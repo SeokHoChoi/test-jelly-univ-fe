@@ -4,7 +4,9 @@ import Button from '@/components/common/Button';
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-16 md:py-24">
+    <section className="py-16 md:py-24" style={{
+      background: 'linear-gradient(to top, rgba(0, 61, 165, 0.5) 0%, rgba(121, 151, 203, 0.3) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0) 90%, transparent 100%)'
+    }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
