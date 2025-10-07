@@ -29,34 +29,34 @@ const ReviewSection = () => {
   return (
     <section id="reviews" className="py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <Text variant="subtitle" className="text-gray-900">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             CBT 참여 보호자들의 생생한 후기
-          </Text>
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((review, index) => (
-            <Card key={index}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                  <span className="text-gray-600 font-medium">
+            <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                  <span className="text-gray-600 font-bold text-lg">
                     {review.name.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <Text variant="body" className="font-medium">
+                  <h4 className="font-bold text-gray-900">
                     {review.name}
-                  </Text>
-                  <Text variant="caption" className="text-gray-500">
+                  </h4>
+                  <p className="text-sm text-gray-500">
                     {review.location} · {review.time}
-                  </Text>
+                  </p>
                 </div>
               </div>
 
-              <Text variant="body" className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed text-lg">
                 &ldquo;{review.content}&rdquo;
-              </Text>
+              </p>
             </Card>
           ))}
         </div>

@@ -58,10 +58,10 @@ const PlanSection = () => {
   return (
     <section id="plans" className="bg-gray-50 py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <Text variant="subtitle" className="text-gray-900">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             우리 아이와 나의 고민에 딱 맞는 플랜을 선택하세요!
-          </Text>
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

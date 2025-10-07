@@ -4,21 +4,22 @@ import Button from '@/components/common/Button';
 
 const AdBanner = () => {
   return (
-    <section className="relative py-12 md:py-20">
-      <div className="absolute inset-0 bg-gray-900 bg-opacity-90">
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue to-brand-blue-dark opacity-80" />
+    <section className="relative py-20 md:py-32 overflow-hidden">
+      {/* 배경 이미지 */}
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div className="absolute inset-0 bg-black bg-opacity-50" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <Text variant="title" className="text-white mb-4">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
           수많은 광고와 광고 속 믿을 수 있는 선택이 필요하다면
-        </Text>
+        </h2>
 
-        <Text variant="subtitle" className="text-white mb-8">
+        <p className="text-xl md:text-2xl text-white mb-10 opacity-90">
           지금 바로 식단 분석을 시작해보세요!
-        </Text>
+        </p>
 
-        <Button size="lg" className="bg-white text-brand-blue hover:bg-gray-100">
+        <Button size="lg" className="bg-white text-brand-blue hover:bg-gray-100 px-8 py-4 text-lg font-semibold">
           <Link href="/product-analysis">30초 만에 분석하기</Link>
         </Button>
       </div>
