@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐕 Jelly University - 반려동물 맞춤 식단 솔루션
 
-## Getting Started
+서울대·한국수의영양학회 임원 수의사가 검증한 반려동물 맞춤 식단 솔루션입니다.
 
-First, run the development server:
+## 🚀 주요 기능
+
+- **무료 사료 분석**: 30초 만에 현재 급여 사료의 품질과 영양성 분석
+- **맞춤형 식단 설계**: 반려동물의 개별 특성을 고려한 맞춤 식단 추천
+- **전문가 검증**: 서울대·한국수의영양학회 임원 수의사가 검증한 AI 분석
+- **실시간 리포트**: 상세한 분석 결과와 개선 방안 제시
+
+## 🛠 기술 스택
+
+- **Frontend**: Next.js 15, TypeScript, TailwindCSS
+- **UI Components**: shadcn/ui, Lucide React
+- **Form Handling**: React Hook Form
+- **State Management**: Zustand
+- **Responsive Design**: React Responsive
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── app/                    # Next.js App Router 페이지
+│   ├── home/              # 홈페이지
+│   ├── product-analysis/  # 제품 분석 페이지
+│   ├── brief-report/      # 간략 리포트 페이지
+│   ├── login/             # 로그인 페이지
+│   └── signup/            # 회원가입 페이지
+├── components/            # React 컴포넌트
+│   ├── common/            # 공통 컴포넌트
+│   ├── home/              # 홈페이지 컴포넌트
+│   ├── product-analysis/  # 제품 분석 컴포넌트
+│   └── brief-report/      # 리포트 컴포넌트
+└── utils/                 # 유틸리티 함수
+```
+
+## 🎨 디자인 시스템
+
+- **브랜드 컬러**: #003DA5 (Jelly Blue)
+- **타이포그래피**: Pretendard
+
+## 🚀 시작하기
+
+### 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인하세요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 프로덕션 빌드
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 📱 페이지 구성
 
-To learn more about Next.js, take a look at the following resources:
+- **홈페이지** (`/home`): 메인 랜딩 페이지
+- **제품 분석** (`/product-analysis`): 사료 분석 폼
+- **간략 리포트** (`/brief-report`): 분석 결과 미리보기
+- **로그인** (`/login`): 사용자 로그인
+- **회원가입** (`/signup`): 신규 사용자 등록
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 주요 컴포넌트
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Header**: 네비게이션 및 로고
+- **HeroSection**: 메인 배너 및 CTA
+- **ArticleListSection**: 서비스 소개 카드
+- **PlanSection**: 요금제 선택
+- **ReviewSection**: 사용자 후기
+- **ProductForm**: 사료 정보 입력 폼
+- **ReportContentSection**: 분석 결과 표시
 
-## Deploy on Vercel
+## 🔧 개발 환경
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Node.js 18+
+- npm 또는 yarn
+- TypeScript 5+
+- TailwindCSS 4+
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 라이선스
+
+© 2025 Jelly University. All rights reserved.
