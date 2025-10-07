@@ -18,7 +18,7 @@ const HeroSection = () => {
             사료부터 영양제까지 교수의학 데이터로 우리 아이에게 맞는 제품인지 비교 분석해드립니다
           </p>
 
-          <div className="flex flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto">
+          <div className="flex flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto px-[61.5px] sm:px-0">
             <Button
               variant="hero-primary"
               size="hero"

@@ -24,7 +24,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       sm: 'h-8 px-3 text-sm',
       md: 'h-10 px-4 text-base',
       lg: 'h-12 px-6 text-lg',
-      hero: 'px-4 sm:px-8 py-4 text-xs sm:text-xl rounded-xl',
+      hero: 'px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-xs sm:text-xl rounded-xl whitespace-nowrap',
     };
 
     return (
