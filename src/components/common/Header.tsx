@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import Button from '@/components/common/Button';
 
@@ -20,9 +21,13 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">J</span>
-            </div>
+            <Image
+              src="/img/jellyu-logo.png"
+              alt="Jelly University Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
             <span className="text-xl font-bold text-gray-900">Jelly University</span>
           </Link>
 
