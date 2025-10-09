@@ -1,16 +1,30 @@
 import Link from 'next/link';
-import Text from '@/components/common/Text';
 import Button from '@/components/common/Button';
 
 const AdBanner = () => {
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      {/* 배경 이미지 */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-900">
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-      </div>
+    <section
+      className="relative overflow-hidden w-full aspect-[327/204] md:aspect-[1280/568]"
+      style={{
+        backgroundImage: 'url(/img/home/ad-banner-mobile.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* 데스크탑 배경 이미지 */}
+      <div
+        className="absolute inset-0 hidden md:block"
+        style={{
+          backgroundImage: 'url(/img/home/ad-banner-desktop.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* 콘텐츠 */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
           수많은 광고와 광고 속 믿을 수 있는 선택이 필요하다면
         </h2>
