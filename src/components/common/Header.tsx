@@ -20,15 +20,15 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/img/jellyu-logo.png"
               alt="Jelly University Logo"
-              width={32}
-              height={32}
-              className="w-8 h-8"
+              width={40}
+              height={40}
+              className="w-7 h-7 md:w-10 md:h-10"
             />
-            <span className="text-xl font-bold text-gray-900">Jelly University</span>
+            <span className="text-[18px] md:text-[24px] font-semibold text-[#000000]">Jelly University</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -37,19 +37,22 @@ const Header = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-gray-700 hover:text-brand-blue transition-colors"
+                className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/login"
-              className="text-gray-700 hover:text-brand-blue transition-colors"
+              className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-3 text-center"
             >
               로그인
             </Link>
-            <Button size="sm">
-              <Link href="/signup">무료로 회원가입</Link>
+            <Button
+              size="sm"
+              className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] rounded-[12px] w-[139px] h-[47px]"
+            >
+              <Link href="/signup">무료로 시작하기</Link>
             </Button>
           </nav>
 
@@ -71,7 +74,7 @@ const Header = () => {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-gray-700 hover:text-brand-blue transition-colors px-4 py-2"
+                  className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
@@ -79,14 +82,17 @@ const Header = () => {
               ))}
               <Link
                 href="/login"
-                className="text-gray-700 hover:text-brand-blue transition-colors px-4 py-2"
+                className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-3 text-center mx-4"
                 onClick={() => setIsMenuOpen(false)}
               >
                 로그인
               </Link>
               <div className="px-4">
-                <Button size="sm" className="w-full">
-                  <Link href="/signup">무료로 회원가입</Link>
+                <Button
+                  size="sm"
+                  className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] rounded-[12px] w-full h-[47px]"
+                >
+                  <Link href="/signup">무료로 시작하기</Link>
                 </Button>
               </div>
             </nav>
