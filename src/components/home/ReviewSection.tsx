@@ -5,24 +5,30 @@ import Image from 'next/image';
 const ReviewSection = () => {
   const reviews = [
     {
-      name: '밤비 보호자 남은데',
-      location: '서울랜드 맘독',
-      time: '1일',
-      content: '정말 상세한 분석이 나왔어요! 우리 밤비가 평소 먹던 사료가 영양적으로 부족하다는 걸 처음 알았습니다. 전문가 상담도 정말 도움이 되었고요.',
+      dogName: '두부',
+      guardianName: '신지원',
+      location: '말티즈',
+      title: '노화 관리 식단 관리에 확신이 생겼어요',
+      age: { value: 4, unit: 'year' },
+      content: '4살이 되면서 점점 노화에 대한 걱정이 커졌는데, 현재 먹이고 있는 건사료가 주식으로 적합한지 궁금했어요. 리포트에서 목표 체중과 권장 칼로리를 명확히 제시해주시고, 탄수화물 비중 등 구체적인 영양소 분석을 해주셔서 사료 변경 결정에 확신이 생겼어요. 리포트 형태라 계속 참고할 수 있어서 더 만족스럽습니다.',
       avatar: '/img/home/tmp-review-profile/review-1.png',
     },
     {
-      name: '멍멍이 엄마 김씨',
-      location: '강아지 키우기',
-      time: '3일',
-      content: '맞춤형 식단 설계 서비스 받았는데, 우리 강아지 체중 관리에 정말 도움이 되었어요. 이제 정확한 급여량을 알 수 있어서 안심이 됩니다.',
+      dogName: '밤비',
+      guardianName: '남은비',
+      location: '셔틀랜드 쉽독',
+      title: '영양제 과다섭취를 발견해서 정말 다행이에요',
+      age: { value: 1, unit: 'year' },
+      content: '밤비가 계란노른자 알레르기와 슬개골 문제가 있어서 영양 관리가 정말 어려웠어요. 알러지 성분을 피하면서 영양 균형을 맞추는 게 쉽지 않았거든요. 리포트를 받고 충격적이었던 건 영양제를 너무 과하게 먹이고 있었다는 사실이었어요! 모르게 계속 먹였다가 오히려 독이 될 뻔했는데, 일찍 알게 되어 정말 다행입니다. 리포트를 기반으로 식단과 영양제를 모두 바꿨어요!',
       avatar: '/img/home/tmp-review-profile/review-2.png',
     },
     {
-      name: '뽀삐 아빠 박씨',
-      location: '반려동물 건강관리',
-      time: '1주',
-      content: '영양제 추천도 정말 정확했어요. 우리 뽀삐가 훨씬 건강해진 것 같아요. 전문가가 직접 상담해주시니까 신뢰가 갑니다.',
+      dogName: '하이',
+      guardianName: '김지우',
+      location: '포메라니안',
+      title: '데이터 기반의 분석이 정말 만족스러워요',
+      age: { value: 2, unit: 'year' },
+      content: '기존 수의사 컨설팅은 35만원이나 해서 부담스러웠는데, 이 정도 퀄리티를 합리적인 가격에 받을 수 있어서 너무 좋았어요. 원료프로필과 영양성분비 등 수치적 구성도 우수하고, 사료 뒤 라벨의 애매한 정보를 구체적 수치로 명확하게 보여주셔서 이해하기 쉬웠어요. 평소 꼼꼼히 기록하는 편인데, 제가 계산한 것과 비교해봐도 정확했습니다!',
       avatar: '/img/home/tmp-review-profile/review-3.png',
     },
   ];
@@ -41,27 +47,36 @@ const ReviewSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((review, index) => (
-            <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+            <Card key={index} className="p-8 hover:shadow-lg transition-shadow">
               <div className="flex items-center gap-4 mb-6">
                 <Image
                   src={review.avatar}
-                  alt={`${review.name} avatar`}
+                  alt={`${review.dogName} 보호자 ${review.guardianName} avatar`}
                   width={48}
                   height={48}
                   className="w-12 h-12 rounded-[8px] object-cover"
                 />
                 <div>
-                  <h4 className="font-bold text-gray-900">
-                    {review.name}
+                  <h4 className="text-[#000000] font-bold text-[18px]">
+                    {review.dogName} 보호자 {review.guardianName}
                   </h4>
                   <p className="text-sm text-gray-500">
-                    {review.location} · {review.time}
+                    {review.location} · {review.age.value}
+                    {review.age.unit === 'year' ? '살' : review.age.unit === 'month' ? '개월' : '주'}
                   </p>
                 </div>
               </div>
 
-              <p className="text-gray-700 leading-relaxed text-lg">
-                &ldquo;{review.content}&rdquo;
+              {/* Review title */}
+              {review.title && (
+                <p className="text-[18px] font-medium text-[#003DA5] mb-3">
+                  &ldquo;{review.title}&rdquo;
+                </p>
+              )}
+
+              {/* Review content */}
+              <p className="text-[#1E1E1E] text-[17px] font-normal leading-relaxed">
+                {review.content}
               </p>
             </Card>
           ))}
