@@ -9,9 +9,16 @@ const HeroSection = () => {
     }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            서울대·한국수의영양학회 임원 수의사가 검증한<br />
-            반려동물 맞춤 식단 솔루션
+          <h1 className="text-[25px] md:text-[50px] font-medium text-[#1E1E1E] mb-6 leading-tight text-center">
+            <span className="block md:hidden">
+              서울대·한국수의영양학회<br />
+              임원 수의사가 검증한<br />
+              반려동물 맞춤 식단 솔루션
+            </span>
+            <span className="hidden md:block">
+              서울대·한국수의영양학회 임원 수의사가<br />
+              검증한 반려동물 맞춤 식단 솔루션
+            </span>
           </h1>
 
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-4xl mx-auto leading-relaxed">
