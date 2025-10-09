@@ -6,10 +6,11 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import Button from '@/components/common/Button';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // 임시 상태
+  const { isLoggedIn, login, logout } = useAuth();
   const pathname = usePathname();
   const isHomePage = pathname === '/' || pathname === '/home';
   const isLoginPage = pathname === '/login';
@@ -56,7 +57,7 @@ const Header = () => {
             {/* 로그인 안된 경우 */}
             {!isLoggedIn && (
               <>
-                {/* 홈페이지: 현재 그대로 */}
+                {/* 홈페이지 */}
                 {isHomePage && (
                   <>
                     {navigationItems.map((item) => (
@@ -68,12 +69,12 @@ const Header = () => {
                         {item.label}
                       </Link>
                     ))}
-                    <Link
-                      href="/login"
-                      className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors w-[139px] h-[47px] flex items-center justify-center"
+                    <button
+                      onClick={() => login()}
+                      className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors w-[76px] h-[47px] flex items-center justify-center"
                     >
                       로그인
-                    </Link>
+                    </button>
                     <Button
                       className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] rounded-[12px] w-[139px] h-[47px]"
                     >
@@ -145,7 +146,7 @@ const Header = () => {
                   <Button
                     size="sm"
                     className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] rounded-[12px] w-[139px] h-[47px]"
-                    onClick={() => setIsLoggedIn(false)}
+                    onClick={() => logout()}
                   >
                     로그아웃
                   </Button>
@@ -227,7 +228,7 @@ const Header = () => {
                     <Button
                       size="sm"
                       className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[11px] rounded-[12px] py-[10px] px-[15px]"
-                      onClick={() => setIsLoggedIn(false)}
+                      onClick={() => logout()}
                     >
                       로그아웃
                     </Button>
@@ -256,17 +257,19 @@ const Header = () => {
               {/* 로그인 안된 경우에만 로그인 버튼과 무료로 시작하기 버튼 표시 */}
               {!isLoggedIn && (
                 <>
-                  <Link
-                    href="/login"
+                  <button
+                    onClick={() => {
+                      login();
+                      setIsMenuOpen(false);
+                    }}
                     className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-3 text-center mx-4"
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     로그인
-                  </Link>
+                  </button>
                   <div className="px-4">
                     <Button
-                      size="sm"
-                      className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[11px] rounded-[12px] w-full py-[10px] px-[15px]"
+                      size="lg"
+                      className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] !rounded-[12px] w-full py-3 px-4"
                     >
                       <Link href="/product-analysis">무료로 시작하기</Link>
                     </Button>
