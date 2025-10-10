@@ -74,14 +74,14 @@ const ProductForm = () => {
 
     feeds.forEach((feed, index) => {
       if (!feed.name.trim()) {
-        newFeedNameErrors[index] = '사료명을 입력해주세요.';
+        newFeedNameErrors[index] = '사료이름을 입력해주세요!';
         if (firstEmptyNameIndex === -1) {
           firstEmptyNameIndex = index;
         }
       }
 
       if (!feed.amount.trim()) {
-        newAmountErrors[index] = '하루 급여량을 입력해주세요.';
+        newAmountErrors[index] = '하루 급여량을 입력해주세요!';
         if (firstEmptyAmountIndex === -1) {
           firstEmptyAmountIndex = index;
         }
@@ -199,7 +199,7 @@ const ProductForm = () => {
                               updateFeed(index, 'name', `${food.brand_name} ${food.product_name}`);
                             }
                           }}
-                          placeholder="사료명을 입력해주세요"
+                          placeholder="사료이름을 입력해주세요!"
                         />
                         {feedNameErrors[index] && (
                           <p className="text-red-500 text-sm mt-1">{feedNameErrors[index]}</p>
@@ -239,7 +239,7 @@ const ProductForm = () => {
                   {feeds.map((feed, index) => (
                     <Card key={index} className="p-4 !rounded-[20px]">
                       <Text variant="body" className="font-medium mb-2">
-                        하루에 <span className="bg-blue-100 px-2 py-0.5 rounded-full">{feed.name || '[사료명]'}</span>을 얼마나 급여하시나요?
+                        하루에 <span className="bg-blue-100 px-2 py-0.5 rounded-full">{feed.name || '[사료이름]'}</span>을 얼마나 급여하시나요?
                       </Text>
                       <div className="relative mt-4">
                         <input
