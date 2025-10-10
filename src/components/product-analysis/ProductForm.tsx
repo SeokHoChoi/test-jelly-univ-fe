@@ -239,7 +239,7 @@ const ProductForm = () => {
                   {feeds.map((feed, index) => (
                     <Card key={index} className="p-4 !rounded-[20px]">
                       <Text variant="body" className="font-medium mb-2">
-                        하루에 {feed.name || '[사료명]'}을 얼마나 급여하시나요?
+                        하루에 <span className="bg-blue-100 px-2 py-0.5 rounded-full">{feed.name || '[사료명]'}</span>을 얼마나 급여하시나요?
                       </Text>
                       <div className="relative mt-4">
                         <input
