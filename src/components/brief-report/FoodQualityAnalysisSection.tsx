@@ -60,13 +60,15 @@ const FoodQualityAnalysisSection = () => {
         {/* 상단 네비게이션은 플로팅 탭으로 대체됨 */}
 
         {/* 메인 제목 */}
-        <div className="text-center mb-12">
-          <h1 className="text-[32px] md:text-[48px] font-bold text-[#003DA5] mb-4">
+        <div className="text-center mb-[30px] md:mb-[60px]">
+          <p className="text-[#000000] font-medium text-[20px] mb-2">
+            현재 급여 사료 분석 요약
+          </p>
+          <h1 className="text-[#003DA5] font-semibold text-[28px] md:text-[45px] mb-4">
             이 사료, 믿고 먹일 수 있을까?
           </h1>
-          <p className="text-[16px] md:text-[20px] text-gray-600 max-w-3xl mx-auto">
-            서울대·한국수의영양학회 임원 수의사와 함께 설계한 AI가
-            사료의 품질을 종합적으로 분석해드립니다.
+          <p className="text-[#525252] font-normal text-[18px] md:text-[28px] max-w-4xl mx-auto">
+            현재 급여 제품이 하이와는 별개로 신뢰할 수 있는 제품인지 평가해요!
           </p>
         </div>
 
