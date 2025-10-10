@@ -2,10 +2,12 @@
 
 import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Text from '@/components/common/Text';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
+import BreedSearchInput from '@/components/common/BreedSearchInput';
+import FoodSearchInput from '@/components/common/FoodSearchInput';
 
 interface FeedItem {
   name: string;
@@ -28,7 +30,7 @@ const ProductForm = () => {
   const amountInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const feedNameInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<FormData>();
 
   const addFeed = () => {
     if (feeds.length < 3) {
@@ -165,14 +167,16 @@ const ProductForm = () => {
                 <label className="block text-[17px] font-medium text-gray-700 mb-2">
                   <span className="text-red-500">*</span> 반려견의 (추정) 품종을 알려주세요
                 </label>
-                <div className="relative">
-                  <input
-                    {...register('dogBreed', { required: '품종을 입력해주세요' })}
-                    className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
-                    placeholder="예: 골든 리트리버"
-                  />
-                  <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                </div>
+                <BreedSearchInput
+                  value={watch('dogBreed') || ''}
+                  onChange={(value) => setValue('dogBreed', value)}
+                  onSelect={(breed) => {
+                    if (breed) {
+                      setValue('dogBreed', breed);
+                    }
+                  }}
+                  placeholder="예: 골든 리트리버"
+                />
                 {errors.dogBreed && (
                   <p className="text-red-500 text-sm mt-1">{errors.dogBreed.message}</p>
                 )}
@@ -187,16 +191,16 @@ const ProductForm = () => {
                   <div key={index} className="mb-4">
                     <div className="flex gap-4 items-end">
                       <div className="flex-1">
-                        <div className="relative">
-                          <input
-                            ref={(el) => { feedNameInputRefs.current[index] = el; }}
-                            value={feed.name}
-                            onChange={(e) => updateFeed(index, 'name', e.target.value)}
-                            className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
-                            placeholder="사료명을 입력해주세요"
-                          />
-                          <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                        </div>
+                        <FoodSearchInput
+                          value={feed.name}
+                          onChange={(value) => updateFeed(index, 'name', value)}
+                          onSelect={(food) => {
+                            if (food) {
+                              updateFeed(index, 'name', `${food.brand_name} ${food.product_name}`);
+                            }
+                          }}
+                          placeholder="사료명을 입력해주세요"
+                        />
                         {feedNameErrors[index] && (
                           <p className="text-red-500 text-sm mt-1">{feedNameErrors[index]}</p>
                         )}
