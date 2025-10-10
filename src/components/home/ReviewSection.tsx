@@ -104,9 +104,10 @@ const ReviewSection = () => {
             CBT 참여 보호자들의 생생한 후기
           </h2>
         </div>
+        {/* 잘리지 않고 렌더링 원한다면 overflow-visible 적용 */}
         <div
           ref={sliderRef}
-          className="keen-slider overflow-visible"
+          className="keen-slider overflow-hidden"
           style={{
             display: 'flex',
             flexDirection: 'row',
