@@ -130,7 +130,7 @@ const ProductForm = () => {
                   </label>
                   <input
                     {...register('dogName', { required: '반려견 이름을 입력해주세요' })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
+                    className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
                     placeholder="예: 뽀삐"
                   />
                   {errors.dogName && (
@@ -147,7 +147,7 @@ const ProductForm = () => {
                       {...register('dogWeight', { required: '몸무게를 입력해주세요' })}
                       type="number"
                       step="0.1"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
+                      className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
                       placeholder="예: 5.5"
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -168,7 +168,7 @@ const ProductForm = () => {
                 <div className="relative">
                   <input
                     {...register('dogBreed', { required: '품종을 입력해주세요' })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
+                    className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
                     placeholder="예: 골든 리트리버"
                   />
                   <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -192,7 +192,7 @@ const ProductForm = () => {
                             ref={(el) => { feedNameInputRefs.current[index] = el; }}
                             value={feed.name}
                             onChange={(e) => updateFeed(index, 'name', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
+                            className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
                             placeholder="사료명을 입력해주세요"
                           />
                           <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -205,7 +205,7 @@ const ProductForm = () => {
                         <button
                           type="button"
                           onClick={() => removeFeed(index)}
-                          className="px-4 py-3 text-red-500 hover:text-red-700"
+                          className="px-4 py-4 text-red-500 hover:text-red-700"
                         >
                           삭제
                         </button>
@@ -218,7 +218,7 @@ const ProductForm = () => {
                   <button
                     type="button"
                     onClick={addFeed}
-                    className="w-full border-2 border-dashed border-[#003DA5] rounded-lg p-4 text-[#003DA5] hover:border-[#002A7A] hover:text-[#002A7A] transition-colors flex items-center justify-center gap-2 bg-transparent hover:bg-[#003DA5]/5 text-[18px] font-normal"
+                    className="w-full border-2 border-dashed border-[#003DA5] rounded-[20px] p-4 text-[#003DA5] hover:border-[#002A7A] hover:text-[#002A7A] transition-colors flex items-center justify-center gap-2 bg-transparent hover:bg-[#003DA5]/5 text-[18px] font-normal"
                   >
                     <Plus size={20} />
                     사료 추가하기
@@ -237,7 +237,7 @@ const ProductForm = () => {
                       <Text variant="body" className="font-medium mb-2">
                         하루에 {feed.name || '[사료명]'}을 얼마나 급여하시나요?
                       </Text>
-                      <div className="relative">
+                      <div className="relative mt-4">
                         <input
                           ref={(el) => { amountInputRefs.current[index] = el; }}
                           value={feed.amount}
@@ -245,7 +245,7 @@ const ProductForm = () => {
                           type="text"
                           inputMode="numeric"
                           pattern="[0-9]*"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
+                          className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
                           placeholder="예: 150"
                         />
                         <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
