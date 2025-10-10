@@ -52,7 +52,7 @@ const ProductForm = () => {
   };
 
   return (
-    <section className="py-12 md:py-20">
+    <section className="py-10 px-4 md:py-[50px] md:px-[150px]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Card className="p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
