@@ -104,9 +104,27 @@ const ReviewSection = () => {
             CBT 참여 보호자들의 생생한 후기
           </h2>
         </div>
-        <div ref={sliderRef} className="keen-slider overflow-visible">
+        {/* 잘리지 않고 렌더링 원한다면 overflow-visible 적용 */}
+        <div
+          ref={sliderRef}
+          className="keen-slider overflow-hidden"
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'stretch'
+          }}
+        >
           {reviews.map((review) => (
-            <div key={review.id} className="keen-slider__slide">
+            <div
+              key={review.id}
+              className="keen-slider__slide"
+              style={{
+                width: 'auto',
+                minHeight: 'auto',
+                flexShrink: 0,
+                display: 'block'
+              }}
+            >
               <Card className="p-8 hover:shadow-lg transition-shadow h-auto">
                 <div className="flex items-center gap-4 mb-6">
                   <Image

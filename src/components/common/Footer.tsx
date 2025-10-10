@@ -9,7 +9,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-white py-[32px] px-[24px] md:py-[33px] md:px-[64px]">
+    <footer className="bg-white py-[32px] px-[24px] md:py-[33px] md:px-[64px] border-t border-black/15">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-6 md:space-y-0">
         {/* Company Info */}
         <div className="text-left">
