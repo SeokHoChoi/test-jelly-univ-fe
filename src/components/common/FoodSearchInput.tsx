@@ -1,6 +1,6 @@
 'use client';
 
-import AutocompleteInput from './AutocompleteInput';
+import AutocompleteInput, { AutocompleteOption } from './AutocompleteInput';
 import { searchFoods, FoodSearchResult } from '@/utils/api';
 
 interface FoodSearchInputProps {
@@ -26,7 +26,7 @@ const FoodSearchInput = ({
       const response = await searchFoods(query, 10);
 
       // API 응답을 AutocompleteOption 형태로 변환
-      const options = response.data.map((food: FoodSearchResult) => ({
+      const options: AutocompleteOption[] = response.data.map((food: FoodSearchResult) => ({
         id: food.id.toString(),
         label: `${food.brand_name} ${food.product_name}`,
         subtitle: `단백질 ${food.crude_protein}% 지방 ${food.crude_fat}%`,
@@ -40,8 +40,10 @@ const FoodSearchInput = ({
           id: 'direct',
           label: '직접 입력하기',
           subtitle: `"${query}"`,
-          isDirectInput: true
-        } as any);
+          thumbnail: '',
+          isDirectInput: true,
+          originalData: null
+        } as AutocompleteOption);
       }
 
       return options;
@@ -52,12 +54,14 @@ const FoodSearchInput = ({
         id: 'direct',
         label: '직접 입력하기',
         subtitle: `"${query}"`,
-        isDirectInput: true
-      } as any];
+        thumbnail: '',
+        isDirectInput: true,
+        originalData: null
+      } as AutocompleteOption];
     }
   };
 
-  const handleSelect = (option: any) => {
+  const handleSelect = (option: AutocompleteOption) => {
     if (option.isDirectInput) {
       // 직접 입력 선택 시
       onSelect(null);

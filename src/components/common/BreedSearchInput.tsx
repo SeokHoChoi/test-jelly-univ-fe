@@ -1,6 +1,6 @@
 'use client';
 
-import AutocompleteInput from './AutocompleteInput';
+import AutocompleteInput, { AutocompleteOption } from './AutocompleteInput';
 import { searchDogBreeds } from '@/utils/api';
 
 interface BreedSearchInputProps {
@@ -26,7 +26,7 @@ const BreedSearchInput = ({
       const breeds = await searchDogBreeds(query);
 
       // 품종 목록을 AutocompleteOption 형태로 변환
-      const options = breeds.map((breed: string) => ({
+      const options: AutocompleteOption[] = breeds.map((breed: string) => ({
         id: breed,
         label: breed,
         originalData: breed
@@ -38,8 +38,9 @@ const BreedSearchInput = ({
           id: 'direct',
           label: '직접 입력하기',
           subtitle: `"${query}"`,
-          isDirectInput: true
-        } as any);
+          isDirectInput: true,
+          originalData: query
+        } as AutocompleteOption);
       }
 
       return options;
@@ -50,12 +51,13 @@ const BreedSearchInput = ({
         id: 'direct',
         label: '직접 입력하기',
         subtitle: `"${query}"`,
-        isDirectInput: true
-      } as any];
+        isDirectInput: true,
+        originalData: query
+      } as AutocompleteOption];
     }
   };
 
-  const handleSelect = (option: any) => {
+  const handleSelect = (option: AutocompleteOption) => {
     if (option.isDirectInput) {
       // 직접 입력 선택 시
       onSelect(null);

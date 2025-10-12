@@ -1,15 +1,15 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search } from 'lucide-react';
 
-interface AutocompleteOption {
+export interface AutocompleteOption {
   id: string | number;
   label: string;
   subtitle?: string;
   thumbnail?: string;
   isDirectInput?: boolean;
-  originalData?: any;
+  originalData?: unknown;
 }
 
 interface AutocompleteInputProps {
@@ -43,7 +43,7 @@ const AutocompleteInput = ({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 검색 실행
-  const performSearch = async (query: string) => {
+  const performSearch = useCallback(async (query: string) => {
     if (query.length < minSearchLength) {
       setOptions([]);
       setIsOpen(false);
@@ -63,7 +63,7 @@ const AutocompleteInput = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [searchFunction, minSearchLength]);
 
   // 디바운스된 검색
   useEffect(() => {
@@ -80,7 +80,7 @@ const AutocompleteInput = ({
         clearTimeout(debounceRef.current);
       }
     };
-  }, [value]);
+  }, [value, performSearch]);
 
   // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
@@ -192,7 +192,7 @@ const AutocompleteInput = ({
                     </div>
                     <span className="text-blue-500 text-sm">클릭</span>
                   </div>
-                  <p className="text-blue-500 text-sm mt-1">"{value}"</p>
+                  <p className="text-blue-500 text-sm mt-1">&quot;{value}&quot;</p>
                 </div>
               )}
             </div>

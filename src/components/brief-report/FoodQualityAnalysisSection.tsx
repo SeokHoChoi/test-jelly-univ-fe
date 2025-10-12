@@ -1,17 +1,17 @@
 'use client';
 
-import { Check } from 'lucide-react';
+// import { Check } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
 import InfoBar from '@/components/common/InfoBar';
 import RatingBar from '@/components/common/RatingBar';
 
 const FoodQualityAnalysisSection = () => {
-  const scrollTo = (targetId: string) => {
-    if (typeof window === 'undefined') return;
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+  // const scrollTo = (targetId: string) => {
+  //   if (typeof window === 'undefined') return;
+  //   const el = document.getElementById(targetId);
+  //   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // };
   const overallGrades = [
     { label: '영양 정보 신뢰도', grade: 'A+' },
     { label: '원료 품질', grade: 'A+' },
@@ -106,11 +106,11 @@ const FoodQualityAnalysisSection = () => {
             <div className="space-y-3 mb-10">
               <InfoBar>
                 <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">📝 한 줄 평</div>
-                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">사람이 먹을 수 있는 최상급 원료와 엄격한 영양 기준을 모두 만족시킨, 신뢰도 높은 '인간 등급(Human Grade)' 탈수 건조 식품입니다.</div>
+                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">사람이 먹을 수 있는 최상급 원료와 엄격한 영양 기준을 모두 만족시킨, 신뢰도 높은 &apos;인간 등급(Human Grade)&apos; 탈수 건조 식품입니다.</div>
               </InfoBar>
               <InfoBar>
                 <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">👍🏻 사료의 주요 장점</div>
-                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">'주식' 자격 공식 보증, 인간 등급(Human Grade) 원료, 영양소 보존율이 높은 제조 공법</div>
+                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">&apos;주식&apos; 자격 공식 보증, 인간 등급(Human Grade) 원료, 영양소 보존율이 높은 제조 공법</div>
               </InfoBar>
               <InfoBar>
                 <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">👀 사료의 주요 단점 및 주의사항</div>

@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Text from '@/components/common/Text';
-import Button from '@/components/common/Button';
 
 const HeroSection = () => {
   return (
@@ -28,20 +26,18 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto px-[61.5px] sm:px-0">
-            <Button
-              variant="hero-primary"
-              size="hero"
-              className="flex-1 sm:w-auto"
+            <Link
+              href="/product-analysis"
+              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-xs sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
             >
-              <Link href="/product-analysis">무료로 시작하기</Link>
-            </Button>
-            <Button
-              variant="hero-secondary"
-              size="hero"
-              className="flex-1 sm:w-auto"
+              무료로 시작하기
+            </Link>
+            <Link
+              href="#service"
+              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-white text-[#1E1E1E] hover:bg-gray-50 active:bg-gray-100 border-0 px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-xs sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
             >
-              <Link href="#service">더 알아보기 →</Link>
-            </Button>
+              더 알아보기 →
+            </Link>
           </div>
 
           <p className="text-[9px] md:text-[17px] text-[#003DA5] font-medium mt-[30px] md:mt-[45px] mb-[30px] md:mb-[60px] text-center">

@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 
 const CurrentDietReportSection = () => {
   const petInfo = {
