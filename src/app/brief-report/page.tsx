@@ -1,18 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import PublicInfoSection from '@/components/brief-report/PublicInfoSection';
-import ResultSummarySection from '@/components/brief-report/ResultSummarySection';
 import ReportContentSection from '@/components/brief-report/ReportContentSection';
 import SignupPromptModal from '@/components/brief-report/SignupPromptModal';
+import FoodQualityAnalysisSection from '@/components/brief-report/FoodQualityAnalysisSection';
+import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
+import CurrentDietReportSection from '@/components/brief-report/CurrentDietReportSection';
+import ReportFloatingTabs from '@/components/brief-report/ReportFloatingTabs';
 
 const BriefReportPage = () => {
   const [showSignupModal, setShowSignupModal] = useState(false);
 
   return (
     <div className="min-h-screen">
-      <PublicInfoSection />
-      <ResultSummarySection />
+      <ReportFloatingTabs />
+
+      {/* 새로운 UI 섹션들 */}
+      <FoodQualityAnalysisSection />
+      <PetSuitabilitySection />
+      <CurrentDietReportSection />
+
+      {/* 기존 리포트 섹션 (블러 처리) */}
       <ReportContentSection blurLevel="lg" />
 
       {/* 회원가입 유도 버튼 */}
