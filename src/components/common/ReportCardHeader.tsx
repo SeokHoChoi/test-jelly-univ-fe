@@ -8,6 +8,9 @@ interface ReportCardHeaderProps {
   subtitle?: string;
   titleColor?: string;
   subtitleColor?: string;
+  titleSize?: string;
+  subtitleSize?: string;
+  titleSubtitleGap?: string;
 }
 
 const ReportCardHeader = ({
@@ -15,7 +18,10 @@ const ReportCardHeader = ({
   title,
   subtitle,
   titleColor = '#1E1E1E',
-  subtitleColor = '#525252'
+  subtitleColor = '#525252',
+  titleSize = '25px',
+  subtitleSize = '18px',
+  titleSubtitleGap = '8px'
 }: ReportCardHeaderProps) => {
   // 색상에 따른 Tailwind 클래스 매핑
   const getColorClass = (color: string) => {
@@ -39,9 +45,10 @@ const ReportCardHeader = ({
         <span className="text-2xl">{emoji}</span>
         <h2
           className={twMerge(
-            "text-[25px] font-semibold",
+            "font-medium",
             getColorClass(titleColor)
           )}
+          style={{ fontSize: titleSize }}
         >
           {title}
         </h2>
@@ -49,9 +56,10 @@ const ReportCardHeader = ({
       {subtitle && (
         <p
           className={twMerge(
-            "font-normal text-[18px] mt-[8px] ml-[32px]",
+            "font-normal ml-[32px]",
             getColorClass(subtitleColor)
           )}
+          style={{ fontSize: subtitleSize, marginTop: titleSubtitleGap }}
         >
           {subtitle}
         </p>

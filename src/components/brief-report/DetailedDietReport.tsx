@@ -5,6 +5,8 @@ import Image from 'next/image';
 import ReportCard from '@/components/common/ReportCard';
 import ReportCardHeader from '@/components/common/ReportCardHeader';
 import ReportCardContent from '@/components/common/ReportCardContent';
+import NutrientAnalysisPanel from '@/components/common/NutrientAnalysisPanel';
+import NutrientItem from '@/components/common/NutrientItem';
 
 interface PetInfo {
   name: string;
@@ -123,7 +125,7 @@ const DetailedDietReport = ({
               </div>
             </div>
 
-            <div className="text-center">
+            <div className="text-left">
               <div className="flex items-center justify-center gap-0 mb-3">
                 <span className="text-2xl">🍕</span>
                 <h2 className="text-[27px] font-semibold text-white ml-0">행복한 미식가</h2>
@@ -183,18 +185,18 @@ const DetailedDietReport = ({
           <ReportCard className="md:order-3 md:mt-[24px]">
             <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} />
             <div className="mt-[35px]">
-              <div className="grid grid-cols-3 gap-[18px]">
-                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
-                  <p className="text-[17px] text-white font-medium leading-none">나이</p>
-                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.age}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-[18px]">
+                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px]">
+                  <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">나이</p>
+                  <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.age}</p>
                 </div>
-                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
-                  <p className="text-[17px] text-white font-medium leading-none">몸무게</p>
-                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.weight}</p>
+                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px]">
+                  <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">몸무게</p>
+                  <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.weight}</p>
                 </div>
-                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
-                  <p className="text-[17px] text-white font-medium leading-none">중성화</p>
-                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.neutered}</p>
+                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] sm:col-span-2 lg:col-span-1">
+                  <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">중성화</p>
+                  <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.neutered}</p>
                 </div>
               </div>
             </div>
@@ -272,24 +274,51 @@ const DetailedDietReport = ({
           />
           <div className="mt-[35px]">
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
-                <div className="text-2xl mb-2">😴</div>
-                <p className="text-xs mb-1">휴식 대사량(RER)</p>
-                <p className="text-xs mb-1">Resting Energy Requirement</p>
-                <p className="text-lg font-bold">{targetMetrics.rer}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-[37px]">
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left">
+                <ReportCardHeader
+                  emoji="😴"
+                  title="휴식 대사량(RER)"
+                  subtitle="Resting Energy Requirement"
+                  titleColor="#1E1E1E"
+                  subtitleColor="#525252"
+                  titleSize="18px"
+                  subtitleSize="13px"
+                  titleSubtitleGap="0px"
+                />
+                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
+                </div>
               </div>
-              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
-                <div className="text-2xl mb-2">⚓️</div>
-                <p className="text-xs mb-1">목표 체중</p>
-                <p className="text-xs mb-1">현재의 이상적인 체중을 유지</p>
-                <p className="text-lg font-bold">{targetMetrics.targetWeight}</p>
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left">
+                <ReportCardHeader
+                  emoji="⚓️"
+                  title="목표 체중"
+                  subtitle="현재의 이상적인 체중을 유지"
+                  titleColor="#1E1E1E"
+                  subtitleColor="#525252"
+                  titleSize="18px"
+                  subtitleSize="13px"
+                  titleSubtitleGap="0px"
+                />
+                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.targetWeight}</p>
+                </div>
               </div>
-              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
-                <div className="text-2xl mb-2">🔥️</div>
-                <p className="text-xs mb-1">1일 권장 칼로리(MER)</p>
-                <p className="text-xs mb-1">Recommeded Daily Enegy Requirement</p>
-                <p className="text-lg font-bold">{targetMetrics.mer}</p>
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left sm:col-span-2 lg:col-span-1">
+                <ReportCardHeader
+                  emoji="🔥️"
+                  title="1일 권장 칼로리(MER)"
+                  subtitle="Recommeded Daily Enegy Requirement"
+                  titleColor="#1E1E1E"
+                  subtitleColor="#525252"
+                  titleSize="18px"
+                  subtitleSize="13px"
+                  titleSubtitleGap="0px"
+                />
+                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.mer}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -304,60 +333,100 @@ const DetailedDietReport = ({
             subtitleColor="#525252"
           />
           <div className="mt-[35px]">
-
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2 text-sm font-medium text-[#1E1E1E]">제품명</th>
-                    <th className="text-center py-2 text-sm font-medium text-[#1E1E1E]">급여량(g)</th>
-                    <th className="text-center py-2 text-sm font-medium text-[#1E1E1E]">단백질 함량(g)</th>
-                    <th className="text-center py-2 text-sm font-medium text-[#1E1E1E]">지방 함량(g)</th>
-                    <th className="text-center py-2 text-sm font-medium text-[#1E1E1E]">탄수화물 함량(g)</th>
-                    <th className="text-center py-2 text-sm font-medium text-[#1E1E1E]">칼로리(kcal)</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* 섭취량(g) 패널 */}
+              <NutrientAnalysisPanel
+                title="섭취량(g)"
+                backgroundColor="#FFB800"
+                textColor="#343434"
+              >
+                <div className="space-y-[10px]">
                   {currentFoods.map((food, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="py-3 text-sm text-[#1E1E1E]">{food.name}</td>
-                      <td className="py-3 text-center text-sm text-[#1E1E1E]">{food.intake}</td>
-                      <td className="py-3 text-center text-sm text-[#1E1E1E]">
-                        <div className="flex items-center justify-center gap-1">
-                          <span>{food.protein}</span>
-                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
-                            {food.proteinPercent}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3 text-center text-sm text-[#1E1E1E]">
-                        <div className="flex items-center justify-center gap-1">
-                          <span>{food.fat}</span>
-                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
-                            {food.fatPercent}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3 text-center text-sm text-[#1E1E1E]">
-                        <div className="flex items-center justify-center gap-1">
-                          <span>{food.carbs}</span>
-                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
-                            {food.carbsPercent}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-3 text-center text-sm text-[#1E1E1E]">
-                        <div className="flex items-center justify-center gap-1">
-                          <span>{food.calories}</span>
-                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
-                            {food.caloriesPercent}
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+                    <NutrientItem
+                      key={index}
+                      name={food.name}
+                      value={food.intake}
+                      type="simple"
+                    />
                   ))}
-                </tbody>
-              </table>
+                </div>
+              </NutrientAnalysisPanel>
+
+              {/* 칼로리(kcal) 패널 */}
+              <NutrientAnalysisPanel
+                title="칼로리(kcal)"
+                backgroundColor="#FFB800"
+                textColor="#343434"
+              >
+                <div className="space-y-[10px]">
+                  {currentFoods.map((food, index) => (
+                    <NutrientItem
+                      key={index}
+                      name={food.name}
+                      value={food.calories}
+                      type="simple"
+                    />
+                  ))}
+                </div>
+              </NutrientAnalysisPanel>
+
+              {/* 단백질 함량(g) 패널 */}
+              <NutrientAnalysisPanel
+                title="단백질 함량(g)"
+                backgroundColor="#F7623E"
+                textColor="#FFFFFF"
+              >
+                <div className="space-y-[10px]">
+                  {currentFoods.map((food, index) => (
+                    <NutrientItem
+                      key={index}
+                      name={food.name}
+                      value={food.protein}
+                      percentage={food.proteinPercent}
+                      type="complex"
+                    />
+                  ))}
+                </div>
+              </NutrientAnalysisPanel>
+
+              {/* 지방 함량(g) 패널 */}
+              <NutrientAnalysisPanel
+                title="지방 함량(g)"
+                backgroundColor="#F7623E"
+                textColor="#FFFFFF"
+              >
+                <div className="space-y-[10px]">
+                  {currentFoods.map((food, index) => (
+                    <NutrientItem
+                      key={index}
+                      name={food.name}
+                      value={food.fat}
+                      percentage={food.fatPercent}
+                      type="complex"
+                    />
+                  ))}
+                </div>
+              </NutrientAnalysisPanel>
+
+              {/* 탄수화물 함량(g) 패널 */}
+              <NutrientAnalysisPanel
+                title="탄수화물 함량(g)"
+                backgroundColor="#F7623E"
+                textColor="#FFFFFF"
+                className="lg:col-span-2"
+              >
+                <div className="space-y-[10px]">
+                  {currentFoods.map((food, index) => (
+                    <NutrientItem
+                      key={index}
+                      name={food.name}
+                      value={food.carbs}
+                      percentage={food.carbsPercent}
+                      type="complex"
+                    />
+                  ))}
+                </div>
+              </NutrientAnalysisPanel>
             </div>
           </div>
         </ReportCard>
@@ -374,22 +443,22 @@ const DetailedDietReport = ({
           <div className="mt-[35px] text-white">
 
             <div className="grid grid-cols-4 gap-4">
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-center">
+              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
                 <div className="text-2xl mb-2 text-[#003DA5]">🥚</div>
                 <p className="text-xs text-[#003DA5] mb-1">단백질(Protein)</p>
                 <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.protein}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-center">
+              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
                 <div className="text-2xl mb-2 text-[#003DA5]">🥩</div>
                 <p className="text-xs text-[#003DA5] mb-1">지방(Fat)</p>
                 <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.fat}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-center">
+              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
                 <div className="text-2xl mb-2 text-[#003DA5]">🌾</div>
                 <p className="text-xs text-[#003DA5] mb-1">탄수화물(Carbs)</p>
                 <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.carbs}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-center">
+              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
                 <div className="text-2xl mb-2 text-[#003DA5]">💧</div>
                 <p className="text-xs text-[#003DA5] mb-1">음수량</p>
                 <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.water}</p>
