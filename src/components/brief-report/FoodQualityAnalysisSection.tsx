@@ -74,7 +74,7 @@ const FoodQualityAnalysisSection = () => {
           </p>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-[40px] px-6 py-8 md:px-[136px] md:py-[74px]">
+        <div className="bg-[#F2F2F2] rounded-[40px] px-6 py-8 md:px-[138px] md:py-[74px]">
           {/* 상단 네비게이션은 플로팅 탭으로 대체됨 */}
 
           {/* 사료 정보 */}
@@ -130,7 +130,7 @@ const FoodQualityAnalysisSection = () => {
           {/* 세부 평가 카드들 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {detailedAssessments.map((assessment) => (
-              <div key={assessment.id} className="bg-white rounded-[20px] p-6 shadow-sm">
+              <div key={assessment.id} className="bg-white rounded-[20px] p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
                     {assessment.id}
