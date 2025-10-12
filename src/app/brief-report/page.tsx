@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import ReportContentSection from '@/components/brief-report/ReportContentSection';
 import SignupPromptModal from '@/components/brief-report/SignupPromptModal';
 import FoodQualityAnalysisSection from '@/components/brief-report/FoodQualityAnalysisSection';
 import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
-import CurrentDietReportSection from '@/components/brief-report/CurrentDietReportSection';
 import ReportFloatingTabs from '@/components/brief-report/ReportFloatingTabs';
+import DietReportExample from '@/components/brief-report/DietReportExample';
 
 const BriefReportPage = () => {
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -16,10 +15,9 @@ const BriefReportPage = () => {
       <ReportFloatingTabs />
       <FoodQualityAnalysisSection />
       <PetSuitabilitySection />
-      <CurrentDietReportSection />
 
-      {/* 기존 리포트 섹션 (블러 처리) */}
-      <ReportContentSection blurLevel="lg" />
+      {/* 상세 식단 분석 리포트 */}
+      <DietReportExample />
 
       {/* 회원가입 유도 버튼 */}
       <div className="fixed bottom-4 right-4 z-50">
