@@ -485,44 +485,165 @@ const DetailedDietReport = ({
             subtitle="위에서 분석한 현재와 권장 칼로리 및 주요 영양소를 비교 분석해 현재 식단이 어떤 상태인지 더 자세히 파악해요!"
           />
           <div className="mt-[35px]">
+            {/* 주요 영양소 섭취량 비교 섹션 */}
+            <div className="flex flex-col gap-4 mb-6">
+              {/* 칼로리 */}
+              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
+                <div className="flex items-center gap-6">
+                  {/* 왼쪽: 제목 */}
+                  <div className="flex-shrink-0">
+                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">칼로리</h3>
+                  </div>
 
-            <div className="space-y-4 mb-6">
-              {comparisonData.map((item, index) => (
-                <div key={index} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-medium text-[#1E1E1E]">{item.name}</span>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full ${getStatusColor(item.status)}`}></div>
-                      <span className="text-sm font-semibold text-[#1E1E1E]">{item.percentage}%</span>
+                  {/* 중앙: 수치 + 그래프 */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
+                      <div className="text-[#1E1E1E] text-[16px] font-medium">
+                        <span>10.0</span>
+                        <span className="mx-1">/</span>
+                        <span>11.1</span>
+                        <span className="ml-1">kcal</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
                     </div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
-                    <div
-                      className={`h-3 rounded-full ${getStatusColor(item.status)}`}
-                      style={{ width: `${Math.min(item.percentage, 100)}%` }}
-                    ></div>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-[#525252] font-medium">{item.description}</p>
-                    <p className="text-xs text-[#8B8B8B]">{item.detail}</p>
+
+                  {/* 오른쪽: 상태 */}
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                    <div className="text-[#1E1E1E] text-[12px]">
+                      <p className="font-medium mb-1">칼로리 상태</p>
+                      <p>・74kcal 부족</p>
+                      <p>・목표치의 60% 수준으로 심각하게 부족</p>
+                    </div>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* 단백질 */}
+              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
+                <div className="flex items-center gap-6">
+                  {/* 왼쪽: 제목 */}
+                  <div className="flex-shrink-0">
+                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">단백질</h3>
+                  </div>
+
+                  {/* 중앙: 수치 + 그래프 */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
+                      <div className="text-[#1E1E1E] text-[16px] font-medium">
+                        <span>10.0</span>
+                        <span className="mx-1">/</span>
+                        <span>11.1</span>
+                        <span className="ml-1">g</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
+                    </div>
+                  </div>
+
+                  {/* 오른쪽: 상태 */}
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                    <div className="text-[#1E1E1E] text-[12px]">
+                      <p className="font-medium mb-1">단백질 상태</p>
+                      <p>・1.1g 부족</p>
+                      <p>・근육 보존에 필요한 최소량보다 부족</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 지방 */}
+              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
+                <div className="flex items-center gap-6">
+                  {/* 왼쪽: 제목 */}
+                  <div className="flex-shrink-0">
+                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">지방</h3>
+                  </div>
+
+                  {/* 중앙: 수치 + 그래프 */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
+                      <div className="text-[#1E1E1E] text-[16px] font-medium">
+                        <span>10.0</span>
+                        <span className="mx-1">/</span>
+                        <span>11.1</span>
+                        <span className="ml-1">g</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
+                    </div>
+                  </div>
+
+                  {/* 오른쪽: 상태 */}
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                    <div className="text-[#1E1E1E] text-[12px]">
+                      <p className="font-medium mb-1">지방 상태</p>
+                      <p>・목표 범위 내로 잘 관리되고 있음</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 탄수화물 */}
+              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
+                <div className="flex items-center gap-6">
+                  {/* 왼쪽: 제목 */}
+                  <div className="flex-shrink-0">
+                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">탄수화물</h3>
+                  </div>
+
+                  {/* 중앙: 수치 + 그래프 */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[#003DA5] font-bold text-[18px]">106.5%</span>
+                      <div className="text-[#1E1E1E] text-[16px] font-medium">
+                        <span>9</span>
+                        <span className="mx-1">~</span>
+                        <span>17</span>
+                        <span className="ml-1">g</span>
+                      </div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '100%' }}></div>
+                    </div>
+                  </div>
+
+                  {/* 오른쪽: 상태 */}
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                    <div className="text-[#1E1E1E] text-[12px]">
+                      <p className="font-medium mb-1">탄수화물 상태</p>
+                      <p>・권장 범위 내로 적절하게 섭취 중</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* 긴급 알림 박스 - 비교 분석 카드 안에 포함 */}
-            <div className="bg-[#FFB800] rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-white mt-1 flex-shrink-0" />
+            {/* 식단 평가 및 개선 권고 섹션 */}
+            <div className="bg-[#FFB800] rounded-[15px] p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <span className="text-[#1E1E1E] text-[20px]">✓</span>
+                <h3 className="text-[#1E1E1E] font-bold text-[18px]">현재 하이의 식단! 심각한 '저칼로리 & 저단백' 상태로, 변화가 시급해요!</h3>
+              </div>
+              <div className="space-y-4 text-[#1E1E1E] text-[14px]">
                 <div>
-                  <h3 className="text-sm font-bold text-white mb-2">
-                    현재 {petInfo.name}의 식단! 심각한 &apos;저칼로리 & 저단백&apos; 상태로, 변화가 시급해요!
-                  </h3>
-                  <ul className="space-y-1 text-xs text-white">
-                    <li>• 심각한 칼로리 및 단백질 부족으로 인한 근손실 위험, 현재 섭취량(111kcal)이 RER(168kcal)보다 낮아 &apos;굶주림 식단&apos; 수준</li>
-                    <li>• 지속될 경우: 근육 분해 → 슬개골 탈구 악화 → 기초대사량 저하 및 활력 저하</li>
-                    <li>• 프리미엄 사료를 사용하고 있지만, 절대적 부족으로 인한 급여 방식이 {petInfo.name}의 건강을 위협하고 있으며, 특히 슬개골 탈구가 있는 {petInfo.name}에게는 치명적</li>
-                  </ul>
+                  <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 '근손실' 위험</p>
+                  <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 '기아 상태'에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                  <p>결론적으로, 현재 급여 방식은 '최고급 사료'를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</p>
                 </div>
               </div>
             </div>
@@ -538,19 +659,57 @@ const DetailedDietReport = ({
             subtitleColor="#525252"
           />
           <div className="mt-[35px]">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {supplements.map((supplement, index) => (
-                <div key={index} className="bg-gray-100 border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <div className={`w-3 h-3 rounded-full ${supplement.status === 'maintenance' ? 'bg-green-500' : 'bg-yellow-500'
-                      } mt-2 flex-shrink-0`}></div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-[#1E1E1E] mb-2">{supplement.name}</h4>
-                      <p className="text-xs text-[#525252] leading-relaxed whitespace-pre-line">{supplement.description}</p>
-                    </div>
+            <div className="flex flex-col lg:flex-row gap-4">
+              {/* 페퍼테일 참 유산균 */}
+              <div className="flex-1">
+                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-white font-bold text-[14px]">유지 권장</span>
+                    <span className="text-white text-[14px]">페퍼테일 참 유산균</span>
                   </div>
                 </div>
-              ))}
+                <div className="bg-white rounded-b-[15px] p-4">
+                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
+                    <li>• 주식에 포함되지 않은 '프로바이오틱스'를 공급하여 고유의 기능을 수행합니다.</li>
+                    <li>• 장내 환경 개선은 피부 문제 및 전반적인 면역력과 직결되므로, 꾸준한 급여를 권장합니다.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* 페피테일 참 오메가 */}
+              <div className="flex-1">
+                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <span className="text-white font-bold text-[14px]">조건부 권장</span>
+                    <span className="text-white text-[14px]">페피테일 참 오메가</span>
+                  </div>
+                </div>
+                <div className="bg-white rounded-b-[15px] p-4">
+                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
+                    <li>• 주식(워프)과 간식(쏘울메이트) 모두 피쉬 오일을 함유하고 있으나, 염증 완화 및 피부 개선을 위한 치료적 용량의 EPA/DHA를 보충해준다는 점에서 유효합니다.</li>
+                    <li>• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 '조건부'로 권장합니다.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Neprofin Pet® */}
+              <div className="flex-1">
+                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span className="text-white font-bold text-[14px]">유지 권장</span>
+                    <span className="text-white text-[14px]">Neprofin Pet®</span>
+                  </div>
+                </div>
+                <div className="bg-white rounded-b-[15px] p-4">
+                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
+                    <li>• 소화 효소 및 항염 효소는 일반 사료에 포함되지 않는 고유의 기능성 성분입니다.</li>
+                    <li>• 카쿠의 과거 두드러기, 점액변 등 염증성 반응 관리와 관절 건강 예방이라는 목표에 부합하므로 유지를 권장합니다.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </ReportCard>
@@ -564,36 +723,38 @@ const DetailedDietReport = ({
             subtitleColor="#1E1E1E"
           />
           <div className="mt-[35px]">
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* 왼쪽: 현재 식단의 최종 평가 */}
-              <div className="bg-[#003DA5] rounded-lg p-5">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-white mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-3">현재 식단의 최종 평가</h4>
-                    <p className="text-xs text-white leading-relaxed">
-                      현재 식단은 &apos;좋은 사료를 잘못된 양으로 사용&apos;하고 있는 대표적인 사례입니다.
-                      이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 {petInfo.name}의 건강을 심각하게 해칠 수 있습니다.
-                    </p>
-                  </div>
+            <div className="space-y-6">
+              {/* 현재 식단의 최종 평가 */}
+              <div className="bg-[#1A4A8A] rounded-[15px] p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <span className="text-white text-[20px]">✏️</span>
+                  <h3 className="text-white font-bold text-[18px]">현재 식단의 최종 평가</h3>
                 </div>
+                <p className="text-white text-[14px] leading-relaxed">
+                  현재 식단은 '좋은 사료를 잘못된 양으로 사용'하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
+                </p>
               </div>
 
-              {/* 오른쪽: 실행 계획 */}
-              <div className="bg-[#003DA5] rounded-lg p-5">
-                <div className="flex items-start gap-3">
-                  <Clipboard className="w-5 h-5 text-white mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white mb-3">실행 계획</h4>
-                    <ul className="space-y-3 text-xs text-white">
-                      <li><strong>권장 사항:</strong> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 &apos;저지방 주식(베이스)&apos;을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 &apos;베이스 + 솔버&apos; 전략으로 전환을 추천합니다.</li>
-                      <li><strong>급여 방법:</strong> 현재 급여 중인 3가지 사료의 조합과 품질이 매우 훌륭하므로, 제품을 바꾸기보다는 각 사료의 양을 비례적으로 늘려 총량을 맞추는 방법을 추천합니다.</li>
-                      <li><strong>제한사항:</strong> 정확한 칼로리 관리를 위해, 새로운 식단에 적응하는 동안에는 별도의 간식 급여를 제한하거나, 급여 시 하루 목표 칼로리의 10%를 넘지 않도록 엄격히 관리해야 합니다.</li>
-                      <li><strong>장기 모니터링:</strong> 식단 변경 후 2~4주 간격으로 체중을 측정하고, BCS를 다시 확인하여 체중이 급격히 늘지 않고 3.2kg을 잘 유지하는지 모니터링해야 합니다.</li>
-                    </ul>
-                  </div>
+              {/* 실행 계획 */}
+              <div className="bg-[#1A4A8A] rounded-[15px] p-6">
+                <div className="flex items-start gap-3 mb-4">
+                  <span className="text-white text-[20px]">📋</span>
+                  <h3 className="text-white font-bold text-[18px]">실행 계획</h3>
                 </div>
+                <ul className="space-y-4 text-white text-[14px]">
+                  <li>
+                    <span className="font-bold">권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 '저지방 주식(베이스)'을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 '베이스 + 솔버' 전략으로 전환을 추천합니다.
+                  </li>
+                  <li>
+                    <span className="font-bold">급여 방법:</span> 현재 급여 중인 3가지 사료의 조합과 품질이 매우 훌륭하므로, 제품을 바꾸기보다는 각 사료의 양을 비례적으로 늘려 총량을 맞추는 방법을 추천합니다.
+                  </li>
+                  <li>
+                    <span className="font-bold">제한사항:</span> 정확한 칼로리 관리를 위해, 새로운 식단에 적응하는 동안에는 별도의 간식 급여를 제한하거나, 급여 시 하루 목표 칼로리의 10%를 넘지 않도록 엄격히 관리해야 합니다.
+                  </li>
+                  <li>
+                    <span className="font-bold">장기 모니터링:</span> 식단 변경 후 2~4주 간격으로 체중을 측정하고, BCS를 다시 확인하여 체중이 급격히 늘지 않고 3.2kg을 잘 유지하는지 모니터링해야 합니다.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
