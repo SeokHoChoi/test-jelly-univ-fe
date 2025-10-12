@@ -1,6 +1,6 @@
 'use client';
 
-import { Scale, Calendar, Target, BarChart3, Handshake, AlertTriangle, Clipboard } from 'lucide-react';
+import { AlertTriangle, Clipboard } from 'lucide-react';
 import Image from 'next/image';
 import ReportCard from '@/components/common/ReportCard';
 import ReportCardHeader from '@/components/common/ReportCardHeader';
@@ -201,54 +201,66 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* BCS & RWASOME 카드 */}
-          <div className="bg-white rounded-[20px] p-6 md:order-4 md:mt-[35px]">
-            <div className="space-y-4">
+          <ReportCard className="md:order-4 md:mt-[35px]">
+            <div className="space-y-6">
               {/* BCS */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-[#1E1E1E]">BCS</span>
-                  <span className="text-xs text-[#8B8B8B]">(Body Condition Score)</span>
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
+                <div className="flex flex-col">
+                  <span className="text-[20px] sm:text-[22px] md:text-[25px] font-semibold text-[#1E1E1E]">BCS</span>
+                  <abbr className="text-[12px] sm:text-[13px] md:text-sm text-[#1E1E1E] -mt-[6px] no-underline" title="Body Condition Score">(Body Condition Score)</abbr>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {petInfo.bcs} Ideal
+                <div className="flex flex-col items-end">
+                  {/* Progress Bar */}
+                  <div className="relative w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[57px] bg-[#F2F2F2] rounded-[60px] overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-[#FFB800] rounded-[60px] flex items-center justify-center"
+                      style={{ width: `${(petInfo.bcs / 9) * 100}%` }}
+                    >
+                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
+                        {petInfo.bcs} Ideal
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex gap-1">
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                      <div
-                        key={num}
-                        className={`w-4 h-4 rounded-full text-xs flex items-center justify-center ${num === petInfo.bcs ? 'bg-orange-500 text-white' : 'bg-gray-200'
-                          }`}
-                      >
+                  {/* Scale Numbers */}
+                  <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
+                    {[0, 2, 4, 6, 8, 9].map((num) => (
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
                         {num}
-                      </div>
+                      </span>
                     ))}
                   </div>
                 </div>
               </div>
 
               {/* RWASOME */}
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-[#1E1E1E]">RWASOME</span>
-                <div className="flex items-center gap-2">
-                  <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {petInfo.rwacome} Ideal
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
+                <div className="flex flex-col">
+                  <span className="text-[20px] sm:text-[22px] md:text-[25px] font-semibold text-[#1E1E1E]">RWASOME</span>
+                </div>
+                <div className="flex flex-col items-end">
+                  {/* Progress Bar */}
+                  <div className="relative w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[57px] bg-[#F2F2F2] rounded-[60px] overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-[#FFB800] rounded-[60px] flex items-center justify-center"
+                      style={{ width: `${(petInfo.rwacome / 9) * 100}%` }}
+                    >
+                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
+                        {petInfo.rwacome} Ideal
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex gap-1">
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                      <div
-                        key={num}
-                        className={`w-4 h-4 rounded-full text-xs flex items-center justify-center ${num === petInfo.rwacome ? 'bg-orange-500 text-white' : 'bg-gray-200'
-                          }`}
-                      >
+                  {/* Scale Numbers */}
+                  <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
+                    {[0, 2, 4, 6, 8, 9].map((num) => (
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
                         {num}
-                      </div>
+                      </span>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ReportCard>
         </div>
 
         {/* 목표 체중과 하루 권장 칼로리 */}
