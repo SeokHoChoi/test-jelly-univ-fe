@@ -183,18 +183,18 @@ const DetailedDietReport = ({
           <ReportCard className="md:order-3 md:mt-[24px]">
             <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} />
             <div className="mt-[35px]">
-              <div className="grid grid-cols-3 gap-3">
-                <div className="border border-[#003DA5] rounded-lg p-3 text-center">
-                  <p className="text-xs text-[#003DA5] font-medium">나이</p>
-                  <p className="text-sm font-semibold">{petInfo.age}</p>
+              <div className="grid grid-cols-3 gap-[18px]">
+                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
+                  <p className="text-[17px] text-white font-medium leading-none">나이</p>
+                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.age}</p>
                 </div>
-                <div className="border border-[#003DA5] rounded-lg p-3 text-center">
-                  <p className="text-xs text-[#003DA5] font-medium">몸무게</p>
-                  <p className="text-sm font-semibold">{petInfo.weight}</p>
+                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
+                  <p className="text-[17px] text-white font-medium leading-none">몸무게</p>
+                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.weight}</p>
                 </div>
-                <div className="border border-[#003DA5] rounded-lg p-3 text-center">
-                  <p className="text-xs text-[#003DA5] font-medium">중성화</p>
-                  <p className="text-sm font-semibold">{petInfo.neutered}</p>
+                <div className="bg-[#003DA5] rounded-lg px-[19px] py-[15px] text-left space-y-[20px]">
+                  <p className="text-[17px] text-white font-medium leading-none">중성화</p>
+                  <p className="text-[22px] text-white font-semibold leading-none">{petInfo.neutered}</p>
                 </div>
               </div>
             </div>
