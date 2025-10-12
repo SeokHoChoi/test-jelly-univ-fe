@@ -24,36 +24,36 @@ const FoodQualityAnalysisSection = () => {
       id: '01',
       title: '영양 정보 신뢰도',
       items: [
-        { label: '국제 표준\n준수 선언', grade: 'A' },
-        { label: '영양 정보\n공개 수준', grade: 'A' },
-        { label: '영양 정보\n일관성', grade: 'A' },
+        { label: '국제 표준\n준수 선언', grade: 'A+' },
+        { label: '영양 정보\n공개 수준', grade: 'B' },
+        { label: '영양 정보\n일관성', grade: 'B+' },
       ]
     },
     {
       id: '02',
-      title: '원료 품질',
+      title: '영양 정보 신뢰도',
       items: [
-        { label: '원료 신선도', grade: 'A+' },
-        { label: '원료 품질', grade: 'A' },
-        { label: '원료 안전성', grade: 'A+' },
+        { label: '주요 영양소\n비율 및 적정성', grade: 'A' },
+        { label: '핵심 미네랄\n균형도', grade: 'A' },
+        { label: '필수 지방상\n충족도', grade: 'A' },
       ]
     },
     {
       id: '03',
-      title: '제조 품질',
+      title: '원료 품질',
       items: [
-        { label: '제조 공정', grade: 'A' },
-        { label: '품질 관리', grade: 'A+' },
-        { label: '포장 품질', grade: 'A' },
+        { label: '주원료의 구성\n및 영양 밀도', grade: 'A' },
+        { label: '원료의 안정성\n및 기능성', grade: 'A' },
       ]
     },
     {
       id: '04',
-      title: '안전성',
+      title: '제조 품질',
       items: [
-        { label: '안전성 검증', grade: 'A+' },
-        { label: '위생 관리', grade: 'A' },
-        { label: '품질 보증', grade: 'A+' },
+        { label: '제조사의 신뢰도\n및 제조국', grade: 'A' },
+        { label: '제조 공정의\n영양소 보존율', grade: 'A' },
+        { label: '제조 시설의\n신뢰도', grade: 'A' },
+        { label: '안정성 이력\n및 투명성', grade: 'A' },
       ]
     },
   ];

@@ -17,13 +17,13 @@ const RatingBar = ({ label, selectedGrade }: RatingBarProps) => {
     <div className="relative">
       {/* 메인 바 컨테이너 */}
       <div
-        className="bg-white rounded-[40px] md:rounded-[80px] flex flex-col md:flex-row items-center relative overflow-visible py-[8px] px-[12px] md:py-[10px] md:px-[39px] gap-[20px] md:gap-[50px]"
+        className="bg-white rounded-[40px] md:rounded-[80px] flex flex-row items-center justify-between relative overflow-visible py-[8px] px-[8px] md:py-[10px] md:pl-[20px] md:pr-[39px]"
         style={{
           boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.25)'
         }}
       >
         {/* 왼쪽 라벨 */}
-        <span className="text-[12px] md:text-[15px] font-bold text-[#003DA5] leading-tight whitespace-pre-line text-center w-full md:w-auto md:flex-shrink-0">
+        <span className="text-[12px] md:text-[17px] font-bold text-[#003DA5] leading-tight whitespace-pre-line text-center w-[90px] md:w-[110px] md:flex-shrink-0">
           {label}
         </span>
 
@@ -36,14 +36,14 @@ const RatingBar = ({ label, selectedGrade }: RatingBarProps) => {
             const prevIsSelected = prevGrade && selectedGrade === prevGrade.value;
             const nextIsSelected = nextGrade && selectedGrade === nextGrade.value;
 
-            // 간격 계산 - 더 작은 간격으로 조정
+            // 간격 계산 - 모바일에서 더 작은 간격으로 조정
             let marginLeft = '';
             if (index === 0) {
               marginLeft = 'ml-0';
             } else if (isSelected || prevIsSelected || nextIsSelected) {
-              marginLeft = 'ml-[8px] md:ml-[15px]'; // 선택된 등급과 인접한 경우
+              marginLeft = 'ml-[2px] md:ml-[12px]'; // 선택된 등급과 인접한 경우
             } else {
-              marginLeft = 'ml-[8px] md:ml-[12px]'; // 선택되지 않은 등급들 간격 (더 작게)
+              marginLeft = 'ml-[3px] md:ml-[10px]'; // 선택되지 않은 등급들 간격 (더 작게)
             }
 
             return (
@@ -51,10 +51,8 @@ const RatingBar = ({ label, selectedGrade }: RatingBarProps) => {
                 {/* 선택된 등급의 강조 표시 (카드를 벗어나서) */}
                 {selectedGrade === grade.value && (
                   <div
-                    className="absolute bg-[#003DA5] rounded-full z-10"
+                    className="absolute bg-[#003DA5] rounded-full z-10 w-[45px] h-[67px] md:w-[60px] md:h-[89px]"
                     style={{
-                      width: '60px',
-                      height: '89px',
                       top: '50%',
                       left: '50%',
                       transform: 'translate(-50%, -50%)',
