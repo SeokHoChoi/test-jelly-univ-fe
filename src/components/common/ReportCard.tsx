@@ -11,7 +11,7 @@ interface ReportCardProps {
 const ReportCard = ({ children, className = '', backgroundColor = '#FFFFFF' }: ReportCardProps) => {
   return (
     <div
-      className={`rounded-[20px] py-[33px] px-[36px] ${className}`}
+      className={`rounded-[20px] py-[33px] px-4 sm:px-[36px] ${className}`}
       style={{ backgroundColor }}
     >
       {children}

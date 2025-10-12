@@ -33,7 +33,7 @@ const NutrientAnalysisPanel = ({
           {title}
         </span>
       </div>
-      <div className="bg-white rounded-lg w-full sm:w-[441px] h-auto sm:h-[174px] py-[12px] px-[20px] sm:py-[14px] sm:px-[27px] mt-[8px] sm:mt-0 sm:ml-[11px]">
+      <div className="bg-white rounded-[15px] w-full sm:w-[441px] h-auto sm:h-[174px] py-[12px] px-[20px] sm:py-[14px] sm:px-[27px] mt-[8px] sm:mt-0 sm:ml-[11px]">
         {children}
       </div>
     </div>

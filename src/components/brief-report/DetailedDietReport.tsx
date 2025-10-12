@@ -98,7 +98,7 @@ const DetailedDietReport = ({
 
   return (
     <div className="bg-[#F2F2F2] min-h-screen py-6 px-4 md:py-[58px] md:px-[64px]">
-      <div className="max-w-[1280px] mx-auto space-y-6">
+      <div className="max-w-[1152px] mx-auto space-y-6">
 
         {/* 헤더 섹션 - 좌측 정렬 */}
         <div className="text-left mb-44">
@@ -134,8 +134,10 @@ const DetailedDietReport = ({
               {/* 하단 보더 */}
               <div className="border-t border-[#E3E3E3] my-3"></div>
 
-              <p className="text-[22px] font-medium text-white leading-snug px-[4px] break-words">
-                맛있는 것 앞에서는 절대 양보할 수 없는 진정한 푸디 산책보다는 간식 시간이 더 설레고, 통통한 볼살이 트레이드마크인 사랑스러운 식도락가
+              <p className="text-[22px] font-medium text-white leading-snug px-[4px] text-center">
+                맛있는 것 앞에서는 절대 양보할 수 없는 진정한 푸디<br />
+                산책보다는 간식 시간이 더 설레고, 통통한 볼살이<br />
+                트레이드마크인 사랑스러운 식도락가
               </p>
             </div>
           </div>
@@ -274,15 +276,15 @@ const DetailedDietReport = ({
           />
           <div className="mt-[35px]">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-[37px]">
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left">
+            <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-[37px]">
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[325px]">
                 <ReportCardHeader
                   emoji="😴"
                   title="휴식 대사량(RER)"
                   subtitle="Resting Energy Requirement"
                   titleColor="#1E1E1E"
                   subtitleColor="#525252"
-                  titleSize="18px"
+                  titleSize="16px"
                   subtitleSize="13px"
                   titleSubtitleGap="0px"
                 />
@@ -290,14 +292,14 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
                 </div>
               </div>
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left">
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[284px]">
                 <ReportCardHeader
                   emoji="⚓️"
                   title="목표 체중"
                   subtitle="현재의 이상적인 체중을 유지"
                   titleColor="#1E1E1E"
                   subtitleColor="#525252"
-                  titleSize="18px"
+                  titleSize="16px"
                   subtitleSize="13px"
                   titleSubtitleGap="0px"
                 />
@@ -305,14 +307,14 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.targetWeight}</p>
                 </div>
               </div>
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left sm:col-span-2 lg:col-span-1">
+              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[397px]">
                 <ReportCardHeader
                   emoji="🔥️"
                   title="1일 권장 칼로리(MER)"
                   subtitle="Recommeded Daily Enegy Requirement"
                   titleColor="#1E1E1E"
                   subtitleColor="#525252"
-                  titleSize="18px"
+                  titleSize="16px"
                   subtitleSize="13px"
                   titleSubtitleGap="0px"
                 />
@@ -442,26 +444,34 @@ const DetailedDietReport = ({
           />
           <div className="mt-[35px] text-white">
 
-            <div className="grid grid-cols-4 gap-4">
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
-                <div className="text-2xl mb-2 text-[#003DA5]">🥚</div>
-                <p className="text-xs text-[#003DA5] mb-1">단백질(Protein)</p>
-                <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.protein}</p>
+            <div className="flex flex-wrap gap-3 sm:gap-[31px] justify-center sm:justify-start">
+              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+                <div className="flex items-center gap-1 mb-2">
+                  <span className="text-lg">🥚</span>
+                  <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">단백질(Protein)</h3>
+                </div>
+                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.protein}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
-                <div className="text-2xl mb-2 text-[#003DA5]">🥩</div>
-                <p className="text-xs text-[#003DA5] mb-1">지방(Fat)</p>
-                <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.fat}</p>
+              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+                <div className="flex items-center gap-1 mb-2">
+                  <span className="text-lg">🥩</span>
+                  <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">지방(Fat)</h3>
+                </div>
+                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.fat}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
-                <div className="text-2xl mb-2 text-[#003DA5]">🌾</div>
-                <p className="text-xs text-[#003DA5] mb-1">탄수화물(Carbs)</p>
-                <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.carbs}</p>
+              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+                <div className="flex items-center gap-1 mb-2">
+                  <span className="text-lg">🌾</span>
+                  <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">탄수화물(Carbs)</h3>
+                </div>
+                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.carbs}</p>
               </div>
-              <div className="bg-white border-2 border-blue-300 rounded-lg p-4 text-left">
-                <div className="text-2xl mb-2 text-[#003DA5]">💧</div>
-                <p className="text-xs text-[#003DA5] mb-1">음수량</p>
-                <p className="text-sm font-bold text-[#003DA5]">{recommendedIntake.water}</p>
+              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+                <div className="flex items-center gap-1 mb-2">
+                  <span className="text-lg">💧</span>
+                  <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">음수량</h3>
+                </div>
+                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.water}</p>
               </div>
             </div>
           </div>
