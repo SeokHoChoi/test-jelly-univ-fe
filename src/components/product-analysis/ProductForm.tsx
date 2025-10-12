@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import Text from '@/components/common/Text';
 import Button from '@/components/common/Button';
@@ -22,6 +23,7 @@ interface FormData {
 }
 
 const ProductForm = () => {
+  const router = useRouter();
   const [feeds, setFeeds] = useState<FeedItem[]>([
     { name: '', amount: '' },
   ]);
@@ -115,7 +117,7 @@ const ProductForm = () => {
     setAmountErrors([]);
     console.log('Form submitted:', { ...data, feeds });
     // 여기서 분석 결과 페이지로 이동
-    window.location.href = '/brief-report';
+    router.push('/brief-report');
   };
 
   return (
