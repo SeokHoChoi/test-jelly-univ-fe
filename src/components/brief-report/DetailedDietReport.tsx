@@ -332,15 +332,15 @@ const DetailedDietReport = ({
             subtitle="제품 라벨에서는 알려주지 않는 각 제품의 섭취량과 칼로리에 따른 단백질, 지방 그리고 탄수화물의 함량을 자세히 파악해요! (AS FED 기준)"
             subtitleColor="#525252"
           />
-          <div className="mt-[35px]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="mt-[30px] sm:mt-[45px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               {/* 섭취량(g) 패널 */}
               <NutrientAnalysisPanel
                 title="섭취량(g)"
                 backgroundColor="#FFB800"
                 textColor="#343434"
               >
-                <div className="space-y-[10px]">
+                <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
                     <NutrientItem
                       key={index}
@@ -358,7 +358,7 @@ const DetailedDietReport = ({
                 backgroundColor="#FFB800"
                 textColor="#343434"
               >
-                <div className="space-y-[10px]">
+                <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
                     <NutrientItem
                       key={index}
@@ -376,7 +376,7 @@ const DetailedDietReport = ({
                 backgroundColor="#F7623E"
                 textColor="#FFFFFF"
               >
-                <div className="space-y-[10px]">
+                <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
                     <NutrientItem
                       key={index}
@@ -395,7 +395,7 @@ const DetailedDietReport = ({
                 backgroundColor="#F7623E"
                 textColor="#FFFFFF"
               >
-                <div className="space-y-[10px]">
+                <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
                     <NutrientItem
                       key={index}
@@ -413,9 +413,9 @@ const DetailedDietReport = ({
                 title="탄수화물 함량(g)"
                 backgroundColor="#F7623E"
                 textColor="#FFFFFF"
-                className="lg:col-span-2"
+                className="col-span-1 lg:col-span-2"
               >
-                <div className="space-y-[10px]">
+                <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
                     <NutrientItem
                       key={index}

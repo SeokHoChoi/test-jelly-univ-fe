@@ -18,19 +18,22 @@ const NutrientAnalysisPanel = ({
   className = ''
 }: NutrientAnalysisPanelProps) => {
   return (
-    <div className={`flex items-center ${className}`}>
+    <div className={`flex flex-col sm:flex-row items-center ${className}`}>
       <div
-        className="rounded-lg w-[48px] h-[146px] flex items-center justify-center"
+        className="rounded-lg w-full h-[40px] sm:w-[48px] sm:h-[146px] flex items-center justify-center flex-shrink-0 sm:flex-shrink-0"
         style={{ backgroundColor }}
       >
         <span
-          className="font-medium text-[20px] vertical-text"
-          style={{ color: textColor }}
+          className="font-medium text-[16px] sm:text-[20px] rotate-0 sm:-rotate-90"
+          style={{
+            color: textColor,
+            whiteSpace: 'nowrap'
+          }}
         >
           {title}
         </span>
       </div>
-      <div className="bg-white rounded-lg w-[441px] h-[174px] py-[14px] px-[27px] ml-[11px]">
+      <div className="bg-white rounded-lg w-full sm:w-[441px] h-auto sm:h-[174px] py-[12px] px-[20px] sm:py-[14px] sm:px-[27px] mt-[8px] sm:mt-0 sm:ml-[11px]">
         {children}
       </div>
     </div>
