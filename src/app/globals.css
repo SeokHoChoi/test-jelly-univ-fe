@@ -1,6 +1,17 @@
 @import url('keen-slider/keen-slider.min.css');
 @import "tailwindcss";
 
+/* 홈페이지 로딩 최적화 */
+.home-page {
+  min-height: 100vh;
+  contain: layout style paint;
+}
+
+/* 깜빡임 방지 - 초기 렌더링 최적화 */
+.keen-slider {
+  will-change: transform;
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('/fonts/pretendard/Pretendard-Regular.woff2') format('woff2');

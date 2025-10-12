@@ -6,7 +6,7 @@ import AdBanner from '@/components/home/AdBanner';
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen home-page">
       <HeroSection />
       <ArticleListSection />
       <PlanSection />
