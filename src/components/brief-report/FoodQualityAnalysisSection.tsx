@@ -85,12 +85,14 @@ const FoodQualityAnalysisSection = () => {
               </Pill>
             </div>
 
-            <h2 className="text-[22px] md:text-[28px] font-semibold text-[#003DA5] mb-6">
+            <h2 className="text-[30px] md:text-[35px] font-semibold text-[#003DA5] mb-6">
               ZIWIPEAK 에어드라이 소고기
             </h2>
 
             {/* 종합 평가 타이틀 */}
-            <p className="text-[16px] font-medium text-gray-900 mb-4">사료 품질 종합 평가</p>
+            <p className="text-[25px] font-semibold text-[#1E1E1E] mb-4">
+              <span className="mr-2">✔️</span>사료 품질 종합 평가
+            </p>
 
             {/* 종합 평가 카드 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
