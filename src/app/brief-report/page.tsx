@@ -14,8 +14,6 @@ const BriefReportPage = () => {
   return (
     <div className="min-h-screen">
       <ReportFloatingTabs />
-
-      {/* 새로운 UI 섹션들 */}
       <FoodQualityAnalysisSection />
       <PetSuitabilitySection />
       <CurrentDietReportSection />
