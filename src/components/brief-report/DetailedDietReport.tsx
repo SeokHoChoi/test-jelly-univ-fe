@@ -1,6 +1,5 @@
 'use client';
 
-import { AlertTriangle, Clipboard } from 'lucide-react';
 import Image from 'next/image';
 import ReportCard from '@/components/common/ReportCard';
 import ReportCardHeader from '@/components/common/ReportCardHeader';
@@ -47,45 +46,20 @@ interface RecommendedIntake {
   water: string;
 }
 
-interface ComparisonData {
-  name: string;
-  percentage: number;
-  status: 'critical' | 'warning' | 'good';
-  description: string;
-  detail: string;
-}
-
-interface Supplement {
-  name: string;
-  status: 'maintenance' | 'conditional';
-  description: string;
-}
 
 interface DetailedDietReportProps {
   petInfo: PetInfo;
   targetMetrics: TargetMetrics;
   currentFoods: NutrientData[];
   recommendedIntake: RecommendedIntake;
-  comparisonData: ComparisonData[];
-  supplements: Supplement[];
 }
 
 const DetailedDietReport = ({
   petInfo,
   targetMetrics,
   currentFoods,
-  recommendedIntake,
-  comparisonData,
-  supplements
+  recommendedIntake
 }: DetailedDietReportProps) => {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'critical': return 'bg-red-500';
-      case 'warning': return 'bg-yellow-500';
-      case 'good': return 'bg-green-500';
-      default: return 'bg-gray-500';
-    }
-  };
 
   // const getStatusText = (status: string) => {
   //   switch (status) {
@@ -634,16 +608,16 @@ const DetailedDietReport = ({
             <div className="bg-[#FFB800] rounded-[15px] p-6">
               <div className="flex items-start gap-3 mb-4">
                 <span className="text-[#1E1E1E] text-[20px]">✓</span>
-                <h3 className="text-[#1E1E1E] font-bold text-[18px]">현재 하이의 식단! 심각한 '저칼로리 & 저단백' 상태로, 변화가 시급해요!</h3>
+                <h3 className="text-[#1E1E1E] font-bold text-[18px]">현재 하이의 식단! 심각한 &apos;저칼로리 & 저단백&apos; 상태로, 변화가 시급해요!</h3>
               </div>
               <div className="space-y-4 text-[#1E1E1E] text-[14px]">
                 <div>
-                  <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 '근손실' 위험</p>
-                  <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 '기아 상태'에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
+                  <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 &apos;근손실&apos; 위험</p>
+                  <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 &apos;기아 상태&apos;에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
-                  <p>결론적으로, 현재 급여 방식은 '최고급 사료'를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</p>
+                  <p>결론적으로, 현재 급여 방식은 &apos;최고급 사료&apos;를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</p>
                 </div>
               </div>
             </div>
@@ -671,7 +645,7 @@ const DetailedDietReport = ({
                 </div>
                 <div className="bg-white rounded-b-[15px] p-4">
                   <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
-                    <li>• 주식에 포함되지 않은 '프로바이오틱스'를 공급하여 고유의 기능을 수행합니다.</li>
+                    <li>• 주식에 포함되지 않은 &apos;프로바이오틱스&apos;를 공급하여 고유의 기능을 수행합니다.</li>
                     <li>• 장내 환경 개선은 피부 문제 및 전반적인 면역력과 직결되므로, 꾸준한 급여를 권장합니다.</li>
                   </ul>
                 </div>
@@ -689,7 +663,7 @@ const DetailedDietReport = ({
                 <div className="bg-white rounded-b-[15px] p-4">
                   <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
                     <li>• 주식(워프)과 간식(쏘울메이트) 모두 피쉬 오일을 함유하고 있으나, 염증 완화 및 피부 개선을 위한 치료적 용량의 EPA/DHA를 보충해준다는 점에서 유효합니다.</li>
-                    <li>• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 '조건부'로 권장합니다.</li>
+                    <li>• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 &apos;조건부&apos;로 권장합니다.</li>
                   </ul>
                 </div>
               </div>
@@ -731,7 +705,7 @@ const DetailedDietReport = ({
                   <h3 className="text-white font-bold text-[18px]">현재 식단의 최종 평가</h3>
                 </div>
                 <p className="text-white text-[14px] leading-relaxed">
-                  현재 식단은 '좋은 사료를 잘못된 양으로 사용'하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
+                  현재 식단은 &apos;좋은 사료를 잘못된 양으로 사용&apos;하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
                 </p>
               </div>
 
@@ -743,7 +717,7 @@ const DetailedDietReport = ({
                 </div>
                 <ul className="space-y-4 text-white text-[14px]">
                   <li>
-                    <span className="font-bold">권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 '저지방 주식(베이스)'을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 '베이스 + 솔버' 전략으로 전환을 추천합니다.
+                    <span className="font-bold">권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 &apos;저지방 주식(베이스)&apos;을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 &apos;베이스 + 솔버&apos; 전략으로 전환을 추천합니다.
                   </li>
                   <li>
                     <span className="font-bold">급여 방법:</span> 현재 급여 중인 3가지 사료의 조합과 품질이 매우 훌륭하므로, 제품을 바꾸기보다는 각 사료의 양을 비례적으로 늘려 총량을 맞추는 방법을 추천합니다.
