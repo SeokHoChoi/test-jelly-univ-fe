@@ -273,19 +273,19 @@ const DetailedDietReport = ({
           <div className="mt-[35px]">
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-orange-500 rounded-lg p-4 text-white text-center">
+              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
                 <div className="text-2xl mb-2">😴</div>
                 <p className="text-xs mb-1">휴식 대사량(RER)</p>
                 <p className="text-xs mb-1">Resting Energy Requirement</p>
                 <p className="text-lg font-bold">{targetMetrics.rer}</p>
               </div>
-              <div className="bg-orange-500 rounded-lg p-4 text-white text-center">
+              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
                 <div className="text-2xl mb-2">⚓️</div>
                 <p className="text-xs mb-1">목표 체중</p>
                 <p className="text-xs mb-1">현재의 이상적인 체중을 유지</p>
                 <p className="text-lg font-bold">{targetMetrics.targetWeight}</p>
               </div>
-              <div className="bg-orange-500 rounded-lg p-4 text-white text-center">
+              <div className="bg-[#FFB800] rounded-lg p-4 text-white text-center">
                 <div className="text-2xl mb-2">🔥️</div>
                 <p className="text-xs mb-1">1일 권장 칼로리(MER)</p>
                 <p className="text-xs mb-1">Recommeded Daily Enegy Requirement</p>
@@ -325,7 +325,7 @@ const DetailedDietReport = ({
                       <td className="py-3 text-center text-sm text-[#1E1E1E]">
                         <div className="flex items-center justify-center gap-1">
                           <span>{food.protein}</span>
-                          <div className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
                             {food.proteinPercent}
                           </div>
                         </div>
@@ -333,7 +333,7 @@ const DetailedDietReport = ({
                       <td className="py-3 text-center text-sm text-[#1E1E1E]">
                         <div className="flex items-center justify-center gap-1">
                           <span>{food.fat}</span>
-                          <div className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
                             {food.fatPercent}
                           </div>
                         </div>
@@ -341,7 +341,7 @@ const DetailedDietReport = ({
                       <td className="py-3 text-center text-sm text-[#1E1E1E]">
                         <div className="flex items-center justify-center gap-1">
                           <span>{food.carbs}</span>
-                          <div className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
                             {food.carbsPercent}
                           </div>
                         </div>
@@ -349,7 +349,7 @@ const DetailedDietReport = ({
                       <td className="py-3 text-center text-sm text-[#1E1E1E]">
                         <div className="flex items-center justify-center gap-1">
                           <span>{food.calories}</span>
-                          <div className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                          <div className="bg-[#FFB800] text-white text-xs px-2 py-1 rounded-full">
                             {food.caloriesPercent}
                           </div>
                         </div>
@@ -432,7 +432,7 @@ const DetailedDietReport = ({
             </div>
 
             {/* 긴급 알림 박스 - 비교 분석 카드 안에 포함 */}
-            <div className="bg-orange-500 rounded-lg p-4">
+            <div className="bg-[#FFB800] rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-white mt-1 flex-shrink-0" />
                 <div>
