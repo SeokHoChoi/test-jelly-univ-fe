@@ -4,6 +4,7 @@ import { Check } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
 import InfoBar from '@/components/common/InfoBar';
+import RatingBar from '@/components/common/RatingBar';
 
 const FoodQualityAnalysisSection = () => {
   const scrollTo = (targetId: string) => {
@@ -23,9 +24,9 @@ const FoodQualityAnalysisSection = () => {
       id: '01',
       title: '영양 정보 신뢰도',
       items: [
-        { label: '영양소 구성', grade: 'A' },
-        { label: '원료 신선도', grade: 'A+' },
-        { label: '제조 공정', grade: 'A' },
+        { label: '국제 표준\n준수 선언', grade: 'A' },
+        { label: '영양 정보\n공개 수준', grade: 'A' },
+        { label: '영양 정보\n일관성', grade: 'A' },
       ]
     },
     {
@@ -119,9 +120,9 @@ const FoodQualityAnalysisSection = () => {
           </div>
 
           {/* 세부 평가 제목 */}
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <Check className="text-green-500" size={24} />
-            <h3 className="text-[24px] md:text-[32px] font-bold text-[#003DA5]">
+          <div className="flex items-center gap-2 mb-8">
+            <span className="text-[25px]">✔️</span>
+            <h3 className="text-[25px] font-semibold text-[#1E1E1E]">
               사료 품질 세부 평가
             </h3>
           </div>
@@ -134,31 +135,18 @@ const FoodQualityAnalysisSection = () => {
                   <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
                     {assessment.id}
                   </span>
-                  <h4 className="text-[18px] font-bold text-[#003DA5]">
+                  <h4 className="text-[25px] font-semibold text-[#003DA5]">
                     {assessment.title}
                   </h4>
                 </div>
 
                 <div className="space-y-4">
                   {assessment.items.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className="text-[14px] text-gray-600">{item.label}</span>
-                      <div className="flex items-center gap-2">
-                        <div className="flex gap-1">
-                          {['A+', 'A', 'B+', 'B'].map((grade) => (
-                            <span
-                              key={grade}
-                              className={`px-3 py-1 rounded-full text-[12px] font-medium ${grade === item.grade
-                                ? 'bg-[#003DA5] text-white'
-                                : 'bg-gray-100 text-gray-500'
-                                }`}
-                            >
-                              {grade}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                    <RatingBar
+                      key={index}
+                      label={item.label}
+                      selectedGrade={item.grade}
+                    />
                   ))}
                 </div>
               </div>
