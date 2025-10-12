@@ -29,6 +29,7 @@ const ProductForm = () => {
   ]);
   const [amountErrors, setAmountErrors] = useState<string[]>([]);
   const [feedNameErrors, setFeedNameErrors] = useState<string[]>([]);
+  const [breedError, setBreedError] = useState<string>('');
   const amountInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const feedNameInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -68,6 +69,15 @@ const ProductForm = () => {
   };
 
   const onSubmit = (data: FormData) => {
+    // 품종 필수 검증
+    if (!data.dogBreed || !data.dogBreed.trim()) {
+      setBreedError('반려견의 품종을 선택해주세요!');
+      return;
+    }
+
+    // 품종 에러 초기화
+    setBreedError('');
+
     // 사료명 벨리데이션 체크
     const newFeedNameErrors: string[] = [];
     const newAmountErrors: string[] = [];
@@ -171,16 +181,24 @@ const ProductForm = () => {
                 </label>
                 <BreedSearchInput
                   value={watch('dogBreed') || ''}
-                  onChange={(value) => setValue('dogBreed', value)}
+                  onChange={(value) => {
+                    setValue('dogBreed', value);
+                    if (breedError) {
+                      setBreedError('');
+                    }
+                  }}
                   onSelect={(breed) => {
                     if (breed) {
                       setValue('dogBreed', breed);
+                      if (breedError) {
+                        setBreedError('');
+                      }
                     }
                   }}
                   placeholder="예: 골든 리트리버"
                 />
-                {errors.dogBreed && (
-                  <p className="text-red-500 text-sm mt-1">{errors.dogBreed.message}</p>
+                {breedError && (
+                  <p className="text-red-500 text-sm mt-1">{breedError}</p>
                 )}
               </div>
 
