@@ -104,29 +104,18 @@ const FoodQualityAnalysisSection = () => {
             {/* 요약 박스들 */}
             <div className="space-y-3 mb-10">
               <InfoBar>
-                <span className="font-semibold mr-2">한 줄 평</span>
-                사람이 먹을 수 있는 최상급 원료와 엄격한 영양 기준을 모두 만족시킨, 신뢰도 높은 '인간 등급(Human Grade)' 탈수 건조 식품입니다.
+                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">📝 한 줄 평</div>
+                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">사람이 먹을 수 있는 최상급 원료와 엄격한 영양 기준을 모두 만족시킨, 신뢰도 높은 '인간 등급(Human Grade)' 탈수 건조 식품입니다.</div>
               </InfoBar>
               <InfoBar>
-                <span className="font-semibold mr-2">사료의 주요 장점</span>
-                '주식' 자격 공식 보증, 인간 등급(Human Grade) 원료, 영양소 보존율이 높은 제조 공법
+                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">👍🏻 사료의 주요 장점</div>
+                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">'주식' 자격 공식 보증, 인간 등급(Human Grade) 원료, 영양소 보존율이 높은 제조 공법</div>
               </InfoBar>
               <InfoBar>
-                <span className="font-semibold mr-2">사료의 주요 단점 및 주의사항</span>
-                상대적으로 높은 탄수화물 의존도, 물을 부어 불리는 과정 필수
+                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">👀 사료의 주요 단점 및 주의사항</div>
+                <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">상대적으로 높은 탄수화물 의존도, 물을 부어 불리는 과정 필수</div>
               </InfoBar>
             </div>
-          </div>
-
-          {/* 세부 평가로 이어짐 */}
-
-          {/* 요약 텍스트 */}
-          <div className="text-center mb-12">
-            <p className="text-[16px] text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              ZIWIPEAK 에어드라이 소고기는 전반적으로 우수한 품질을 보여주는 사료입니다.
-              영양소 구성이 균형잡혀 있고, 원료의 신선도와 제조 품질이 뛰어나며,
-              안전성 검증도 철저히 이루어진 것으로 평가됩니다.
-            </p>
           </div>
 
           {/* 세부 평가 제목 */}
