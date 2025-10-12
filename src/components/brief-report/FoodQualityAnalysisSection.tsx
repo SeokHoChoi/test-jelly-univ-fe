@@ -95,7 +95,7 @@ const FoodQualityAnalysisSection = () => {
             </p>
 
             {/* 종합 평가 카드 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-7 mb-8">
               {overallGrades.map((item, idx) => (
                 <EvalCard key={idx} title={item.label} grade={item.grade} />
               ))}

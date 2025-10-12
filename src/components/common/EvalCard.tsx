@@ -11,16 +11,29 @@ interface EvalCardProps {
 
 const EvalCard = ({ title, grade, children, className }: EvalCardProps) => {
   return (
-    <div className={cn('bg-white rounded-[20px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)]', className)}>
+    <div
+      className={cn('bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.25)] flex flex-col justify-between w-full relative', className)}
+      style={{
+        aspectRatio: '230/190',
+        padding: '16px 20px 12px 20px'
+      }}
+    >
+      {/* 우측 상단 체크표시 */}
+      <div className="absolute top-4 right-4 text-[#003DA5] text-[20px] transform rotate-90">
+        ⎋
+      </div>
+
       {title && (
-        <p className="text-[14px] text-gray-500 mb-2 flex items-center gap-2">
+        <p className="text-[18px] font-medium text-[#343434] h-[50px] leading-tight flex items-center" style={{ wordBreak: 'keep-all', overflowWrap: 'break-word' }}>
           {title}
         </p>
       )}
       {grade ? (
-        <div className="text-[48px] font-bold text-[#003DA5]">{grade}</div>
+        <div className="text-[60px] font-semibold text-[#003DA5] mt-[15px] md:mt-[45px]">{grade}</div>
       ) : (
-        children
+        <div className="mt-[15px] md:mt-[45px]">
+          {children}
+        </div>
       )}
     </div>
   );
