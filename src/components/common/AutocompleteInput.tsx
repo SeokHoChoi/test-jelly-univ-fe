@@ -51,16 +51,20 @@ const AutocompleteInput = ({
       return;
     }
 
+    // 검색 시작 즉시 패널을 열고 로딩 표시
     setIsLoading(true);
+    setIsOpen(true);
     try {
       const results = await searchFunction(query);
       setOptions(results);
-      setIsOpen(results.length > 0);
+      // 결과 유무와 상관없이 패널은 열린 상태 유지 (빈 결과 UI/직접입력 노출)
+      setIsOpen(true);
       setSelectedIndex(-1);
     } catch (error) {
       console.error('검색 에러:', error);
       setOptions([]);
-      setIsOpen(false);
+      // 에러 시에도 패널을 열어 빈 상태/직접입력 UI를 노출
+      setIsOpen(true);
     } finally {
       setIsLoading(false);
     }

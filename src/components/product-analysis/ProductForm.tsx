@@ -10,6 +10,7 @@ import Card from '@/components/common/Card';
 import BreedSearchInput from '@/components/common/BreedSearchInput';
 import FoodSearchInput from '@/components/common/FoodSearchInput';
 import { submitRating } from '@/utils/api';
+import { useRatingStore } from '@/contexts/RatingStore';
 
 interface FeedItem {
   name: string;
@@ -141,10 +142,13 @@ const ProductForm = () => {
         feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
       };
 
-      await submitRating(payload);
+      const res = await submitRating(payload);
+      // 전역 스토어에 응답 저장 (brief-report 등에서 재사용)
+      useRatingStore.getState().setResponse(res?.data ?? null);
       router.push('/brief-report');
-    } catch (e: any) {
-      setSubmitError(e?.message || '요청 처리 중 오류가 발생했어요.');
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';
+      setSubmitError(message);
     } finally {
       setSubmitting(false);
     }
