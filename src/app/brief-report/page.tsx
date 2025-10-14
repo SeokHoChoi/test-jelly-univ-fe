@@ -6,7 +6,7 @@ import { useRatingStore } from '@/contexts/RatingStore';
 import SignupPromptModal from '@/components/brief-report/SignupPromptModal';
 import FoodQualityAnalysisSection from '@/components/brief-report/FoodQualityAnalysisSection';
 import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
-import ReportFloatingTabs from '@/components/brief-report/ReportFloatingTabs';
+import ReportTabs from '@/components/brief-report/ReportTabs';
 import DietReportExample from '@/components/brief-report/DietReportExample';
 
 const BriefReportPage = () => {
@@ -39,12 +39,8 @@ const BriefReportPage = () => {
 
   return (
     <div className="min-h-screen">
-      <ReportFloatingTabs />
       <FoodQualityAnalysisSection />
       <PetSuitabilitySection />
-
-      {/* 상세 식단 분석 리포트 */}
-      <DietReportExample />
 
       {/* 회원가입 유도 버튼 */}
       <div className="fixed bottom-4 right-4 z-50">

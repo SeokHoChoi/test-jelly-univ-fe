@@ -7,6 +7,7 @@ import EvalCard from '@/components/common/EvalCard';
 import InfoBar from '@/components/common/InfoBar';
 import RatingBar from '@/components/common/RatingBar';
 import { useRatingStore, type RatingData } from '@/contexts/RatingStore';
+import ReportTabs from '@/components/brief-report/ReportTabs';
 
 const FoodQualityAnalysisSection = () => {
   // const scrollTo = (targetId: string) => {
@@ -251,8 +252,12 @@ const FoodQualityAnalysisSection = () => {
   ];
 
   return (
-    <section id="food-analysis" className="bg-gray-50 pb-12 pt-30 md:pb-20 md:pt-40">
+    <section id="food-analysis" className="bg-gray-50 pb-12 pt-10 md:pb-20 md:pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 상단 탭 - 메인 제목 바로 위, 아래로 40px 간격 */}
+        <div className="mb-[40px]">
+          <ReportTabs />
+        </div>
         {/* 메인 제목 - 상자 밖 */}
         <div className="text-center mb-[30px] md:mb-[60px]">
           <p className="text-[#000000] font-medium text-[20px] mb-2">
@@ -356,6 +361,16 @@ const FoodQualityAnalysisSection = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* 참고 배너 */}
+          <div className="mt-6 md:mt-8">
+            <div className="bg-[#FFB800] text-[#1E1E1E] rounded-[12px] md:rounded-[14px] px-[21px] py-[15px]">
+              <div className="text-[#000000] font-semibold text-[18px] md:text-[20px] mb-2">📍 참고해주세요!</div>
+              <p className="text-[#1E1E1E] text-[15px] md:text-[18px] leading-[22px] md:leading-[26px]">
+                실제 식단 분석 리포트 제공 시 추가적인 정밀 검증 절차를 거치므로 본 사료의 종합 및 세부 평가 등급은 일부 변동될 수 있으며, 세부 평가 항목 또한 보다 다양하고 상세하게 제공됩니다.
+              </p>
+            </div>
           </div>
         </div>
       </div>
