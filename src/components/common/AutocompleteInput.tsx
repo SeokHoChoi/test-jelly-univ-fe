@@ -37,6 +37,7 @@ const AutocompleteInput = ({
   const [options, setOptions] = useState<AutocompleteOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isFocused, setIsFocused] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -67,6 +68,10 @@ const AutocompleteInput = ({
 
   // 디바운스된 검색
   useEffect(() => {
+    if (!isFocused) {
+      // 입력 포커스가 아닐 때는 검색하지 않음 (선택 후 재오픈 방지)
+      return;
+    }
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
@@ -80,7 +85,18 @@ const AutocompleteInput = ({
         clearTimeout(debounceRef.current);
       }
     };
-  }, [value, performSearch]);
+  }, [value, performSearch, isFocused]);
+
+  // 전역 닫기 이벤트 구독: 다른 자동완성 인풋이 포커스되면 즉시 닫힘
+  useEffect(() => {
+    const handleCloseAll = () => {
+      setIsOpen(false);
+      setOptions([]);
+      setSelectedIndex(-1);
+    };
+    window.addEventListener('autocomplete:closeAll', handleCloseAll as EventListener);
+    return () => window.removeEventListener('autocomplete:closeAll', handleCloseAll as EventListener);
+  }, []);
 
   // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
@@ -108,6 +124,12 @@ const AutocompleteInput = ({
     onSelect(option);
     setIsOpen(false);
     setOptions([]);
+    setSelectedIndex(-1);
+    setIsFocused(false);
+    // 선택 직후 포커스 해제하여 디바운스 검색으로 재오픈되는 현상 방지
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -149,9 +171,16 @@ const AutocompleteInput = ({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => {
+            // 먼저 다른 자동완성들을 모두 닫게 전역 이벤트 발행
+            window.dispatchEvent(new Event('autocomplete:closeAll'));
+            setIsFocused(true);
             if (options.length > 0) {
               setIsOpen(true);
             }
+          }}
+          onBlur={() => {
+            // 입력창 포커스 이탈 시 포커스 상태만 해제 (외부 클릭 핸들러가 닫기 담당)
+            setIsFocused(false);
           }}
           placeholder={placeholder}
           disabled={disabled}

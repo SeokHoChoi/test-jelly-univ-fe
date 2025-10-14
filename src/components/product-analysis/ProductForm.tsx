@@ -9,6 +9,7 @@ import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
 import BreedSearchInput from '@/components/common/BreedSearchInput';
 import FoodSearchInput from '@/components/common/FoodSearchInput';
+import { submitRating } from '@/utils/api';
 
 interface FeedItem {
   name: string;
@@ -68,7 +69,10 @@ const ProductForm = () => {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [submitError, setSubmitError] = useState<string>('');
+
+  const onSubmit = async (data: FormData) => {
     // 품종 필수 검증
     if (!data.dogBreed || !data.dogBreed.trim()) {
       setBreedError('반려견의 품종을 선택해주세요!');
@@ -125,9 +129,25 @@ const ProductForm = () => {
     // 에러가 없으면 에러 상태 초기화
     setFeedNameErrors([]);
     setAmountErrors([]);
-    console.log('Form submitted:', { ...data, feeds });
-    // 여기서 분석 결과 페이지로 이동
-    router.push('/brief-report');
+
+    // 등록 API 호출
+    try {
+      setSubmitting(true);
+      setSubmitError('');
+      const payload = {
+        dogName: data.dogName,
+        dogWeight: data.dogWeight,
+        dogBreed: data.dogBreed,
+        feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
+      };
+
+      await submitRating(payload);
+      router.push('/brief-report');
+    } catch (e: any) {
+      setSubmitError(e?.message || '요청 처리 중 오류가 발생했어요.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -285,12 +305,16 @@ const ProductForm = () => {
               </div>
 
               {/* 제출 버튼 */}
+              {submitError && (
+                <p className="text-red-500 text-sm text-center">{submitError}</p>
+              )}
               <div className="md:pt-[56px] pt-[30px] flex justify-center">
                 <Button
                   variant="hero-primary"
                   className="px-[40px] py-[30px] md:w-[304px] md:h-[78px] !rounded-[50px] !text-[20px] !font-semibold"
+                  disabled={submitting}
                 >
-                  30초 만에 알아보기
+                  {submitting ? '분석 중...' : '30초 만에 알아보기'}
                 </Button>
               </div>
             </form>
