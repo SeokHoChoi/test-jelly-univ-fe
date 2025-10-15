@@ -6,10 +6,28 @@ import { useEffect } from 'react';
 declare global {
   interface Window {
     AUTHNICE: {
-      requestPay: (data: any) => void;
+      requestPay: (data: NicePayRequest) => void;
     };
   }
 }
+
+type NicePayRequest = {
+  clientId: string;
+  method: 'card';
+  orderId: string;
+  amount: number;
+  goodsName: string;
+  returnUrl: string;
+  sandbox: boolean;
+  timestamp?: number;
+  signature?: string;
+  buyerName?: string;
+  buyerEmail?: string;
+  buyerTel?: string;
+  fnSuccess?: (res: unknown) => void;
+  fnFail?: (err: unknown) => void;
+  fnError?: (err: unknown) => void;
+};
 
 interface Props {
   clientId: string;
@@ -22,8 +40,8 @@ interface Props {
   buyerName: string;
   buyerEmail: string;
   buyerTel: string;
-  onSuccess?: (res: any) => void;
-  onFail?: (err: any) => void;
+  onSuccess?: (res: unknown) => void;
+  onFail?: (err: unknown) => void;
 }
 
 export default function NicePayButton({
@@ -57,12 +75,12 @@ export default function NicePayButton({
   }, []);
 
   const handlePayment = () => {
-    if (!(window as any).AUTHNICE) {
+    if (!window.AUTHNICE) {
       alert('결제 SDK 로드에 실패했습니다. 새로고침 후 다시 시도해주세요.');
       return;
     }
 
-    (window as any).AUTHNICE.requestPay({
+    window.AUTHNICE.requestPay({
       clientId,
       method: 'card',
       orderId,
@@ -75,14 +93,15 @@ export default function NicePayButton({
       buyerName,
       buyerEmail,
       buyerTel,
-      fnSuccess: (res: any) => {
+      fnSuccess: (res) => {
         onSuccess?.(res);
       },
-      fnFail: (err: any) => {
+      fnFail: (err) => {
         onFail?.(err);
       },
-      fnError: (err: any) => {
-        alert('결제 중 오류가 발생했습니다: ' + (err.message || err));
+      fnError: (err) => {
+        const message = err && typeof err === 'object' && 'message' in err ? String((err as { message?: unknown }).message) : String(err);
+        alert('결제 중 오류가 발생했습니다: ' + message);
         onFail?.(err);
       },
     });

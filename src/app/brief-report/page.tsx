@@ -6,8 +6,8 @@ import { useRatingStore } from '@/contexts/RatingStore';
 import SignupPromptModal from '@/components/brief-report/SignupPromptModal';
 import FoodQualityAnalysisSection from '@/components/brief-report/FoodQualityAnalysisSection';
 import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
-import ReportTabs from '@/components/brief-report/ReportTabs';
-import DietReportExample from '@/components/brief-report/DietReportExample';
+// import ReportTabs from '@/components/brief-report/ReportTabs';
+// import DietReportExample from '@/components/brief-report/DietReportExample';
 
 const BriefReportPage = () => {
   const [showSignupModal, setShowSignupModal] = useState(false);
