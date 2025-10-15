@@ -1,4 +1,4 @@
-import Text from '@/components/common/Text';
+// import Text from '@/components/common/Text';
 import Card from '@/components/common/Card';
 import Image from 'next/image';
 

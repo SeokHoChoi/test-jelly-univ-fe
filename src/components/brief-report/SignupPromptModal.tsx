@@ -28,9 +28,12 @@ const SignupPromptModal = ({ isOpen, onClose }: SignupPromptModalProps) => {
         </Text>
 
         <div className="space-y-3">
-          <Button size="lg" className="w-full">
-            <Link href="/signup">무료로 회원가입하기</Link>
-          </Button>
+          <Link
+            href="/signup"
+            className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark h-12 px-6 text-lg w-full"
+          >
+            무료로 회원가입하기
+          </Link>
 
           <Button variant="outline" size="lg" className="w-full" onClick={onClose}>
             나중에 하기

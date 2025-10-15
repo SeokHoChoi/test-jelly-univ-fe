@@ -10,7 +10,7 @@ import { useAuthContext } from '@/contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, isLoading, login, logout, user, isMounted } = useAuthContext();
+  const { isLoggedIn, isLoading, logout, user, isMounted } = useAuthContext();
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/home';
@@ -84,59 +84,59 @@ const Header = () => {
                     >
                       로그인
                     </Link>
-                    <Button
-                      variant="hero-primary"
-                      className="w-[139px] h-[47px] text-[16px]"
+                    <Link
+                      href="/product-analysis"
+                      className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] w-[139px] h-[47px] text-[16px]"
                     >
-                      <Link href="/product-analysis">무료로 시작하기</Link>
-                    </Button>
+                      무료로 시작하기
+                    </Link>
                   </>
                 )}
 
                 {/* 로그인 페이지: 회원가입 + 무료로 시작하기 */}
                 {isLoginPage && (
                   <>
-                    <Button
-                      variant="hero-primary"
-                      className="w-[139px] h-[47px] text-[16px]"
+                    <Link
+                      href="/signup"
+                      className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] w-[139px] h-[47px] text-[16px]"
                     >
-                      <Link href="/signup">회원가입</Link>
-                    </Button>
-                    <Button
-                      variant="hero-primary"
-                      className="w-[139px] h-[47px] text-[16px]"
+                      회원가입
+                    </Link>
+                    <Link
+                      href="/product-analysis"
+                      className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] w-[139px] h-[47px] text-[16px]"
                     >
-                      <Link href="/product-analysis">무료로 시작하기</Link>
-                    </Button>
+                      무료로 시작하기
+                    </Link>
                   </>
                 )}
 
                 {/* 회원가입 페이지: 로그인 + 무료로 시작하기 */}
                 {isSignupPage && (
                   <>
-                    <Button
-                      className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[16px] rounded-[12px] w-[139px] h-[47px]"
+                    <Link
+                      href="/login"
+                      className="inline-flex items-center justify-center rounded-[12px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] hover:bg-[#002A7A] text-white text-[16px] w-[139px] h-[47px]"
                     >
-                      <Link href="/login">로그인</Link>
-                    </Button>
-                    <Button
-                      variant="hero-primary"
-                      className="w-[139px] h-[47px] text-[16px]"
+                      로그인
+                    </Link>
+                    <Link
+                      href="/product-analysis"
+                      className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] w-[139px] h-[47px] text-[16px]"
                     >
-                      <Link href="/product-analysis">무료로 시작하기</Link>
-                    </Button>
+                      무료로 시작하기
+                    </Link>
                   </>
                 )}
 
                 {/* 제품분석, 간단리포트 페이지: 회원가입 */}
                 {(isProductAnalysisPage || isBriefReportPage) && (
-                  <Button
-                    variant="hero-primary"
-                    size="sm"
-                    className="w-[139px] h-[47px] text-[16px]"
+                  <Link
+                    href="/signup"
+                    className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-8 px-3 text-sm w-[139px] h-[47px] text-[16px]"
                   >
-                    <Link href="/signup">회원가입</Link>
-                  </Button>
+                    회원가입
+                  </Link>
                 )}
               </>
             )}
@@ -215,51 +215,47 @@ const Header = () => {
                   {/* 로그인 페이지: 회원가입 + 무료로 시작하기 */}
                   {isLoginPage && (
                     <>
-                      <Button
-                        variant="hero-primary"
-                        size="sm"
-                        className="text-[11px] py-[10px] px-[15px]"
+                      <Link
+                        href="/signup"
+                        className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-8 px-3 text-sm text-[11px] py-[10px] px-[15px]"
                       >
-                        <Link href="/signup">회원가입</Link>
-                      </Button>
-                      <Button
-                        variant="hero-primary"
-                        size="sm"
-                        className="text-[11px] py-[10px] px-[15px]"
+                        회원가입
+                      </Link>
+                      <Link
+                        href="/product-analysis"
+                        className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-8 px-3 text-sm text-[11px] py-[10px] px-[15px]"
                       >
-                        <Link href="/product-analysis">무료로 시작하기</Link>
-                      </Button>
+                        무료로 시작하기
+                      </Link>
                     </>
                   )}
 
                   {/* 회원가입 페이지: 로그인 + 무료로 시작하기 */}
                   {isSignupPage && (
                     <>
-                      <Button
-                        variant="hero-primary"
-                        size="sm"
-                        className="text-[11px] py-[10px] px-[15px]"
+                      <Link
+                        href="/login"
+                        className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-8 px-3 text-sm text-[11px] py-[10px] px-[15px]"
                       >
-                        <Link href="/login">로그인</Link>
-                      </Button>
-                      <Button
-                        variant="hero-primary"
-                        size="sm"
-                        className="text-[11px] py-[10px] px-[15px]"
+                        로그인
+                      </Link>
+                      <Link
+                        href="/product-analysis"
+                        className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-8 px-3 text-sm text-[11px] py-[10px] px-[15px]"
                       >
-                        <Link href="/product-analysis">무료로 시작하기</Link>
-                      </Button>
+                        무료로 시작하기
+                      </Link>
                     </>
                   )}
 
                   {/* 제품분석, 간단리포트 페이지: 회원가입 */}
                   {(isProductAnalysisPage || isBriefReportPage) && (
-                    <Button
-                      size="sm"
-                      className="bg-[#003DA5] hover:bg-[#002A7A] text-white font-medium text-[11px] rounded-[12px] py-[10px] px-[15px]"
+                    <Link
+                      href="/signup"
+                      className="inline-flex items-center justify-center rounded-[12px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] hover:bg-[#002A7A] text-white text-[11px] py-[10px] px-[15px]"
                     >
-                      <Link href="/signup">회원가입</Link>
-                    </Button>
+                      회원가입
+                    </Link>
                   )}
                 </>
               )}
@@ -323,13 +319,12 @@ const Header = () => {
                     로그인
                   </Link>
                   <div className="px-4">
-                    <Button
-                      variant="hero-primary"
-                      size="lg"
-                      className="w-full py-3 px-4 text-[16px]"
+                    <Link
+                      href="/product-analysis"
+                      className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full py-3 px-4 text-[16px]"
                     >
-                      <Link href="/product-analysis">무료로 시작하기</Link>
-                    </Button>
+                      무료로 시작하기
+                    </Link>
                   </div>
                 </>
               )}

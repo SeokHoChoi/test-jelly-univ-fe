@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Text from '@/components/common/Text';
-import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
 import { Check } from 'lucide-react';
 
@@ -94,13 +92,12 @@ const PlanSection = () => {
               </ul>
             </div>
             <div className="shrink-0 w-full md:w-auto">
-              <Button
-                variant="hero-primary"
-                size="lg"
-                className="w-full md:w-[199px] md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
+              <Link
+                href="/product-analysis"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
               >
-                <Link href="/product-analysis">30초 만에 분석하기</Link>
-              </Button>
+                30초 만에 분석하기
+              </Link>
             </div>
           </div>
         </Card>
@@ -169,13 +166,17 @@ const PlanSection = () => {
                 })}
               </ul>
 
-              <Button
-                variant={index === 0 ? 'hero-primary' : plan.buttonVariant}
-                size="lg"
-                className={`${index === 0 ? 'w-full mx-auto' : 'w-full'}`}
+              <Link
+                href={plan.href}
+                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
+                  ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
+                  : plan.buttonVariant === 'primary'
+                    ? 'bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark'
+                    : 'border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white active:bg-brand-blue active:text-white'
+                  }`}
               >
-                <Link href={plan.href}>{plan.buttonText}</Link>
-              </Button>
+                {plan.buttonText}
+              </Link>
             </Card>
           ))}
         </div>
