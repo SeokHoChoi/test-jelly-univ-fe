@@ -123,9 +123,10 @@ const LoginPage = () => {
                 />
                 <span className="ml-2 text-sm text-gray-600">로그인 상태 유지</span>
               </label>
-              <Link href="/forgot-password" className="text-sm text-brand-blue hover:text-brand-blue-dark">
+              {/* TODO: 비밀번호 찾기 링크는 향후 기능 추가 시 활성화 예정 */}
+              {/* <Link href="/forgot-password" className="text-sm text-brand-blue hover:text-brand-blue-dark">
                 비밀번호 찾기
-              </Link>
+              </Link> */}
             </div>
 
             {/* 에러 메시지 표시 */}
