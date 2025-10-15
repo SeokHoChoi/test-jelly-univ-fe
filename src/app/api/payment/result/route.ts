@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const contentType = request.headers.get('content-type');
-    let resultData: any = {};
+    let resultData: Record<string, string> = {};
 
     // FormData로 시도
     if (contentType?.includes('form')) {
       const formData = await request.formData();
       for (const [key, value] of formData.entries()) {
-        resultData[key] = value;
+        resultData[String(key)] = String(value);
       }
     }
     // JSON으로 시도

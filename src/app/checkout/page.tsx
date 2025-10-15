@@ -8,7 +8,20 @@ import NicePayButton from '@/components/NicePayButton';
 
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
-  const [paymentData, setPaymentData] = useState<any>(null);
+  type PaymentData = {
+    clientId: string;
+    orderId: string;
+    amount: number;
+    goodsName: string;
+    returnUrl: string;
+    timestamp: string;
+    signature: string;
+    buyerName?: string;
+    buyerEmail?: string;
+    buyerTel?: string;
+  } | null;
+
+  const [paymentData, setPaymentData] = useState<PaymentData>(null);
   const router = useRouter();
 
   const handlePreparePayment = async () => {
@@ -74,15 +87,15 @@ export default function CheckoutPage() {
           amount={paymentData.amount}
           goodsName={paymentData.goodsName}
           returnUrl={paymentData.returnUrl}
-          timestamp={paymentData.timestamp}
+          timestamp={Number(paymentData.timestamp)}
           signature={paymentData.signature}
-          buyerName={paymentData.buyerName}
-          buyerEmail={paymentData.buyerEmail}
-          buyerTel={paymentData.buyerTel}
-          onSuccess={(res) => {
+          buyerName={paymentData.buyerName ?? ''}
+          buyerEmail={paymentData.buyerEmail ?? ''}
+          buyerTel={paymentData.buyerTel ?? ''}
+          onSuccess={() => {
             // 결제 성공 시 추가 처리 (필요시)
           }}
-          onFail={(err) => {
+          onFail={() => {
             alert('결제에 실패했습니다. 다시 시도해주세요.');
           }}
         />

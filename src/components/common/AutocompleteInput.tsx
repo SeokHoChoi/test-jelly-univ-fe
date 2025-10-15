@@ -257,6 +257,7 @@ const AutocompleteInput = ({
                   ) : (
                     <div className="flex items-center gap-3">
                       {option.thumbnail && (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={option.thumbnail}
                           alt={option.label}
