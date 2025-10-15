@@ -69,28 +69,7 @@ const ReportFloatingTabs = () => {
     }, 750);
   };
 
-  return (
-    <div className="fixed left-1/2 -translate-x-1/2 z-50 top-24 md:top-24 lg:top-28">
-      <nav className="inline-flex items-center gap-1 bg-white/80 backdrop-blur rounded-full p-1 shadow-lg border border-gray-200 px-1 max-w-[calc(100vw-24px)] md:max-w-none overflow-x-auto">
-        {sections.map(({ id, label }) => {
-          const isActive = activeId === id;
-          return (
-            <button
-              key={id}
-              type="button"
-              onClick={() => scrollTo(id)}
-              className={`whitespace-nowrap flex-shrink-0 h-9 md:h-10 px-4 md:px-5 rounded-full text-sm md:text-base font-medium transition-all duration-200 ${isActive
-                ? 'bg-[#003DA5] text-white shadow'
-                : 'text-gray-700 hover:bg-blue-50 active:bg-blue-100'
-                }`}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </nav>
-    </div>
-  );
+  return null;
 };
 
 export default ReportFloatingTabs;

@@ -2,12 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import Text from '@/components/common/Text';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
 import BreedSearchInput from '@/components/common/BreedSearchInput';
 import FoodSearchInput from '@/components/common/FoodSearchInput';
+import { submitRating } from '@/utils/api';
+import { useRatingStore } from '@/contexts/RatingStore';
 
 interface FeedItem {
   name: string;
@@ -22,11 +25,13 @@ interface FormData {
 }
 
 const ProductForm = () => {
+  const router = useRouter();
   const [feeds, setFeeds] = useState<FeedItem[]>([
     { name: '', amount: '' },
   ]);
   const [amountErrors, setAmountErrors] = useState<string[]>([]);
   const [feedNameErrors, setFeedNameErrors] = useState<string[]>([]);
+  const [breedError, setBreedError] = useState<string>('');
   const amountInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const feedNameInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -65,7 +70,19 @@ const ProductForm = () => {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [submitError, setSubmitError] = useState<string>('');
+
+  const onSubmit = async (data: FormData) => {
+    // 품종 필수 검증
+    if (!data.dogBreed || !data.dogBreed.trim()) {
+      setBreedError('반려견의 품종을 선택해주세요!');
+      return;
+    }
+
+    // 품종 에러 초기화
+    setBreedError('');
+
     // 사료명 벨리데이션 체크
     const newFeedNameErrors: string[] = [];
     const newAmountErrors: string[] = [];
@@ -113,9 +130,28 @@ const ProductForm = () => {
     // 에러가 없으면 에러 상태 초기화
     setFeedNameErrors([]);
     setAmountErrors([]);
-    console.log('Form submitted:', { ...data, feeds });
-    // 여기서 분석 결과 페이지로 이동
-    window.location.href = '/brief-report';
+
+    // 등록 API 호출
+    try {
+      setSubmitting(true);
+      setSubmitError('');
+      const payload = {
+        dogName: data.dogName,
+        dogWeight: data.dogWeight,
+        dogBreed: data.dogBreed,
+        feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
+      };
+
+      const res = await submitRating(payload);
+      // 전역 스토어에 응답 저장 (brief-report 등에서 재사용)
+      useRatingStore.getState().setResponse(res?.data ?? null);
+      router.push('/brief-report');
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';
+      setSubmitError(message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -169,16 +205,24 @@ const ProductForm = () => {
                 </label>
                 <BreedSearchInput
                   value={watch('dogBreed') || ''}
-                  onChange={(value) => setValue('dogBreed', value)}
+                  onChange={(value) => {
+                    setValue('dogBreed', value);
+                    if (breedError) {
+                      setBreedError('');
+                    }
+                  }}
                   onSelect={(breed) => {
                     if (breed) {
                       setValue('dogBreed', breed);
+                      if (breedError) {
+                        setBreedError('');
+                      }
                     }
                   }}
                   placeholder="예: 골든 리트리버"
                 />
-                {errors.dogBreed && (
-                  <p className="text-red-500 text-sm mt-1">{errors.dogBreed.message}</p>
+                {breedError && (
+                  <p className="text-red-500 text-sm mt-1">{breedError}</p>
                 )}
               </div>
 
@@ -265,12 +309,16 @@ const ProductForm = () => {
               </div>
 
               {/* 제출 버튼 */}
+              {submitError && (
+                <p className="text-red-500 text-sm text-center">{submitError}</p>
+              )}
               <div className="md:pt-[56px] pt-[30px] flex justify-center">
                 <Button
                   variant="hero-primary"
                   className="px-[40px] py-[30px] md:w-[304px] md:h-[78px] !rounded-[50px] !text-[20px] !font-semibold"
+                  disabled={submitting}
                 >
-                  30초 만에 알아보기
+                  {submitting ? '분석 중...' : '30초 만에 알아보기'}
                 </Button>
               </div>
             </form>

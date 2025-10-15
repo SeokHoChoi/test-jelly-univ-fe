@@ -9,7 +9,7 @@ interface PillProps {
 }
 
 const colorMap = {
-  blue: 'bg-blue-50 text-[#003DA5]',
+  blue: 'bg-[#003DA5] text-white',
   gray: 'bg-gray-100 text-gray-700',
   green: 'bg-green-50 text-green-700',
   yellow: 'bg-yellow-50 text-yellow-700',
@@ -17,7 +17,7 @@ const colorMap = {
 
 const Pill = ({ children, color = 'blue', className }: PillProps) => {
   return (
-    <span className={cn('inline-flex items-center px-3 py-1 rounded-full text-sm font-medium', colorMap[color], className)}>
+    <span className={cn('inline-flex items-center rounded-full text-[15px] font-medium', colorMap[color], className)} style={{ padding: '12px' }}>
       {children}
     </span>
   );

@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Button from '@/components/common/Button';
-
 const AdBanner = () => {
   return (
     <section
@@ -34,12 +32,12 @@ const AdBanner = () => {
           지금 바로 식단 분석을 시작해보세요!
         </p>
 
-        <Button
-          size="lg"
-          className="bg-[#003DA5] hover:bg-[#002A7A] text-[#FFFFFF] font-bold text-[15px] md:text-[20px] rounded-[12px] w-[170px] h-[50px] md:w-[205px] md:h-[57px]"
+        <Link
+          href="/product-analysis"
+          className="inline-flex items-center justify-center rounded-[12px] font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] hover:bg-[#002A7A] text-[#FFFFFF] text-[15px] md:text-[20px] w-[170px] h-[50px] md:w-[205px] md:h-[57px]"
         >
-          <Link href="/product-analysis">30초 만에 분석하기</Link>
-        </Button>
+          30초 만에 분석하기
+        </Link>
       </div>
     </section>
   );

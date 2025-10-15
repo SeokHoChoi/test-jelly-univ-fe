@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Text from '@/components/common/Text';
@@ -22,7 +21,7 @@ interface SignupFormData {
 const SignupPage = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm<SignupFormData>();
   const { register: registerUser, isLoading } = useAuthContext();
-  const router = useRouter();
+  // const router = useRouter();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
 
@@ -48,7 +47,7 @@ const SignupPage = () => {
       } else {
         setSubmitError(result.error || '회원가입에 실패했습니다.');
       }
-    } catch (error) {
+    } catch {
       setSubmitError('회원가입 중 오류가 발생했습니다.');
     }
   };

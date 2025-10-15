@@ -6,7 +6,7 @@ import {
   logout as logoutAPI,
   register as registerAPI,
   getCurrentUser,
-  validateToken,
+  // validateToken,
   getToken,
   setToken,
   removeToken,
@@ -75,11 +75,11 @@ export const useAuth = () => {
       setIsLoggedIn(true);
 
       return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login failed:', error);
       return {
         success: false,
-        error: error.message || '로그인에 실패했습니다.'
+        error: (error as Error).message || '로그인에 실패했습니다.'
       };
     } finally {
       setIsLoading(false);
@@ -101,11 +101,11 @@ export const useAuth = () => {
       setIsLoggedIn(true);
 
       return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Registration failed:', error);
       return {
         success: false,
-        error: error.message || '회원가입에 실패했습니다.'
+        error: (error as Error).message || '회원가입에 실패했습니다.'
       };
     } finally {
       setIsLoading(false);
@@ -128,7 +128,7 @@ export const useAuth = () => {
       setIsLoggedIn(false);
 
       return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Logout failed:', error);
 
       // 서버 요청이 실패해도 로컬 상태는 초기화
@@ -138,7 +138,7 @@ export const useAuth = () => {
 
       return {
         success: false,
-        error: error.message || '로그아웃에 실패했습니다.'
+        error: (error as Error).message || '로그아웃에 실패했습니다.'
       };
     } finally {
       setIsLoading(false);

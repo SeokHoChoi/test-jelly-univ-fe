@@ -140,7 +140,7 @@ const decodeJWT = (token: string) => {
         .join('')
     );
     return JSON.parse(jsonPayload);
-  } catch (error) {
+  } catch {
     return null;
   }
 };

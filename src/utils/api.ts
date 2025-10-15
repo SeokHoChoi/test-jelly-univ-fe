@@ -85,3 +85,32 @@ export const checkApiHealth = async (): Promise<boolean> => {
     return false;
   }
 };
+
+// 사료 등급 평가 요청 (내부 API Routes 사용)
+export interface RatingFeedInput {
+  name: string;
+  amount: string; // g
+}
+
+export interface RatingRequestBody {
+  dogName: string;
+  dogWeight: string;
+  dogBreed: string;
+  feeds: RatingFeedInput[]; // 1~3개
+}
+
+export const submitRating = async (payload: RatingRequestBody) => {
+  const response = await fetch(`${INTERNAL_API_BASE_URL}/rating`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => ({}));
+    const message = errorBody?.error || `HTTP error! status: ${response.status}`;
+    throw new Error(message);
+  }
+
+  return response.json();
+};
