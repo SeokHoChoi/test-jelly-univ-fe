@@ -4,8 +4,16 @@ import { useEffect, useState } from 'react';
 import { approvePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
 
+type ApproveResult = {
+  payment: {
+    amount: number;
+    cardName?: string;
+    receiptUrl?: string;
+  };
+};
+
 export default function PaymentResultPage() {
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<ApproveResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,8 +45,9 @@ export default function PaymentResultPage() {
         setResult(response.data);
         sessionStorage.removeItem('np_orderId');
         sessionStorage.removeItem('np_amount');
-      } catch (err: any) {
-        setError(err?.message || '결제 승인 실패');
+      } catch (err) {
+        const message = err instanceof Error ? err.message : '결제 승인 실패';
+        setError(message);
       } finally {
         setLoading(false);
       }
