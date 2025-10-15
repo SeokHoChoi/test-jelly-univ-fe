@@ -79,7 +79,7 @@ const SignupPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                이름
+                <span className="text-red-500 mr-1">*</span>이름
               </label>
               <input
                 {...register('name', { required: '이름을 입력해주세요' })}
@@ -94,7 +94,7 @@ const SignupPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                이메일
+                <span className="text-red-500 mr-1">*</span>이메일
               </label>
               <input
                 {...register('email', {
@@ -115,7 +115,7 @@ const SignupPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                비밀번호
+                <span className="text-red-500 mr-1">*</span>비밀번호
               </label>
               <input
                 {...register('password', {
@@ -140,7 +140,7 @@ const SignupPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                비밀번호 확인
+                <span className="text-red-500 mr-1">*</span>비밀번호 확인
               </label>
               <input
                 {...register('confirmPassword', {
@@ -164,6 +164,7 @@ const SignupPage = () => {
                   className="h-4 w-4 text-brand-blue focus:ring-brand-blue border-gray-300 rounded mt-1"
                 />
                 <span className="ml-2 text-sm text-gray-600">
+                  <span className="text-red-500 mr-1">*</span>
                   <Link href="/terms" className="text-brand-blue hover:text-brand-blue-dark">
                     이용약관
                   </Link>
@@ -181,6 +182,7 @@ const SignupPage = () => {
                   className="h-4 w-4 text-brand-blue focus:ring-brand-blue border-gray-300 rounded mt-1"
                 />
                 <span className="ml-2 text-sm text-gray-600">
+                  <span className="text-red-500 mr-1">*</span>
                   <Link href="/privacy" className="text-brand-blue hover:text-brand-blue-dark">
                     개인정보처리방침
                   </Link>
