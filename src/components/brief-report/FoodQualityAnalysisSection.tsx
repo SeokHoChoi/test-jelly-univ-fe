@@ -2,6 +2,7 @@
 
 // import { Check } from 'lucide-react';
 import { useMemo } from 'react';
+import { ChevronRight } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
 import InfoBar from '@/components/common/InfoBar';
@@ -10,11 +11,11 @@ import { useRatingStore, type RatingData } from '@/contexts/RatingStore';
 import ReportTabs from '@/components/brief-report/ReportTabs';
 
 const FoodQualityAnalysisSection = () => {
-  // const scrollTo = (targetId: string) => {
-  //   if (typeof window === 'undefined') return;
-  //   const el = document.getElementById(targetId);
-  //   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  // };
+  const scrollTo = (targetId: string) => {
+    if (typeof window === 'undefined') return;
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   // 무한 루프 방지: 스토어에서 파생값을 직접 구독하지 말고 원본 응답만 구독
   const response = useRatingStore((s) => s.response);
   const foods = useMemo(() => {
@@ -304,7 +305,12 @@ const FoodQualityAnalysisSection = () => {
             {/* 종합 평가 카드 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-7 mb-8">
               {overallGrades.map((item, idx) => (
-                <EvalCard key={idx} title={item.label} grade={item.grade} />
+                <EvalCard
+                  key={idx}
+                  title={item.label}
+                  grade={item.grade}
+                  onArrowClick={() => scrollTo('detailed-assessment')}
+                />
               ))}
             </div>
 
@@ -330,7 +336,7 @@ const FoodQualityAnalysisSection = () => {
           </div>
 
           {/* 세부 평가 제목 */}
-          <div className="flex items-center gap-2 mb-8">
+          <div id="detailed-assessment" className="flex items-center gap-2 mb-8">
             <span className="text-[25px]">✔️</span>
             <h3 className="text-[25px] font-semibold text-[#1E1E1E]">
               사료 품질 세부 평가
