@@ -36,12 +36,15 @@ const PetSuitabilitySection = () => {
             {/* 왼쪽: 경고 영역 */}
             <div className="text-center w-full sm:w-[280px] md:w-[300px] flex-shrink-0">
               <div className="text-[30px] sm:text-[35px] md:text-[40px] mb-[5px]">🤯</div>
-              <div className="text-[#DA0E0E] font-medium text-[16px] sm:text-[18px] md:text-[20px] leading-[20px] sm:leading-[23px] md:leading-[26px] mb-[20px] sm:mb-[22px] md:mb-[25px]">
+              <div className="text-[#DA0E0E] font-semibold text-[20px] leading-[26px] mb-[10px] sm:mb-[18px] md:mb-[21px]">
                 {overall?.recommendedAction || '권장 조치를 확인해 주세요.'}
               </div>
-              <button className="bg-[#003DA5] hover:bg-[#002A7A] text-white px-[20px] sm:px-[24px] md:px-8 py-[10px] sm:py-[12px] md:py-3 rounded-[40px] sm:rounded-[45px] md:rounded-[50px] font-semibold text-[14px] sm:text-[15px] md:text-[16px] transition-colors">
-                더 알아보기 →
-              </button>
+              {/* 데스크톱에서만 버튼 표시 */}
+              <div className="hidden md:flex justify-center">
+                <button className="bg-[#003DA5] hover:bg-[#002A7A] text-white px-[20px] sm:px-[24px] md:px-8 py-[10px] sm:py-[12px] md:py-3 rounded-[40px] sm:rounded-[45px] md:rounded-[50px] font-semibold text-[14px] sm:text-[15px] md:text-[16px] transition-colors">
+                  자세히 알아보기
+                </button>
+              </div>
             </div>
 
             {/* 오른쪽: 상세 분석 */}
@@ -61,6 +64,13 @@ const PetSuitabilitySection = () => {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* 모바일에서만 표시되는 버튼 - 하얀 카드를 꽉 채움 */}
+          <div className="md:hidden mt-14">
+            <button className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-[12px] rounded-[30px] font-semibold text-[16px] transition-colors">
+              자세히 알아보기
+            </button>
           </div>
         </div>
       </div>
