@@ -253,7 +253,7 @@ const FoodQualityAnalysisSection = () => {
   ];
 
   return (
-    <section id="food-analysis" className="bg-gray-50 pb-12 pt-10 md:pb-20 md:pt-20">
+    <section id="food-analysis" className="pt-10 md:pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 상단 탭 - 메인 제목 바로 위, 아래로 40px 간격 */}
         <div className="mb-[40px]">

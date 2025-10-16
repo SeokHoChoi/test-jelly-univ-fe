@@ -23,36 +23,15 @@ const PetSuitabilitySection = () => {
   }, [petName]);
 
   return (
-    <section id="pet-suitability" className="bg-[#003DA5] pt-[40px] sm:pt-[60px] md:pt-[93.5px] pb-[30px] sm:pb-[45px] md:pb-[64.5px] px-[20px] sm:px-[40px] md:px-[64px]">
-      <div className="max-w-7xl mx-auto">
-        {/* 메인 제목 */}
-        <div className="text-center mb-[30px] sm:mb-[45px] md:mb-[62px]">
-          <h1 className="text-[#F2F2F2] font-medium text-[16px] sm:text-[18px] md:text-[20px] mb-[15px] sm:mb-[18px] md:mb-[20px]">
-            {petName}의 맞춤 식단 분석
-          </h1>
-          <h2 className="text-[#FFFFFF] font-medium text-[24px] sm:text-[32px] md:text-[45px] mb-[12px] sm:mb-[18px] md:mb-[24px]">
-            {headerTitle.split('\\n')[0]}<br className="sm:hidden" />
-            {headerTitle.split('\\n')[1]}
-          </h2>
-          {(badge || typeof score === 'number') && (
-            <div className="text-[#E6ECF7] text-[14px] sm:text-[16px] md:text-[18px] mb-[24px] sm:mb-[36px] md:mb-[48px]">
-              {badge && <span className="mr-2">[{badge}]</span>}
-              {typeof score === 'number' && <span>종합 점수 {score}점</span>}
-            </div>
-          )}
-          <p className="text-[#F2F2F2] font-normal text-[16px] sm:text-[20px] md:text-[25px] max-w-4xl mx-auto leading-relaxed px-[10px] sm:px-[20px]">
-            급여 중인 사료가 {petName}의 현재 건강 상태와<br className="sm:hidden" />
-            필요 영양에 부합하는지, 그리고<br className="sm:hidden" />
-            현재 급여 방식이 적절한지<br className="sm:hidden" />
-            최종적으로 진단하고 해결책을 제시해 드려요!<br className="sm:hidden" />
-            <span className="hidden sm:inline">
-              급여 중인 사료가 {petName}의 현재 건강 상태와 필요 영양에 부합하는지, 그리고 현재 급여 방식이 적절한지 최종적으로 진단하고 해결책을 제시해 드려요!
-            </span>
-          </p>
-        </div>
-
+    <section id="pet-suitability" className="pt-[30px] pb-[40px] sm:pt-[45px] sm:pb-[60px] md:pt-[64.5px] md:pb-[93.5px] px-[20px] sm:px-[40px] md:px-[64px]">
+      <div className="max-w-[1008px] mx-auto">
         {/* 하얀 박스 */}
-        <div className="bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[20px] py-[20px] sm:py-[23px] md:py-[26px] px-[15px] sm:px-[20px] md:px-0">
+        <div
+          className="bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[20px] py-[20px] sm:py-[23px] md:py-[26px] px-[15px] sm:px-[20px] md:px-0"
+          style={{
+            boxShadow: '10px 5px 30px 0px rgba(0, 0, 0, 0.15)'
+          }}
+        >
           <div className="flex flex-col md:flex-row justify-center items-center gap-[30px] sm:gap-[40px] md:gap-[52px] max-w-4xl mx-auto">
             {/* 왼쪽: 경고 영역 */}
             <div className="text-center w-full sm:w-[280px] md:w-[300px] flex-shrink-0">
