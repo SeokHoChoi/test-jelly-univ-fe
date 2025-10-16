@@ -216,7 +216,7 @@ const FoodQualityAnalysisSection = () => {
 
   const detailedAssessments = [
     {
-      id: '01',
+      id: '1',
       title: '영양 정보 신뢰도',
       items: [
         { label: '기준 충족\n(표기 기준/범위)', grade: rel?.standardCompliance?.grade ?? 'N/A' },
@@ -225,7 +225,7 @@ const FoodQualityAnalysisSection = () => {
       ]
     },
     {
-      id: '02',
+      id: '2',
       title: '영양 설계 균형도',
       items: [
         { label: '주요 영양소\n비율 및 적정성', grade: bal?.macronutrientRatio?.grade ?? 'N/A' },
@@ -234,7 +234,7 @@ const FoodQualityAnalysisSection = () => {
       ]
     },
     {
-      id: '03',
+      id: '3',
       title: '원료 품질',
       items: [
         { label: '주원료의 구성\n및 영양 밀도', grade: ing?.primaryIngredients?.grade ?? 'N/A' },
@@ -243,7 +243,7 @@ const FoodQualityAnalysisSection = () => {
       ]
     },
     {
-      id: '04',
+      id: '4',
       title: '제조 품질',
       items: [
         { label: '제조국/제조사\n신뢰도', grade: mfg?.countryReliability?.grade ?? 'N/A' },
@@ -347,21 +347,22 @@ const FoodQualityAnalysisSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {detailedAssessments.map((assessment) => (
               <div key={assessment.id} className="bg-white rounded-[20px] p-6">
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-8 md:mb-6">
                   <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
                     {assessment.id}
                   </span>
-                  <h4 className="text-[25px] font-semibold text-[#003DA5]">
+                  <h4 className="text-[18px] md:text-[25px] font-semibold text-[#003DA5]">
                     {assessment.title}
                   </h4>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6 md:space-y-5">
                   {assessment.items.map((item, index) => (
                     <RatingBar
                       key={index}
                       label={item.label}
                       selectedGrade={item.grade}
+                      orderNumber={`${assessment.id}-${index + 1}`}
                     />
                   ))}
                 </div>
