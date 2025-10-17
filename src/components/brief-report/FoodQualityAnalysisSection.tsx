@@ -147,7 +147,9 @@ const FoodQualityAnalysisSection = () => {
             return rel?.transparencyLevel?.detail || '영양 성분 공개 수준을 확인할 수 있습니다.';
         }
       })();
-      return `${part1} 또한, ${part2}`;
+      const base = `${part1} 또한, ${part2}`;
+      const hasFatal = Boolean((rel?.fatalFlaws && rel.fatalFlaws.length > 0) || (rel?.fatalFlawConditions && rel.fatalFlawConditions.length > 0));
+      return hasFatal ? `${base} ⛔️ 핵심 영양 정보 누락 또는 기준 미달이 확인되었습니다.` : base;
     })();
   const balanceText =
     (() => {
@@ -200,7 +202,9 @@ const FoodQualityAnalysisSection = () => {
         }
       })();
       const parts = [mText, minText, fText].filter(Boolean);
-      return parts.length ? parts.join(' ') : '주요 영양소 비율과 미네랄/지방산 균형을 확인할 수 있습니다.';
+      const base = parts.length ? parts.join(' ') : '주요 영양소 비율과 미네랄/지방산 균형을 확인할 수 있습니다.';
+      const hasFatal = Boolean((bal?.fatalFlaws && bal.fatalFlaws.length > 0) || (bal?.fatalFlawConditions && bal.fatalFlawConditions.length > 0));
+      return hasFatal ? `${base} ⛔️ 필수 영양소 또는 미네랄/지방산 기준 미달이 확인되었습니다.` : base;
     })();
   const ingredientText =
     (() => {
@@ -236,7 +240,9 @@ const FoodQualityAnalysisSection = () => {
         }
       })();
       const parts = [pText, sText].filter(Boolean);
-      return parts.length ? parts.join(' ') : '주원료의 구성과 안전성을 검토했습니다.';
+      const base = parts.length ? parts.join(' ') : '주원료의 구성과 안전성을 검토했습니다.';
+      const hasFatal = Boolean((ing?.fatalFlaws && ing.fatalFlaws.length > 0) || (ing?.fatalFlawConditions && ing.fatalFlawConditions.length > 0));
+      return hasFatal ? `${base} ⛔️ 저품질/위험 신호 원료가 확인되었습니다.` : base;
     })();
   const manufacturingText =
     (() => {
@@ -255,12 +261,93 @@ const FoodQualityAnalysisSection = () => {
       }
     })();
 
+  // 긴급 경고 배너 노출 판단 및 문구 매핑
+  const firstRating = response?.foodRatings?.[0]?.rating;
+  const hasUrgent = firstRating?.alertSeverity === 'urgent' || response?.overallSummary?.hasUrgentAlert === true;
+  const urgentTitle = (() => {
+    switch (firstRating?.alertMessageKey) {
+      case 'low_reliability_feed':
+        return '주요 영양소 최소 권장량 미달 의심';
+      default:
+        return firstRating?.alertCategory || '긴급 점검 필요';
+    }
+  })();
+  const urgentDesc = (() => {
+    switch (firstRating?.alertMessageKey) {
+      case 'low_reliability_feed':
+        return 'AAFCO/FEDIAF에서 제시하는 주요 영양소 최소 권장량에 부합하지 않음';
+      default:
+        return '해당 사료는 중요한 안전/영양 이슈가 발견되어 즉시 점검이 필요합니다.';
+    }
+  })();
+
   const overallGrades = [
     { label: '영양 정보 신뢰도', grade: reliabilityGrade },
     { label: '영양 설계 균형도', grade: balanceGrade },
     { label: '원료 품질', grade: ingredientGrade },
     { label: '제조 품질', grade: manufacturingGrade },
   ];
+
+  // 뒤집힌 카드에 들어갈 표준 데이터 구조 생성기
+  const buildBackSideContent = (sectionId: string): {
+    summaryLine: string;
+    strengths: string[];
+    weaknesses: string[];
+    fatalFlaws: string[];
+  } => {
+    const overallImprovements = response?.foodRatings?.[0]?.rating?.overallRating?.improvements ?? [];
+    if (sectionId === '1') {
+      const fatal = rel?.fatalFlaws ?? [];
+      const summaryParts = [
+        rel?.overallGrade ? `${rel.overallGrade} 등급` : undefined,
+        typeof rel?.overallScore === 'number' ? `(${rel.overallScore}점)` : undefined,
+        rel?.standardCompliance?.detail,
+        rel?.transparencyLevel?.detail,
+      ].filter(Boolean) as string[];
+      const summaryLine = summaryParts.join(' ').trim();
+      const strengthsArr = [rel?.standardCompliance?.detail, rel?.transparencyLevel?.detail].filter(Boolean) as string[];
+      const weaknessesArr = overallImprovements.length > 0 ? overallImprovements.slice(0, 3).map(String) : ['특별한 결함 없음'];
+      return { summaryLine, strengths: strengthsArr, weaknesses: weaknessesArr, fatalFlaws: fatal };
+    }
+    if (sectionId === '2') {
+      const fatal = bal?.fatalFlaws ?? [];
+      const summaryParts = [
+        bal?.overallGrade ? `${bal.overallGrade} 등급` : undefined,
+        typeof bal?.overallScore === 'number' ? `(${bal.overallScore}점)` : undefined,
+        bal?.macronutrientRatio?.detail,
+        bal?.mineralBalance?.detail,
+        bal?.fattyAcidBalance?.detail,
+      ].filter(Boolean) as string[];
+      const summaryLine = summaryParts.join(' ').trim();
+      const strengthsArr = [bal?.macronutrientRatio?.detail, bal?.mineralBalance?.detail, bal?.fattyAcidBalance?.detail].filter(Boolean) as string[];
+      const weaknessesArr = overallImprovements.length > 0 ? overallImprovements.slice(0, 3).map(String) : ['특별한 결함 없음'];
+      return { summaryLine, strengths: strengthsArr, weaknesses: weaknessesArr, fatalFlaws: fatal };
+    }
+    if (sectionId === '3') {
+      const fatal = ing?.fatalFlaws ?? [];
+      const summaryParts = [
+        ing?.overallGrade ? `${ing.overallGrade} 등급` : undefined,
+        typeof ing?.overallScore === 'number' ? `(${ing.overallScore}점)` : undefined,
+        ing?.primaryIngredients?.detail,
+        ing?.ingredientSafety?.detail,
+      ].filter(Boolean) as string[];
+      const summaryLine = summaryParts.join(' ').trim();
+      const strengthsArr = [ing?.primaryIngredients?.detail, ing?.ingredientSafety?.detail].filter(Boolean) as string[];
+      const weaknessesArr = overallImprovements.length > 0 ? overallImprovements.slice(0, 3).map(String) : ['특별한 결함 없음'];
+      return { summaryLine, strengths: strengthsArr, weaknesses: weaknessesArr, fatalFlaws: fatal };
+    }
+    // sectionId === '4' (제조 품질)
+    const fatal = mfg?.fatalFlaws ?? [];
+    const summaryParts = [
+      mfg?.overallGrade ? `${mfg.overallGrade} 등급` : undefined,
+      typeof mfg?.overallScore === 'number' ? `(${mfg.overallScore}점)` : undefined,
+      mfg?.countryReliability?.detail,
+    ].filter(Boolean) as string[];
+    const summaryLine = summaryParts.join(' ').trim();
+    const strengthsArr = [mfg?.countryReliability?.detail].filter(Boolean) as string[];
+    const weaknessesArr = overallImprovements.length > 0 ? overallImprovements.slice(0, 3).map(String) : ['특별한 결함 없음'];
+    return { summaryLine, strengths: strengthsArr, weaknesses: weaknessesArr, fatalFlaws: fatal };
+  };
 
   const detailedAssessments = [
     {
@@ -395,6 +482,7 @@ const FoodQualityAnalysisSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {detailedAssessments.map((assessment) => {
               const isFlipped = flippedCards.has(assessment.id);
+              const back = buildBackSideContent(assessment.id);
               return (
                 <div
                   key={assessment.id}
@@ -447,13 +535,84 @@ const FoodQualityAnalysisSection = () => {
                     </div>
 
                     {/* 뒷면 */}
-                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden rotate-y-180 flex items-center justify-center">
-                      <div className="text-center text-[#003DA5]">
-                        <div className="text-[20px] md:text-[32px] font-bold mb-3 md:mb-4">
-                          {assessment.title}
+                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden rotate-y-180 flex">
+                      <div className="flex flex-col w-full h-full">
+                        {/* 헤더 */}
+                        <div className="flex items-center gap-3 mb-5">
+                          <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
+                            {assessment.id}
+                          </span>
+                          <h4 className="text-[18px] md:text-[22px] font-semibold text-[#003DA5]">
+                            {assessment.title}
+                          </h4>
                         </div>
-                        <div className="text-[14px] md:text-[18px] text-[#525252]">
-                          상세 정보가 곧 추가됩니다
+
+                        {/* 스크롤 가능한 콘텐츠 영역 */}
+                        <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+                          <div className="space-y-3">
+                            {/* 한 줄 평 카드 */}
+                            <div className="bg-[#F5F5F5] rounded-[14px] px-4 py-3">
+                              <div className="text-[14px] md:text-[16px] font-semibold text-[#1E1E1E] mb-2">📝 한 줄 평</div>
+                              <p className="text-[13px] md:text-[15px] leading-[20px] md:leading-[22px] text-[#1E1E1E]">{back.summaryLine}</p>
+                            </div>
+
+                            {/* 장점 카드 */}
+                            <div className="bg-[#F5F5F5] rounded-[14px] px-4 py-3">
+                              <div className="text-[14px] md:text-[16px] font-semibold text-[#1E1E1E] mb-2">👍 사료의 주요 장점</div>
+                              {back.strengths.length > 0 ? (
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {back.strengths.slice(0, 3).map((s, i) => (
+                                    <li key={i} className="text-[13px] md:text-[15px] text-[#1E1E1E]">{s}</li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <p className="text-[13px] md:text-[15px] text-[#6B7280]">제공된 장점 정보가 없습니다.</p>
+                              )}
+                            </div>
+
+                            {/* 단점 및 주의사항 카드 */}
+                            <div className="bg-[#F5F5F5] rounded-[14px] px-4 py-3">
+                              <div className="text-[14px] md:text-[16px] font-semibold text-[#1E1E1E] mb-2">👀 사료의 주요 단점 및 주의사항</div>
+                              {back.weaknesses.length > 0 ? (
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {back.weaknesses.slice(0, 3).map((w, i) => (
+                                    <li key={i} className="text-[13px] md:text-[15px] text-[#1E1E1E]">{w}</li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <p className="text-[13px] md:text-[15px] text-[#6B7280]">주의사항 정보가 없습니다.</p>
+                              )}
+                            </div>
+
+                            {/* 치명적 결함(섹션별) */}
+                            {Array.isArray(back.fatalFlaws) && back.fatalFlaws.length > 0 && (
+                              <div className="bg-[#FFF1F0] border border-[#FF6A3D]/40 text-[#B42318] rounded-[14px] px-4 py-3">
+                                <div className="text-[14px] md:text-[16px] font-semibold mb-1">⛔ 치명적 결함</div>
+                                <ul className="list-disc pl-5 space-y-1">
+                                  {back.fatalFlaws.slice(0, 3).map((f, i) => (
+                                    <li key={i} className="text-[13px] md:text-[15px]">{f}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {/* 긴급 경고 배너 */}
+                            {hasUrgent && (
+                              <div className="bg-[#FF6A3D] text-white rounded-[16px] px-5 py-4">
+                                <div className="text-[15px] md:text-[16px] font-semibold mb-2">🚫 {urgentTitle}</div>
+                                <div className="text-[13px] md:text-[15px] leading-[20px] md:leading-[22px]">
+                                  {urgentDesc}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* 하단 링크 */}
+                        <div className="mt-3 text-center pt-1">
+                          <button type="button" className="text-[#003DA5] text-[14px] md:text-[15px] font-medium hover:underline">
+                            해당 사료 전체 프로필 확인하기 →
+                          </button>
                         </div>
                       </div>
                     </div>
