@@ -76,7 +76,7 @@ export default function CheckoutPage() {
   // NICEPAY SDK 로더
   const ensureNiceSdkLoaded = (): Promise<void> => {
     return new Promise((resolve, reject) => {
-      if (typeof window !== 'undefined' && (window as any).AUTHNICE) {
+      if (typeof window !== 'undefined' && (window as { AUTHNICE?: unknown }).AUTHNICE) {
         resolve();
         return;
       }
@@ -129,7 +129,7 @@ export default function CheckoutPage() {
 
       // NICEPAY 결제창 호출
       await ensureNiceSdkLoaded();
-      (window as any).AUTHNICE.requestPay({
+      (window as { AUTHNICE: { requestPay: (data: unknown) => void } }).AUTHNICE.requestPay({
         clientId: modifiedData.clientId,
         method: 'card',
         orderId: modifiedData.orderId,

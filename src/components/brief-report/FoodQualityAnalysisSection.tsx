@@ -1,7 +1,7 @@
 "use client";
 
 // import { Check } from 'lucide-react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 // import { ChevronRight } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
@@ -11,10 +11,36 @@ import { useRatingStore, type RatingData } from '@/contexts/RatingStore';
 import ReportTabs from '@/components/brief-report/ReportTabs';
 
 const FoodQualityAnalysisSection = () => {
+  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
+
   const scrollTo = (targetId: string) => {
     if (typeof window === 'undefined') return;
     const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const toggleCard = (cardId: string) => {
+    setFlippedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cardId)) {
+        newSet.delete(cardId);
+      } else {
+        newSet.add(cardId);
+      }
+      return newSet;
+    });
+  };
+
+  const flipCard = (cardId: string) => {
+    setFlippedCards(prev => new Set(prev).add(cardId));
+  };
+
+  const unflipCard = (cardId: string) => {
+    setFlippedCards(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(cardId);
+      return newSet;
+    });
   };
   // 무한 루프 방지: 스토어에서 파생값을 직접 구독하지 말고 원본 응답만 구독
   const response = useRatingStore((s) => s.response);
@@ -367,29 +393,74 @@ const FoodQualityAnalysisSection = () => {
 
           {/* 세부 평가 카드들 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {detailedAssessments.map((assessment) => (
-              <div key={assessment.id} className="bg-white rounded-[20px] p-6">
-                <div className="flex items-center gap-3 mb-8 md:mb-6">
-                  <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
-                    {assessment.id}
-                  </span>
-                  <h4 className="text-[18px] md:text-[25px] font-semibold text-[#003DA5]">
-                    {assessment.title}
-                  </h4>
-                </div>
+            {detailedAssessments.map((assessment) => {
+              const isFlipped = flippedCards.has(assessment.id);
+              return (
+                <div
+                  key={assessment.id}
+                  className="relative h-[500px] md:h-[400px] cursor-pointer md:cursor-default"
+                  onClick={() => {
+                    // 모바일에서만 클릭으로 토글
+                    if (window.innerWidth < 768) {
+                      toggleCard(assessment.id);
+                    }
+                  }}
+                  onMouseEnter={() => {
+                    // 데스크탑에서만 호버로 뒤집기
+                    if (window.innerWidth >= 768) {
+                      flipCard(assessment.id);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    // 데스크탑에서만 호버 아웃으로 원복
+                    if (window.innerWidth >= 768) {
+                      unflipCard(assessment.id);
+                    }
+                  }}
+                >
+                  {/* 카드 컨테이너 */}
+                  <div
+                    className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : 'rotate-y-0'
+                      }`}
+                  >
+                    {/* 앞면 */}
+                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden flex flex-col">
+                      <div className="flex items-center gap-3 mb-6 md:mb-6">
+                        <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
+                          {assessment.id}
+                        </span>
+                        <h4 className="text-[18px] md:text-[25px] font-semibold text-[#003DA5]">
+                          {assessment.title}
+                        </h4>
+                      </div>
 
-                <div className="space-y-6 md:space-y-5">
-                  {assessment.items.map((item, index) => (
-                    <RatingBar
-                      key={index}
-                      label={item.label}
-                      selectedGrade={item.grade}
-                      orderNumber={`${assessment.id}-${index + 1}`}
-                    />
-                  ))}
+                      <div className="flex-1 space-y-4 md:space-y-5">
+                        {assessment.items.map((item, index) => (
+                          <RatingBar
+                            key={index}
+                            label={item.label}
+                            selectedGrade={item.grade}
+                            orderNumber={`${assessment.id}-${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 뒷면 */}
+                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden rotate-y-180 flex items-center justify-center">
+                      <div className="text-center text-[#003DA5]">
+                        <div className="text-[20px] md:text-[32px] font-bold mb-3 md:mb-4">
+                          {assessment.title}
+                        </div>
+                        <div className="text-[14px] md:text-[18px] text-[#525252]">
+                          상세 정보가 곧 추가됩니다
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* 참고 배너 */}
