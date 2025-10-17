@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
-import NicePayButton from '@/components/NicePayButton';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import { Check } from 'lucide-react';
@@ -12,22 +11,26 @@ import { Check } from 'lucide-react';
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
+  const [dogName, setDogName] = useState<string>('냥구');
 
-  type PaymentData = {
-    clientId: string;
-    orderId: string;
-    amount: number;
-    goodsName: string;
-    returnUrl: string;
-    timestamp: string;
-    signature: string;
-    buyerName?: string;
-    buyerEmail?: string;
-    buyerTel?: string;
-  } | null;
-
-  const [paymentData, setPaymentData] = useState<PaymentData>(null);
   const router = useRouter();
+
+  // 세션스토리지에서 강아지 이름 가져오기
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const raw = sessionStorage.getItem('rating-store');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed?.state?.response?.dogInfo?.name) {
+            setDogName(parsed.state.response.dogInfo.name);
+          }
+        }
+      } catch (error) {
+        console.error('강아지 이름을 가져오는 중 오류 발생:', error);
+      }
+    }
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -70,7 +73,29 @@ export default function CheckoutPage() {
     },
   ];
 
-  const handlePreparePayment = async () => {
+  // NICEPAY SDK 로더
+  const ensureNiceSdkLoaded = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (typeof window !== 'undefined' && (window as any).AUTHNICE) {
+        resolve();
+        return;
+      }
+      const existing = document.querySelector('script[src="https://pay.nicepay.co.kr/v1/js/"]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve());
+        existing.addEventListener('error', () => reject(new Error('SDK 로드 실패')));
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://pay.nicepay.co.kr/v1/js/';
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error('SDK 로드 실패'));
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePrepareAndPay = async () => {
     try {
       setLoading(true);
 
@@ -102,8 +127,28 @@ export default function CheckoutPage() {
         returnUrl: `${window.location.origin}/api/payment/result` // API 라우트로 설정
       };
 
-      // 결제 데이터 설정 (NicePayButton에서 사용)
-      setPaymentData(modifiedData);
+      // NICEPAY 결제창 호출
+      await ensureNiceSdkLoaded();
+      (window as any).AUTHNICE.requestPay({
+        clientId: modifiedData.clientId,
+        method: 'card',
+        orderId: modifiedData.orderId,
+        amount: modifiedData.amount,
+        goodsName: modifiedData.goodsName,
+        returnUrl: modifiedData.returnUrl,
+        sandbox: true,
+        ...(modifiedData.timestamp && { timestamp: Number(modifiedData.timestamp) }),
+        ...(modifiedData.signature && { signature: modifiedData.signature }),
+        buyerName: modifiedData.buyerName ?? '',
+        buyerEmail: modifiedData.buyerEmail ?? '',
+        buyerTel: modifiedData.buyerTel ?? '',
+        fnSuccess: () => { },
+        fnFail: () => { alert('결제에 실패했습니다. 다시 시도해주세요.'); },
+        fnError: (err: unknown) => {
+          const message = err && typeof err === 'object' && 'message' in err ? String((err as { message?: unknown }).message) : String(err);
+          alert('결제 중 오류가 발생했습니다: ' + message);
+        },
+      });
 
     } catch (err) {
       console.error(err);
@@ -151,7 +196,7 @@ export default function CheckoutPage() {
         {/* 헤드라인 */}
         <div className='text-center mb-10 md:mb-16'>
           <h1 className='text-[25px] md:text-[40px] leading-tight'>
-            <span className='text-[#003DA5] font-semibold'>냥구</span>
+            <span className='text-[#003DA5] font-semibold'>{dogName}</span>
             <span className='text-[#000000] font-medium'>의 현재 식단, 정말 안전한지<br />
               서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span>
           </h1>
@@ -185,38 +230,15 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* 첫 번째 결제 버튼 */}
+              {/* 결제 버튼 (UI 동일, 클릭 시 프리페어 후 즉시 결제) */}
               <div className='mb-8'>
-                {!paymentData ? (
-                  <button
-                    onClick={handlePreparePayment}
-                    disabled={loading}
-                    className='w-full bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg font-bold rounded-lg transition-colors disabled:opacity-50'
-                  >
-                    {loading ? '결제 준비 중...' : '결제하기'}
-                  </button>
-                ) : (
-                  <div className='w-full'>
-                    <NicePayButton
-                      clientId={paymentData.clientId}
-                      orderId={paymentData.orderId}
-                      amount={paymentData.amount}
-                      goodsName={paymentData.goodsName}
-                      returnUrl={paymentData.returnUrl}
-                      timestamp={Number(paymentData.timestamp)}
-                      signature={paymentData.signature}
-                      buyerName={paymentData.buyerName ?? ''}
-                      buyerEmail={paymentData.buyerEmail ?? ''}
-                      buyerTel={paymentData.buyerTel ?? ''}
-                      onSuccess={() => {
-                        // 결제 성공 시 추가 처리 (필요시)
-                      }}
-                      onFail={() => {
-                        alert('결제에 실패했습니다. 다시 시도해주세요.');
-                      }}
-                    />
-                  </div>
-                )}
+                <button
+                  onClick={handlePrepareAndPay}
+                  disabled={loading}
+                  className='w-full bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg font-bold rounded-lg transition-colors disabled:opacity-50'
+                >
+                  {loading ? '결제 준비 중...' : '결제하기'}
+                </button>
               </div>
             </div>
 
@@ -314,36 +336,13 @@ export default function CheckoutPage() {
       {/* 하단 고정 결제 영역 */}
       <div className='sticky bottom-0 left-0 right-0 bg-white'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex justify-center'>
-          {!paymentData ? (
-            <button
-              onClick={handlePreparePayment}
-              disabled={loading}
-              className='w-full md:w-auto min-w-[200px] bg-[#003DA5] hover:bg-[#002A7A] text-white px-6 py-3 rounded-[10px] font-semibold disabled:opacity-50'
-            >
-              {loading ? '결제 준비 중...' : '결제하기'}
-            </button>
-          ) : (
-            <div className='w-full md:w-auto'>
-              <NicePayButton
-                clientId={paymentData.clientId}
-                orderId={paymentData.orderId}
-                amount={paymentData.amount}
-                goodsName={paymentData.goodsName}
-                returnUrl={paymentData.returnUrl}
-                timestamp={Number(paymentData.timestamp)}
-                signature={paymentData.signature}
-                buyerName={paymentData.buyerName ?? ''}
-                buyerEmail={paymentData.buyerEmail ?? ''}
-                buyerTel={paymentData.buyerTel ?? ''}
-                onSuccess={() => {
-                  // 결제 성공 시 추가 처리 (필요시)
-                }}
-                onFail={() => {
-                  alert('결제에 실패했습니다. 다시 시도해주세요.');
-                }}
-              />
-            </div>
-          )}
+          <button
+            onClick={handlePrepareAndPay}
+            disabled={loading}
+            className='w-full md:w-auto min-w-[200px] bg-[#003DA5] hover:bg-[#002A7A] text-white px-6 py-3 rounded-[10px] font-semibold disabled:opacity-50'
+          >
+            {loading ? '결제 준비 중...' : '결제하기'}
+          </button>
         </div>
       </div>
     </div>
