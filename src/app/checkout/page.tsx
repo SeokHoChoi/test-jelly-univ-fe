@@ -11,6 +11,8 @@ import { Check } from 'lucide-react';
 
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('plan');
+
   type PaymentData = {
     clientId: string;
     orderId: string;
@@ -26,6 +28,13 @@ export default function CheckoutPage() {
 
   const [paymentData, setPaymentData] = useState<PaymentData>(null);
   const router = useRouter();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // 후기 데이터 (home 페이지와 동일)
   const reviews = [
@@ -108,17 +117,49 @@ export default function CheckoutPage() {
     <div className='min-h-screen bg-white'>
       {/* 상단 컨테이너 */}
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 md:pt-12'>
+        {/* 스크롤 액션 버튼 */}
+        <div className='w-full flex justify-center mb-8'>
+          <nav>
+            <div className='inline-flex items-center gap-1 bg-white rounded-full p-1 border border-gray-200 overflow-x-auto'>
+              {[
+                { id: 'plan', label: '플랜' },
+                { id: 'process', label: '프로세스' },
+                { id: 'reviews', label: '후기' }
+              ].map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      scrollToSection(tab.id);
+                    }}
+                    className={`whitespace-nowrap h-10 px-5 rounded-full text-sm md:text-base font-medium transition-all duration-200 ${isActive
+                      ? 'bg-[#003DA5] text-white shadow'
+                      : 'text-gray-700 hover:bg-blue-50 active:bg-blue-100'
+                      }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
+
         {/* 헤드라인 */}
         <div className='text-center mb-10 md:mb-16'>
-          <h1 className='text-[22px] md:text-[45px] font-medium text-[#000000] leading-tight'>
-            <span className='text-[#003DA5]'>냥구</span>의 현재 식단, 정말 안전한지<br />
-            서울대·한국수의영양학회 임원 수의사가 분석해 드려요!
+          <h1 className='text-[25px] md:text-[40px] leading-tight'>
+            <span className='text-[#003DA5] font-semibold'>냥구</span>
+            <span className='text-[#000000] font-medium'>의 현재 식단, 정말 안전한지<br />
+              서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span>
           </h1>
         </div>
 
         {/* 가격 카드 */}
-        <div className='flex justify-center mb-12 md:mb-16'>
-          <Card className='relative w-full max-w-[400px] border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px]'>
+        <div id="plan" className='flex justify-center mb-12 md:mb-16'>
+          <Card className='relative w-full max-w-[571px] border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px]'>
             {/* 할인 배지 */}
             <div className='absolute -top-3 left-1/2 -translate-x-1/2'>
               <span className='bg-red-500 text-white px-4 py-2 rounded-full text-base font-medium'>
@@ -203,18 +244,18 @@ export default function CheckoutPage() {
         </div>
 
         {/* 서비스 프로세스 */}
-        <div className='mb-12 md:mb-16'>
+        <div id="process" className='mb-12 md:mb-16 mt-1'>
           <div className='text-center mb-10 md:mb-18'>
             <p className='text-[15px] md:text-[20px] font-medium text-[#003DA5] mb-[15px] md:mb-[20px]'>
               서비스 프로세스
             </p>
-            <h2 className='text-[22px] md:text-[45px] font-medium text-[#000000] leading-tight'>
+            <h2 className='text-[25px] md:text-[40px] font-medium text-[#000000] leading-tight'>
               우리 아이만을 위한 1:1 맞춤 리포트<br />
               이렇게 제공해드려요
             </h2>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+          <div className='flex flex-col md:flex-row justify-center items-center gap-4'>
             {[
               {
                 no: '01',
@@ -224,30 +265,43 @@ export default function CheckoutPage() {
               {
                 no: '02',
                 title: '리포트 제작',
-                desc: '제출해주신 정보를 바탕으로, 국내에서 손꼽히는 기량과 데이터를 학습한 최신 AI와 서울대 출신 수의영양 전문가가 리포트를 제작합니다.'
+                desc: '제출하신 정보를 바탕으로\n국제적으로 신뢰받는 기관들의\n데이터를 학습한 AI와 서울대\n출신 수의영양 전문가가\n리포트를 제작합니다.'
               },
               {
                 no: '03',
                 title: '리포트 발송',
-                desc: '결제 이후, 영업일 기준 3-5일 이내 회원가입 시 기재한 이메일 주소로 리포트를 발송해드립니다.'
+                desc: '결제 이후, 영업일 기준\n3~5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
               }
             ].map((item) => (
-              <div key={item.no} className='bg-[#003DA5] text-white rounded-[16px] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.15)]'>
-                <div className='text-[24px] md:text-[28px] font-bold mb-3'>{item.no}</div>
-                <div className='text-[20px] md:text-[24px] font-semibold mb-4'>{item.title}</div>
-                <p className='text-[15px] md:text-[17px] leading-relaxed opacity-90'>{item.desc}</p>
+              <div
+                key={item.no}
+                className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)]'
+                style={{
+                  width: '375px',
+                  height: '424px',
+                  padding: item.no === '03' ? '37px 70px 37px 44px' : '37px 37px 37px 44px'
+                }}
+              >
+                <div className='text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
+                <div className='text-[35px] font-medium text-white leading-none' style={{ marginBottom: '85px' }}>{item.title}</div>
+                <p
+                  className='text-[25px] font-normal text-white opacity-90'
+                  style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
+                >
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
         {/* 후기 섹션 */}
-        <div className='mb-12 md:mb-16'>
-          <div className='text-center mb-10 md:mb-18'>
+        <div id="reviews" className='mb-12 md:mb-16' style={{ marginTop: '70px' }}>
+          <div className='text-center mb-10 md:mb-10'>
             <p className='text-[15px] md:text-[20px] font-medium text-[#003DA5] mb-[15px] md:mb-[20px]'>
               CBT 참여 보호자들의 후기
             </p>
-            <h2 className='text-[22px] md:text-[45px] font-medium text-[#000000] leading-tight'>
+            <h2 className='text-[25px] md:text-[40px] font-medium text-[#000000] leading-tight'>
               현재 식단 분석을 경험한<br />
               실제 보호자들의 후기를 확인해보세요!
             </h2>
