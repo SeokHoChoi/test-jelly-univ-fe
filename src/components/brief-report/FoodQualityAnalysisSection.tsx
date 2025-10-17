@@ -354,9 +354,9 @@ const FoodQualityAnalysisSection = () => {
       id: '1',
       title: '영양 정보 신뢰도',
       items: [
-        { label: '기준 충족\n(표기 기준/범위)', grade: rel?.standardCompliance?.grade ?? 'N/A' },
+        { label: '국제 표준\n기준 충족도', grade: rel?.standardCompliance?.grade ?? 'N/A' },
         { label: '영양 정보\n공개 수준', grade: rel?.transparencyLevel?.grade ?? 'N/A' },
-        { label: '종합 신뢰도\n(요약)', grade: rel?.overallGrade ?? 'N/A' },
+        // { label: '종합 신뢰도\n(요약)', grade: rel?.overallGrade ?? 'N/A' },
       ]
     },
     {
@@ -373,16 +373,16 @@ const FoodQualityAnalysisSection = () => {
       title: '원료 품질',
       items: [
         { label: '주원료의 구성\n및 영양 밀도', grade: ing?.primaryIngredients?.grade ?? 'N/A' },
-        { label: '원료의 안전성\n및 위해요소', grade: ing?.ingredientSafety?.grade ?? 'N/A' },
-        { label: '종합 원료 품질\n(요약)', grade: ing?.overallGrade ?? 'N/A' },
+        { label: '원료의 안전성\n및 기능성', grade: ing?.ingredientSafety?.grade ?? 'N/A' },
+        // { label: '종합 원료 품질\n(요약)', grade: ing?.overallGrade ?? 'N/A' },
       ]
     },
     {
       id: '4',
       title: '제조 품질',
       items: [
-        { label: '제조국/제조사\n신뢰도', grade: mfg?.countryReliability?.grade ?? 'N/A' },
-        { label: '제조 품질\n종합', grade: mfg?.overallGrade ?? 'N/A' },
+        { label: '제조국의\n신뢰도', grade: mfg?.countryReliability?.grade ?? 'N/A' },
+        // { label: '제조 품질\n종합', grade: mfg?.overallGrade ?? 'N/A' },
       ]
     },
   ];
