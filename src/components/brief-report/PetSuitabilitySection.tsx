@@ -1,26 +1,36 @@
 'use client';
 
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 import { useRatingStore } from '@/contexts/RatingStore';
 
 const PetSuitabilitySection = () => {
   const response = useRatingStore((s) => s.response);
-  const dog = response?.dogInfo;
+  // const dog = response?.dogInfo;
   const overall = response?.overallSummary;
   const first = response?.foodRatings?.[0];
   const recommendations = first?.rating?.overallRating?.recommendations ?? [];
   const improvements = first?.rating?.overallRating?.improvements ?? [];
-  const badge = first?.rating?.overallRating?.badge ?? overall?.badge;
-  const score = first?.rating?.overallRating?.score ?? overall?.score;
 
-  const petName = useMemo(() => {
-    const name = dog?.name || '반려견';
-    return name;
-  }, [dog?.name]);
+  // 가중 평균 점수를 우선 사용, 없으면 기존 점수 사용
+  // const badge = first?.rating?.overallRatingWeighted?.badge ?? first?.rating?.overallRating?.badge ?? overall?.badge;
+  // const score = first?.rating?.overallRatingWeighted?.score ?? first?.rating?.overallRating?.score ?? overall?.score;
 
-  const headerTitle = useMemo(() => {
-    return `그래서 이 사료,\n${petName}에게 잘 맞을까?`;
-  }, [petName]);
+  // Alert 정보 활용
+  // const alertLevel = first?.rating?.alertLevel;
+  // const alertMessageKey = first?.rating?.alertMessageKey;
+  // const alertSeverity = first?.rating?.alertSeverity;
+  // const alertCategory = first?.rating?.alertCategory;
+  const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
+  const hasCautionAlert = overall?.hasCautionAlert ?? false;
+
+  // const petName = useMemo(() => {
+  //   const name = dog?.name || '반려견';
+  //   return name;
+  // }, [dog?.name]);
+
+  // const headerTitle = useMemo(() => {
+  //   return `그래서 이 사료,\n${petName}에게 잘 맞을까?`;
+  // }, [petName]);
 
   return (
     <section id="pet-suitability" className="pt-[30px] pb-[40px] sm:pt-[45px] sm:pb-[60px] md:pt-[64.5px] md:pb-[93.5px] px-[20px] sm:px-[40px] md:px-[64px]">
@@ -37,7 +47,11 @@ const PetSuitabilitySection = () => {
             <div className="text-center w-full sm:w-[280px] md:w-[300px] flex-shrink-0">
               <div className="text-[30px] sm:text-[35px] md:text-[40px] mb-[5px]">🤯</div>
               <div className="text-[#DA0E0E] font-semibold text-[20px] leading-[26px] mb-[10px] sm:mb-[18px] md:mb-[21px]">
-                {overall?.recommendedAction || '권장 조치를 확인해 주세요.'}
+                {hasUrgentAlert
+                  ? '즉시 개선이 필요한 사항이 있습니다!'
+                  : hasCautionAlert
+                    ? '주의가 필요한 사항이 있습니다.'
+                    : overall?.recommendedAction || '권장 조치를 확인해 주세요.'}
               </div>
               {/* 데스크톱에서만 버튼 표시 */}
               <div className="hidden md:flex justify-center">

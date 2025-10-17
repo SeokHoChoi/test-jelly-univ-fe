@@ -2,7 +2,7 @@
 
 // import { Check } from 'lucide-react';
 import { useMemo } from 'react';
-import { ChevronRight } from 'lucide-react';
+// import { ChevronRight } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
 import InfoBar from '@/components/common/InfoBar';
@@ -32,6 +32,17 @@ const FoodQualityAnalysisSection = () => {
         improvements?: string[];
         recommendations?: string[];
       };
+      overallWeighted?: {
+        grade: string;
+        score: number;
+        badge: string;
+      };
+      // Alert 필드들 (rating 객체 내부에 직접 위치)
+      alertLevel?: 'urgent' | 'caution' | 'checkup' | null;
+      alertMessageKey?: string;
+      alertSeverity?: 'urgent' | 'caution' | 'checkup';
+      alertCategory?: string;
+      alertDetails?: Record<string, unknown>;
     }>;
     return response.foodRatings.map((fr, idx) => ({
       key: `${fr.foodInfo.id ?? idx}`,
@@ -46,6 +57,17 @@ const FoodQualityAnalysisSection = () => {
         improvements: fr.rating?.overallRating?.improvements,
         recommendations: fr.rating?.overallRating?.recommendations,
       },
+      overallWeighted: fr.rating?.overallRatingWeighted ? {
+        grade: fr.rating.overallRatingWeighted.grade,
+        score: fr.rating.overallRatingWeighted.score,
+        badge: fr.rating.overallRatingWeighted.badge,
+      } : undefined,
+      // Alert 필드들 (rating 객체 내부에 직접 위치)
+      alertLevel: fr.rating?.alertLevel,
+      alertMessageKey: fr.rating?.alertMessageKey,
+      alertSeverity: fr.rating?.alertSeverity,
+      alertCategory: fr.rating?.alertCategory,
+      alertDetails: fr.rating?.alertDetails,
     }));
   }, [response]);
   const first = foods[0];

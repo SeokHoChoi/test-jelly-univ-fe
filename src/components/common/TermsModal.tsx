@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 import { X } from 'lucide-react';
 
 interface TermsModalProps {

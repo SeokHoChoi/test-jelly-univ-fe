@@ -56,6 +56,19 @@ export interface RatingData {
         improvements?: string[];
         recommendations?: string[];
       };
+      overallRatingWeighted?: {
+        grade: string;
+        score: number;
+        badge: string;
+      };
+      // Alert 필드들 (rating 객체 내부에 직접 위치)
+      alertLevel?: 'urgent' | 'caution' | 'checkup' | null;
+      alertMessageKey?: string;
+      alertSeverity?: 'urgent' | 'caution' | 'checkup';
+      alertCategory?: string;
+      alertDetails?: Record<string, unknown>;
+      // 디버그 정보
+      _sectionWeightedScores?: Record<string, number>;
       // 세부 필드 생략: 필요 시 확장
     };
   }>;
@@ -65,6 +78,9 @@ export interface RatingData {
     badge: string;
     summary: string;
     feedCount: number;
+    hasUrgentAlert?: boolean;
+    hasCautionAlert?: boolean;
+    totalFatalFlaws?: number;
     recommendedAction?: string;
   };
 }
@@ -94,6 +110,17 @@ interface RatingState {
       improvements?: string[];
       recommendations?: string[];
     };
+    overallWeighted?: {
+      grade: string;
+      score: number;
+      badge: string;
+    };
+    // Alert 필드들 (rating 객체 내부에 직접 위치)
+    alertLevel?: 'urgent' | 'caution' | 'checkup' | null;
+    alertMessageKey?: string;
+    alertSeverity?: 'urgent' | 'caution' | 'checkup';
+    alertCategory?: string;
+    alertDetails?: Record<string, unknown>;
   }>;
   getOverallSummary: () => RatingData['overallSummary'] | null;
 }
@@ -125,6 +152,17 @@ export const useRatingStore = create<RatingState>()(
             improvements: fr.rating?.overallRating?.improvements,
             recommendations: fr.rating?.overallRating?.recommendations,
           },
+          overallWeighted: fr.rating?.overallRatingWeighted ? {
+            grade: fr.rating.overallRatingWeighted.grade,
+            score: fr.rating.overallRatingWeighted.score,
+            badge: fr.rating.overallRatingWeighted.badge,
+          } : undefined,
+          // Alert 필드들 (rating 객체 내부에 직접 위치)
+          alertLevel: fr.rating?.alertLevel,
+          alertMessageKey: fr.rating?.alertMessageKey,
+          alertSeverity: fr.rating?.alertSeverity,
+          alertCategory: fr.rating?.alertCategory,
+          alertDetails: fr.rating?.alertDetails,
         }));
       },
       getOverallSummary: () => {
