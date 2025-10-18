@@ -6,6 +6,7 @@ import ReportCardHeader from '@/components/common/ReportCardHeader';
 import ReportCardContent from '@/components/common/ReportCardContent';
 import NutrientAnalysisPanel from '@/components/common/NutrientAnalysisPanel';
 import NutrientItem from '@/components/common/NutrientItem';
+import StatusIndicator from '@/components/common/StatusIndicator';
 
 interface PetInfo {
   name: string;
@@ -191,7 +192,7 @@ const DetailedDietReport = ({
                   {/* Progress Bar */}
                   <div className="relative w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[57px] bg-[#F2F2F2] rounded-[60px] overflow-hidden">
                     <div
-                      className="absolute left-0 top-0 h-full bg-[#FFB800] rounded-[60px] flex items-center justify-center"
+                      className="absolute left-0 top-0 h-full bg-[#FFC466] rounded-[60px] flex items-center justify-center"
                       style={{ width: `${(petInfo.bcs / 9) * 100}%` }}
                     >
                       <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
@@ -219,7 +220,7 @@ const DetailedDietReport = ({
                   {/* Progress Bar */}
                   <div className="relative w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] h-[45px] sm:h-[50px] md:h-[55px] lg:h-[57px] bg-[#F2F2F2] rounded-[60px] overflow-hidden">
                     <div
-                      className="absolute left-0 top-0 h-full bg-[#FFB800] rounded-[60px] flex items-center justify-center"
+                      className="absolute left-0 top-0 h-full bg-[#FFC466] rounded-[60px] flex items-center justify-center"
                       style={{ width: `${(petInfo.rwacome / 9) * 100}%` }}
                     >
                       <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
@@ -251,7 +252,7 @@ const DetailedDietReport = ({
           <div className="mt-[35px]">
 
             <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-[37px]">
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[325px]">
+              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[325px]">
                 <ReportCardHeader
                   emoji="😴"
                   title="휴식 대사량(RER)"
@@ -266,7 +267,7 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
                 </div>
               </div>
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[284px]">
+              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[284px]">
                 <ReportCardHeader
                   emoji="⚓️"
                   title="목표 체중"
@@ -281,7 +282,7 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.targetWeight}</p>
                 </div>
               </div>
-              <div className="bg-[#FFB800] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[397px]">
+              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[397px]">
                 <ReportCardHeader
                   emoji="🔥️"
                   title="1일 권장 칼로리(MER)"
@@ -458,146 +459,300 @@ const DetailedDietReport = ({
             title="현재 vs 권장 섭취량 비교 분석"
             subtitle="위에서 분석한 현재와 권장 칼로리 및 주요 영양소를 비교 분석해 현재 식단이 어떤 상태인지 더 자세히 파악해요!"
           />
-          <div className="mt-[35px]">
+          <div className="mt-[42px]">
             {/* 주요 영양소 섭취량 비교 섹션 */}
-            <div className="flex flex-col gap-4 mb-6">
+            <div className="flex flex-col gap-[30px] mb-[42px]">
               {/* 칼로리 */}
-              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
-                <div className="flex items-center gap-6">
-                  {/* 왼쪽: 제목 */}
-                  <div className="flex-shrink-0">
-                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">칼로리</h3>
+              <div className="md:bg-[#F2F2F2] md:rounded-[20px] md:py-[16.5px] md:px-[34.5px]">
+                {/* 데스크탑 레이아웃 */}
+                <div className="hidden md:flex items-start gap-[6px]">
+                  {/* 왼쪽: 제목 + 백분율 */}
+                  <div className="w-[70px] flex-shrink-0">
+                    <h3 className="text-[#525252] font-medium text-[15px]">칼로리</h3>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
-                      <div className="text-[#1E1E1E] text-[16px] font-medium">
-                        <span>10.0</span>
-                        <span className="mx-1">/</span>
-                        <span>11.1</span>
-                        <span className="ml-1">kcal</span>
-                      </div>
+                  <div className="w-[461px] mr-[35px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                      <span>10.0</span>
+                      <span className="mx-1">/</span>
+                      <span>11.1</span>
+                      <span className="ml-1">kcal</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
+                    <div className="w-[461px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                      <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
                     </div>
                   </div>
 
                   {/* 오른쪽: 상태 */}
-                  <div className="flex-shrink-0 flex items-center gap-2">
-                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                    <div className="text-[#1E1E1E] text-[12px]">
-                      <p className="font-medium mb-1">칼로리 상태</p>
+                  <div className="flex-shrink-0 flex gap-4">
+                    <div className="w-[82px] flex flex-col gap-[6px] items-center">
+                      <span className="text-[#525252] text-[15px] font-medium">칼로리 상태</span>
+                      <StatusIndicator status="critical" size="lg" />
+                    </div>
+                    <div className="text-[#1E1E1E] text-[18px] font-medium">
                       <p>・74kcal 부족</p>
                       <p>・목표치의 60% 수준으로 심각하게 부족</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 모바일 레이아웃 */}
+                <div className="md:hidden space-y-4">
+                  {/* 첫 번째 배지: 영양소명 + 수치 + 퍼센티지 + 그래프 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex items-start gap-[6px]">
+                      <div className="w-[70px] flex-shrink-0">
+                        <h3 className="text-[#525252] font-medium text-[15px]">칼로리</h3>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                      </div>
+                      <div className="w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                          <span>10.0</span>
+                          <span className="mx-1">/</span>
+                          <span>11.1</span>
+                          <span className="ml-1">kcal</span>
+                        </div>
+                        <div className="w-[193px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                          <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 두 번째 배지: 상태명 + 배지 + 텍스트 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex gap-4">
+                      <div className="w-[100px] flex flex-col gap-[6px] items-center justify-center">
+                        <span className="text-[#525252] text-[15px] font-medium">칼로리 상태</span>
+                        <StatusIndicator status="critical" size="lg" />
+                      </div>
+                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                        <p className="pl-[1em] indent-[-1em]">・74kcal 부족</p>
+                        <p className="pl-[1em] indent-[-1em]">・목표치의 60% 수준으로 심각하게 부족</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* 단백질 */}
-              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
-                <div className="flex items-center gap-6">
-                  {/* 왼쪽: 제목 */}
-                  <div className="flex-shrink-0">
-                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">단백질</h3>
+              <div className="md:bg-[#F2F2F2] md:rounded-[20px] md:py-[16.5px] md:px-[34.5px]">
+                {/* 데스크탑 레이아웃 */}
+                <div className="hidden md:flex items-start gap-[6px]">
+                  {/* 왼쪽: 제목 + 백분율 */}
+                  <div className="w-[70px] flex-shrink-0">
+                    <h3 className="text-[#525252] font-medium text-[15px]">단백질</h3>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
-                      <div className="text-[#1E1E1E] text-[16px] font-medium">
-                        <span>10.0</span>
-                        <span className="mx-1">/</span>
-                        <span>11.1</span>
-                        <span className="ml-1">g</span>
-                      </div>
+                  <div className="w-[461px] mr-[35px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                      <span>10.0</span>
+                      <span className="mx-1">/</span>
+                      <span>11.1</span>
+                      <span className="ml-1">g</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
+                    <div className="w-[461px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                      <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
                     </div>
                   </div>
 
                   {/* 오른쪽: 상태 */}
-                  <div className="flex-shrink-0 flex items-center gap-2">
-                    <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                    <div className="text-[#1E1E1E] text-[12px]">
-                      <p className="font-medium mb-1">단백질 상태</p>
+                  <div className="flex-shrink-0 flex gap-4">
+                    <div className="w-[82px] flex flex-col gap-[6px] items-center">
+                      <span className="text-[#525252] text-[15px] font-medium">단백질 상태</span>
+                      <StatusIndicator status="warning" size="lg" />
+                    </div>
+                    <div className="text-[#1E1E1E] text-[18px] font-medium">
                       <p>・1.1g 부족</p>
                       <p>・근육 보존에 필요한 최소량보다 부족</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 모바일 레이아웃 */}
+                <div className="md:hidden space-y-4">
+                  {/* 첫 번째 배지: 영양소명 + 수치 + 퍼센티지 + 그래프 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex items-start gap-[6px]">
+                      <div className="w-[70px] flex-shrink-0">
+                        <h3 className="text-[#525252] font-medium text-[15px]">단백질</h3>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                      </div>
+                      <div className="w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                          <span>10.0</span>
+                          <span className="mx-1">/</span>
+                          <span>11.1</span>
+                          <span className="ml-1">g</span>
+                        </div>
+                        <div className="w-[193px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                          <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 두 번째 배지: 상태명 + 배지 + 텍스트 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex gap-4">
+                      <div className="w-[100px] flex flex-col gap-[6px] items-center justify-center">
+                        <span className="text-[#525252] text-[15px] font-medium">단백질 상태</span>
+                        <StatusIndicator status="warning" size="lg" />
+                      </div>
+                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                        <p className="pl-[1em] indent-[-1em]">・1.1g 부족</p>
+                        <p className="pl-[1em] indent-[-1em]">・근육 보존에 필요한 최소량보다 부족</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* 지방 */}
-              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
-                <div className="flex items-center gap-6">
-                  {/* 왼쪽: 제목 */}
-                  <div className="flex-shrink-0">
-                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">지방</h3>
+              <div className="md:bg-[#F2F2F2] md:rounded-[20px] md:py-[16.5px] md:px-[34.5px]">
+                {/* 데스크탑 레이아웃 */}
+                <div className="hidden md:flex items-start gap-[6px]">
+                  {/* 왼쪽: 제목 + 백분율 */}
+                  <div className="w-[70px] flex-shrink-0">
+                    <h3 className="text-[#525252] font-medium text-[15px]">지방</h3>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[#003DA5] font-bold text-[18px]">90.1%</span>
-                      <div className="text-[#1E1E1E] text-[16px] font-medium">
-                        <span>10.0</span>
-                        <span className="mx-1">/</span>
-                        <span>11.1</span>
-                        <span className="ml-1">g</span>
-                      </div>
+                  <div className="w-[461px] mr-[35px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                      <span>10.0</span>
+                      <span className="mx-1">/</span>
+                      <span>11.1</span>
+                      <span className="ml-1">g</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '90.1%' }}></div>
+                    <div className="w-[461px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                      <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
                     </div>
                   </div>
 
                   {/* 오른쪽: 상태 */}
-                  <div className="flex-shrink-0 flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                    <div className="text-[#1E1E1E] text-[12px]">
-                      <p className="font-medium mb-1">지방 상태</p>
+                  <div className="flex-shrink-0 flex gap-4">
+                    <div className="w-[82px] flex flex-col gap-[6px] items-center">
+                      <span className="text-[#525252] text-[15px] font-medium">지방 상태</span>
+                      <StatusIndicator status="good" size="lg" />
+                    </div>
+                    <div className="text-[#1E1E1E] text-[18px] font-medium">
                       <p>・목표 범위 내로 잘 관리되고 있음</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 모바일 레이아웃 */}
+                <div className="md:hidden space-y-4">
+                  {/* 첫 번째 배지: 영양소명 + 수치 + 퍼센티지 + 그래프 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex items-start gap-[6px]">
+                      <div className="w-[70px] flex-shrink-0">
+                        <h3 className="text-[#525252] font-medium text-[15px]">지방</h3>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                      </div>
+                      <div className="w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                          <span>10.0</span>
+                          <span className="mx-1">/</span>
+                          <span>11.1</span>
+                          <span className="ml-1">g</span>
+                        </div>
+                        <div className="w-[193px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                          <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '90.1%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 두 번째 배지: 상태명 + 배지 + 텍스트 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex gap-4">
+                      <div className="w-[100px] flex flex-col gap-[6px] items-center justify-center">
+                        <span className="text-[#525252] text-[15px] font-medium">지방 상태</span>
+                        <StatusIndicator status="good" size="lg" />
+                      </div>
+                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                        <p className="pl-[1em] indent-[-1em]">・목표 범위 내로 잘 관리되고 있음</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* 탄수화물 */}
-              <div className="bg-[#F2F2F2] rounded-[15px] p-4">
-                <div className="flex items-center gap-6">
-                  {/* 왼쪽: 제목 */}
-                  <div className="flex-shrink-0">
-                    <h3 className="text-[#1E1E1E] font-semibold text-[18px]">탄수화물</h3>
+              <div className="md:bg-[#F2F2F2] md:rounded-[20px] md:py-[16.5px] md:px-[34.5px]">
+                {/* 데스크탑 레이아웃 */}
+                <div className="hidden md:flex items-start gap-[6px]">
+                  {/* 왼쪽: 제목 + 백분율 */}
+                  <div className="w-[70px] flex-shrink-0">
+                    <h3 className="text-[#525252] font-medium text-[15px]">탄수화물</h3>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px]">106.5%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[#003DA5] font-bold text-[18px]">106.5%</span>
-                      <div className="text-[#1E1E1E] text-[16px] font-medium">
-                        <span>9</span>
-                        <span className="mx-1">~</span>
-                        <span>17</span>
-                        <span className="ml-1">g</span>
-                      </div>
+                  <div className="w-[461px] mr-[35px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                      <span>9</span>
+                      <span className="mx-1">~</span>
+                      <span>17</span>
+                      <span className="ml-1">g</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-[#003DA5] h-2 rounded-full" style={{ width: '100%' }}></div>
+                    <div className="w-[461px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                      <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '100%' }}></div>
                     </div>
                   </div>
 
                   {/* 오른쪽: 상태 */}
-                  <div className="flex-shrink-0 flex items-center gap-2">
-                    <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                    <div className="text-[#1E1E1E] text-[12px]">
-                      <p className="font-medium mb-1">탄수화물 상태</p>
+                  <div className="flex-shrink-0 flex gap-4">
+                    <div className="w-[82px] flex flex-col gap-[6px] items-center">
+                      <span className="text-[#525252] text-[15px] font-medium">탄수화물 상태</span>
+                      <StatusIndicator status="warning" size="lg" />
+                    </div>
+                    <div className="text-[#1E1E1E] text-[18px] font-medium">
                       <p>・권장 범위 내로 적절하게 섭취 중</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 모바일 레이아웃 */}
+                <div className="md:hidden space-y-4">
+                  {/* 첫 번째 배지: 영양소명 + 수치 + 퍼센티지 + 그래프 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex items-start gap-[6px]">
+                      <div className="w-[70px] flex-shrink-0">
+                        <h3 className="text-[#525252] font-medium text-[15px]">탄수화물</h3>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px]">106.5%</span>
+                      </div>
+                      <div className="w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                          <span>9</span>
+                          <span className="mx-1">~</span>
+                          <span>17</span>
+                          <span className="ml-1">g</span>
+                        </div>
+                        <div className="w-[193px] h-[20px] bg-[#C1C1C1] rounded-full overflow-hidden">
+                          <div className="bg-[#010A6B] h-full rounded-full" style={{ width: '100%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 두 번째 배지: 상태명 + 배지 + 텍스트 */}
+                  <div className="bg-[#F2F2F2] rounded-[20px] py-[16.5px] px-[15px]">
+                    <div className="flex gap-4">
+                      <div className="w-[100px] flex flex-col gap-[6px] items-center justify-center">
+                        <span className="text-[#525252] text-[15px] font-medium">탄수화물 상태</span>
+                        <StatusIndicator status="warning" size="lg" />
+                      </div>
+                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                        <p className="pl-[1em] indent-[-1em]">・권장 범위 내로 적절하게 섭취 중</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -605,19 +760,32 @@ const DetailedDietReport = ({
             </div>
 
             {/* 식단 평가 및 개선 권고 섹션 */}
-            <div className="bg-[#FFB800] rounded-[15px] p-6">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="text-[#1E1E1E] text-[20px]">✓</span>
-                <h3 className="text-[#1E1E1E] font-bold text-[18px]">현재 하이의 식단! 심각한 &apos;저칼로리 & 저단백&apos; 상태로, 변화가 시급해요!</h3>
-              </div>
-              <div className="space-y-4 text-[#1E1E1E] text-[14px]">
-                <div>
-                  <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 &apos;근손실&apos; 위험</p>
-                  <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 &apos;기아 상태&apos;에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
-                  <p>결론적으로, 현재 급여 방식은 &apos;최고급 사료&apos;를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</p>
+            <div className="bg-[#FFC466] rounded-[15px] py-[39.5px] px-[24.5px]">
+              <div className="flex flex-col items-center">
+                <div className="space-y-4 text-[#343434] text-[15px] md:text-[19px] w-full max-w-none">
+                  <div className="flex items-start gap-3">
+                    <span className="text-[#1E1E1E] text-[20px] hidden md:block">✔️</span>
+                    <h3 className="text-[#000000] font-semibold text-[18px] md:text-[22px] text-center w-full">
+                      <span className="md:hidden">
+                        현재 하이의 식단!<br />
+                        심각한 &apos;저칼로리 & 저단백&apos;<br />
+                        상태로, 변화가 시급해요!
+                      </span>
+                      <span className="hidden md:block">
+                        현재 하이의 식단! 심각한 &apos;저칼로리 & 저단백&apos; 상태로, 변화가 시급해요!
+                      </span>
+                    </h3>
+                  </div>
+                  <div className="w-full">
+                    <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 &apos;근손실&apos; 위험</p>
+                    <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 &apos;기아 상태&apos;에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
+                  </div>
+                  <div className="w-full">
+                    <p>
+                      <StatusIndicator status="critical" size="md" />
+                      <span className="ml-1.5">결론적으로, 현재 급여 방식은 &apos;최고급 사료&apos;를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

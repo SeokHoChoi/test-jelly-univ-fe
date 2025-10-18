@@ -45,10 +45,9 @@ const ReportCardHeader = ({
         <span className="text-2xl">{emoji}</span>
         <h2
           className={twMerge(
-            "font-medium",
+            "font-medium text-[18px] md:text-[25px]",
             getColorClass(titleColor)
           )}
-          style={{ fontSize: titleSize }}
         >
           {title}
         </h2>
@@ -56,10 +55,10 @@ const ReportCardHeader = ({
       {subtitle && (
         <p
           className={twMerge(
-            "font-normal ml-[32px]",
+            "font-normal text-[12px] md:text-[18px] ml-0 md:ml-[32px]",
             getColorClass(subtitleColor)
           )}
-          style={{ fontSize: subtitleSize, marginTop: titleSubtitleGap }}
+          style={{ marginTop: titleSubtitleGap }}
         >
           {subtitle}
         </p>
