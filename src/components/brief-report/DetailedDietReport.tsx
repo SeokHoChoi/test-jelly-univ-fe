@@ -801,54 +801,60 @@ const DetailedDietReport = ({
             subtitleColor="#525252"
           />
           <div className="mt-[35px]">
-            <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex flex-col lg:flex-row gap-4 lg:items-stretch">
               {/* 페퍼테일 참 유산균 */}
-              <div className="flex-1">
-                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-white font-bold text-[14px]">유지 권장</span>
-                    <span className="text-white text-[14px]">페퍼테일 참 유산균</span>
+              <div className="flex-1 flex flex-col">
+                <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
+                  <div className="text-white">
+                    <div className="flex items-center gap-2">
+                      <StatusIndicator status="good" size="sm" />
+                      <span className="font-normal text-[18px] md:text-[20px]">유지 권장</span>
+                    </div>
+                    <div className="font-semibold text-[20px] md:text-[22px]">페퍼테일 참 유산균</div>
                   </div>
                 </div>
-                <div className="bg-white rounded-b-[15px] p-4">
-                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
-                    <li>• 주식에 포함되지 않은 &apos;프로바이오틱스&apos;를 공급하여 고유의 기능을 수행합니다.</li>
-                    <li>• 장내 환경 개선은 피부 문제 및 전반적인 면역력과 직결되므로, 꾸준한 급여를 권장합니다.</li>
+                <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                    <li className="pl-[1em] indent-[-1em]">• 주식에 포함되지 않은 &apos;프로바이오틱스&apos;를 공급하여 고유의 기능을 수행합니다.</li>
+                    <li className="pl-[1em] indent-[-1em]">• 장내 환경 개선은 피부 문제 및 전반적인 면역력과 직결되므로, 꾸준한 급여를 권장합니다.</li>
                   </ul>
                 </div>
               </div>
 
               {/* 페피테일 참 오메가 */}
-              <div className="flex-1">
-                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <span className="text-white font-bold text-[14px]">조건부 권장</span>
-                    <span className="text-white text-[14px]">페피테일 참 오메가</span>
+              <div className="flex-1 flex flex-col">
+                <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
+                  <div className="text-white">
+                    <div className="flex items-center gap-2">
+                      <StatusIndicator status="warning" size="sm" />
+                      <span className="font-normal text-[18px] md:text-[20px]">조건부 권장</span>
+                    </div>
+                    <div className="font-semibold text-[20px] md:text-[22px]">페피테일 참 오메가</div>
                   </div>
                 </div>
-                <div className="bg-white rounded-b-[15px] p-4">
-                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
-                    <li>• 주식(워프)과 간식(쏘울메이트) 모두 피쉬 오일을 함유하고 있으나, 염증 완화 및 피부 개선을 위한 치료적 용량의 EPA/DHA를 보충해준다는 점에서 유효합니다.</li>
-                    <li>• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 &apos;조건부&apos;로 권장합니다.</li>
+                <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                    <li className="pl-[1em] indent-[-1em]">• 주식(워프)과 간식(쏘울메이트) 모두 피쉬 오일을 함유하고 있으나, 염증 완화 및 피부 개선을 위한 치료적 용량의 EPA/DHA를 보충해준다는 점에서 유효합니다.</li>
+                    <li className="pl-[1em] indent-[-1em]">• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 &apos;조건부&apos;로 권장합니다.</li>
                   </ul>
                 </div>
               </div>
 
               {/* Neprofin Pet® */}
-              <div className="flex-1">
-                <div className="bg-[#003DA5] rounded-t-[15px] p-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-white font-bold text-[14px]">유지 권장</span>
-                    <span className="text-white text-[14px]">Neprofin Pet®</span>
+              <div className="flex-1 flex flex-col">
+                <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
+                  <div className="text-white">
+                    <div className="flex items-center gap-2">
+                      <StatusIndicator status="good" size="sm" />
+                      <span className="font-normal text-[18px] md:text-[20px]">유지 권장</span>
+                    </div>
+                    <div className="font-semibold text-[20px] md:text-[22px]">Neprofin Pet®</div>
                   </div>
                 </div>
-                <div className="bg-white rounded-b-[15px] p-4">
-                  <ul className="space-y-2 text-[#1E1E1E] text-[14px]">
-                    <li>• 소화 효소 및 항염 효소는 일반 사료에 포함되지 않는 고유의 기능성 성분입니다.</li>
-                    <li>• 카쿠의 과거 두드러기, 점액변 등 염증성 반응 관리와 관절 건강 예방이라는 목표에 부합하므로 유지를 권장합니다.</li>
+                <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                    <li className="pl-[1em] indent-[-1em]">• 소화 효소 및 항염 효소는 일반 사료에 포함되지 않는 고유의 기능성 성분입니다.</li>
+                    <li className="pl-[1em] indent-[-1em]">• 카쿠의 과거 두드러기, 점액변 등 염증성 반응 관리와 관절 건강 예방이라는 목표에 부합하므로 유지를 권장합니다.</li>
                   </ul>
                 </div>
               </div>
