@@ -7,8 +7,10 @@ const DietReportPage = () => {
   return (
     <div className="min-h-screen">
       {/* 상단 고정 탭 */}
-      <div className="sticky top-23 z-40 bg-white/80 backdrop-blur pt-4 pb-3">
-        <ReportTabs />
+      <div className="bg-white/80 backdrop-blur pt-18 pb-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ReportTabs />
+        </div>
       </div>
 
       {/* 상세 식단 분석 리포트 */}
