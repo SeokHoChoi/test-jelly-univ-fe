@@ -535,7 +535,7 @@ const FoodQualityAnalysisSection = () => {
                     </div>
 
                     {/* 뒷면 */}
-                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden rotate-y-180 flex">
+                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] px-6 pt-6 pb-2 backface-hidden rotate-y-180 flex">
                       <div className="flex flex-col w-full h-full">
                         {/* 헤더 */}
                         <div className="flex items-center gap-3 mb-5">
@@ -609,11 +609,11 @@ const FoodQualityAnalysisSection = () => {
                         </div>
 
                         {/* 하단 링크 */}
-                        <div className="mt-3 text-center pt-1">
+                        {/* <div className="mt-3 text-center pt-1">
                           <button type="button" className="text-[#003DA5] text-[14px] md:text-[15px] font-medium hover:underline">
                             해당 사료 전체 프로필 확인하기 →
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
