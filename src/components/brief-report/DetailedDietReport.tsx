@@ -8,6 +8,34 @@ import NutrientAnalysisPanel from '@/components/common/NutrientAnalysisPanel';
 import NutrientItem from '@/components/common/NutrientItem';
 import StatusIndicator from '@/components/common/StatusIndicator';
 
+// 모바일 버튼 컴포넌트
+const MobileButton = ({
+  text,
+  variant = 'blue'
+}: {
+  text: string;
+  variant?: 'blue' | 'white' | 'yellow';
+}) => {
+  const getButtonStyles = () => {
+    switch (variant) {
+      case 'blue':
+        return 'bg-[#003DA5] text-white';
+      case 'white':
+        return 'bg-white text-[#003DA5]';
+      case 'yellow':
+        return 'bg-[#FFC466] text-[#343434]';
+      default:
+        return 'bg-[#003DA5] text-white';
+    }
+  };
+
+  return (
+    <button className={`w-full py-[20px] rounded-[50px] font-medium text-[15px] ${getButtonStyles()} md:hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]`}>
+      {text}
+    </button>
+  );
+};
+
 interface PetInfo {
   name: string;
   breed: string;
@@ -124,6 +152,9 @@ const DetailedDietReport = ({
               <ReportCardContent>
                 넘치는 에너지와 좋은 골격을 가졌지만, 현재는 몸이 조금 무거운 유망주. 전문적인 관리를 통해 최고의 컨디션을 되찾을 준비가 되어 있으며, 체중 감량과 동시에 근육량 유지가 가능한 타입입니다.
               </ReportCardContent>
+              <div className="mt-[28.5px]">
+                <MobileButton text="냥구의 활동 수준을 알려주세요" variant="blue" />
+              </div>
             </div>
           </ReportCard>
 
@@ -140,6 +171,9 @@ const DetailedDietReport = ({
                   현재 체중과 신체 상태는 매우 이상적입니다. 특히 슬개골 탈구가 있는 {petInfo.name}에게 이상적인 체중 유지는 관절에 가해지는 물리적 부담을 줄여주는 가장 중요한 관리법이므로, 앞으로도 꾸준히 현재 상태를 유지하는 것이 매우 중요합니다.
                 </p>
               </ReportCardContent>
+              <div className="mt-[28.5px]">
+                <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="blue" />
+              </div>
             </div>
           </ReportCard>
 
@@ -239,6 +273,9 @@ const DetailedDietReport = ({
                 </div>
               </div>
             </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="white" />
+            </div>
           </ReportCard>
         </div>
 
@@ -297,6 +334,9 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.mer}</p>
                 </div>
               </div>
+            </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="BCS ∙ 중성화 ∙ 활동수준 정보를 알려주세요" variant="white" />
             </div>
           </div>
         </ReportCard>
@@ -448,6 +488,9 @@ const DetailedDietReport = ({
                 </div>
                 <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.water}</p>
               </div>
+            </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="하루 권장 칼로리 정보가 필요해요" variant="yellow" />
             </div>
           </div>
         </ReportCard>
@@ -789,6 +832,9 @@ const DetailedDietReport = ({
                 </div>
               </div>
             </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="주요 영양소 권장 섭취량 정보가 필요해요" variant="blue" />
+            </div>
           </div>
         </ReportCard>
 
@@ -859,6 +905,9 @@ const DetailedDietReport = ({
                 </div>
               </div>
             </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="급여 중인 영양제 정보를 알려주세요" variant="yellow" />
+            </div>
           </div>
         </ReportCard>
 
@@ -904,6 +953,9 @@ const DetailedDietReport = ({
                   </li>
                 </ul>
               </div>
+            </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="주요 영양소 권장 섭취량 정보가 필요해요" variant="white" />
             </div>
           </div>
         </ReportCard>
