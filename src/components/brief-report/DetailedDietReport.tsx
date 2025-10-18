@@ -873,34 +873,34 @@ const DetailedDietReport = ({
           <div className="mt-[35px]">
             <div className="space-y-6">
               {/* 현재 식단의 최종 평가 */}
-              <div className="bg-[#1A4A8A] rounded-[15px] p-6">
+              <div className="bg-[#003DA5] rounded-[15px] py-[28.5px] px-[30px]">
                 <div className="flex items-start gap-3 mb-4">
-                  <span className="text-white text-[20px]">✏️</span>
-                  <h3 className="text-white font-bold text-[18px]">현재 식단의 최종 평가</h3>
+                  <span className="text-white text-[20px]">🖍️</span>
+                  <h3 className="text-white font-semibold text-[18px] md:text-[22px]">현재 식단의 최종 평가</h3>
                 </div>
-                <p className="text-white text-[14px] leading-relaxed">
+                <p className="text-white text-[15px] md:text-[20px] leading-relaxed ml-[32px]">
                   현재 식단은 &apos;좋은 사료를 잘못된 양으로 사용&apos;하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
                 </p>
               </div>
 
               {/* 실행 계획 */}
-              <div className="bg-[#1A4A8A] rounded-[15px] p-6">
+              <div className="bg-[#003DA5] rounded-[15px] py-[28.5px] px-[30px]">
                 <div className="flex items-start gap-3 mb-4">
-                  <span className="text-white text-[20px]">📋</span>
-                  <h3 className="text-white font-bold text-[18px]">실행 계획</h3>
+                  <span className="text-white text-[20px]">📝</span>
+                  <h3 className="text-white font-semibold text-[18px] md:text-[22px]">실행 계획</h3>
                 </div>
-                <ul className="space-y-4 text-white text-[14px]">
+                <ul className="space-y-4 text-white text-[15px] md:text-[20px] ml-[32px]">
                   <li>
-                    <span className="font-bold">권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 &apos;저지방 주식(베이스)&apos;을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 &apos;베이스 + 솔버&apos; 전략으로 전환을 추천합니다.
+                    <span className="font-bold">• 권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 &apos;저지방 주식(베이스)&apos;을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 &apos;베이스 + 솔버&apos; 전략으로 전환을 추천합니다.
                   </li>
                   <li>
-                    <span className="font-bold">급여 방법:</span> 현재 급여 중인 3가지 사료의 조합과 품질이 매우 훌륭하므로, 제품을 바꾸기보다는 각 사료의 양을 비례적으로 늘려 총량을 맞추는 방법을 추천합니다.
+                    <span className="font-bold">• 급여 방법:</span> 현재 급여 중인 3가지 사료의 조합과 품질이 매우 훌륭하므로, 제품을 바꾸기보다는 각 사료의 양을 비례적으로 늘려 총량을 맞추는 방법을 추천합니다.
                   </li>
                   <li>
-                    <span className="font-bold">제한사항:</span> 정확한 칼로리 관리를 위해, 새로운 식단에 적응하는 동안에는 별도의 간식 급여를 제한하거나, 급여 시 하루 목표 칼로리의 10%를 넘지 않도록 엄격히 관리해야 합니다.
+                    <span className="font-bold">• 제한사항:</span> 정확한 칼로리 관리를 위해, 새로운 식단에 적응하는 동안에는 별도의 간식 급여를 제한하거나, 급여 시 하루 목표 칼로리의 10%를 넘지 않도록 엄격히 관리해야 합니다.
                   </li>
                   <li>
-                    <span className="font-bold">장기 모니터링:</span> 식단 변경 후 2~4주 간격으로 체중을 측정하고, BCS를 다시 확인하여 체중이 급격히 늘지 않고 3.2kg을 잘 유지하는지 모니터링해야 합니다.
+                    <span className="font-bold">• 장기 모니터링:</span> 식단 변경 후 2~4주 간격으로 체중을 측정하고, BCS를 다시 확인하여 체중이 급격히 늘지 않고 3.2kg을 잘 유지하는지 모니터링해야 합니다.
                   </li>
                 </ul>
               </div>
