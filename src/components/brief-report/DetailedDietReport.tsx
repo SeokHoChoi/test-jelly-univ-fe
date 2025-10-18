@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import ReportCard from '@/components/common/ReportCard';
 import ReportCardHeader from '@/components/common/ReportCardHeader';
 import ReportCardContent from '@/components/common/ReportCardContent';
@@ -16,6 +17,8 @@ const MobileButton = ({
   text: string;
   variant?: 'blue' | 'white' | 'yellow';
 }) => {
+  const router = useRouter();
+
   const getButtonStyles = () => {
     switch (variant) {
       case 'blue':
@@ -29,8 +32,15 @@ const MobileButton = ({
     }
   };
 
+  const handleClick = () => {
+    router.push('/survey');
+  };
+
   return (
-    <button className={`w-full py-[20px] rounded-[50px] font-medium text-[15px] ${getButtonStyles()} md:hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]`}>
+    <button
+      onClick={handleClick}
+      className={`w-full py-[20px] rounded-[50px] font-medium text-[15px] ${getButtonStyles()} md:hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]`}
+    >
       {text}
     </button>
   );
