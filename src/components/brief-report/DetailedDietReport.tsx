@@ -675,29 +675,29 @@ const DetailedDietReport = ({
           />
           <div className="mt-[35px] text-white">
 
-            <div className="flex flex-wrap gap-3 sm:gap-[31px] justify-center sm:justify-start">
-              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-[31px] justify-center sm:justify-start">
+              <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">🥚</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">단백질(Protein)</h3>
                 </div>
                 <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.protein}</p>
               </div>
-              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+              <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">🥩</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">지방(Fat)</h3>
                 </div>
                 <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.fat}</p>
               </div>
-              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+              <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">🌾</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">탄수화물(Carbs)</h3>
                 </div>
                 <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.carbs}</p>
               </div>
-              <div className="bg-white rounded-[25px] w-[140px] h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
+              <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">💧</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">음수량</h3>
