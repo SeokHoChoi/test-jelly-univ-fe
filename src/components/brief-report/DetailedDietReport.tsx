@@ -239,7 +239,7 @@ const DetailedDietReport = ({
           </div>
 
           {/* 냥구는요 카드 */}
-          <ReportCard className="md:order-2 relative">
+          <ReportCard className="md:order-2 relative mt-[20px] md:mt-0">
             <ReportCardHeader emoji="🐾" title="냥구는요" />
             <div className="mt-[35px]">
               <ReportCardContent>
@@ -257,7 +257,7 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 체중 및 신체충실도 진단 */}
-          <ReportCard className="md:order-5 md:mt-[24px] relative">
+          <ReportCard className="md:order-5 md:mt-[24px] relative mt-[20px] md:mt-[24px]">
             <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" />
             <div className="mt-[35px]">
               <ReportCardContent>
@@ -281,7 +281,7 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 생애주기 평가 */}
-          <ReportCard className="md:order-6 md:mt-[35px]">
+          <ReportCard className="md:order-6 md:mt-[35px] mt-[20px] md:mt-[35px]">
             <ReportCardHeader emoji="👧🏻" title="생애주기 평가" />
             <div className="mt-[35px]">
               <ReportCardContent>
@@ -296,21 +296,23 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 셔틀랜드 쉽독 카드 */}
-          <ReportCard className="md:order-3 md:mt-[24px]">
+          <ReportCard className="md:order-3 md:mt-[24px] mt-[20px] md:mt-[24px]">
             <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} />
             <div className="mt-[35px]">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-[18px]">
-                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px]">
+                <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] h-[94px] md:h-[94px] flex flex-col justify-center">
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">나이</p>
                   <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.age}</p>
                 </div>
-                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px]">
+                <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] h-[94px] md:h-[94px] flex flex-col justify-center">
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">몸무게</p>
                   <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.weight}</p>
                 </div>
-                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] sm:col-span-2 lg:col-span-1 relative">
+                <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] sm:col-span-2 lg:col-span-1 relative h-[94px] md:h-[94px] flex flex-col justify-center">
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">중성화</p>
-                  <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.neutered}</p>
+                  <p className={`text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none ${true ? 'blur-sm' : ''}`}>
+                    {petInfo.neutered}
+                  </p>
                   <DesktopFloatingButton
                     text="중성화 정보 필요"
                     variant="white"
@@ -319,10 +321,13 @@ const DetailedDietReport = ({
                 </div>
               </div>
             </div>
+            <div className="mt-[28.5px]">
+              <MobileButton text="냥구의 중성화 정보를 알려주세요" variant="white" />
+            </div>
           </ReportCard>
 
           {/* BCS & RWASOME 카드 */}
-          <ReportCard className="md:order-4 md:mt-[35px] relative">
+          <ReportCard className="md:order-4 md:mt-[35px] relative mt-[20px] md:mt-[35px]">
             <div className="space-y-6">
               {/* BCS */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
