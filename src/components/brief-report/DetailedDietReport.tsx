@@ -242,7 +242,7 @@ const DetailedDietReport = ({
           <ReportCard className="md:order-2 relative mt-[20px] md:mt-0">
             <ReportCardHeader emoji="🐾" title="냥구는요" />
             <div className="mt-[35px]">
-              <ReportCardContent>
+              <ReportCardContent className="blur-sm">
                 넘치는 에너지와 좋은 골격을 가졌지만, 현재는 몸이 조금 무거운 유망주. 전문적인 관리를 통해 최고의 컨디션을 되찾을 준비가 되어 있으며, 체중 감량과 동시에 근육량 유지가 가능한 타입입니다.
               </ReportCardContent>
               <div className="mt-[28.5px]">
@@ -260,13 +260,17 @@ const DetailedDietReport = ({
           <ReportCard className="md:order-5 md:mt-[24px] relative mt-[20px] md:mt-[24px]">
             <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" />
             <div className="mt-[35px]">
-              <ReportCardContent>
-                <p className="mb-3">
+              <ReportCardContent className="relative">
+                <p className="mb-3 relative">
                   {petInfo.name}는 현재 {petInfo.weight}입니다. 포메라니안 남아의 표준 체중(1.8~3.5kg) 범위 내에 있으며,
                   보호자께서 직접 촉진(RAWSOME)하신 결과에 따르면 &apos;손을 편 손등&apos;과 유사하여 BCS 5/9의 &apos;이상적인(Ideal)&apos; 상태에 해당합니다.
+                  {/* 첫 번째 문단 그라데이션 블러 오버레이 - "보호자께서 직접 촉진" 이후부터 블러 */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% via-white/20 to-white/80 backdrop-blur-[1px] pointer-events-none"></div>
                 </p>
-                <p>
+                <p className="relative">
                   현재 체중과 신체 상태는 매우 이상적입니다. 특히 슬개골 탈구가 있는 {petInfo.name}에게 이상적인 체중 유지는 관절에 가해지는 물리적 부담을 줄여주는 가장 중요한 관리법이므로, 앞으로도 꾸준히 현재 상태를 유지하는 것이 매우 중요합니다.
+                  {/* 두 번째 문단 그라데이션 블러 오버레이 */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/70 to-white/98 backdrop-blur-[3px] pointer-events-none"></div>
                 </p>
               </ReportCardContent>
               <div className="mt-[28.5px]">
@@ -284,7 +288,7 @@ const DetailedDietReport = ({
           <ReportCard className="md:order-6 md:mt-[35px] mt-[20px] md:mt-[35px]">
             <ReportCardHeader emoji="👧🏻" title="생애주기 평가" />
             <div className="mt-[35px]">
-              <ReportCardContent>
+              <ReportCardContent className="blur-sm">
                 <p className="mb-3">
                   2023년 8월생으로 현재 약 1년 11개월령인 {petInfo.name}는 &apos;어린 성견(Young Adult)&apos; 단계에 있습니다.
                 </p>
@@ -342,7 +346,7 @@ const DetailedDietReport = ({
                       className="absolute left-0 top-0 h-full bg-[#FFC466] rounded-[60px] flex items-center justify-center"
                       style={{ width: `${(petInfo.bcs / 9) * 100}%` }}
                     >
-                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
+                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] blur-sm">
                         {petInfo.bcs} Ideal
                       </span>
                     </div>
@@ -350,7 +354,7 @@ const DetailedDietReport = ({
                   {/* Scale Numbers */}
                   <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
                     {[0, 2, 4, 6, 8, 9].map((num) => (
-                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal blur-sm">
                         {num}
                       </span>
                     ))}
@@ -370,7 +374,7 @@ const DetailedDietReport = ({
                       className="absolute left-0 top-0 h-full bg-[#FFC466] rounded-[60px] flex items-center justify-center"
                       style={{ width: `${(petInfo.rwacome / 9) * 100}%` }}
                     >
-                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px]">
+                      <span className="text-[#010A6B] font-semibold text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] blur-sm">
                         {petInfo.rwacome} Ideal
                       </span>
                     </div>
@@ -378,7 +382,7 @@ const DetailedDietReport = ({
                   {/* Scale Numbers */}
                   <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
                     {[0, 2, 4, 6, 8, 9].map((num) => (
-                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal blur-sm">
                         {num}
                       </span>
                     ))}
@@ -694,12 +698,12 @@ const DetailedDietReport = ({
                   {/* 왼쪽: 제목 + 백분율 */}
                   <div className="w-[70px] flex-shrink-0">
                     <h3 className="text-[#525252] font-medium text-[15px]">칼로리</h3>
-                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
                   <div className="w-[461px] mr-[35px]">
-                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px] blur-sm">
                       <span>10.0</span>
                       <span className="mx-1">/</span>
                       <span>11.1</span>
@@ -716,7 +720,7 @@ const DetailedDietReport = ({
                       <span className="text-[#525252] text-[15px] font-medium">칼로리 상태</span>
                       <StatusIndicator status="critical" size="lg" />
                     </div>
-                    <div className="text-[#1E1E1E] text-[18px] font-medium">
+                    <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                       <p>・74kcal 부족</p>
                       <p>・목표치의 60% 수준으로 심각하게 부족</p>
                     </div>
@@ -730,10 +734,10 @@ const DetailedDietReport = ({
                     <div className="flex items-start gap-[6px]">
                       <div className="w-[70px] flex-shrink-0">
                         <h3 className="text-[#525252] font-medium text-[15px]">칼로리</h3>
-                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                       </div>
                       <div className="w-[193px]">
-                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px] blur-sm">
                           <span>10.0</span>
                           <span className="mx-1">/</span>
                           <span>11.1</span>
@@ -753,7 +757,7 @@ const DetailedDietReport = ({
                         <span className="text-[#525252] text-[15px] font-medium">칼로리 상태</span>
                         <StatusIndicator status="critical" size="lg" />
                       </div>
-                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                      <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                         <p className="pl-[1em] indent-[-1em]">・74kcal 부족</p>
                         <p className="pl-[1em] indent-[-1em]">・목표치의 60% 수준으로 심각하게 부족</p>
                       </div>
@@ -769,12 +773,12 @@ const DetailedDietReport = ({
                   {/* 왼쪽: 제목 + 백분율 */}
                   <div className="w-[70px] flex-shrink-0">
                     <h3 className="text-[#525252] font-medium text-[15px]">단백질</h3>
-                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
                   <div className="w-[461px] mr-[35px]">
-                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px] blur-sm">
                       <span>10.0</span>
                       <span className="mx-1">/</span>
                       <span>11.1</span>
@@ -791,7 +795,7 @@ const DetailedDietReport = ({
                       <span className="text-[#525252] text-[15px] font-medium">단백질 상태</span>
                       <StatusIndicator status="warning" size="lg" />
                     </div>
-                    <div className="text-[#1E1E1E] text-[18px] font-medium">
+                    <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                       <p>・1.1g 부족</p>
                       <p>・근육 보존에 필요한 최소량보다 부족</p>
                     </div>
@@ -805,10 +809,10 @@ const DetailedDietReport = ({
                     <div className="flex items-start gap-[6px]">
                       <div className="w-[70px] flex-shrink-0">
                         <h3 className="text-[#525252] font-medium text-[15px]">단백질</h3>
-                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                       </div>
                       <div className="w-[193px]">
-                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px] blur-sm">
                           <span>10.0</span>
                           <span className="mx-1">/</span>
                           <span>11.1</span>
@@ -828,7 +832,7 @@ const DetailedDietReport = ({
                         <span className="text-[#525252] text-[15px] font-medium">단백질 상태</span>
                         <StatusIndicator status="warning" size="lg" />
                       </div>
-                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                      <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                         <p className="pl-[1em] indent-[-1em]">・1.1g 부족</p>
                         <p className="pl-[1em] indent-[-1em]">・근육 보존에 필요한 최소량보다 부족</p>
                       </div>
@@ -844,12 +848,12 @@ const DetailedDietReport = ({
                   {/* 왼쪽: 제목 + 백분율 */}
                   <div className="w-[70px] flex-shrink-0">
                     <h3 className="text-[#525252] font-medium text-[15px]">지방</h3>
-                    <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
                   <div className="w-[461px] mr-[35px]">
-                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px] blur-sm">
                       <span>10.0</span>
                       <span className="mx-1">/</span>
                       <span>11.1</span>
@@ -866,7 +870,7 @@ const DetailedDietReport = ({
                       <span className="text-[#525252] text-[15px] font-medium">지방 상태</span>
                       <StatusIndicator status="good" size="lg" />
                     </div>
-                    <div className="text-[#1E1E1E] text-[18px] font-medium">
+                    <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                       <p>・목표 범위 내로 잘 관리되고 있음</p>
                     </div>
                   </div>
@@ -879,10 +883,10 @@ const DetailedDietReport = ({
                     <div className="flex items-start gap-[6px]">
                       <div className="w-[70px] flex-shrink-0">
                         <h3 className="text-[#525252] font-medium text-[15px]">지방</h3>
-                        <span className="text-[#1E1E1E] font-semibold text-[20px]">90.1%</span>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">90.1%</span>
                       </div>
                       <div className="w-[193px]">
-                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px] blur-sm">
                           <span>10.0</span>
                           <span className="mx-1">/</span>
                           <span>11.1</span>
@@ -902,7 +906,7 @@ const DetailedDietReport = ({
                         <span className="text-[#525252] text-[15px] font-medium">지방 상태</span>
                         <StatusIndicator status="good" size="lg" />
                       </div>
-                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                      <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                         <p className="pl-[1em] indent-[-1em]">・목표 범위 내로 잘 관리되고 있음</p>
                       </div>
                     </div>
@@ -917,12 +921,12 @@ const DetailedDietReport = ({
                   {/* 왼쪽: 제목 + 백분율 */}
                   <div className="w-[70px] flex-shrink-0">
                     <h3 className="text-[#525252] font-medium text-[15px]">탄수화물</h3>
-                    <span className="text-[#1E1E1E] font-semibold text-[20px]">106.5%</span>
+                    <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">106.5%</span>
                   </div>
 
                   {/* 중앙: 수치 + 그래프 */}
                   <div className="w-[461px] mr-[35px]">
-                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px]">
+                    <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[461px] blur-sm">
                       <span>9</span>
                       <span className="mx-1">~</span>
                       <span>17</span>
@@ -939,7 +943,7 @@ const DetailedDietReport = ({
                       <span className="text-[#525252] text-[15px] font-medium">탄수화물 상태</span>
                       <StatusIndicator status="warning" size="lg" />
                     </div>
-                    <div className="text-[#1E1E1E] text-[18px] font-medium">
+                    <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                       <p>・권장 범위 내로 적절하게 섭취 중</p>
                     </div>
                   </div>
@@ -952,10 +956,10 @@ const DetailedDietReport = ({
                     <div className="flex items-start gap-[6px]">
                       <div className="w-[70px] flex-shrink-0">
                         <h3 className="text-[#525252] font-medium text-[15px]">탄수화물</h3>
-                        <span className="text-[#1E1E1E] font-semibold text-[20px]">106.5%</span>
+                        <span className="text-[#1E1E1E] font-semibold text-[20px] blur-sm">106.5%</span>
                       </div>
                       <div className="w-[193px]">
-                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px]">
+                        <div className="text-[#525252] text-[15px] font-medium mb-[6px] text-right w-[193px] blur-sm">
                           <span>9</span>
                           <span className="mx-1">~</span>
                           <span>17</span>
@@ -975,7 +979,7 @@ const DetailedDietReport = ({
                         <span className="text-[#525252] text-[15px] font-medium">탄수화물 상태</span>
                         <StatusIndicator status="warning" size="lg" />
                       </div>
-                      <div className="text-[#1E1E1E] text-[18px] font-medium">
+                      <div className="text-[#1E1E1E] text-[18px] font-medium blur-sm">
                         <p className="pl-[1em] indent-[-1em]">・권장 범위 내로 적절하게 섭취 중</p>
                       </div>
                     </div>
@@ -990,7 +994,7 @@ const DetailedDietReport = ({
                 <div className="space-y-4 text-[#343434] text-[15px] md:text-[19px] w-full max-w-none">
                   <div className="flex items-start gap-3">
                     <span className="text-[#1E1E1E] text-[20px] hidden md:block">✔️</span>
-                    <h3 className="text-[#000000] font-semibold text-[18px] md:text-[22px] text-center w-full">
+                    <h3 className="text-[#000000] font-semibold text-[18px] md:text-[22px] text-center md:text-left w-full blur-[2px]">
                       <span className="md:hidden">
                         현재 하이의 식단!<br />
                         심각한 &apos;저칼로리 & 저단백&apos;<br />
@@ -1001,11 +1005,11 @@ const DetailedDietReport = ({
                       </span>
                     </h3>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full md:ml-[32px] blur-sm">
                     <p className="font-semibold mb-2">• 심각한 칼로리 및 단백질 부족으로 인한 &apos;근손실&apos; 위험</p>
                     <p>현재 섭취 칼로리(111 kcal)가 기초대사량(RER, 168kcal)에 미치지 못하는 &apos;기아 상태&apos;에 가깝고, 이로 인해 체지방뿐만 아니라 근육이 분해될 수 있으며, 슬개골 지지 근육 약화 및 관절 문제 악화, 기초대사량 및 활력 저하를 유발할 수 있습니다.</p>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full md:ml-[32px] blur-sm">
                     <p>
                       <StatusIndicator status="critical" size="md" />
                       <span className="ml-1.5">결론적으로, 현재 급여 방식은 &apos;최고급 사료&apos;를 급여함에도 불구하고, 절대적인 양 부족으로 인해 결과적으로는 하이의 건강을 위협하고 있는 상태입니다. 특히 슬개골 탈구가 있는 하이에게 근손실은 치명적일 수 있으므로 즉각적인 개선이 필요합니다.</span>
@@ -1033,7 +1037,7 @@ const DetailedDietReport = ({
               {/* 페퍼테일 참 유산균 */}
               <div className="flex-1 flex flex-col">
                 <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
-                  <div className="text-white">
+                  <div className="text-white blur-sm">
                     <div className="flex items-center gap-2">
                       <StatusIndicator status="good" size="sm" />
                       <span className="font-normal text-[18px] md:text-[20px]">유지 권장</span>
@@ -1042,7 +1046,7 @@ const DetailedDietReport = ({
                   </div>
                 </div>
                 <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
-                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal blur-sm">
                     <li className="pl-[1em] indent-[-1em]">• 주식에 포함되지 않은 &apos;프로바이오틱스&apos;를 공급하여 고유의 기능을 수행합니다.</li>
                     <li className="pl-[1em] indent-[-1em]">• 장내 환경 개선은 피부 문제 및 전반적인 면역력과 직결되므로, 꾸준한 급여를 권장합니다.</li>
                   </ul>
@@ -1052,7 +1056,7 @@ const DetailedDietReport = ({
               {/* 페피테일 참 오메가 */}
               <div className="flex-1 flex flex-col">
                 <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
-                  <div className="text-white">
+                  <div className="text-white blur-sm">
                     <div className="flex items-center gap-2">
                       <StatusIndicator status="warning" size="sm" />
                       <span className="font-normal text-[18px] md:text-[20px]">조건부 권장</span>
@@ -1061,7 +1065,7 @@ const DetailedDietReport = ({
                   </div>
                 </div>
                 <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
-                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal blur-sm">
                     <li className="pl-[1em] indent-[-1em]">• 주식(워프)과 간식(쏘울메이트) 모두 피쉬 오일을 함유하고 있으나, 염증 완화 및 피부 개선을 위한 치료적 용량의 EPA/DHA를 보충해준다는 점에서 유효합니다.</li>
                     <li className="pl-[1em] indent-[-1em]">• 현재 카쿠의 피부 상태와 관절 건강 예방을 위해 긍정적인 역할이 더 큽니다. 단, 향후 구리 제한 처방식 등 오메가-3가 강화된 특정 사료로 변경시 중복 가능성이 있으므로 &apos;조건부&apos;로 권장합니다.</li>
                   </ul>
@@ -1071,7 +1075,7 @@ const DetailedDietReport = ({
               {/* Neprofin Pet® */}
               <div className="flex-1 flex flex-col">
                 <div className="bg-[#003DA5] rounded-t-[15px] py-[37px] px-[38px]">
-                  <div className="text-white">
+                  <div className="text-white blur-sm">
                     <div className="flex items-center gap-2">
                       <StatusIndicator status="good" size="sm" />
                       <span className="font-normal text-[18px] md:text-[20px]">유지 권장</span>
@@ -1080,7 +1084,7 @@ const DetailedDietReport = ({
                   </div>
                 </div>
                 <div className="bg-white rounded-b-[15px] py-[32px] px-[35px] flex-1">
-                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal">
+                  <ul className="space-y-3 text-[#000000] text-[16px] md:text-[18px] font-normal blur-sm">
                     <li className="pl-[1em] indent-[-1em]">• 소화 효소 및 항염 효소는 일반 사료에 포함되지 않는 고유의 기능성 성분입니다.</li>
                     <li className="pl-[1em] indent-[-1em]">• 카쿠의 과거 두드러기, 점액변 등 염증성 반응 관리와 관절 건강 예방이라는 목표에 부합하므로 유지를 권장합니다.</li>
                   </ul>
@@ -1125,7 +1129,7 @@ const DetailedDietReport = ({
                   <span className="text-white text-[20px]">🖍️</span>
                   <h3 className="text-white font-semibold text-[18px] md:text-[22px]">현재 식단의 최종 평가</h3>
                 </div>
-                <p className="text-white text-[15px] md:text-[20px] leading-relaxed ml-[32px]">
+                <p className="text-white text-[15px] md:text-[20px] leading-relaxed ml-[32px] blur-sm">
                   현재 식단은 &apos;좋은 사료를 잘못된 양으로 사용&apos;하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
                 </p>
               </div>
@@ -1151,7 +1155,7 @@ const DetailedDietReport = ({
                   <span className="text-white text-[20px]">📝</span>
                   <h3 className="text-white font-semibold text-[18px] md:text-[22px]">실행 계획</h3>
                 </div>
-                <ul className="space-y-4 text-white text-[15px] md:text-[20px] ml-[32px]">
+                <ul className="space-y-4 text-white text-[15px] md:text-[20px] ml-[32px] blur-sm">
                   <li>
                     <span className="font-bold">• 권장 사항:</span> 현재 사료의 장점은 살리되, 지방 함량이 훨씬 낮은 새로운 &apos;저지방 주식(베이스)&apos;을 도입하여 전체 식단의 지방은 낮추고 부족한 칼로리와 단백질을 채우는 &apos;베이스 + 솔버&apos; 전략으로 전환을 추천합니다.
                   </li>
