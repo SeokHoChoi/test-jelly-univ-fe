@@ -46,6 +46,88 @@ const MobileButton = ({
   );
 };
 
+// 데스크탑 플로팅 버튼 컴포넌트
+const DesktopFloatingButton = ({
+  text,
+  variant = 'blue',
+  className = ''
+}: {
+  text: string;
+  variant?: 'blue' | 'white' | 'yellow';
+  className?: string;
+}) => {
+  const router = useRouter();
+
+  const getButtonStyles = () => {
+    switch (variant) {
+      case 'blue':
+        return 'bg-[#003DA5] text-white';
+      case 'white':
+        return 'bg-white text-[#003DA5]';
+      case 'yellow':
+        return 'bg-[#FFC466] text-[#343434]';
+      default:
+        return 'bg-[#003DA5] text-white';
+    }
+  };
+
+  const handleClick = () => {
+    router.push('/survey');
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`rounded-[50px] font-medium text-[15px] ${getButtonStyles()} hidden md:block shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center ${className}`}
+    >
+      {text}
+    </button>
+  );
+};
+
+// 조건부 버튼 컴포넌트 (정보가 없을 때만 표시)
+const ConditionalButton = ({
+  text,
+  variant = 'blue',
+  className = '',
+  show = true
+}: {
+  text: string;
+  variant?: 'blue' | 'white' | 'yellow';
+  className?: string;
+  show?: boolean;
+}) => {
+  const router = useRouter();
+
+  const getButtonStyles = () => {
+    switch (variant) {
+      case 'blue':
+        return 'bg-[#003DA5] text-white';
+      case 'white':
+        return 'bg-white text-[#003DA5]';
+      case 'yellow':
+        return 'bg-[#FFC466] text-[#343434]';
+      default:
+        return 'bg-[#003DA5] text-white';
+    }
+  };
+
+  const handleClick = () => {
+    router.push('/survey');
+  };
+
+  if (!show) return null;
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`w-full py-[20px] rounded-[50px] font-medium text-[15px] ${getButtonStyles()} shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center ${className}`}
+    >
+      {text}
+    </button>
+  );
+};
+
 interface PetInfo {
   name: string;
   breed: string;
@@ -99,6 +181,7 @@ const DetailedDietReport = ({
   currentFoods,
   recommendedIntake
 }: DetailedDietReportProps) => {
+  const router = useRouter();
 
   // const getStatusText = (status: string) => {
   //   switch (status) {
@@ -156,7 +239,7 @@ const DetailedDietReport = ({
           </div>
 
           {/* 냥구는요 카드 */}
-          <ReportCard className="md:order-2">
+          <ReportCard className="md:order-2 relative">
             <ReportCardHeader emoji="🐾" title="냥구는요" />
             <div className="mt-[35px]">
               <ReportCardContent>
@@ -166,10 +249,15 @@ const DetailedDietReport = ({
                 <MobileButton text="냥구의 활동 수준을 알려주세요" variant="blue" />
               </div>
             </div>
+            <DesktopFloatingButton
+              text="하이의 활동 수준을 알려주세요"
+              variant="blue"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
+            />
           </ReportCard>
 
           {/* 체중 및 신체충실도 진단 */}
-          <ReportCard className="md:order-5 md:mt-[24px]">
+          <ReportCard className="md:order-5 md:mt-[24px] relative">
             <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" />
             <div className="mt-[35px]">
               <ReportCardContent>
@@ -185,6 +273,11 @@ const DetailedDietReport = ({
                 <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="blue" />
               </div>
             </div>
+            <DesktopFloatingButton
+              text="하이의 활동 수준을 알려주세요"
+              variant="blue"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
+            />
           </ReportCard>
 
           {/* 생애주기 평가 */}
@@ -215,16 +308,21 @@ const DetailedDietReport = ({
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">몸무게</p>
                   <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.weight}</p>
                 </div>
-                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] sm:col-span-2 lg:col-span-1">
+                <div className="bg-[#003DA5] rounded-lg px-[15px] sm:px-[17px] lg:px-[19px] py-[12px] sm:py-[13px] lg:py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] sm:col-span-2 lg:col-span-1 relative">
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">중성화</p>
                   <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.neutered}</p>
+                  <DesktopFloatingButton
+                    text="중성화 정보 필요"
+                    variant="white"
+                    className="absolute -bottom-[18px] left-1/2 transform -translate-x-1/2 w-[124px] h-[36px] py-0 flex items-center justify-center text-[12px]"
+                  />
                 </div>
               </div>
             </div>
           </ReportCard>
 
           {/* BCS & RWASOME 카드 */}
-          <ReportCard className="md:order-4 md:mt-[35px]">
+          <ReportCard className="md:order-4 md:mt-[35px] relative">
             <div className="space-y-6">
               {/* BCS */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
@@ -286,6 +384,11 @@ const DetailedDietReport = ({
             <div className="mt-[28.5px]">
               <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="white" />
             </div>
+            <DesktopFloatingButton
+              text="하이의 활동 수준을 알려주세요"
+              variant="blue"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
+            />
           </ReportCard>
         </div>
 
@@ -314,7 +417,7 @@ const DetailedDietReport = ({
                   <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
                 </div>
               </div>
-              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[284px]">
+              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left flex-shrink-0 w-full sm:w-[284px] flex flex-col">
                 <ReportCardHeader
                   emoji="⚓️"
                   title="목표 체중"
@@ -325,11 +428,29 @@ const DetailedDietReport = ({
                   subtitleSize="13px"
                   titleSubtitleGap="0px"
                 />
-                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
-                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.targetWeight}</p>
+                {/* 모바일에서는 수치 표시, 데스크탑에서는 survey 완료 상태에 따라 조건부 표시 */}
+                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px] md:hidden">
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">
+                    {targetMetrics.targetWeight}
+                  </p>
+                </div>
+                {/* TODO: 데스크탑에서 survey 완료 상태에 따라 조건부 표시 */}
+                {false && ( // 현재는 정보 입력이 안 되어 있으므로 false
+                  <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px] hidden md:block">
+                    <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">
+                      {targetMetrics.targetWeight}
+                    </p>
+                  </div>
+                )}
+                <div className="mt-auto hidden md:block">
+                  <ConditionalButton
+                    text="BCS 점수가 필요해요"
+                    variant="blue"
+                    show={true} // TODO: survey 완료 상태에 따라 조건부 표시
+                  />
                 </div>
               </div>
-              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] pl-[20px] sm:pl-[22px] lg:pl-[25px] pr-[66px] text-left flex-shrink-0 w-full sm:w-[397px]">
+              <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left flex-shrink-0 w-full sm:w-[397px] flex flex-col">
                 <ReportCardHeader
                   emoji="🔥️"
                   title="1일 권장 칼로리(MER)"
@@ -340,8 +461,26 @@ const DetailedDietReport = ({
                   subtitleSize="13px"
                   titleSubtitleGap="0px"
                 />
-                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
-                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.mer}</p>
+                {/* 모바일에서는 수치 표시, 데스크탑에서는 survey 완료 상태에 따라 조건부 표시 */}
+                <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px] md:hidden">
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">
+                    {targetMetrics.mer}
+                  </p>
+                </div>
+                {/* TODO: 데스크탑에서 survey 완료 상태에 따라 조건부 표시 */}
+                {false && ( // 현재는 정보 입력이 안 되어 있으므로 false
+                  <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px] hidden md:block">
+                    <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">
+                      {targetMetrics.mer}
+                    </p>
+                  </div>
+                )}
+                <div className="mt-auto hidden md:block">
+                  <ConditionalButton
+                    text="중성화 여부와 활동 수준 정보가 필요해요"
+                    variant="blue"
+                    show={true} // TODO: survey 완료 상태에 따라 조건부 표시
+                  />
                 </div>
               </div>
             </div>
@@ -499,6 +638,19 @@ const DetailedDietReport = ({
                 <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.water}</p>
               </div>
             </div>
+
+            {/* 데스크탑용 노란 버튼 - 하얀 카드들 아래 보더보다 19px 위에 배치 */}
+            <div className="relative hidden md:block">
+              <div className="absolute bottom-[19px] left-1/2 transform -translate-x-1/2">
+                <button
+                  onClick={() => router.push('/survey')}
+                  className="w-[1033px] h-[59px] bg-[#FFC466] text-[#343434] rounded-[50px] font-semibold text-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center"
+                >
+                  1일 권장 칼로리(DER)의 정보가 필요해요!
+                </button>
+              </div>
+            </div>
+
             <div className="mt-[28.5px]">
               <MobileButton text="하루 권장 칼로리 정보가 필요해요" variant="yellow" />
             </div>
@@ -513,6 +665,21 @@ const DetailedDietReport = ({
             subtitle="위에서 분석한 현재와 권장 칼로리 및 주요 영양소를 비교 분석해 현재 식단이 어떤 상태인지 더 자세히 파악해요!"
           />
           <div className="mt-[42px]">
+            {/* 데스크탑용 파란 버튼 - 칼로리 배지 위에 배치 */}
+            <div className="relative hidden md:block mb-[20px]">
+              <div className="absolute top-[-4px] left-1/2 transform -translate-x-1/2">
+                <button
+                  onClick={() => router.push('/survey')}
+                  className="w-[839px] h-[97px] bg-[#003DA5] text-white rounded-[50px] font-medium text-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center"
+                >
+                  <div className="text-center">
+                    <div>주요 영양소의 1일 권장섭취량의 정보가 필요해요.</div>
+                    <div>활동 수준, BCS 등의 정보를 기입하고 확인해보세요!</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
             {/* 주요 영양소 섭취량 비교 섹션 */}
             <div className="flex flex-col gap-[30px] mb-[42px]">
               {/* 칼로리 */}
@@ -915,6 +1082,22 @@ const DetailedDietReport = ({
                 </div>
               </div>
             </div>
+
+            {/* 데스크탑용 파란 버튼 - 절대 위치로 배치 */}
+            <div className="relative hidden md:block">
+              <div className="absolute bottom-[242px] left-1/2 transform -translate-x-1/2">
+                <button
+                  onClick={() => router.push('/survey')}
+                  className="w-[839px] h-[97px] bg-[#003DA5] text-white rounded-[50px] font-medium text-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center"
+                >
+                  <div className="text-center">
+                    <div>어떤 영양제를 급여하고 계신가요?</div>
+                    <div>지금 정보를 기입하고 혹시 과하게 급하고 있는건 아닐지 체크해보세요!</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <div className="mt-[28.5px]">
               <MobileButton text="급여 중인 영양제 정보를 알려주세요" variant="yellow" />
             </div>
@@ -940,6 +1123,21 @@ const DetailedDietReport = ({
                 <p className="text-white text-[15px] md:text-[20px] leading-relaxed ml-[32px]">
                   현재 식단은 &apos;좋은 사료를 잘못된 양으로 사용&apos;하고 있는 대표적인 사례입니다. 이는 영양 불균형과 지속적인 허기를 유발하여, 장기적으로는 하이의 건강을 심각하게 해칠 수 있습니다.
                 </p>
+              </div>
+
+              {/* 데스크탑용 하얀 버튼 - 파란 카드 두 개 사이에 배치 */}
+              <div className="relative hidden md:block">
+                <div className="absolute top-[-48px] left-1/2 transform -translate-x-1/2">
+                  <button
+                    onClick={() => router.push('/survey')}
+                    className="w-[839px] h-[97px] bg-[#FFFFFF] text-[#1E1E1E] rounded-[50px] font-medium text-[20px] shadow-[0_4px_4px_rgba(0,0,0,0.25)] flex items-center justify-center"
+                  >
+                    <div className="text-center">
+                      <div>수의영양학 데이터로 분석하고 수의사가 검증한</div>
+                      <div>종합 진단과 솔루션을 바로 확인해보세요!</div>
+                    </div>
+                  </button>
+                </div>
               </div>
 
               {/* 실행 계획 */}
