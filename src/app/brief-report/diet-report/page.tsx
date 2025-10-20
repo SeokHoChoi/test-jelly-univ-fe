@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ReportTabs from '@/components/brief-report/ReportTabs';
 import DietReportExample from '@/components/brief-report/DietReportExample';
+import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
 
 const DietReportPage = () => {
   const [petInfo, setPetInfo] = useState({ name: '반려견' });
@@ -44,6 +45,9 @@ const DietReportPage = () => {
         </div>
         <DietReportExample onPetInfoChange={setPetInfo} />
       </section>
+
+      {/* 플로팅 PetSuitabilitySection */}
+      <PetSuitabilitySection />
     </div>
   );
 };
