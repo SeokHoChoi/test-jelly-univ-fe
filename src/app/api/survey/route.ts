@@ -72,7 +72,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
 // 데이터베이스 저장 함수 (예시)
 async function saveSurveyData(data: SurveyData) {
   // TODO: 실제 데이터베이스 저장 로직 구현
@@ -88,3 +87,4 @@ async function saveSurveyData(data: SurveyData) {
 
   return { success: true, id: 'temp-id' };
 }
+
