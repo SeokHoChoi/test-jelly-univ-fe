@@ -13,7 +13,7 @@ interface SurveyData {
   gender: string;
   neutered: string;
   pregnant: string;
-  bcs: number;
+  bcs: string;
   rawsome: string;
   activityLevel: string;
 

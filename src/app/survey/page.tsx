@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import DatePicker from 'react-datepicker';
@@ -60,6 +60,7 @@ const SurveyPage = () => {
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [dateError, setDateError] = useState('');
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   // 전화번호 포맷팅 함수
   const formatPhoneNumber = (value: string) => {
@@ -260,6 +261,12 @@ const SurveyPage = () => {
       setTimeout(() => {
         setCurrentStep(currentStep + 1);
         setIsAnimating(false);
+        // 다음 단계로 이동 후 포커스
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }, 100);
       }, 200);
     } else {
       handleSubmit();
@@ -457,6 +464,7 @@ const SurveyPage = () => {
             <div className="space-y-4">
               {currentQuestion.type === 'text' && (
                 <input
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
                   type={currentQuestion.type}
                   value={formData[currentQuestion.id as keyof SurveyData] as string}
                   onChange={(e) => handleInputChange(e.target.value)}
@@ -469,6 +477,7 @@ const SurveyPage = () => {
               {currentQuestion.type === 'email' && (
                 <div>
                   <input
+                    ref={inputRef as React.RefObject<HTMLInputElement>}
                     type="email"
                     value={formData[currentQuestion.id as keyof SurveyData] as string}
                     onChange={(e) => handleInputChange(e.target.value)}
@@ -486,6 +495,7 @@ const SurveyPage = () => {
               {currentQuestion.type === 'tel' && (
                 <div>
                   <input
+                    ref={inputRef as React.RefObject<HTMLInputElement>}
                     type="tel"
                     value={formData[currentQuestion.id as keyof SurveyData] as string}
                     onChange={(e) => handleInputChange(e.target.value)}
@@ -533,6 +543,7 @@ const SurveyPage = () => {
                     customInput={
                       <div className="relative">
                         <input
+                          ref={inputRef as React.RefObject<HTMLInputElement>}
                           type="text"
                           value={formData.birthDate ? formData.birthDate.replace(/-/g, '.') : ''}
                           onChange={(e) => {
@@ -555,6 +566,10 @@ const SurveyPage = () => {
                               if (parts[1].length >= 3) {
                                 formatted = parts[0] + '.' + parts[1].slice(0, 2) + '.' + parts[1].slice(2);
                               }
+                            }
+                            // 8자리 숫자가 모두 입력된 경우 자동으로 포맷팅
+                            if (cleanValue.length === 8 && !cleanValue.includes('.')) {
+                              formatted = cleanValue.slice(0, 4) + '.' + cleanValue.slice(4, 6) + '.' + cleanValue.slice(6, 8);
                             }
 
                             // YYYY-MM-DD 형식으로 변환하여 저장
@@ -625,6 +640,7 @@ const SurveyPage = () => {
 
               {currentQuestion.type === 'textarea' && (
                 <textarea
+                  ref={inputRef as React.RefObject<HTMLTextAreaElement>}
                   value={formData[currentQuestion.id as keyof SurveyData] as string}
                   onChange={(e) => handleInputChange(e.target.value)}
                   placeholder={currentQuestion.placeholder}
