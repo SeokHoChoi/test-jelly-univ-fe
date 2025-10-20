@@ -53,6 +53,32 @@ const SurveyPage = () => {
   });
 
   const [isAnimating, setIsAnimating] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  // 전화번호 포맷팅 함수
+  const formatPhoneNumber = (value: string) => {
+    // 숫자만 추출
+    const numbers = value.replace(/\D/g, '');
+
+    // 11자리 제한
+    const limitedNumbers = numbers.slice(0, 11);
+
+    // 포맷팅 적용
+    if (limitedNumbers.length <= 3) {
+      return limitedNumbers;
+    } else if (limitedNumbers.length <= 7) {
+      return `${limitedNumbers.slice(0, 3)}-${limitedNumbers.slice(3)}`;
+    } else {
+      return `${limitedNumbers.slice(0, 3)}-${limitedNumbers.slice(3, 7)}-${limitedNumbers.slice(7)}`;
+    }
+  };
+
+  // 이메일 유효성 검사 함수
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const questions = [
     // 보호자 정보
@@ -239,9 +265,37 @@ const SurveyPage = () => {
 
   const handleInputChange = (value: string | number) => {
     const currentQuestion = questions[currentStep];
+    let processedValue = value;
+
+    // 전화번호 처리
+    if (currentQuestion.id === 'phoneNumber') {
+      const formattedPhone = formatPhoneNumber(value as string);
+      processedValue = formattedPhone;
+
+      // 전화번호 유효성 검사 (11자리 숫자)
+      const numbers = formattedPhone.replace(/\D/g, '');
+      if (numbers.length === 11) {
+        setPhoneError('');
+      } else if (numbers.length > 0) {
+        setPhoneError('올바른 전화번호 형식이 아닙니다');
+      } else {
+        setPhoneError('');
+      }
+    }
+
+    // 이메일 처리
+    if (currentQuestion.id === 'email') {
+      const emailValue = value as string;
+      if (emailValue.length > 0 && !validateEmail(emailValue)) {
+        setEmailError('올바른 이메일 형식이 아닙니다');
+      } else {
+        setEmailError('');
+      }
+    }
+
     setFormData(prev => ({
       ...prev,
-      [currentQuestion.id]: value
+      [currentQuestion.id]: processedValue
     }));
   };
 
@@ -271,7 +325,10 @@ const SurveyPage = () => {
 
   const currentQuestion = questions[currentStep];
   const isCurrentStepValid = currentQuestion.required
-    ? formData[currentQuestion.id as keyof SurveyData] !== '' && formData[currentQuestion.id as keyof SurveyData] !== 0
+    ? formData[currentQuestion.id as keyof SurveyData] !== '' &&
+    formData[currentQuestion.id as keyof SurveyData] !== 0 &&
+    (currentQuestion.id === 'phoneNumber' ? phoneError === '' : true) &&
+    (currentQuestion.id === 'email' ? emailError === '' : true)
     : true;
 
   return (
@@ -369,25 +426,37 @@ const SurveyPage = () => {
               )}
 
               {currentQuestion.type === 'email' && (
-                <input
-                  type="email"
-                  value={formData[currentQuestion.id as keyof SurveyData] as string}
-                  onChange={(e) => handleInputChange(e.target.value)}
-                  placeholder={currentQuestion.placeholder}
-                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
-                  required={currentQuestion.required}
-                />
+                <div>
+                  <input
+                    type="email"
+                    value={formData[currentQuestion.id as keyof SurveyData] as string}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    placeholder={currentQuestion.placeholder}
+                    className={`w-full px-4 py-4 border rounded-xl focus:ring-2 focus:border-transparent text-base ${emailError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-blue-500'
+                      }`}
+                    required={currentQuestion.required}
+                  />
+                  {emailError && (
+                    <p className="text-red-500 text-sm mt-2">{emailError}</p>
+                  )}
+                </div>
               )}
 
               {currentQuestion.type === 'tel' && (
-                <input
-                  type="tel"
-                  value={formData[currentQuestion.id as keyof SurveyData] as string}
-                  onChange={(e) => handleInputChange(e.target.value)}
-                  placeholder={currentQuestion.placeholder}
-                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
-                  required={currentQuestion.required}
-                />
+                <div>
+                  <input
+                    type="tel"
+                    value={formData[currentQuestion.id as keyof SurveyData] as string}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    placeholder={currentQuestion.placeholder}
+                    className={`w-full px-4 py-4 border rounded-xl focus:ring-2 focus:border-transparent text-base ${phoneError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-blue-500'
+                      }`}
+                    required={currentQuestion.required}
+                  />
+                  {phoneError && (
+                    <p className="text-red-500 text-sm mt-2">{phoneError}</p>
+                  )}
+                </div>
               )}
 
               {currentQuestion.type === 'select' && (
