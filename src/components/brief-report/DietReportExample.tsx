@@ -1,10 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import DetailedDietReport from './DetailedDietReport';
 
 const DietReportExample = () => {
-  // 이미지에 맞는 실제 데이터
-  const petInfo = {
+  const [petInfo, setPetInfo] = useState({
     name: '하이',
     breed: '셔틀랜드 쉽독',
     gender: '남아',
@@ -15,7 +15,44 @@ const DietReportExample = () => {
     rwacome: 5,
     personality: '행복한 미식가',
     description: '넘치는 에너지로 가득하지만 조금은 무거운 상태예요. 전문적인 관리로 근육량을 유지하면서 최고 컨디션을 만들어보세요.'
-  };
+  });
+
+  useEffect(() => {
+    // 로컬스토리지에서 분석 페이지 데이터 가져오기
+    const productAnalysisData = localStorage.getItem('productAnalysisData');
+    // 세션스토리지에서 설문 데이터 가져오기
+    const surveyData = sessionStorage.getItem('surveyData');
+
+    if (productAnalysisData) {
+      try {
+        const parsedData = JSON.parse(productAnalysisData);
+        setPetInfo(prev => ({
+          ...prev,
+          name: parsedData.dogName || prev.name,
+          breed: parsedData.dogBreed || prev.breed,
+          weight: parsedData.dogWeight ? `${parsedData.dogWeight}kg` : prev.weight
+        }));
+      } catch (error) {
+        console.error('Failed to parse productAnalysisData:', error);
+      }
+    }
+
+    if (surveyData) {
+      try {
+        const parsedData = JSON.parse(surveyData);
+        setPetInfo(prev => ({
+          ...prev,
+          name: parsedData.dogName || prev.name,
+          breed: parsedData.dogBreed || prev.breed,
+          weight: parsedData.dogWeight ? `${parsedData.dogWeight}kg` : prev.weight,
+          gender: parsedData.gender || prev.gender,
+          neutered: parsedData.neutered || prev.neutered
+        }));
+      } catch (error) {
+        console.error('Failed to parse surveyData:', error);
+      }
+    }
+  }, []);
 
   const targetMetrics = {
     rer: '168kcal',
