@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface SurveyData {
   // 보호자 정보
@@ -218,7 +219,7 @@ const SurveyPage = () => {
       setTimeout(() => {
         setCurrentStep(currentStep + 1);
         setIsAnimating(false);
-      }, 300);
+      }, 200);
     } else {
       handleSubmit();
     }
@@ -230,7 +231,7 @@ const SurveyPage = () => {
       setTimeout(() => {
         setCurrentStep(currentStep - 1);
         setIsAnimating(false);
-      }, 300);
+      }, 200);
     }
   };
 
@@ -272,17 +273,36 @@ const SurveyPage = () => {
     : true;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
-            <span>질문 {currentStep + 1} / {questions.length}</span>
-            <span>{Math.round(((currentStep + 1) / questions.length) * 100)}%</span>
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* 데스크탑 컨테이너 */}
+      <div className="max-w-2xl mx-auto w-full">
+        {/* 헤더 */}
+        <div className="px-6 pt-16 pb-4">
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={handlePrevious}
+              disabled={currentStep === 0}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${currentStep === 0
+                ? 'bg-gray-100 text-gray-300'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <div className="text-sm text-gray-500">
+              {currentStep + 1} / {questions.length}
+            </div>
+
+            <div className="w-8"></div>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 rounded-full h-1">
             <div
-              className="h-2 rounded-full transition-all duration-300 ease-out"
+              className="h-1 rounded-full transition-all duration-300 ease-out"
               style={{
                 width: `${((currentStep + 1) / questions.length) * 100}%`,
                 backgroundColor: '#003DA5'
@@ -291,141 +311,121 @@ const SurveyPage = () => {
           </div>
         </div>
 
-        {/* Question Card */}
-        <div className={`bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 ease-out ${isAnimating ? 'opacity-0 transform translate-x-8' : 'opacity-100 transform translate-x-0'
-          }`}>
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{currentQuestion.title}</h2>
-            <h3 className="text-lg text-gray-700 mb-4">{currentQuestion.subtitle}</h3>
-            {currentQuestion.description && (
-              <div
-                className="border-l-4 p-4 mb-4"
-                style={{
-                  backgroundColor: '#E6F0FF',
-                  borderLeftColor: '#003DA5'
-                }}
-              >
-                <p
-                  className="text-sm"
-                  style={{ color: '#002A7A' }}
-                >
-                  {currentQuestion.description}
-                </p>
-              </div>
-            )}
-            {currentQuestion.image && (
-              <div className="mb-6">
-                <img
-                  src={currentQuestion.image}
-                  alt={currentQuestion.subtitle}
-                  className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
+        {/* 메인 콘텐츠 */}
+        <div className="flex-1 px-6 py-8 pb-32">
+          <div className={`max-w-lg mx-auto transition-all duration-200 ${isAnimating ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
+            }`}>
+            {/* 질문 제목 */}
+            <div className="mb-8">
+              <h1 className="text-xl font-semibold text-gray-900 mb-2">
+                {currentQuestion.subtitle}
+              </h1>
+              {currentQuestion.description && (
+                <div className="bg-blue-50 rounded-xl p-4 mb-4">
+                  <p className="text-sm text-blue-800 leading-relaxed">
+                    {currentQuestion.description}
+                  </p>
+                </div>
+              )}
+              {currentQuestion.image && (
+                <div className="mb-6">
+                  <Image
+                    src={currentQuestion.image}
+                    alt={currentQuestion.subtitle}
+                    width={400}
+                    height={200}
+                    className="w-full rounded-xl shadow-sm"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* 입력 필드 */}
+            <div className="space-y-4">
+              {currentQuestion.type === 'text' && (
+                <input
+                  type={currentQuestion.type}
+                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder={currentQuestion.placeholder}
+                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  required={currentQuestion.required}
                 />
-              </div>
-            )}
+              )}
+
+              {currentQuestion.type === 'email' && (
+                <input
+                  type="email"
+                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder={currentQuestion.placeholder}
+                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  required={currentQuestion.required}
+                />
+              )}
+
+              {currentQuestion.type === 'tel' && (
+                <input
+                  type="tel"
+                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder={currentQuestion.placeholder}
+                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  required={currentQuestion.required}
+                />
+              )}
+
+              {currentQuestion.type === 'select' && (
+                <div className="space-y-2">
+                  {currentQuestion.options?.map((option, index) => (
+                    <label key={index} className="flex items-center p-4 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
+                      <input
+                        type="radio"
+                        name={currentQuestion.id}
+                        value={option}
+                        checked={formData[currentQuestion.id as keyof SurveyData] === option}
+                        onChange={(e) => handleInputChange(e.target.value)}
+                        className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                        required={currentQuestion.required}
+                      />
+                      <span className="text-gray-700 text-sm">{option}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              {currentQuestion.type === 'textarea' && (
+                <textarea
+                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder={currentQuestion.placeholder}
+                  rows={6}
+                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base resize-none"
+                  required={currentQuestion.required}
+                />
+              )}
+            </div>
           </div>
+        </div>
 
-          {/* Input Field */}
-          <div className="mb-8">
-            {currentQuestion.type === 'text' && (
-              <input
-                type={currentQuestion.type}
-                value={formData[currentQuestion.id as keyof SurveyData] as string}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder={currentQuestion.placeholder}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent text-lg"
-                style={{
-                  '--tw-ring-color': '#003DA5'
-                } as React.CSSProperties}
-                required={currentQuestion.required}
-              />
-            )}
-
-            {currentQuestion.type === 'email' && (
-              <input
-                type="email"
-                value={formData[currentQuestion.id as keyof SurveyData] as string}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder={currentQuestion.placeholder}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent text-lg"
-                style={{
-                  '--tw-ring-color': '#003DA5'
-                } as React.CSSProperties}
-                required={currentQuestion.required}
-              />
-            )}
-
-            {currentQuestion.type === 'tel' && (
-              <input
-                type="tel"
-                value={formData[currentQuestion.id as keyof SurveyData] as string}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder={currentQuestion.placeholder}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent text-lg"
-                style={{
-                  '--tw-ring-color': '#003DA5'
-                } as React.CSSProperties}
-                required={currentQuestion.required}
-              />
-            )}
-
-            {currentQuestion.type === 'select' && (
-              <div className="space-y-3">
-                {currentQuestion.options?.map((option, index) => (
-                  <label key={index} className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                    <input
-                      type="radio"
-                      name={currentQuestion.id}
-                      value={option}
-                      checked={formData[currentQuestion.id as keyof SurveyData] === option}
-                      onChange={(e) => handleInputChange(e.target.value)}
-                      className="mr-3 h-4 w-4"
-                      style={{
-                        color: '#003DA5',
-                        '--tw-ring-color': '#003DA5'
-                      } as React.CSSProperties}
-                      required={currentQuestion.required}
-                    />
-                    <span className="text-gray-700">{option}</span>
-                  </label>
-                ))}
-              </div>
-            )}
-
-            {currentQuestion.type === 'textarea' && (
-              <textarea
-                value={formData[currentQuestion.id as keyof SurveyData] as string}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder={currentQuestion.placeholder}
-                rows={6}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg resize-none"
-                required={currentQuestion.required}
-              />
-            )}
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-between">
-            <button
-              onClick={handlePrevious}
-              disabled={currentStep === 0}
-              className={`px-6 py-3 rounded-lg font-medium transition-colors ${currentStep === 0
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-            >
-              이전
-            </button>
-
+        {/* 하단 고정 버튼 */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-6">
+          <div className="max-w-2xl mx-auto">
             <button
               onClick={handleNext}
               disabled={!isCurrentStepValid}
-              className={`px-8 py-3 rounded-lg font-medium transition-colors ${isCurrentStepValid
-                ? 'text-white hover:opacity-90'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              className={`w-full py-4 text-white font-semibold text-base rounded-xl transition-all duration-200 ${isCurrentStepValid
+                ? 'active:scale-95'
+                : 'opacity-50 cursor-not-allowed'
                 }`}
-              style={isCurrentStepValid ? { backgroundColor: '#003DA5' } : {}}
+              style={isCurrentStepValid ? {
+                backgroundColor: '#003DA5',
+                boxShadow: '0 4px 12px rgba(0, 61, 165, 0.15)'
+              } : {
+                backgroundColor: '#E5E7EB'
+              }}
             >
-              {currentStep === questions.length - 1 ? '완료' : '다음'}
+              {currentStep === questions.length - 1 ? '완료하기' : '다음'}
             </button>
           </div>
         </div>
