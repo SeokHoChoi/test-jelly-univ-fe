@@ -19,8 +19,6 @@ const ReportCardHeader = ({
   subtitle,
   titleColor = '#1E1E1E',
   subtitleColor = '#525252',
-  titleSize = '25px',
-  subtitleSize = '18px',
   titleSubtitleGap = '8px'
 }: ReportCardHeaderProps) => {
   // 색상에 따른 Tailwind 클래스 매핑

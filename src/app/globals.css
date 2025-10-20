@@ -105,3 +105,153 @@ body {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* 토스 스타일 DatePicker */
+.toss-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+.toss-datepicker-popper .react-datepicker {
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  font-family: 'Pretendard', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  overflow: hidden !important;
+}
+
+.toss-datepicker-popper .react-datepicker__header {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e9ecef !important;
+  border-radius: 16px 16px 0 0 !important;
+  padding: 16px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__current-month {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 8px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day-names {
+  margin-bottom: 8px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day-name {
+  color: #6b7280 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  width: 40px !important;
+  line-height: 40px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__month {
+  margin: 0 !important;
+  padding: 8px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day {
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  margin: 2px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #1a1a1a !important;
+  transition: all 0.2s ease !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day:hover {
+  background-color: #e6f0ff !important;
+  color: #003DA5 !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--selected {
+  background-color: #003DA5 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--selected:hover {
+  background-color: #002A7A !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--keyboard-selected {
+  background-color: #e6f0ff !important;
+  color: #003DA5 !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--outside-month {
+  color: #d1d5db !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--disabled {
+  color: #d1d5db !important;
+  cursor: not-allowed !important;
+}
+
+.toss-datepicker-popper .react-datepicker__day--disabled:hover {
+  background-color: transparent !important;
+  color: #d1d5db !important;
+}
+
+.toss-datepicker-popper .react-datepicker__navigation {
+  top: 16px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background-color: white !important;
+  border: 1px solid #e5e7eb !important;
+  transition: all 0.2s ease !important;
+}
+
+.toss-datepicker-popper .react-datepicker__navigation:hover {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+}
+
+.toss-datepicker-popper .react-datepicker__navigation--previous {
+  left: 16px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__navigation--next {
+  right: 16px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__navigation-icon::before {
+  border-color: #6b7280 !important;
+  border-width: 2px 2px 0 0 !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.toss-datepicker-popper .react-datepicker__year-dropdown,
+.toss-datepicker-popper .react-datepicker__month-dropdown {
+  background-color: white !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+.toss-datepicker-popper .react-datepicker__year-option,
+.toss-datepicker-popper .react-datepicker__month-option {
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  color: #1a1a1a !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.toss-datepicker-popper .react-datepicker__year-option:hover,
+.toss-datepicker-popper .react-datepicker__month-option:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.toss-datepicker-popper .react-datepicker__year-option--selected,
+.toss-datepicker-popper .react-datepicker__month-option--selected {
+  background-color: #003DA5 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}

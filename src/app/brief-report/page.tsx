@@ -38,12 +38,11 @@ const BriefReportPage = () => {
   }, [response, restored, router]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-20">
       <FoodQualityAnalysisSection />
-      <PetSuitabilitySection />
 
       {/* 회원가입 유도 버튼 */}
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed bottom-4 right-4 z-40">
         <button
           onClick={() => setShowSignupModal(true)}
           className="bg-brand-blue text-white px-4 py-3 rounded-lg shadow-lg hover:bg-brand-blue-dark transition-colors text-sm md:text-base md:px-6"
@@ -52,6 +51,9 @@ const BriefReportPage = () => {
           <span className="sm:hidden">전체 보기</span>
         </button>
       </div>
+
+      {/* 플로팅 PetSuitabilitySection */}
+      <PetSuitabilitySection />
 
       <SignupPromptModal
         isOpen={showSignupModal}

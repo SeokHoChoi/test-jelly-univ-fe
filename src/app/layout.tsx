@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,11 +81,13 @@ export default function RootLayout({
           />
         </noscript>
 
-        <AuthProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
