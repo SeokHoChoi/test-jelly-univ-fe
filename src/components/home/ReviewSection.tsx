@@ -92,7 +92,7 @@ const ReviewSection = () => {
             CBT 참여 보호자들의 생생한 후기
           </h2>
         </div>
-        <ReviewSlider reviews={reviews} />
+        <ReviewSlider reviews={reviews} showDots={true} />
       </div>
     </section>
   );
