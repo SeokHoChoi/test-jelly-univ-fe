@@ -3,7 +3,17 @@
 import { useEffect, useState } from 'react';
 import DetailedDietReport from './DetailedDietReport';
 
-const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: any) => void }) => {
+interface PetInfo {
+  name: string;
+  breed: string;
+  gender: string;
+  weight: string;
+  age?: string;
+  neutered?: string;
+  activityLevel?: string;
+}
+
+const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: PetInfo) => void }) => {
   const [petInfo, setPetInfo] = useState({
     name: '하이',
     breed: '셔틀랜드 쉽독',

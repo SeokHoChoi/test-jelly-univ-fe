@@ -52,7 +52,7 @@ interface SurveyData {
 
 const SurveyPage = () => {
   const router = useRouter();
-  const { data: meData, isLoading: isMeLoading, error: meError } = useMe();
+  const { data: meData } = useMe();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<SurveyData>({
     ownerName: '',

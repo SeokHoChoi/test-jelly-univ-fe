@@ -53,10 +53,13 @@ export const useMe = () => {
     queryFn: fetchMe,
     enabled: !!getToken(), // 토큰이 있을 때만 쿼리 실행
     staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
-    retry: (failureCount, error: any) => {
+    retry: (failureCount, error: unknown) => {
       // 401 에러는 재시도하지 않음
-      if (error?.message?.includes('401') || error?.status === 401) {
-        return false;
+      if (error && typeof error === 'object') {
+        if (('message' in error && typeof error.message === 'string' && error.message.includes('401')) ||
+          ('status' in error && error.status === 401)) {
+          return false;
+        }
       }
       // 다른 에러는 최대 2번 재시도
       return failureCount < 2;
