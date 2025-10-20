@@ -229,18 +229,20 @@ const DetailedDietReport = ({
         )}
 
         {/* 헤더 섹션 - 좌측 정렬 */}
-        <div className="text-left mb-44">
-          <p className="text-[#848484] font-medium text-[18px] sm:text-[22px] md:text-[28px] mb-0">Current Diet Report</p>
-          <h1 className="text-[24px] sm:text-[32px] md:text-[40px] font-semibold text-[#000000] mb-6">
+        <div className="text-left mb-8">
+          {/* 맞춤 식단 분석 리포트 배지 */}
+          <div className="inline-flex items-center px-4 py-3.5 bg-[#003DA5] rounded-full mb-4">
+            <span className="text-white font-medium text-[15px]">맞춤 식단 분석 리포트</span>
+          </div>
+          <h1 className="text-[24px] sm:text-[32px] md:text-[40px] font-semibold text-[#003DA5] mb-6">
             {petInfo.name}를 위한 현재 식단 분석 리포트
           </h1>
         </div>
 
         {/* 6개 카드 그리드: 가로80px, 왼쪽세로24px, 오른쪽세로35px, md:order로 순서조정 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 md:gap-x-[80px] mb-8">
-          {/* 행복한 미식가 카드 */}
-          <div className="bg-[#003DA5] rounded-[20px] pt-[46px] pb-[36px] px-[18px] text-white relative md:order-1">
-            {/* 반려동물 일러스트 - 카드 위에 떠있는 위치 */}
+          {/* 행복한 미식가 카드 - 주석처리 */}
+          {/* <div className="bg-[#003DA5] rounded-[20px] pt-[46px] pb-[36px] px-[18px] text-white relative md:order-1">
             <div className="absolute -top-39 left-1/2 transform -translate-x-1/2">
               <div className="w-50 h-50 relative">
                 <Image
@@ -259,7 +261,6 @@ const DetailedDietReport = ({
                 <h2 className="text-[27px] font-semibold text-white ml-0">행복한 미식가</h2>
               </div>
 
-              {/* 하단 보더 */}
               <div className="border-t border-[#E3E3E3] my-3"></div>
 
               <p className="text-[22px] font-medium text-white leading-snug px-[4px] text-center">
@@ -268,7 +269,7 @@ const DetailedDietReport = ({
                 트레이드마크인 사랑스러운 식도락가
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* 냥구는요 카드 */}
           <ReportCard className="md:order-2 relative mt-[20px] md:mt-0">
