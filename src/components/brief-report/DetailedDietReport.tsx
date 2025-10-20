@@ -182,6 +182,15 @@ const DetailedDietReport = ({
   currentFoods,
   recommendedIntake
 }: DetailedDietReportProps) => {
+  // RER 계산 함수: RER = 70 × (체중(kg))^0.75
+  const calculateRER = (weight: string): string => {
+    // "3.2kg" 형태에서 숫자만 추출
+    const weightNumber = parseFloat(weight.replace('kg', ''));
+    if (isNaN(weightNumber)) return '168kcal';
+
+    const rer = 70 * Math.pow(weightNumber, 0.75);
+    return `${Math.round(rer)}kcal`;
+  };
   const router = useRouter();
 
   // Survey 상태 관리 - 개발용 토글 가능
@@ -493,7 +502,7 @@ const DetailedDietReport = ({
                   titleSubtitleGap="0px"
                 />
                 <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
-                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{calculateRER(petInfo.weight)}</p>
                 </div>
               </div>
               <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left flex-shrink-0 w-full sm:w-[284px] flex flex-col">
