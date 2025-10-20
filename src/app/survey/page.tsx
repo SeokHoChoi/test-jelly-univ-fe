@@ -244,22 +244,25 @@ const SurveyPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('/api/survey', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      // TODO: 실제 API 연동 시 주석 해제
+      // const response = await fetch('/api/survey', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
 
-      if (response.ok) {
-        // 성공 시 리포트 페이지로 이동
-        router.push('/brief-report/diet-report');
-      } else {
-        console.error('Survey submission failed');
-      }
+      // if (response.ok) {
+      // 성공 시 완료 페이지로 이동
+      router.push('/survey/complete');
+      // } else {
+      //   console.error('Survey submission failed');
+      // }
     } catch (error) {
       console.error('Error submitting survey:', error);
+      // 에러가 발생해도 일단 완료 페이지로 이동 (개발용)
+      router.push('/survey/complete');
     }
   };
 
