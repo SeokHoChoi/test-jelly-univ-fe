@@ -7,9 +7,10 @@ interface EvalCardProps {
   grade?: string;
   children?: React.ReactNode;
   className?: string;
+  onArrowClick?: () => void;
 }
 
-const EvalCard = ({ title, grade, children, className }: EvalCardProps) => {
+const EvalCard = ({ title, grade, children, className, onArrowClick }: EvalCardProps) => {
   return (
     <div
       className={cn('bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.25)] flex flex-col justify-between w-full relative', className)}
@@ -18,10 +19,14 @@ const EvalCard = ({ title, grade, children, className }: EvalCardProps) => {
         padding: '14px 20px 10px 20px'
       }}
     >
-      {/* 우측 상단 체크표시 */}
-      <div className="absolute top-[18px] right-4 text-[#003DA5] text-[20px] transform rotate-90">
+      {/* 우측 상단 화살표 */}
+      <button
+        onClick={onArrowClick}
+        className="absolute top-[18px] right-4 text-[#003DA5] text-[20px] transform rotate-90 hover:text-[#002A7A] transition-colors cursor-pointer"
+        disabled={!onArrowClick}
+      >
         ⎋
-      </div>
+      </button>
 
       {title && (
         <p className="text-[18px] font-medium text-[#343434] h-[45px] leading-tight flex items-start pt-2" style={{ wordBreak: 'keep-all', overflowWrap: 'break-word' }}>

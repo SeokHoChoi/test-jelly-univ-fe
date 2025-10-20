@@ -74,8 +74,34 @@ body {
   font-family: 'Pretendard', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* 데스크톱/태블릿 구간에서는 레이아웃 너비가 1200px보다 작아지지 않도록 고정 */
+@media (min-width: 768px) {
+
+  html,
+  body {
+    min-width: 1200px;
+  }
+}
+
 /* 세로 텍스트 스타일 */
 .vertical-text {
   transform: rotate(-90deg);
   white-space: nowrap;
+}
+
+/* 3D 카드 뒤집기 애니메이션 */
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-0 {
+  transform: rotateY(0deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }
