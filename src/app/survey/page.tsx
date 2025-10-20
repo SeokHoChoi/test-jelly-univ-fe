@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useMe } from '@/hooks/useMe';
 
 dayjs.extend(customParseFormat);
 import 'react-datepicker/dist/react-datepicker.css';
@@ -51,6 +52,7 @@ interface SurveyData {
 
 const SurveyPage = () => {
   const router = useRouter();
+  const { data: meData, isLoading: isMeLoading, error: meError } = useMe();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<SurveyData>({
     ownerName: '',
@@ -79,6 +81,19 @@ const SurveyPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
+  // 로그인한 사용자의 정보를 자동으로 채워주는 효과
+  useEffect(() => {
+    if (meData?.success && meData.data) {
+      const user = meData.data;
+      setFormData(prev => ({
+        ...prev,
+        ownerName: user.name || '',
+        email: user.email || '',
+        phoneNumber: user.phone || ''
+      }));
+    }
+  }, [meData]);
 
   // 전화번호 포맷팅 함수
   const formatPhoneNumber = (value: string) => {
