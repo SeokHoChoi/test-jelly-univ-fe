@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import DetailedDietReport from './DetailedDietReport';
 
-const DietReportExample = () => {
+const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: any) => void }) => {
   const [petInfo, setPetInfo] = useState({
     name: '하이',
     breed: '셔틀랜드 쉽독',
@@ -53,6 +53,13 @@ const DietReportExample = () => {
       }
     }
   }, []);
+
+  // petInfo가 변경될 때마다 부모 컴포넌트에 전달
+  useEffect(() => {
+    if (onPetInfoChange) {
+      onPetInfoChange(petInfo);
+    }
+  }, [petInfo, onPetInfoChange]);
 
   const targetMetrics = {
     rer: '168kcal',

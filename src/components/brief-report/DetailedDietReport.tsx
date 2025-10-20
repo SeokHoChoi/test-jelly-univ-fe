@@ -299,8 +299,8 @@ const DetailedDietReport = ({
             <div className="mt-[35px]">
               <ReportCardContent className="relative">
                 <p className="mb-3 relative">
-                  {petInfo.name}는 현재 {petInfo.weight}입니다. 포메라니안 남아의 표준 체중(1.8~3.5kg) 범위 내에 있으며,
-                  보호자께서 직접 촉진(RAWSOME)하신 결과에 따르면 &apos;손을 편 손등&apos;과 유사하여 BCS 5/9의 &apos;이상적인(Ideal)&apos; 상태에 해당합니다.
+                  {petInfo.name}는 현재 {petInfo.weight}입니다. {petInfo.breed} <span className={!isSurveyCompleted ? 'blur-sm' : ''}>남아</span>의 <span className={!isSurveyCompleted ? 'blur-sm' : ''}>표준 체중(1.8~3.5kg)</span> 범위 내에 있으며,
+                  보호자께서 직접 촉진(RAWSOME)하신 결과에 따르면 &apos;손을 편 손등&apos;과 유사하여 BCS <span className={!isSurveyCompleted ? 'blur-sm' : ''}>5/9</span>의 &apos;이상적인(Ideal)&apos; 상태에 해당합니다.
                   {/* 첫 번째 문단 그라데이션 블러 오버레이 - "보호자께서 직접 촉진" 이후부터 블러 */}
                   {!isSurveyCompleted && (
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% via-white/20 to-white/80 backdrop-blur-[1px] pointer-events-none"></div>
