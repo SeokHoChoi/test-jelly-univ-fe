@@ -10,6 +10,18 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import 'react-datepicker/dist/react-datepicker.css';
 
+// currentFoods 문자열 구성 함수
+function buildCurrentFoodsString(productAnalysisFeeds: Array<{ name: string, amount: string }>, surveyCurrentFoods: string): string {
+  const productAnalysisFoods = productAnalysisFeeds.map(feed => feed.name).join(', ');
+  return `분석 페이지에서 입력한 주식 목록: ${productAnalysisFoods}\n설문 페이지에서 입력한 자료 목록:\n${surveyCurrentFoods}`;
+}
+
+// feedingAmount 문자열 구성 함수
+function buildFeedingAmountString(productAnalysisFeeds: Array<{ name: string, amount: string }>, surveyFeedingAmount: string): string {
+  const productAnalysisAmounts = productAnalysisFeeds.map(feed => `${feed.name} ${feed.amount}g`).join(', ');
+  return `분석 페이지에서 입력한 주식 급여 타이밍: ${productAnalysisAmounts}\n설문 페이지에서 입력한 급여 정보:\n${surveyFeedingAmount}`;
+}
+
 interface SurveyData {
   // 보호자 정보
   ownerName: string;
@@ -336,15 +348,39 @@ const SurveyPage = () => {
 
       const parsedProductAnalysisData = JSON.parse(productAnalysisData);
 
+      // 백엔드 스펙에 맞는 데이터 구조로 변환
+      const apiPayload = {
+        guardian: {
+          name: formData.ownerName,
+          phone: formData.phoneNumber,
+          email: formData.email
+        },
+        pet: {
+          name: parsedProductAnalysisData.dogName,
+          birthDate: formData.birthDate,
+          breed: parsedProductAnalysisData.dogBreed,
+          genderNeutered: formData.gender,
+          pregnantOrNursing: formData.pregnant,
+          weight: parseFloat(parsedProductAnalysisData.dogWeight),
+          bcsScore: typeof formData.bcs === 'string' ? parseInt((formData.bcs as string).replace('점', '')) : formData.bcs,
+          rawsomeCheck: formData.rawsome,
+          activityLevel: formData.activityLevel,
+          healthIssues: formData.healthIssues,
+          allergies: formData.allergies,
+          medications: formData.medications,
+          currentFoods: buildCurrentFoodsString(parsedProductAnalysisData.feeds, formData.currentFoods),
+          feedingAmount: buildFeedingAmountString(parsedProductAnalysisData.feeds, formData.feedingAmount),
+          foodResponse: formData.foodReaction,
+          additionalInfo: formData.additionalInfo || ""
+        }
+      };
+
       const response = await fetch('/api/survey', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          surveyData: formData,
-          productAnalysisData: parsedProductAnalysisData
-        }),
+        body: JSON.stringify(apiPayload),
       });
 
       if (response.ok) {

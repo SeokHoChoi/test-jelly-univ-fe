@@ -2,101 +2,47 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const EXTERNAL_API_BASE_URL = 'https://dog-food-db.onrender.com/api';
 
-interface SurveyData {
-  // 보호자 정보
-  ownerName: string;
-  phoneNumber: string;
-  email: string;
-
-  // 반려견 정보
-  birthDate: string;
-  gender: string;
-  neutered: string;
-  pregnant: string;
-  bcs: string;
-  rawsome: string;
-  activityLevel: string;
-
-  // 건강 정보
-  healthIssues: string;
-  allergies: string;
-  medications: string;
-
-  // 사료 정보
-  currentFoods: string;
-  feedingAmount: string;
-  foodReaction: string;
-  additionalInfo: string;
-}
-
-interface ProductAnalysisData {
-  dogName: string;
-  dogWeight: string;
-  dogBreed: string;
-  feeds: Array<{
-    name: string;
-    amount: string;
-  }>;
-}
 
 export async function POST(request: NextRequest) {
   try {
-    const { surveyData, productAnalysisData }: {
-      surveyData: SurveyData;
-      productAnalysisData: ProductAnalysisData;
-    } = await request.json();
+    const apiPayload = await request.json();
 
     // 데이터 검증
-    const requiredFields = [
-      'ownerName', 'phoneNumber', 'email', 'birthDate', 'gender',
-      'pregnant', 'bcs', 'rawsome', 'activityLevel',
-      'healthIssues', 'allergies', 'medications',
-      'currentFoods', 'feedingAmount', 'foodReaction'
-    ];
+    if (!apiPayload.guardian || !apiPayload.pet) {
+      return NextResponse.json(
+        { error: 'guardian 또는 pet 데이터가 누락되었습니다.' },
+        { status: 400 }
+      );
+    }
 
-    for (const field of requiredFields) {
-      if (!surveyData[field as keyof SurveyData]) {
+    const { guardian, pet } = apiPayload;
+
+    // guardian 필수 필드 검증
+    const guardianRequiredFields = ['name', 'phone', 'email'];
+    for (const field of guardianRequiredFields) {
+      if (!guardian[field]) {
         return NextResponse.json(
-          { error: `필수 필드가 누락되었습니다: ${field}` },
+          { error: `guardian 필수 필드가 누락되었습니다: ${field}` },
           { status: 400 }
         );
       }
     }
 
-    // product-analysis 데이터 검증
-    if (!productAnalysisData || !productAnalysisData.dogName || !productAnalysisData.dogWeight || !productAnalysisData.dogBreed) {
-      return NextResponse.json(
-        { error: 'Product analysis 데이터가 누락되었습니다.' },
-        { status: 400 }
-      );
-    }
-
-    // API 요청 데이터 구성
-    const apiPayload = {
-      guardian: {
-        name: surveyData.ownerName,
-        phone: surveyData.phoneNumber,
-        email: surveyData.email
-      },
-      pet: {
-        name: productAnalysisData.dogName,
-        birthDate: surveyData.birthDate,
-        breed: productAnalysisData.dogBreed,
-        genderNeutered: surveyData.gender, // gender 필드를 genderNeutered로 매핑
-        pregnantOrNursing: surveyData.pregnant,
-        weight: parseFloat(productAnalysisData.dogWeight),
-        bcsScore: typeof surveyData.bcs === 'string' ? parseInt(surveyData.bcs.replace('점', '')) : surveyData.bcs,
-        rawsomeCheck: surveyData.rawsome,
-        activityLevel: surveyData.activityLevel,
-        healthIssues: surveyData.healthIssues,
-        allergies: surveyData.allergies,
-        medications: surveyData.medications,
-        currentFoods: buildCurrentFoodsString(productAnalysisData.feeds, surveyData.currentFoods),
-        feedingAmount: buildFeedingAmountString(productAnalysisData.feeds, surveyData.feedingAmount),
-        foodResponse: surveyData.foodReaction,
-        additionalInfo: surveyData.additionalInfo || ""
+    // pet 필수 필드 검증
+    const petRequiredFields = [
+      'name', 'birthDate', 'breed', 'genderNeutered', 'pregnantOrNursing',
+      'weight', 'bcsScore', 'rawsomeCheck', 'activityLevel',
+      'healthIssues', 'allergies', 'medications',
+      'currentFoods', 'feedingAmount', 'foodResponse'
+    ];
+    for (const field of petRequiredFields) {
+      if (pet[field] === undefined || pet[field] === null || pet[field] === '') {
+        return NextResponse.json(
+          { error: `pet 필수 필드가 누락되었습니다: ${field}` },
+          { status: 400 }
+        );
       }
-    };
+    }
 
     // 외부 API 호출
     const response = await fetch(`${EXTERNAL_API_BASE_URL}/pets/survey`, {
@@ -134,17 +80,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// currentFoods 문자열 구성 함수
-function buildCurrentFoodsString(productAnalysisFeeds: Array<{ name: string, amount: string }>, surveyCurrentFoods: string): string {
-  const productAnalysisFoods = productAnalysisFeeds.map(feed => feed.name).join(', ');
-  return `분석 페이지에서 입력한 주식 목록: ${productAnalysisFoods}\n설문 페이지에서 입력한 자료 목록:\n${surveyCurrentFoods}`;
-}
-
-// feedingAmount 문자열 구성 함수
-function buildFeedingAmountString(productAnalysisFeeds: Array<{ name: string, amount: string }>, surveyFeedingAmount: string): string {
-  const productAnalysisAmounts = productAnalysisFeeds.map(feed => `${feed.name} ${feed.amount}g`).join(', ');
-  return `분석 페이지에서 입력한 주식 급여 타이밍: ${productAnalysisAmounts}\n설문 페이지에서 입력한 급여 정보:\n${surveyFeedingAmount}`;
-}
 
 export async function OPTIONS() {
   return new NextResponse(null, {
