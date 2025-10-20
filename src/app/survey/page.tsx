@@ -176,8 +176,9 @@ const SurveyPage = () => {
       title: '사료 정보',
       subtitle: '현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 브랜드 및 제품명을 모두 알려주세요',
       description: '⚠️ 꼭 정확한 브랜드와 제품명을 기입해주시기 바랍니다. 부정확할 경우, 다른 제품으로 분석 및 리포트가 작성될 수 있습니다!',
+      example: '1. 주식(사료): 카나간 스코티쉬 살몬 포 독\n2. 주식(사료): 지위픽 스팀드라이 독 닭고기&과일\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨\n4. 영양제: 묘견서 프로바이오틱스 덴센',
       type: 'textarea',
-      placeholder: '예시:\n1. 주식(사료): 카나간 스코티쉬 살몬 포 독\n2. 주식(사료): 지위픽 스팀드라이 독 닭고기&과일\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨\n4. 영양제: 묘견서 프로바이오틱스 덴센',
+      placeholder: '위 예시를 참고하여 작성해주세요',
       required: true
     },
     {
@@ -185,8 +186,9 @@ const SurveyPage = () => {
       title: '사료 정보',
       subtitle: '현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 1일 급여량 및 급여 횟수를 알려주세요',
       description: '⚠️ 꼭 정확한 급여량(g)을 기입해주시기 바랍니다. 부정확할 경우, 현재 섭취 에너지와 영양소 분석이 다르게 작성될 수 있습니다!',
+      example: '급여 타이밍: 아침 1회, 저녁 1회 = 총 2회\n1. 주식(사료): 카나간 스코티쉬 살몬 포 독 / 하루 기준 45g\n2. 보조식(토퍼): 지위픽 스팀드라이 독 닭고기&과일 / 하루 기준 25g\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨 / 하루 기준 1개\n4. 영양제: 묘견서 프로바이오틱스 덴센 / 하루 기준 1알',
       type: 'textarea',
-      placeholder: '예시:\n급여 타이밍: 아침 1회, 저녁 1회 = 총 2회\n1. 주식(사료): 카나간 스코티쉬 살몬 포 독 / 하루 기준 45g\n2. 보조식(토퍼): 지위픽 스팀드라이 독 닭고기&과일 / 하루 기준 25g\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨 / 하루 기준 1개\n4. 영양제: 묘견서 프로바이오틱스 덴센 / 하루 기준 1알',
+      placeholder: '위 예시를 참고하여 작성해주세요',
       required: true
     },
     {
@@ -325,6 +327,19 @@ const SurveyPage = () => {
                   <p className="text-sm text-blue-800 leading-relaxed">
                     {currentQuestion.description}
                   </p>
+                </div>
+              )}
+              {currentQuestion.example && (
+                <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                  <div className="flex items-center mb-2">
+                    <div className="w-4 h-4 rounded-full bg-gray-400 flex items-center justify-center mr-2">
+                      <span className="text-white text-xs">예</span>
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">예시</span>
+                  </div>
+                  <pre className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap font-sans">
+                    {currentQuestion.example}
+                  </pre>
                 </div>
               )}
               {currentQuestion.image && (
