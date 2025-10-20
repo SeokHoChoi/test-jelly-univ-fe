@@ -145,6 +145,10 @@ const ProductForm = () => {
       const res = await submitRating(payload);
       // 전역 스토어에 응답 저장 (brief-report 등에서 재사용)
       useRatingStore.getState().setResponse(res?.data ?? null);
+
+      // product-analysis 데이터를 로컬스토리지에 저장 (survey에서 사용)
+      localStorage.setItem('productAnalysisData', JSON.stringify(payload));
+
       router.push('/brief-report');
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';

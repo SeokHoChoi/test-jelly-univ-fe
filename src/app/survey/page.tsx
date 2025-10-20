@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface SurveyData {
   // 보호자 정보
@@ -11,6 +13,7 @@ interface SurveyData {
   email: string;
 
   // 반려견 정보
+  birthDate: string;
   gender: string;
   neutered: string;
   pregnant: string;
@@ -37,6 +40,7 @@ const SurveyPage = () => {
     ownerName: '',
     phoneNumber: '',
     email: '',
+    birthDate: '',
     gender: '',
     neutered: '',
     pregnant: '',
@@ -55,6 +59,7 @@ const SurveyPage = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [dateError, setDateError] = useState('');
 
   // 전화번호 포맷팅 함수
   const formatPhoneNumber = (value: string) => {
@@ -108,6 +113,14 @@ const SurveyPage = () => {
     },
 
     // 반려견 정보
+    {
+      id: 'birthDate',
+      title: '반려견 정보',
+      subtitle: '(추정) 생년월일을 알려주세요',
+      type: 'date',
+      placeholder: 'YYYY-MM-DD',
+      required: true
+    },
     {
       id: 'gender',
       title: '반려견 정보',
@@ -301,25 +314,52 @@ const SurveyPage = () => {
 
   const handleSubmit = async () => {
     try {
-      // TODO: 실제 API 연동 시 주석 해제
-      // const response = await fetch('/api/survey', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
+      // 로컬스토리지에서 product-analysis 데이터 가져오기
+      const productAnalysisData = localStorage.getItem('productAnalysisData');
 
-      // if (response.ok) {
-      // 성공 시 완료 페이지로 이동
-      router.push('/survey/complete');
-      // } else {
-      //   console.error('Survey submission failed');
-      // }
+      if (!productAnalysisData) {
+        alert('Product analysis 데이터를 찾을 수 없습니다. 먼저 product-analysis 페이지에서 데이터를 입력해주세요.');
+        router.push('/product-analysis');
+        return;
+      }
+
+      const parsedProductAnalysisData = JSON.parse(productAnalysisData);
+
+      const response = await fetch('/api/survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          surveyData: formData,
+          productAnalysisData: parsedProductAnalysisData
+        }),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        // API 응답 데이터를 로컬스토리지에 저장
+        localStorage.setItem('surveyResponse', JSON.stringify({
+          surveyId: responseData.data.surveyId,
+          userId: responseData.data.userId,
+          petId: responseData.data.petId,
+          submittedAt: responseData.data.submittedAt,
+          submittedAtFormatted: new Date(responseData.data.submittedAt).toLocaleString('ko-KR')
+        }));
+
+        console.log('Survey submitted successfully:', responseData);
+
+        // 성공 시 완료 페이지로 이동
+        router.push('/survey/complete');
+      } else {
+        const errorData = await response.json();
+        console.error('Survey submission failed:', errorData);
+        alert('설문 제출에 실패했습니다. 다시 시도해주세요.');
+      }
     } catch (error) {
       console.error('Error submitting survey:', error);
-      // 에러가 발생해도 일단 완료 페이지로 이동 (개발용)
-      router.push('/survey/complete');
+      alert('설문 제출 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -328,7 +368,8 @@ const SurveyPage = () => {
     ? formData[currentQuestion.id as keyof SurveyData] !== '' &&
     formData[currentQuestion.id as keyof SurveyData] !== 0 &&
     (currentQuestion.id === 'phoneNumber' ? phoneError === '' : true) &&
-    (currentQuestion.id === 'email' ? emailError === '' : true)
+    (currentQuestion.id === 'email' ? emailError === '' : true) &&
+    (currentQuestion.id === 'birthDate' ? dateError === '' : true)
     : true;
 
   return (
@@ -456,6 +497,110 @@ const SurveyPage = () => {
                   {phoneError && (
                     <p className="text-red-500 text-sm mt-2">{phoneError}</p>
                   )}
+                </div>
+              )}
+
+              {currentQuestion.type === 'date' && (
+                <div>
+                  <DatePicker
+                    selected={(() => {
+                      if (!formData.birthDate || !formData.birthDate.includes('-')) return null;
+                      const date = new Date(formData.birthDate);
+                      return isNaN(date.getTime()) ? null : date;
+                    })()}
+                    onChange={(date) => {
+                      if (date) {
+                        const formattedDate = date.toISOString().split('T')[0];
+                        handleInputChange(formattedDate);
+                        setDateError(''); // 캘린더로 선택한 날짜는 유효하므로 에러 초기화
+                      } else {
+                        // X 버튼 클릭 시 date가 null로 전달됨
+                        handleInputChange('');
+                        setDateError(''); // 초기화 시 에러도 제거
+                      }
+                    }}
+                    dateFormat="yyyy.MM.dd"
+                    placeholderText="2025.05.20"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    yearDropdownItemNumber={15}
+                    scrollableYearDropdown
+                    maxDate={new Date()}
+                    isClearable
+                    popperClassName="toss-datepicker-popper"
+                    popperPlacement="bottom-start"
+                    customInput={
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={formData.birthDate ? formData.birthDate.replace(/-/g, '.') : ''}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // 숫자와 점만 허용
+                            const cleanValue = value.replace(/[^\d.]/g, '');
+
+                            // 최대 길이 제한 (YYYY.MM.DD = 10자)
+                            if (cleanValue.length > 10) {
+                              return;
+                            }
+
+                            // YYYY.MM.DD 형식으로 자동 포맷팅
+                            let formatted = cleanValue;
+                            if (cleanValue.length >= 5 && !cleanValue.includes('.')) {
+                              formatted = cleanValue.slice(0, 4) + '.' + cleanValue.slice(4);
+                            }
+                            if (cleanValue.length >= 8 && cleanValue.split('.').length === 2) {
+                              const parts = cleanValue.split('.');
+                              if (parts[1].length >= 3) {
+                                formatted = parts[0] + '.' + parts[1].slice(0, 2) + '.' + parts[1].slice(2);
+                              }
+                            }
+
+                            // YYYY-MM-DD 형식으로 변환하여 저장
+                            const dateString = formatted.replace(/\./g, '-');
+                            if (dateString.length === 10 && /^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+                              // 날짜 유효성 검사
+                              const [year, month, day] = dateString.split('-').map(Number);
+                              const date = new Date(year, month - 1, day);
+
+                              // 실제 존재하는 날짜인지 확인
+                              if (date.getFullYear() === year &&
+                                date.getMonth() === month - 1 &&
+                                date.getDate() === day &&
+                                month >= 1 && month <= 12 &&
+                                day >= 1 && day <= 31) {
+                                handleInputChange(dateString);
+                                setDateError('');
+                              } else {
+                                // 잘못된 날짜는 포맷된 문자열로만 저장 (에러 표시용)
+                                setFormData(prev => ({ ...prev, birthDate: formatted }));
+                                setDateError('올바른 날짜를 입력해주세요');
+                              }
+                            } else {
+                              // 임시로 포맷된 문자열 저장 (입력 중일 때)
+                              setFormData(prev => ({ ...prev, birthDate: formatted }));
+                            }
+                          }}
+                          placeholder="2025.05.20"
+                          className={`w-full px-4 py-4 pr-12 border rounded-xl focus:ring-2 focus:border-transparent text-base bg-white h-14 ${dateError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-blue-500'
+                            }`}
+                        />
+                        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#9CA3AF" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M15.6947 13.7H15.7037M15.6947 16.7H15.7037M11.9955 13.7H12.0045M11.9955 16.7H12.0045M8.29431 13.7H8.30329M8.29431 16.7H8.30329" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                      </div>
+                    }
+                  />
+                  {dateError && (
+                    <p className="text-red-500 text-sm mt-2">{dateError}</p>
+                  )}
+                  <p className="text-sm text-gray-500 mt-2">
+                    정확한 생년월일을 모르신다면 추정하여 입력해주세요
+                  </p>
                 </div>
               )}
 
