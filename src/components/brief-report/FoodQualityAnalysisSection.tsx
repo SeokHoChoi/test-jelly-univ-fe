@@ -72,7 +72,7 @@ const FoodQualityAnalysisSection = () => {
     }>;
     return response.foodRatings.map((fr, idx) => ({
       key: `${fr.foodInfo.id ?? idx}`,
-      title: `${fr.foodInfo.brandName} ${fr.foodInfo.productName}`.trim(),
+      title: `${fr.foodInfo.productName}`.trim(),
       amount: fr.foodInfo.dailyAmount,
       overall: {
         grade: fr.rating?.overallRating?.grade ?? 'N/A',

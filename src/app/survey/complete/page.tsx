@@ -85,22 +85,22 @@ const SurveyCompletePage = () => {
 
           {/* 다음 단계 안내 */}
           <div className="space-y-3 mb-8">
-            <div className="flex items-center text-left">
-              <div className="w-6 h-6 rounded-full flex items-center justify-center mr-3" style={{ backgroundColor: '#003DA5' }}>
+            <div className="flex items-start text-left">
+              <div className="w-6 h-6 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1.5" style={{ backgroundColor: '#003DA5' }}>
                 <span className="text-white text-xs font-medium">1</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900">분석 리포트 생성</p>
-                <p className="text-xs text-gray-500">전문가가 데이터를 분석합니다</p>
+                <p className="text-sm font-medium text-gray-900">맞춤 분석 리포트 생성</p>
+                <p className="text-xs text-gray-500">글로벌 수의영양학 데이터를 바탕으로, AI 기술과 수의영양학 전문가가 함께 데이터를 분석합니다.</p>
               </div>
             </div>
-            <div className="flex items-center text-left">
-              <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+            <div className="flex items-start text-left">
+              <div className="w-6 h-6 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1.5 bg-gray-200">
                 <span className="text-gray-500 text-xs font-medium">2</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">맞춤형 솔루션 제공</p>
-                <p className="text-xs text-gray-400">개인화된 식단 추천을 받으세요</p>
+                <p className="text-sm font-medium text-gray-600">맞춤 식단 설계 제공</p>
+                <p className="text-xs text-gray-400">서울대·한국수의영양학회 임원 수의사가 검증한 맞춤 식단을 제안해 드립니다.</p>
               </div>
             </div>
           </div>

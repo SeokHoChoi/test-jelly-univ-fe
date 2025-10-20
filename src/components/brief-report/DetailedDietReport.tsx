@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ReportCard from '@/components/common/ReportCard';
@@ -182,6 +181,15 @@ const DetailedDietReport = ({
   currentFoods,
   recommendedIntake
 }: DetailedDietReportProps) => {
+  // RER 계산 함수: RER = 70 × (체중(kg))^0.75
+  const calculateRER = (weight: string): string => {
+    // "3.2kg" 형태에서 숫자만 추출
+    const weightNumber = parseFloat(weight.replace('kg', ''));
+    if (isNaN(weightNumber)) return '168kcal';
+
+    const rer = 70 * Math.pow(weightNumber, 0.75);
+    return `${Math.round(rer)}kcal`;
+  };
   const router = useRouter();
 
   // Survey 상태 관리 - 개발용 토글 가능
@@ -229,18 +237,20 @@ const DetailedDietReport = ({
         )}
 
         {/* 헤더 섹션 - 좌측 정렬 */}
-        <div className="text-left mb-44">
-          <p className="text-[#848484] font-medium text-[18px] sm:text-[22px] md:text-[28px] mb-0">Current Diet Report</p>
-          <h1 className="text-[24px] sm:text-[32px] md:text-[40px] font-semibold text-[#000000] mb-6">
+        <div className="text-left mb-8">
+          {/* 맞춤 식단 분석 리포트 배지 */}
+          <div className="inline-flex items-center px-4 py-3.5 bg-[#003DA5] rounded-full mb-4">
+            <span className="text-white font-medium text-[15px]">맞춤 식단 분석 리포트</span>
+          </div>
+          <h1 className="text-[24px] sm:text-[32px] md:text-[40px] font-semibold text-[#003DA5] mb-6">
             {petInfo.name}를 위한 현재 식단 분석 리포트
           </h1>
         </div>
 
         {/* 6개 카드 그리드: 가로80px, 왼쪽세로24px, 오른쪽세로35px, md:order로 순서조정 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 md:gap-x-[80px] mb-8">
-          {/* 행복한 미식가 카드 */}
-          <div className="bg-[#003DA5] rounded-[20px] pt-[46px] pb-[36px] px-[18px] text-white relative md:order-1">
-            {/* 반려동물 일러스트 - 카드 위에 떠있는 위치 */}
+          {/* 행복한 미식가 카드 - 주석처리 */}
+          {/* <div className="bg-[#003DA5] rounded-[20px] pt-[46px] pb-[36px] px-[18px] text-white relative md:order-1">
             <div className="absolute -top-39 left-1/2 transform -translate-x-1/2">
               <div className="w-50 h-50 relative">
                 <Image
@@ -259,7 +269,6 @@ const DetailedDietReport = ({
                 <h2 className="text-[27px] font-semibold text-white ml-0">행복한 미식가</h2>
               </div>
 
-              {/* 하단 보더 */}
               <div className="border-t border-[#E3E3E3] my-3"></div>
 
               <p className="text-[22px] font-medium text-white leading-snug px-[4px] text-center">
@@ -268,24 +277,24 @@ const DetailedDietReport = ({
                 트레이드마크인 사랑스러운 식도락가
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* 냥구는요 카드 */}
-          <ReportCard className="md:order-2 relative mt-[20px] md:mt-0">
-            <ReportCardHeader emoji="🐾" title="냥구는요" />
+          <ReportCard className="relative mt-[20px] md:mt-0 md:order-2">
+            <ReportCardHeader emoji="🐾" title={`${petInfo.name}는요`} />
             <div className="mt-[35px]">
               <ReportCardContent className={!isSurveyCompleted ? 'blur-sm' : ''}>
                 넘치는 에너지와 좋은 골격을 가졌지만, 현재는 몸이 조금 무거운 유망주. 전문적인 관리를 통해 최고의 컨디션을 되찾을 준비가 되어 있으며, 체중 감량과 동시에 근육량 유지가 가능한 타입입니다.
               </ReportCardContent>
               {!isSurveyCompleted && (
                 <div className="mt-[28.5px] md:hidden">
-                  <MobileButton text="냥구의 활동 수준을 알려주세요" variant="blue" />
+                  <MobileButton text={`${petInfo.name}의 활동 수준을 알려주세요`} variant="blue" />
                 </div>
               )}
             </div>
             {!isSurveyCompleted && (
               <DesktopFloatingButton
-                text="하이의 활동 수준을 알려주세요"
+                text={`${petInfo.name}의 활동 수준을 알려주세요`}
                 variant="blue"
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
               />
@@ -293,13 +302,13 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 체중 및 신체충실도 진단 */}
-          <ReportCard className="md:order-5 md:mt-[24px] relative mt-[20px] md:mt-[24px]">
+          <ReportCard className="relative mt-[20px] md:mt-[24px] md:order-4">
             <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" />
             <div className="mt-[35px]">
               <ReportCardContent className="relative">
                 <p className="mb-3 relative">
-                  {petInfo.name}는 현재 {petInfo.weight}입니다. 포메라니안 남아의 표준 체중(1.8~3.5kg) 범위 내에 있으며,
-                  보호자께서 직접 촉진(RAWSOME)하신 결과에 따르면 &apos;손을 편 손등&apos;과 유사하여 BCS 5/9의 &apos;이상적인(Ideal)&apos; 상태에 해당합니다.
+                  {petInfo.name}는 현재 {petInfo.weight}입니다. {petInfo.breed} <span className={!isSurveyCompleted ? 'blur-sm' : ''}>남아</span>의 <span className={!isSurveyCompleted ? 'blur-sm' : ''}>표준 체중(1.8~3.5kg)</span> 범위 내에 있으며,
+                  보호자께서 직접 촉진(RAWSOME)하신 결과에 따르면 &apos;손을 편 손등&apos;과 유사하여 BCS <span className={!isSurveyCompleted ? 'blur-sm' : ''}>5/9</span>의 &apos;이상적인(Ideal)&apos; 상태에 해당합니다.
                   {/* 첫 번째 문단 그라데이션 블러 오버레이 - "보호자께서 직접 촉진" 이후부터 블러 */}
                   {!isSurveyCompleted && (
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent from-70% via-white/20 to-white/80 backdrop-blur-[1px] pointer-events-none"></div>
@@ -315,13 +324,13 @@ const DetailedDietReport = ({
               </ReportCardContent>
               {!isSurveyCompleted && (
                 <div className="mt-[28.5px] md:hidden">
-                  <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="blue" />
+                  <MobileButton text={`${petInfo.name}의 BCS 점수를 알려주세요`} variant="blue" />
                 </div>
               )}
             </div>
             {!isSurveyCompleted && (
               <DesktopFloatingButton
-                text="하이의 활동 수준을 알려주세요"
+                text={`${petInfo.name}의 활동 수준을 알려주세요`}
                 variant="blue"
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
               />
@@ -329,7 +338,7 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 생애주기 평가 */}
-          <ReportCard className="md:order-6 md:mt-[35px] mt-[20px] md:mt-[35px]">
+          <ReportCard className="mt-[20px] md:mt-[24px] md:order-5">
             <ReportCardHeader emoji="👧🏻" title="생애주기 평가" />
             <div className="mt-[35px]">
               <ReportCardContent className={!isSurveyCompleted ? 'blur-sm' : ''}>
@@ -344,13 +353,26 @@ const DetailedDietReport = ({
           </ReportCard>
 
           {/* 셔틀랜드 쉽독 카드 */}
-          <ReportCard className="md:order-3 md:mt-[24px] mt-[20px] md:mt-[24px]">
+          <ReportCard className="mt-[20px] md:mt-[24px] md:order-3">
             <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} />
             <div className="mt-[35px]">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-[18px]">
-                <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] h-[94px] md:h-[94px] flex flex-col justify-center">
-                  <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">나이</p>
-                  <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">{petInfo.age}</p>
+                <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left sm:col-span-2 lg:col-span-1 relative h-[94px] md:h-[94px] flex flex-col justify-center">
+                  <div className="space-y-[15px] sm:space-y-[17px] lg:space-y-[20px]">
+                    <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">나이</p>
+                    <p className="text-[18px] sm:text-[20px] lg:text-[22px] text-white font-semibold leading-none">
+                      <span className={!isSurveyCompleted ? 'blur-sm' : ''}>
+                        {petInfo.age}
+                      </span>
+                    </p>
+                  </div>
+                  {!isSurveyCompleted && (
+                    <DesktopFloatingButton
+                      text="생년월일 정보 필요"
+                      variant="white"
+                      className="absolute -bottom-[18px] left-1/2 transform -translate-x-1/2 w-[124px] h-[36px] py-0 flex items-center justify-center text-[12px]"
+                    />
+                  )}
                 </div>
                 <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left space-y-[15px] sm:space-y-[17px] lg:space-y-[20px] h-[94px] md:h-[94px] flex flex-col justify-center">
                   <p className="text-[15px] sm:text-[16px] lg:text-[17px] text-white font-medium leading-none">몸무게</p>
@@ -377,17 +399,17 @@ const DetailedDietReport = ({
             </div>
             {!isSurveyCompleted && (
               <div className="mt-[28.5px] md:hidden">
-                <MobileButton text="냥구의 중성화 정보를 알려주세요" variant="white" />
+                <MobileButton text={`${petInfo.name}의 생년월일과 중성화 정보를 알려주세요`} variant="white" />
               </div>
             )}
           </ReportCard>
 
           {/* BCS & RWASOME 카드 */}
-          <ReportCard className="md:order-4 md:mt-[35px] relative mt-[20px] md:mt-[35px]">
-            <div className="space-y-6">
+          <ReportCard className="relative mt-[20px] md:mt-[24px] md:order-5 w-full md:w-[600px] h-auto md:h-[280px]">
+            <div className="space-y-4">
               {/* BCS */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-[180px] flex-shrink-0">
                   <span className="text-[20px] sm:text-[22px] md:text-[25px] font-semibold text-[#1E1E1E]">BCS</span>
                   <abbr className="text-[12px] sm:text-[13px] md:text-sm text-[#1E1E1E] -mt-[6px] no-underline" title="Body Condition Score">(Body Condition Score)</abbr>
                 </div>
@@ -406,7 +428,7 @@ const DetailedDietReport = ({
                   {/* Scale Numbers */}
                   <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
                     {[0, 2, 4, 6, 8, 9].map((num) => (
-                      <span key={num} className={`text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal ${!isSurveyCompleted ? 'blur-sm' : ''}`}>
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
                         {num}
                       </span>
                     ))}
@@ -416,7 +438,7 @@ const DetailedDietReport = ({
 
               {/* RWASOME */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-[180px] flex-shrink-0">
                   <span className="text-[20px] sm:text-[22px] md:text-[25px] font-semibold text-[#1E1E1E]">RWASOME</span>
                 </div>
                 <div className="flex flex-col items-end">
@@ -434,7 +456,7 @@ const DetailedDietReport = ({
                   {/* Scale Numbers */}
                   <div className="flex justify-between w-[280px] sm:w-[300px] md:w-[320px] lg:w-[329px] mt-[8px] sm:mt-[9px] md:mt-[10px] lg:mt-[11px]">
                     {[0, 2, 4, 6, 8, 9].map((num) => (
-                      <span key={num} className={`text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal ${!isSurveyCompleted ? 'blur-sm' : ''}`}>
+                      <span key={num} className="text-[#1E1E1E] text-[8px] sm:text-[9px] md:text-[9px] lg:text-[10px] font-normal">
                         {num}
                       </span>
                     ))}
@@ -444,12 +466,12 @@ const DetailedDietReport = ({
             </div>
             {!isSurveyCompleted && (
               <div className="mt-[28.5px] md:hidden">
-                <MobileButton text="냥구의 BCS 점수를 알려주세요" variant="white" />
+                <MobileButton text={`${petInfo.name}의 BCS 점수를 알려주세요`} variant="white" />
               </div>
             )}
             {!isSurveyCompleted && (
               <DesktopFloatingButton
-                text="하이의 활동 수준을 알려주세요"
+                text={`${petInfo.name}의 활동 수준을 알려주세요`}
                 variant="blue"
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[278px] h-[59px]"
               />
@@ -479,7 +501,7 @@ const DetailedDietReport = ({
                   titleSubtitleGap="0px"
                 />
                 <div className="mt-[25px] sm:mt-[30px] lg:mt-[37px] ml-[28px] sm:ml-[30px] lg:ml-[32px]">
-                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{targetMetrics.rer}</p>
+                  <p className="text-[#1E1E1E] font-semibold text-[28px] sm:text-[32px] lg:text-[38px]">{calculateRER(petInfo.weight)}</p>
                 </div>
               </div>
               <div className="bg-[#FFC466] rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] py-[20px] sm:py-[23px] lg:py-[26px] px-[20px] sm:px-[22px] lg:px-[25px] text-left flex-shrink-0 w-full sm:w-[284px] flex flex-col">
@@ -542,7 +564,7 @@ const DetailedDietReport = ({
                 )}
                 <div className="mt-auto hidden md:block">
                   <ConditionalButton
-                    text="중성화 여부와 활동 수준 정보가 필요해요"
+                    text={`${petInfo.name}의 중성화 여부와 활동 수준 정보가 필요해요`}
                     variant="blue"
                     show={!isSurveyCompleted} // TODO: survey 완료 상태에 따라 조건부 표시
                   />
@@ -551,7 +573,7 @@ const DetailedDietReport = ({
             </div>
             {!isSurveyCompleted && (
               <div className="mt-[28.5px] md:hidden">
-                <MobileButton text="BCS ∙ 중성화 ∙ 활동수준 정보를 알려주세요" variant="white" />
+                <MobileButton text={`${petInfo.name}의 BCS ∙ 중성화 ∙ 활동수준 정보를 알려주세요`} variant="white" />
               </div>
             )}
           </div>
@@ -681,28 +703,28 @@ const DetailedDietReport = ({
                   <span className="text-lg">🥚</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">단백질(Protein)</h3>
                 </div>
-                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.protein}</p>
+                <p className={`text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px] ${!isSurveyCompleted ? 'blur-sm' : ''}`}>{recommendedIntake.protein}</p>
               </div>
               <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">🥩</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">지방(Fat)</h3>
                 </div>
-                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.fat}</p>
+                <p className={`text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px] ${!isSurveyCompleted ? 'blur-sm' : ''}`}>{recommendedIntake.fat}</p>
               </div>
               <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">🌾</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">탄수화물(Carbs)</h3>
                 </div>
-                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.carbs}</p>
+                <p className={`text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px] ${!isSurveyCompleted ? 'blur-sm' : ''}`}>{recommendedIntake.carbs}</p>
               </div>
               <div className="bg-white rounded-[25px] w-full h-[100px] sm:w-[245px] sm:h-[163px] py-[12px] px-3 sm:py-[25.5px] sm:px-6 text-left flex-shrink-0">
                 <div className="flex items-center gap-1 mb-2">
                   <span className="text-lg">💧</span>
                   <h3 className="text-[#1E1E1E] font-medium text-[16px] truncate">음수량</h3>
                 </div>
-                <p className="text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px]">{recommendedIntake.water}</p>
+                <p className={`text-[#1E1E1E] font-semibold text-[20px] sm:text-[35px] mt-[15px] sm:mt-[40px] ${!isSurveyCompleted ? 'blur-sm' : ''}`}>{recommendedIntake.water}</p>
               </div>
             </div>
 
