@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@types/react-datepicker": "^7.0.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.18",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.545.0",
     "next": "15.5.4",

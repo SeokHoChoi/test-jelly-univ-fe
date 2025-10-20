@@ -4,6 +4,10 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import DatePicker from 'react-datepicker';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface SurveyData {
@@ -515,12 +519,15 @@ const SurveyPage = () => {
                   <DatePicker
                     selected={(() => {
                       if (!formData.birthDate || !formData.birthDate.includes('-')) return null;
-                      const date = new Date(formData.birthDate);
-                      return isNaN(date.getTime()) ? null : date;
+                      // dayjs를 사용하여 로컬 시간대 기준으로 날짜 파싱 및 유효성 검사
+                      const parsedDate = dayjs(formData.birthDate, 'YYYY-MM-DD', true);
+                      if (!parsedDate.isValid()) return null;
+                      return parsedDate.toDate();
                     })()}
                     onChange={(date) => {
                       if (date) {
-                        const formattedDate = date.toISOString().split('T')[0];
+                        // dayjs를 사용하여 로컬 시간대 기준으로 날짜 포맷팅
+                        const formattedDate = dayjs(date).format('YYYY-MM-DD');
                         handleInputChange(formattedDate);
                         setDateError(''); // 캘린더로 선택한 날짜는 유효하므로 에러 초기화
                       } else {
@@ -556,41 +563,35 @@ const SurveyPage = () => {
                               return;
                             }
 
-                            // YYYY.MM.DD 형식으로 자동 포맷팅
-                            let formatted = cleanValue;
-                            if (cleanValue.length >= 5 && !cleanValue.includes('.')) {
-                              formatted = cleanValue.slice(0, 4) + '.' + cleanValue.slice(4);
+                            // 숫자만 추출
+                            const numbers = cleanValue.replace(/\./g, '');
+
+                            // 단계별 포맷팅
+                            let formatted = numbers;
+                            if (numbers.length >= 5) {
+                              formatted = numbers.slice(0, 4) + '.' + numbers.slice(4);
                             }
-                            if (cleanValue.length >= 8 && cleanValue.split('.').length === 2) {
-                              const parts = cleanValue.split('.');
-                              if (parts[1].length >= 3) {
-                                formatted = parts[0] + '.' + parts[1].slice(0, 2) + '.' + parts[1].slice(2);
-                              }
-                            }
-                            // 8자리 숫자가 모두 입력된 경우 자동으로 포맷팅
-                            if (cleanValue.length === 8 && !cleanValue.includes('.')) {
-                              formatted = cleanValue.slice(0, 4) + '.' + cleanValue.slice(4, 6) + '.' + cleanValue.slice(6, 8);
+                            if (numbers.length >= 7) {
+                              formatted = numbers.slice(0, 4) + '.' + numbers.slice(4, 6) + '.' + numbers.slice(6);
                             }
 
                             // YYYY-MM-DD 형식으로 변환하여 저장
                             const dateString = formatted.replace(/\./g, '-');
                             if (dateString.length === 10 && /^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-                              // 날짜 유효성 검사
-                              const [year, month, day] = dateString.split('-').map(Number);
-                              const date = new Date(year, month - 1, day);
+                              // dayjs를 사용한 날짜 유효성 검사
+                              const parsedDate = dayjs(dateString, 'YYYY-MM-DD', true);
 
-                              // 실제 존재하는 날짜인지 확인
-                              if (date.getFullYear() === year &&
-                                date.getMonth() === month - 1 &&
-                                date.getDate() === day &&
-                                month >= 1 && month <= 12 &&
-                                day >= 1 && day <= 31) {
+                              if (parsedDate.isValid()) {
                                 handleInputChange(dateString);
                                 setDateError('');
                               } else {
-                                // 잘못된 날짜는 포맷된 문자열로만 저장 (에러 표시용)
-                                setFormData(prev => ({ ...prev, birthDate: formatted }));
-                                setDateError('올바른 날짜를 입력해주세요');
+                                // 잘못된 날짜를 해당 월의 마지막 날짜로 자동 보정
+                                const [year, month] = dateString.split('-').map(Number);
+                                const lastDayOfMonth = dayjs(`${year}-${month.toString().padStart(2, '0')}`, 'YYYY-MM').endOf('month').date();
+                                const correctedDate = `${year}-${month.toString().padStart(2, '0')}-${lastDayOfMonth.toString().padStart(2, '0')}`;
+
+                                handleInputChange(correctedDate);
+                                setDateError('');
                               }
                             } else {
                               // 임시로 포맷된 문자열 저장 (입력 중일 때)
