@@ -99,7 +99,7 @@ const PlanSection = () => {
             <div className="shrink-0 w-full md:w-auto">
               <Link
                 href="/product-analysis"
-                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
               >
                 30초 만에 분석하기
               </Link>
@@ -171,11 +171,11 @@ const PlanSection = () => {
                   setSelectedPlan({ title: plan.title, price: plan.price });
                   setModalOpen(true);
                 }}
-                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
+                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
                   ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
                   : plan.buttonVariant === 'primary'
                     ? 'bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark'
-                    : 'border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white active:bg-brand-blue active:text-white'
+                    : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
                   }`}
               >
                 {plan.buttonText}
