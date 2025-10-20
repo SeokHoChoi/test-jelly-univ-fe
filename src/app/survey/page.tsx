@@ -76,6 +76,8 @@ const SurveyPage = () => {
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [dateError, setDateError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   // 전화번호 포맷팅 함수
@@ -272,6 +274,11 @@ const SurveyPage = () => {
   ];
 
   const handleNext = () => {
+    // 에러 상태일 때는 다음 단계로 진행하지 않음
+    if (submitError) {
+      return;
+    }
+
     if (currentStep < questions.length - 1) {
       setIsAnimating(true);
       setTimeout(() => {
@@ -336,13 +343,18 @@ const SurveyPage = () => {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return; // 중복 제출 방지
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
     try {
       // 로컬스토리지에서 product-analysis 데이터 가져오기
       const productAnalysisData = localStorage.getItem('productAnalysisData');
 
       if (!productAnalysisData) {
-        alert('Product analysis 데이터를 찾을 수 없습니다. 먼저 product-analysis 페이지에서 데이터를 입력해주세요.');
-        router.push('/product-analysis');
+        setSubmitError('Product analysis 데이터를 찾을 수 없습니다. 먼저 product-analysis 페이지에서 데이터를 입력해주세요.');
+        setIsSubmitting(false);
         return;
       }
 
@@ -402,12 +414,22 @@ const SurveyPage = () => {
       } else {
         const errorData = await response.json();
         console.error('Survey submission failed:', errorData);
-        alert('설문 제출에 실패했습니다. 다시 시도해주세요.');
+
+        // 에러 메시지 설정
+        const errorMessage = errorData.error || errorData.message || '설문 제출에 실패했습니다.';
+        setSubmitError(errorMessage);
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.error('Error submitting survey:', error);
-      alert('설문 제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+      setSubmitError('네트워크 오류가 발생했습니다. 인터넷 연결을 확인하고 다시 시도해주세요.');
+      setIsSubmitting(false);
     }
+  };
+
+  const handleRetry = () => {
+    setSubmitError('');
+    handleSubmit();
   };
 
   const currentQuestion = questions[currentStep];
@@ -416,8 +438,9 @@ const SurveyPage = () => {
     formData[currentQuestion.id as keyof SurveyData] !== 0 &&
     (currentQuestion.id === 'phoneNumber' ? phoneError === '' : true) &&
     (currentQuestion.id === 'email' ? emailError === '' : true) &&
-    (currentQuestion.id === 'birthDate' ? dateError === '' : true)
-    : true;
+    (currentQuestion.id === 'birthDate' ? dateError === '' : true) &&
+    !submitError // 에러 상태일 때는 버튼 비활성화
+    : !submitError;
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -693,22 +716,53 @@ const SurveyPage = () => {
         {/* 하단 고정 버튼 */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-6">
           <div className="max-w-2xl mx-auto">
-            <button
-              onClick={handleNext}
-              disabled={!isCurrentStepValid}
-              className={`w-full py-4 text-white font-semibold text-base rounded-xl transition-all duration-200 ${isCurrentStepValid
-                ? 'active:scale-95'
-                : 'opacity-50 cursor-not-allowed'
-                }`}
-              style={isCurrentStepValid ? {
-                backgroundColor: '#003DA5',
-                boxShadow: '0 4px 12px rgba(0, 61, 165, 0.15)'
-              } : {
-                backgroundColor: '#E5E7EB'
-              }}
-            >
-              {currentStep === questions.length - 1 ? '완료하기' : '다음'}
-            </button>
+            {/* 에러 메시지 표시 */}
+            {submitError && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3 flex-1">
+                    <h3 className="text-sm font-medium text-red-800">설문 제출 실패</h3>
+                    <p className="mt-1 text-sm text-red-700">{submitError}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              {/* 재시도 버튼 (에러 발생 시에만 표시) */}
+              {submitError && (
+                <button
+                  onClick={handleRetry}
+                  disabled={isSubmitting}
+                  className="flex-1 py-4 text-white font-semibold text-base rounded-xl transition-all duration-200 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? '재시도 중...' : '다시 시도'}
+                </button>
+              )}
+
+              {/* 메인 버튼 */}
+              <button
+                onClick={handleNext}
+                disabled={!isCurrentStepValid || isSubmitting}
+                className={`flex-1 py-4 text-white font-semibold text-base rounded-xl transition-all duration-200 ${isCurrentStepValid && !isSubmitting
+                  ? 'active:scale-95'
+                  : 'opacity-50 cursor-not-allowed'
+                  }`}
+                style={isCurrentStepValid && !isSubmitting ? {
+                  backgroundColor: '#003DA5',
+                  boxShadow: '0 4px 12px rgba(0, 61, 165, 0.15)'
+                } : {
+                  backgroundColor: '#E5E7EB'
+                }}
+              >
+                {isSubmitting ? '제출 중...' : (currentStep === questions.length - 1 ? '완료하기' : '다음')}
+              </button>
+            </div>
           </div>
         </div>
       </div>
