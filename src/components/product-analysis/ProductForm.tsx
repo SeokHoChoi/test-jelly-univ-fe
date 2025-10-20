@@ -244,7 +244,7 @@ const ProductForm = () => {
                           onChange={(value) => updateFeed(index, 'name', value)}
                           onSelect={(food) => {
                             if (food) {
-                              updateFeed(index, 'name', `${food.brand_name} ${food.product_name}`);
+                              updateFeed(index, 'name', `${food.product_name}`);
                             }
                           }}
                           placeholder="사료이름을 입력해주세요!"
