@@ -1,7 +1,7 @@
 "use client";
 
 // import { Check } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 // import { ChevronRight } from 'lucide-react';
 import Pill from '@/components/common/Pill';
 import EvalCard from '@/components/common/EvalCard';
@@ -11,7 +11,8 @@ import { useRatingStore, type RatingData } from '@/contexts/RatingStore';
 import ReportTabs from '@/components/brief-report/ReportTabs';
 
 const FoodQualityAnalysisSection = () => {
-  const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
+  // 카드 뒤집기 애니메이션 비활성화 - 필요시 주석 해제
+  // const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set());
 
   const scrollTo = (targetId: string) => {
     if (typeof window === 'undefined') return;
@@ -19,29 +20,30 @@ const FoodQualityAnalysisSection = () => {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const toggleCard = (cardId: string) => {
-    setFlippedCards(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(cardId)) {
-        newSet.delete(cardId);
-      } else {
-        newSet.add(cardId);
-      }
-      return newSet;
-    });
-  };
+  // 카드 뒤집기 함수들 - 필요시 주석 해제
+  // const toggleCard = (cardId: string) => {
+  //   setFlippedCards(prev => {
+  //     const newSet = new Set(prev);
+  //     if (newSet.has(cardId)) {
+  //       newSet.delete(cardId);
+  //     } else {
+  //       newSet.add(cardId);
+  //     }
+  //     return newSet;
+  //   });
+  // };
 
-  const flipCard = (cardId: string) => {
-    setFlippedCards(prev => new Set(prev).add(cardId));
-  };
+  // const flipCard = (cardId: string) => {
+  //   setFlippedCards(prev => new Set(prev).add(cardId));
+  // };
 
-  const unflipCard = (cardId: string) => {
-    setFlippedCards(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(cardId);
-      return newSet;
-    });
-  };
+  // const unflipCard = (cardId: string) => {
+  //   setFlippedCards(prev => {
+  //     const newSet = new Set(prev);
+  //     newSet.delete(cardId);
+  //     return newSet;
+  //   });
+  // };
   // 무한 루프 방지: 스토어에서 파생값을 직접 구독하지 말고 원본 응답만 구독
   const response = useRatingStore((s) => s.response);
   const foods = useMemo(() => {

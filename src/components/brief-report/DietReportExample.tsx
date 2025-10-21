@@ -127,7 +127,7 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
             })();
 
             // 상세 조회: id 우선, 없으면 검색으로 보정
-            let detail: any | null = null;
+            let detail: { crude_protein?: string; crude_fat?: string; crude_fiber?: string; crude_ash?: string; moisture?: string; nutrition_text?: string } | null = null;
             try {
               if (feed.id) {
                 const d = await getFoodDetail(feed.id);
@@ -145,11 +145,11 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
             }
 
             // 성분 % 파싱
-            const p = parseFloat(detail?.crude_protein) || 0;
-            const f = parseFloat(detail?.crude_fat) || 0;
-            const fi = parseFloat(detail?.crude_fiber) || 0;
-            const a = parseFloat(detail?.crude_ash) || 0;
-            const m = parseFloat(detail?.moisture) || 0;
+            const p = parseFloat(detail?.crude_protein || '0') || 0;
+            const f = parseFloat(detail?.crude_fat || '0') || 0;
+            const fi = parseFloat(detail?.crude_fiber || '0') || 0;
+            const a = parseFloat(detail?.crude_ash || '0') || 0;
+            const m = parseFloat(detail?.moisture || '0') || 0;
             const c = Math.max(0, 100 - (p + f + fi + a + m));
 
             // g 계산 (AS FED)
