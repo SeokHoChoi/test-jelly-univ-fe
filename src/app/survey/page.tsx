@@ -299,12 +299,6 @@ const SurveyPage = () => {
       setTimeout(() => {
         setCurrentStep(currentStep + 1);
         setIsAnimating(false);
-        // 다음 단계로 이동 후 포커스
-        setTimeout(() => {
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
-        }, 100);
       }, 200);
     } else {
       handleSubmit();
