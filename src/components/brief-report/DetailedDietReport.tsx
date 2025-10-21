@@ -281,7 +281,7 @@ const DetailedDietReport = ({
 
           {/* 냥구는요 카드 */}
           <ReportCard className="relative mt-[20px] md:mt-0 md:order-2">
-            <ReportCardHeader emoji="🐾" title={`${petInfo.name}는요`} />
+            <ReportCardHeader emoji="🐾" title={`${petInfo.name}는요`} titleSize="24px" />
             <div className="mt-[35px]">
               <ReportCardContent className={!isSurveyCompleted ? 'blur-sm' : ''}>
                 넘치는 에너지와 좋은 골격을 가졌지만, 현재는 몸이 조금 무거운 유망주. 전문적인 관리를 통해 최고의 컨디션을 되찾을 준비가 되어 있으며, 체중 감량과 동시에 근육량 유지가 가능한 타입입니다.
@@ -303,7 +303,7 @@ const DetailedDietReport = ({
 
           {/* 체중 및 신체충실도 진단 */}
           <ReportCard className="relative mt-[20px] md:mt-[24px] md:order-4">
-            <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" />
+            <ReportCardHeader emoji="📐" title="체중 및 신체충실도(BCS) 진단" titleSize="24px" />
             <div className="mt-[35px]">
               <ReportCardContent className="relative">
                 <p className="mb-3 relative">
@@ -339,7 +339,7 @@ const DetailedDietReport = ({
 
           {/* 생애주기 평가 */}
           <ReportCard className="mt-[20px] md:mt-[24px] md:order-5">
-            <ReportCardHeader emoji="👧🏻" title="생애주기 평가" />
+            <ReportCardHeader emoji="👧🏻" title="생애주기 평가" titleSize="24px" />
             <div className="mt-[35px]">
               <ReportCardContent className={!isSurveyCompleted ? 'blur-sm' : ''}>
                 <p className="mb-3">
@@ -354,7 +354,7 @@ const DetailedDietReport = ({
 
           {/* 셔틀랜드 쉽독 카드 */}
           <ReportCard className="mt-[20px] md:mt-[24px] md:order-3">
-            <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} />
+            <ReportCardHeader emoji="🐶" title={`${petInfo.breed} · ${petInfo.gender}`} titleSize="24px" />
             <div className="mt-[35px]">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-[18px]">
                 <div className="bg-[#003DA5] rounded-[20px] px-[15px] sm:px-[17px] lg:px-[19px] py-[15px] text-left sm:col-span-2 lg:col-span-1 relative h-[94px] md:h-[94px] flex flex-col justify-center">
@@ -485,6 +485,8 @@ const DetailedDietReport = ({
             emoji="🎯"
             title={`${petInfo.name}의 목표 체중과 하루 권장 칼로리`}
             subtitle="현재 신체 상태를 과학적으로 분석하여, 수의영양학 기준 목표 체중과 하루 목표 섭취 칼로리를 제시해드려요!"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[35px]">
 
@@ -586,6 +588,8 @@ const DetailedDietReport = ({
             title="현재 식단의 주요 영양소 함량 분석"
             subtitle="제품 라벨에서는 알려주지 않는 각 제품의 섭취량과 칼로리에 따른 단백질, 지방 그리고 탄수화물의 함량을 자세히 파악해요! (AS FED 기준)"
             subtitleColor="#525252"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[30px] sm:mt-[45px]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 items-start">
@@ -693,6 +697,8 @@ const DetailedDietReport = ({
             subtitle="1일 권장 칼로리(DER) 기준 단백질, 지방, 탄수화물의 섭취량과 음수량을 제시해드려요!"
             titleColor="#FFFFFF"
             subtitleColor="#F2F2F2"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[35px] text-white">
 
@@ -755,6 +761,8 @@ const DetailedDietReport = ({
             emoji="📊"
             title="현재 vs 권장 섭취량 비교 분석"
             subtitle="위에서 분석한 현재와 권장 칼로리 및 주요 영양소를 비교 분석해 현재 식단이 어떤 상태인지 더 자세히 파악해요!"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[42px]">
             {/* 데스크탑용 파란 버튼 - 칼로리 배지 위에 배치 */}
@@ -1118,6 +1126,8 @@ const DetailedDietReport = ({
             title="주식과 영양제의 상호작용 평가"
             subtitle="주식과 영양제가 서로 보완관계에 있는지 또는 과유불급은 아닐지 등을 평가해요!"
             subtitleColor="#525252"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[35px]">
             <div className="flex flex-col lg:flex-row gap-4 lg:items-stretch">
@@ -1211,6 +1221,8 @@ const DetailedDietReport = ({
             title="종합 결론 및 솔루션"
             subtitle="현재 급여 식단에 대한 종합적인 진단과 그에 따른 실행 계획을 알려드려요!"
             subtitleColor="#1E1E1E"
+            titleSize="24px"
+            subtitleSize="16px"
           />
           <div className="mt-[35px]">
             <div className="space-y-6">
