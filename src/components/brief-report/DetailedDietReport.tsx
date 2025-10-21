@@ -588,7 +588,7 @@ const DetailedDietReport = ({
             subtitleColor="#525252"
           />
           <div className="mt-[30px] sm:mt-[45px]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 items-start">
               {/* 섭취량(g) 패널 */}
               <NutrientAnalysisPanel
                 title="섭취량(g)"
@@ -668,7 +668,6 @@ const DetailedDietReport = ({
                 title="탄수화물 함량(g)"
                 backgroundColor="#F7623E"
                 textColor="#FFFFFF"
-                className="col-span-1 lg:col-span-2"
               >
                 <div className="space-y-[8px] sm:space-y-[10px]">
                   {currentFoods.map((food, index) => (
