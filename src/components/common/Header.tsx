@@ -54,7 +54,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-4">
             {/* 마운트되지 않았거나 로딩 중일 때 */}
             {(!isMounted || isLoading) && (
               <div className="flex items-center space-x-4">
@@ -215,7 +215,7 @@ const Header = () => {
 
           {/* Mobile - 홈페이지가 아닐 때 버튼들 */}
           {!isHomePage && (
-            <div className="md:hidden flex items-center space-x-2">
+            <div className="md:hidden flex items-center space-x-1">
               {/* 마운트되지 않았거나 로딩 중일 때 */}
               {(!isMounted || isLoading) && (
                 <div className="h-8 bg-gray-200 rounded w-16 animate-pulse"></div>
