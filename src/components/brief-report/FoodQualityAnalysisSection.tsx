@@ -489,7 +489,7 @@ const FoodQualityAnalysisSection = () => {
               return (
                 <div
                   key={assessment.id}
-                  className="relative h-[500px] md:h-[400px] cursor-pointer md:cursor-default"
+                  className="relative h-auto md:h-[400px] cursor-pointer md:cursor-default"
                 // onClick={() => {
                 //   // 모바일에서만 클릭으로 토글
                 //   if (window.innerWidth < 768) {
@@ -515,7 +515,7 @@ const FoodQualityAnalysisSection = () => {
                       }`}
                   >
                     {/* 앞면 */}
-                    <div className="absolute inset-0 w-full h-full bg-white rounded-[20px] p-6 backface-hidden flex flex-col">
+                    <div className="w-full bg-white rounded-[20px] p-6 backface-hidden flex flex-col md:absolute md:inset-0 md:h-full">
                       <div className="flex items-center gap-3 mb-6 md:mb-6">
                         <span className="text-[14px] font-bold text-[#003DA5] bg-blue-50 px-3 py-1 rounded-full">
                           {assessment.id}
