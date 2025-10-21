@@ -110,24 +110,32 @@ export default function MyPage() {
       }
     } catch (error) {
       console.error('결제 취소 실패:', error);
-      
+
       // 에러 메시지 파싱
       let errorMessage = '결제 취소에 실패했습니다.';
+      let errorTitle = '결제 취소 실패';
+      
       if (error instanceof Error) {
         try {
           const errorData = JSON.parse(error.message);
           if (errorData.error) {
             errorMessage = errorData.error;
           }
+          if (errorData.code) {
+            errorTitle = `결제 취소 실패 (${errorData.code})`;
+          }
         } catch {
           errorMessage = error.message;
         }
       }
 
+      console.log('파싱된 에러 메시지:', errorMessage);
+      console.log('에러 제목:', errorTitle);
+
       setAlertModal({
         isOpen: true,
         type: 'error',
-        title: '결제 취소 실패',
+        title: errorTitle,
         message: errorMessage
       });
     } finally {
