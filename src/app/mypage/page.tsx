@@ -114,7 +114,7 @@ export default function MyPage() {
       // 에러 메시지 파싱
       let errorMessage = '결제 취소에 실패했습니다.';
       let errorTitle = '결제 취소 실패';
-      
+
       if (error instanceof Error) {
         try {
           const errorData = JSON.parse(error.message);
