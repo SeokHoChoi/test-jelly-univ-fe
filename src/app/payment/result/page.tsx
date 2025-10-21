@@ -146,7 +146,7 @@ export default function PaymentResultPage() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-10 h-10 text-green-500" />
           </div>
-          
+
           {/* 메인 메시지 */}
           <h1 className="text-2xl font-bold text-gray-900 mb-2">결제가 완료되었습니다!</h1>
           <p className="text-gray-600 mb-8">젤리유 프리미엄 플랜 구독이 시작되었습니다</p>

@@ -27,7 +27,7 @@ export default function LoginRequiredModal({
       />
       
       {/* 모달 컨텐츠 */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col">
         {/* 헤더 */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export default function LoginRequiredModal({
         </div>
 
         {/* 컨텐츠 */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 overflow-y-auto flex-1">
           {/* 메시지 */}
           <div className="text-center">
             <p className="text-gray-600 mb-2">
@@ -81,7 +81,7 @@ export default function LoginRequiredModal({
         </div>
 
         {/* 푸터 버튼들 */}
-        <div className="p-6 border-t border-gray-200 bg-gray-50">
+        <div className="p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0 rounded-b-2xl">
           <div className="space-y-3">
             <Button
               onClick={onLogin}
