@@ -9,6 +9,7 @@ import { SubscriptionResponse, PaymentHistoryResponse } from '@/lib/paymentClien
 import Card from '@/components/common/Card';
 import Button from '@/components/common/Button';
 import PaymentCancelModal from '@/components/common/PaymentCancelModal';
+import AlertModal from '@/components/common/AlertModal';
 import { Calendar, CreditCard, Receipt, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 export default function MyPage() {
@@ -25,6 +26,17 @@ export default function MyPage() {
     amount: number;
     goodsName: string;
   } | null>(null);
+  const [alertModal, setAlertModal] = useState<{
+    isOpen: boolean;
+    type: 'success' | 'error' | 'warning';
+    title: string;
+    message: string;
+  }>({
+    isOpen: false,
+    type: 'success',
+    title: '',
+    message: ''
+  });
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -71,18 +83,53 @@ export default function MyPage() {
       const token = getToken();
       if (!token) return;
 
-      await cancelPayment(token, {
+      const response = await cancelPayment(token, {
         orderId: selectedPayment.orderId,
         reason
       });
 
-      alert('결제가 취소되었습니다.');
-      await loadData(); // 데이터 새로고침
-      setCancelModalOpen(false);
-      setSelectedPayment(null);
+      if (response.success) {
+        // 성공 모달 표시
+        setAlertModal({
+          isOpen: true,
+          type: 'success',
+          title: '결제 취소 완료',
+          message: '결제가 성공적으로 취소되었습니다. 환불은 영업일 기준 2-3일 소요됩니다.'
+        });
+        await loadData(); // 데이터 새로고침
+        setCancelModalOpen(false);
+        setSelectedPayment(null);
+      } else {
+        // API에서 에러 응답
+        setAlertModal({
+          isOpen: true,
+          type: 'error',
+          title: '결제 취소 실패',
+          message: response.message || '결제 취소에 실패했습니다. 다시 시도해주세요.'
+        });
+      }
     } catch (error) {
       console.error('결제 취소 실패:', error);
-      alert('결제 취소에 실패했습니다.');
+      
+      // 에러 메시지 파싱
+      let errorMessage = '결제 취소에 실패했습니다.';
+      if (error instanceof Error) {
+        try {
+          const errorData = JSON.parse(error.message);
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch {
+          errorMessage = error.message;
+        }
+      }
+
+      setAlertModal({
+        isOpen: true,
+        type: 'error',
+        title: '결제 취소 실패',
+        message: errorMessage
+      });
     } finally {
       setCancelling(null);
     }
@@ -384,6 +431,15 @@ export default function MyPage() {
           isLoading={cancelling === selectedPayment.orderId}
         />
       )}
+
+      {/* 알림 모달 */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal(prev => ({ ...prev, isOpen: false }))}
+        type={alertModal.type}
+        title={alertModal.title}
+        message={alertModal.message}
+      />
     </div>
   );
 }
