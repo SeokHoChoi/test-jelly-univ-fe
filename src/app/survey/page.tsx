@@ -422,8 +422,6 @@ const SurveyPage = () => {
           submittedAtFormatted: new Date(responseData.data.submittedAt).toLocaleString('ko-KR')
         }));
 
-        console.log('Survey submitted successfully:', responseData);
-
         // 성공 시 완료 페이지로 이동
         router.push('/survey/complete');
       } else {

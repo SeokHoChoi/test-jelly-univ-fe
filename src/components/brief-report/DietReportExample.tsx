@@ -106,7 +106,6 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
             name: `${fr.foodInfo.brandName} ${fr.foodInfo.productName}`.trim(),
             amount: fr.foodInfo.dailyAmount
           }));
-          console.log('📊 Rating Store에서 가져온 사료 데이터:', feeds);
         }
 
         // Rating 데이터가 없으면 productAnalysisData에서 가져오기 (fallback)
@@ -115,12 +114,9 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
           if (!pa) return;
           const parsed = JSON.parse(pa) as { feeds?: FeedStored[] };
           feeds = Array.isArray(parsed?.feeds) ? parsed.feeds : [];
-          console.log('📊 ProductAnalysisData에서 가져온 사료 데이터:', feeds);
         }
 
         if (feeds.length === 0) return;
-
-        console.log('🍽️ 처리할 사료 데이터:', feeds);
 
         const results = await Promise.all(
           feeds.map(async (feed) => {
@@ -190,17 +186,66 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
     run();
   }, [ratingResponse]);
 
+  // RER 계산: RER = 70 × (체중(kg))^0.75
+  const calculateRER = (weight: string): number => {
+    const weightNumber = parseFloat(weight.replace('kg', ''));
+    if (isNaN(weightNumber)) return 168;
+    return Math.round(70 * Math.pow(weightNumber, 0.75));
+  };
+
+  // MER 계산: RER × 활동계수 (중성화된 성견 기준 1.4-1.6)
+  const calculateMER = (rer: number): { min: number; max: number } => {
+    return {
+      min: Math.round(rer * 1.4),
+      max: Math.round(rer * 1.6)
+    };
+  };
+
+  // 권장 영양소 계산 (체중 기반)
+  const calculateRecommendedNutrients = (weight: string) => {
+    const weightNumber = parseFloat(weight.replace('kg', ''));
+    if (isNaN(weightNumber)) return { protein: '11.1g 이상', fat: '5.5g 이하', carbs: '9~17g', water: '185ml 이상' };
+
+    // 단백질: 체중 1kg당 2.5-3.5g
+    const proteinMin = Math.round(weightNumber * 2.5 * 10) / 10;
+    const proteinMax = Math.round(weightNumber * 3.5 * 10) / 10;
+
+    // 지방: 체중 1kg당 1.5-2.5g
+    const fatMin = Math.round(weightNumber * 1.5 * 10) / 10;
+    const fatMax = Math.round(weightNumber * 2.5 * 10) / 10;
+
+    // 탄수화물: 체중 1kg당 3-6g
+    const carbsMin = Math.round(weightNumber * 3);
+    const carbsMax = Math.round(weightNumber * 6);
+
+    // 물: 체중 1kg당 50-60ml
+    const waterMin = Math.round(weightNumber * 50);
+    const waterMax = Math.round(weightNumber * 60);
+
+    return {
+      protein: `${proteinMin}~${proteinMax}g`,
+      fat: `${fatMin}~${fatMax}g`,
+      carbs: `${carbsMin}~${carbsMax}g`,
+      water: `${waterMin}~${waterMax}ml`
+    };
+  };
+
+  // 실제 계산된 값들
+  const rer = calculateRER(petInfo.weight);
+  const mer = calculateMER(rer);
+  const recommendedNutrients = calculateRecommendedNutrients(petInfo.weight);
+
   const targetMetrics = {
-    rer: '168kcal',
-    targetWeight: '3.4kg',
-    mer: '185 ~ 202kcal'
+    rer: `${rer}kcal`,
+    targetWeight: petInfo.weight, // 현재 체중을 목표 체중으로 사용
+    mer: `${mer.min} ~ ${mer.max}kcal`
   };
 
   const recommendedIntake = {
-    protein: '11.1g 이상',
-    fat: '5.5g 이하',
-    carbs: '9~17g',
-    water: '185ml 이상'
+    protein: recommendedNutrients.protein,
+    fat: recommendedNutrients.fat,
+    carbs: recommendedNutrients.carbs,
+    water: recommendedNutrients.water
   };
 
   return (
