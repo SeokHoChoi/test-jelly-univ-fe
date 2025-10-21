@@ -20,6 +20,7 @@ const PlanSection = () => {
     {
       title: '현재 급여 식단 분석',
       subtitle: '현재 식단이 우리 아이에게 잘 맞는지 걱정이라면',
+      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
       price: '3.9만원',
       originalPrice: '4.5만원',
       discount: '13% 할인',
@@ -45,6 +46,7 @@ const PlanSection = () => {
     {
       title: '맞춤형 식단 설계',
       subtitle: '저속노화를 위해 무엇을, 얼마나 먹일지 고민이라면',
+      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
       price: '7.9만원',
       originalPrice: '12만원',
       discount: '34% 할인',
@@ -123,12 +125,26 @@ const PlanSection = () => {
               )}
 
               <div className="text-left mb-8">
-                <h3 className="text-[20px] md:text-[30px] font-medium text-[#000000]">
+                {plan.subtitle && (
+                  <p className="text-[15px] md:text-[20px] font-medium text-[#003DA5] mb-1">
+                    {plan.subtitle}
+                  </p>
+                )}
+                <h3 className="text-[20px] md:text-[30px] font-medium text-[#000000] mb-2">
                   {plan.title}
                 </h3>
-                {plan.subtitle && (
-                  <p className="text-[15px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)] mb-6">
-                    {plan.subtitle}
+                {plan.description && (
+                  <p className="text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium">
+                    {plan.description.split('영양·품질·안전성').map((part, idx) => (
+                      idx === 0 ? (
+                        <span key={idx}>{part}</span>
+                      ) : (
+                        <span key={idx}>
+                          <span className="text-orange-500">영양·품질·안전성</span>
+                          {part}
+                        </span>
+                      )
+                    ))}
                   </p>
                 )}
 

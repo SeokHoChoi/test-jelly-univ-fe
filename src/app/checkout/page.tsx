@@ -254,11 +254,14 @@ export default function CheckoutPage() {
               </span>
             </div>
             <div className='text-left mb-8'>
-              <h3 className='text-[20px] md:text-[30px] font-medium text-[#000000] mb-2'>
+              <p className='text-[15px] md:text-[20px] font-semibold text-[#003DA5] mb-1'>
+                현재 식단이 우리 아이에게 잘 맞는지 걱정이라면
+              </p>
+              <h3 className='text-[20px] md:text-[30px] font-bold text-[#000000] mb-2'>
                 현재 급여 식단 분석
               </h3>
-              <p className='text-[15px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)] mb-6'>
-                현재 식단이 우리 아이에게 잘 맞는지 걱정이라면
+              <p className='text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium'>
+                아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 <span className='text-orange-500'>영양·품질·안전성</span>까지 맞춤 분석합니다!
               </p>
 
               <div className='mb-6'>
