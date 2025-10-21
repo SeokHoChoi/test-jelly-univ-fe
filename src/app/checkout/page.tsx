@@ -363,48 +363,75 @@ export default function CheckoutPage() {
             </h2>
           </div>
 
-          {/* Process Cards Carousel */}
-          <div className="flex justify-center">
-            <div className="w-full max-w-6xl">
-              <div
-                ref={processSliderRef}
-                className="keen-slider overflow-hidden"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'stretch'
-                }}
-              >
-                {processCards.map((item) => (
-                  <div
-                    key={item.no}
-                    className="keen-slider__slide"
-                    style={{
-                      width: 'auto',
-                      minHeight: 'auto',
-                      flexShrink: 0,
-                      display: 'block'
-                    }}
-                  >
+          {/* 모바일: 캐러셀, 데스크탑: 기존 UI */}
+          <div className="block md:hidden">
+            {/* Process Cards Carousel (모바일만) */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-6xl">
+                <div
+                  ref={processSliderRef}
+                  className="keen-slider overflow-hidden"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'stretch'
+                  }}
+                >
+                  {processCards.map((item) => (
                     <div
-                      className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)] w-[280px] h-[320px] md:w-[375px] md:h-[424px] p-6 md:p-[37px_37px_37px_44px]'
+                      key={item.no}
+                      className="keen-slider__slide"
                       style={{
-                        padding: item.no === '03' ? '25px 30px 25px 25px' : '25px 25px 25px 25px'
+                        width: 'auto',
+                        minHeight: 'auto',
+                        flexShrink: 0,
+                        display: 'block'
                       }}
                     >
-                      <div className='text-[30px] md:text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
-                      <div className='text-[25px] md:text-[35px] font-medium text-white leading-none mb-[60px] md:mb-[85px]'>{item.title}</div>
-                      <p
-                        className='text-[18px] md:text-[25px] font-normal text-white opacity-90'
-                        style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
+                      <div
+                        className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)] w-[280px] h-[320px] p-6'
+                        style={{
+                          padding: item.no === '03' ? '25px 30px 25px 25px' : '25px 25px 25px 25px'
+                        }}
                       >
-                        {item.desc}
-                      </p>
+                        <div className='text-[30px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
+                        <div className='text-[25px] font-medium text-white leading-none mb-[60px]'>{item.title}</div>
+                        <p
+                          className='text-[18px] font-normal text-white opacity-90'
+                          style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
+                        >
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
+
+          {/* 데스크탑: 기존 UI */}
+          <div className='hidden md:flex flex-row justify-center items-center gap-4'>
+            {processCards.map((item) => (
+              <div
+                key={item.no}
+                className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)]'
+                style={{
+                  width: '375px',
+                  height: '424px',
+                  padding: item.no === '03' ? '37px 70px 37px 44px' : '37px 37px 37px 44px'
+                }}
+              >
+                <div className='text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
+                <div className='text-[35px] font-medium text-white leading-none' style={{ marginBottom: '85px' }}>{item.title}</div>
+                <p
+                  className='text-[25px] font-normal text-white opacity-90'
+                  style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
+                >
+                  {item.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
