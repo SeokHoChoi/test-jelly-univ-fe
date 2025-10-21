@@ -8,6 +8,7 @@ import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import LoginRequiredModal from '@/components/common/LoginRequiredModal';
 import { Check } from 'lucide-react';
+import { useKeenSlider } from 'keen-slider/react';
 
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
@@ -16,6 +17,46 @@ export default function CheckoutPage() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
+
+  // Process cards data
+  const processCards = [
+    {
+      no: '01',
+      title: '문답지 작성',
+      desc: '1:1 맞춤 리포트를 위하여 문답지 작성 시 제출해주세요. 내용에 따라 이전 결과와 달라질 수 있습니다.'
+    },
+    {
+      no: '02',
+      title: '리포트 제작',
+      desc: '제출하신 정보를 바탕으로\n국제적으로 신뢰받는 기관들의\n데이터를 학습한 AI와 서울대\n출신 수의영양 전문가가\n리포트를 제작합니다.'
+    },
+    {
+      no: '03',
+      title: '리포트 발송',
+      desc: '결제 이후, 영업일 기준\n5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
+    }
+  ];
+
+  // Keen slider for process cards
+  const [processSliderRef, processSlider] = useKeenSlider({
+    loop: true,
+    drag: true,
+    mode: 'snap',
+    renderMode: 'performance',
+    slides: {
+      origin: 'center',
+      perView: 1.37,
+      spacing: 2,
+    },
+    breakpoints: {
+      '(min-width: 640px)': {
+        slides: { perView: 1.4, spacing: 2 },
+      },
+      '(min-width: 768px)': {
+        slides: { perView: 1.6, spacing: 2 },
+      },
+    },
+  });
 
   // 세션스토리지에서 강아지 이름 가져오기
   useEffect(() => {
@@ -322,43 +363,48 @@ export default function CheckoutPage() {
             </h2>
           </div>
 
-          <div className='flex flex-col md:flex-row justify-center items-center gap-4'>
-            {[
-              {
-                no: '01',
-                title: '문답지 작성',
-                desc: '1:1 맞춤 리포트를 위하여 문답지 작성 시 제출해주세요. 내용에 따라 이전 결과와 달라질 수 있습니다.'
-              },
-              {
-                no: '02',
-                title: '리포트 제작',
-                desc: '제출하신 정보를 바탕으로\n국제적으로 신뢰받는 기관들의\n데이터를 학습한 AI와 서울대\n출신 수의영양 전문가가\n리포트를 제작합니다.'
-              },
-              {
-                no: '03',
-                title: '리포트 발송',
-                desc: '결제 이후, 영업일 기준\n5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
-              }
-            ].map((item) => (
+          {/* Process Cards Carousel */}
+          <div className="flex justify-center">
+            <div className="w-full max-w-6xl">
               <div
-                key={item.no}
-                className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)]'
+                ref={processSliderRef}
+                className="keen-slider overflow-hidden"
                 style={{
-                  width: '375px',
-                  height: '424px',
-                  padding: item.no === '03' ? '37px 70px 37px 44px' : '37px 37px 37px 44px'
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'stretch'
                 }}
               >
-                <div className='text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
-                <div className='text-[35px] font-medium text-white leading-none' style={{ marginBottom: '85px' }}>{item.title}</div>
-                <p
-                  className='text-[25px] font-normal text-white opacity-90'
-                  style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
-                >
-                  {item.desc}
-                </p>
+                {processCards.map((item) => (
+                  <div
+                    key={item.no}
+                    className="keen-slider__slide"
+                    style={{
+                      width: 'auto',
+                      minHeight: 'auto',
+                      flexShrink: 0,
+                      display: 'block'
+                    }}
+                  >
+                    <div
+                      className='bg-[#003DA5] text-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.15)] w-[280px] h-[320px] md:w-[375px] md:h-[424px] p-6 md:p-[37px_37px_37px_44px]'
+                      style={{
+                        padding: item.no === '03' ? '25px 30px 25px 25px' : '25px 25px 25px 25px'
+                      }}
+                    >
+                      <div className='text-[30px] md:text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
+                      <div className='text-[25px] md:text-[35px] font-medium text-white leading-none mb-[60px] md:mb-[85px]'>{item.title}</div>
+                      <p
+                        className='text-[18px] md:text-[25px] font-normal text-white opacity-90'
+                        style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
+                      >
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
 
