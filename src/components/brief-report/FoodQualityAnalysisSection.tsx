@@ -481,30 +481,31 @@ const FoodQualityAnalysisSection = () => {
           {/* 세부 평가 카드들 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {detailedAssessments.map((assessment) => {
-              const isFlipped = flippedCards.has(assessment.id);
+              // const isFlipped = flippedCards.has(assessment.id); // 카드 뒤집기 애니메이션 비활성화
+              const isFlipped = false; // 항상 앞면만 표시
               const back = buildBackSideContent(assessment.id);
               return (
                 <div
                   key={assessment.id}
                   className="relative h-[500px] md:h-[400px] cursor-pointer md:cursor-default"
-                  onClick={() => {
-                    // 모바일에서만 클릭으로 토글
-                    if (window.innerWidth < 768) {
-                      toggleCard(assessment.id);
-                    }
-                  }}
-                  onMouseEnter={() => {
-                    // 데스크탑에서만 호버로 뒤집기
-                    if (window.innerWidth >= 768) {
-                      flipCard(assessment.id);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    // 데스크탑에서만 호버 아웃으로 원복
-                    if (window.innerWidth >= 768) {
-                      unflipCard(assessment.id);
-                    }
-                  }}
+                // onClick={() => {
+                //   // 모바일에서만 클릭으로 토글
+                //   if (window.innerWidth < 768) {
+                //     toggleCard(assessment.id);
+                //   }
+                // }}
+                // onMouseEnter={() => {
+                //   // 데스크탑에서만 호버로 뒤집기
+                //   if (window.innerWidth >= 768) {
+                //     flipCard(assessment.id);
+                //   }
+                // }}
+                // onMouseLeave={() => {
+                //   // 데스크탑에서만 호버 아웃으로 원복
+                //   if (window.innerWidth >= 768) {
+                //     unflipCard(assessment.id);
+                //   }
+                // }}
                 >
                   {/* 카드 컨테이너 */}
                   <div
