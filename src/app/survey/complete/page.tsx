@@ -121,7 +121,7 @@ const SurveyCompletePage = () => {
         </button>
 
         <p className="text-center text-xs text-gray-400 mt-4">
-          분석 리포트는 보통 5-10분 정도 소요됩니다
+          최종 분석 리포트는 영업일 기준 약 5일 정도 소요됩니다
         </p>
       </div>
     </div>
