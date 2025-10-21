@@ -337,7 +337,7 @@ export default function CheckoutPage() {
               {
                 no: '03',
                 title: '리포트 발송',
-                desc: '결제 이후, 영업일 기준\n3~5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
+                desc: '결제 이후, 영업일 기준\n5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
               }
             ].map((item) => (
               <div
