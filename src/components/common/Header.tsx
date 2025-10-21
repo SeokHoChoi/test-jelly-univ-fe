@@ -159,6 +159,12 @@ const Header = () => {
                     <span className="text-[#000000] font-medium text-[16px]">
                       {user?.name}님
                     </span>
+                    <Link
+                      href="/mypage"
+                      className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                    >
+                      마이페이지
+                    </Link>
                     <Button
                       variant="hero-primary"
                       size="sm"
@@ -170,12 +176,18 @@ const Header = () => {
                   </>
                 )}
 
-                {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 로그아웃 */}
+                {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 마이페이지 + 로그아웃 */}
                 {(isProductAnalysisPage || isBriefReportPage) && (
                   <>
                     <span className="text-[#000000] font-medium text-[16px]">
                       {user?.name}님
                     </span>
+                    <Link
+                      href="/mypage"
+                      className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                    >
+                      마이페이지
+                    </Link>
                     <Button
                       variant="hero-primary"
                       size="sm"
@@ -263,12 +275,18 @@ const Header = () => {
               {/* 로그인된 경우 */}
               {isMounted && !isLoading && isLoggedIn && (
                 <>
-                  {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 로그아웃 */}
+                  {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 마이페이지 + 로그아웃 */}
                   {(isProductAnalysisPage || isBriefReportPage) && (
                     <>
                       <span className="text-[#000000] font-medium text-[12px]">
                         {user?.name}님
                       </span>
+                      <Link
+                        href="/mypage"
+                        className="text-[#000000] font-medium text-[12px] hover:text-brand-blue transition-colors"
+                      >
+                        마이페이지
+                      </Link>
                       <Button
                         variant="hero-primary"
                         size="sm"
@@ -329,7 +347,7 @@ const Header = () => {
                 </>
               )}
 
-              {/* 로그인된 경우 사용자 이름과 로그아웃 버튼 표시 */}
+              {/* 로그인된 경우 사용자 이름과 마이페이지, 로그아웃 버튼 표시 */}
               {isMounted && !isLoading && isLoggedIn && (
                 <>
                   <div className="px-4 py-2">
@@ -337,6 +355,13 @@ const Header = () => {
                       {user?.name}님
                     </span>
                   </div>
+                  <Link
+                    href="/mypage"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-2"
+                  >
+                    마이페이지
+                  </Link>
                   <div className="px-4">
                     <Button
                       variant="hero-primary"
