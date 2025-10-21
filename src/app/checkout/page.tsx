@@ -6,12 +6,14 @@ import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
+import LoginRequiredModal from '@/components/common/LoginRequiredModal';
 import { Check } from 'lucide-react';
 
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
   const [dogName, setDogName] = useState<string>('냥구');
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -142,8 +144,8 @@ export default function CheckoutPage() {
       // JWT 토큰 확인
       const token = getToken();
       if (!token) {
-        alert('로그인이 필요합니다.');
-        return router.push('/login');
+        setLoginModalOpen(true);
+        return;
       }
 
       // 결제 준비 API 호출 (1원 테스트)
@@ -385,6 +387,20 @@ export default function CheckoutPage() {
           </button>
         </div>
       </div>
+
+      {/* 로그인 필요 모달 */}
+      <LoginRequiredModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+        onLogin={() => {
+          setLoginModalOpen(false);
+          router.push('/login');
+        }}
+        onSignup={() => {
+          setLoginModalOpen(false);
+          router.push('/signup');
+        }}
+      />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { getSubscription, getPaymentHistory, cancelPayment } from '@/lib/payment
 import { SubscriptionResponse, PaymentHistoryResponse } from '@/lib/paymentClient';
 import Card from '@/components/common/Card';
 import Button from '@/components/common/Button';
+import PaymentCancelModal from '@/components/common/PaymentCancelModal';
 import { Calendar, CreditCard, Receipt, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 export default function MyPage() {
@@ -18,13 +19,19 @@ export default function MyPage() {
   const [paymentHistory, setPaymentHistory] = useState<PaymentHistoryResponse['data']>([]);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState<string | null>(null);
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState<{
+    orderId: string;
+    amount: number;
+    goodsName: string;
+  } | null>(null);
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
       router.push('/login');
       return;
     }
-    
+
     if (isLoggedIn) {
       loadData();
     }
@@ -51,21 +58,28 @@ export default function MyPage() {
     }
   };
 
-  const handleCancelPayment = async (orderId: string) => {
-    if (!confirm('정말로 이 결제를 취소하시겠습니까?')) return;
+  const handleCancelPayment = (payment: { orderId: string; amount: number; goodsName: string }) => {
+    setSelectedPayment(payment);
+    setCancelModalOpen(true);
+  };
+
+  const handleConfirmCancel = async (reason: string) => {
+    if (!selectedPayment) return;
 
     try {
-      setCancelling(orderId);
+      setCancelling(selectedPayment.orderId);
       const token = getToken();
       if (!token) return;
 
       await cancelPayment(token, {
-        orderId,
-        reason: '사용자 요청'
+        orderId: selectedPayment.orderId,
+        reason
       });
 
       alert('결제가 취소되었습니다.');
       await loadData(); // 데이터 새로고침
+      setCancelModalOpen(false);
+      setSelectedPayment(null);
     } catch (error) {
       console.error('결제 취소 실패:', error);
       alert('결제 취소에 실패했습니다.');
@@ -160,11 +174,10 @@ export default function MyPage() {
           <nav className="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
             <button
               onClick={() => setActiveTab('subscription')}
-              className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === 'subscription'
-                  ? 'bg-[#003DA5] text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'subscription'
+                ? 'bg-[#003DA5] text-white'
+                : 'text-gray-600 hover:text-gray-900'
+                }`}
             >
               <div className="flex items-center justify-center gap-2">
                 <CreditCard className="w-4 h-4" />
@@ -173,11 +186,10 @@ export default function MyPage() {
             </button>
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === 'history'
-                  ? 'bg-[#003DA5] text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${activeTab === 'history'
+                ? 'bg-[#003DA5] text-white'
+                : 'text-gray-600 hover:text-gray-900'
+                }`}
             >
               <div className="flex items-center justify-center gap-2">
                 <Receipt className="w-4 h-4" />
@@ -202,11 +214,10 @@ export default function MyPage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">현재 구독</h3>
                     <p className="text-gray-600">활성화된 구독 정보입니다</p>
                   </div>
-                  <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    subscription.status === 'active' 
-                      ? 'text-green-600 bg-green-50' 
-                      : 'text-gray-600 bg-gray-50'
-                  }`}>
+                  <div className={`px-3 py-1 rounded-full text-sm font-medium ${subscription.status === 'active'
+                    ? 'text-green-600 bg-green-50'
+                    : 'text-gray-600 bg-gray-50'
+                    }`}>
                     {subscription.status === 'active' ? '활성' : subscription.status}
                   </div>
                 </div>
@@ -297,7 +308,7 @@ export default function MyPage() {
                       <div>
                         <label className="block text-gray-500 mb-1">결제수단</label>
                         <p className="text-gray-900">
-                          {payment.pay_method === 'card' && payment.card_name 
+                          {payment.pay_method === 'card' && payment.card_name
                             ? `${payment.card_name} ${payment.card_number || ''}`
                             : payment.pay_method
                           }
@@ -326,7 +337,11 @@ export default function MyPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleCancelPayment(payment.order_id)}
+                          onClick={() => handleCancelPayment({
+                            orderId: payment.order_id,
+                            amount: payment.amount,
+                            goodsName: payment.goods_name
+                          })}
                           disabled={cancelling === payment.order_id}
                           className="text-red-600 border-red-200 hover:bg-red-50"
                         >
@@ -355,6 +370,20 @@ export default function MyPage() {
           </div>
         )}
       </div>
+
+      {/* 결제 취소 모달 */}
+      {selectedPayment && (
+        <PaymentCancelModal
+          isOpen={cancelModalOpen}
+          onClose={() => {
+            setCancelModalOpen(false);
+            setSelectedPayment(null);
+          }}
+          onConfirm={handleConfirmCancel}
+          paymentInfo={selectedPayment}
+          isLoading={cancelling === selectedPayment.orderId}
+        />
+      )}
     </div>
   );
 }
