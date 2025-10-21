@@ -103,7 +103,7 @@ const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: Pe
         if (ratingResponse?.foodRatings) {
           feeds = ratingResponse.foodRatings.map((fr) => ({
             id: fr.foodInfo.id,
-            name: `${fr.foodInfo.brandName} ${fr.foodInfo.productName}`.trim(),
+            name: `${fr.foodInfo.productName}`.trim(),
             amount: fr.foodInfo.dailyAmount
           }));
         }
