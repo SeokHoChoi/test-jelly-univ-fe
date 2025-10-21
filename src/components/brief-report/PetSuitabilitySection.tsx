@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRatingStore } from '@/contexts/RatingStore';
+import { Check, ChevronDown } from 'lucide-react';
 
 const PetSuitabilitySection = () => {
   const router = useRouter();
@@ -64,18 +65,14 @@ const PetSuitabilitySection = () => {
   return (
     <div className="fixed bottom-4 left-4 right-4 z-50">
       {/* 위기 문구 카드 */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className={`bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 ease-out ${isExpanded ? 'transform translate-y-0' : 'transform translate-y-0'
+        }`}>
         {/* 카드 헤더 */}
-        <div className="p-4 text-center">
+        <div className="p-2 pt-8 text-center">
           <div className="text-2xl mb-2">{alertInfo.emoji}</div>
           <h3 className="text-red-600 font-bold text-lg mb-2">
             {alertInfo.title}
           </h3>
-          
-          {/* 기본 내용 (항상 표시) */}
-          <div className="text-gray-700 text-sm mb-3">
-            {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean))[0]}
-          </div>
 
           {/* 더 자세히 보기 버튼 */}
           <button
@@ -83,44 +80,58 @@ const PetSuitabilitySection = () => {
             className="text-gray-600 text-sm hover:text-gray-800 transition-colors flex items-center justify-center gap-1 mx-auto"
           >
             더 자세히 보기
-            <span className={`text-xs transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
-              ▼
-            </span>
+            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
           </button>
         </div>
 
         {/* 확장된 내용 */}
-        {isExpanded && (
-          <div className="border-t border-gray-100 bg-gray-50 p-4 space-y-3">
-            {/* 추가 상세 내용 */}
-            {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).slice(1).map((text, idx) => (
-              <div key={idx} className="flex items-start gap-2">
-                <span className="text-gray-500 text-sm mt-0.5 flex-shrink-0">✓</span>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {text}
-                </p>
-              </div>
-            ))}
-            
-            {/* 면책 조항 */}
-            <div className="flex items-start gap-2">
-              <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">*</span>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                *위 결과는 추가적인 반려동물 정보에 따라 달라질 수 있습니다.
+        <div className={`bg-white transition-all duration-500 ease-in-out ${isExpanded ? 'opacity-100 py-6 px-8 space-y-3' : 'opacity-0 p-0 h-0 overflow-hidden'
+          }`}>
+          {/* 모든 상세 내용 */}
+          {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).map((text, idx) => (
+            <div
+              key={idx}
+              className={`flex items-start gap-2 transition-all duration-400 ease-out ${isExpanded
+                ? 'opacity-100 transform translate-y-0'
+                : 'opacity-0 transform translate-y-1'
+                }`}
+              style={{ transitionDelay: `${idx * 80}ms` }}
+            >
+              <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
+              <p className="text-gray-700 text-sm leading-relaxed">
+                {text}
               </p>
             </div>
+          ))}
 
-            {/* 액션 버튼 */}
-            <div className="pt-2">
-              <button
-                onClick={handleLearnMore}
-                className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-3 rounded-xl font-semibold text-base transition-colors"
-              >
-                내 맞춤 식단 확인하기
-              </button>
-            </div>
+          {/* 면책 조항 */}
+          <div className={`flex items-start gap-2 transition-all duration-400 ease-out ${isExpanded
+            ? 'opacity-100 transform translate-y-0'
+            : 'opacity-0 transform translate-y-1'
+            }`}
+            style={{ transitionDelay: `${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 80 + 80}ms` }}
+          >
+            <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">*</span>
+            <p className="text-gray-500 text-xs leading-relaxed">
+              *위 결과는 추가적인 반려동물 정보에 따라 달라질 수 있습니다.
+            </p>
           </div>
-        )}
+
+          {/* 액션 버튼 */}
+          <div className={`pt-2 transition-all duration-400 ease-out ${isExpanded
+            ? 'opacity-100 transform translate-y-0'
+            : 'opacity-0 transform translate-y-1'
+            }`}
+            style={{ transitionDelay: `${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 80 + 120}ms` }}
+          >
+            <button
+              onClick={handleLearnMore}
+              className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-4 rounded-[50px] font-semibold text-base transition-colors"
+            >
+              내 맞춤 식단 확인하기
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
