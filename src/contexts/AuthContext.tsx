@@ -11,7 +11,7 @@ interface AuthContextType {
   isMounted: boolean;
   login: (credentials: { email: string; password: string; rememberMe?: boolean }) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<{ success: boolean; error?: string }>;
-  register: (userData: { email: string; password: string; name: string }) => Promise<{ success: boolean; error?: string }>;
+  register: (userData: { email: string; password: string; name: string; phone?: string; isPreRegistered?: boolean; referralSource?: string }) => Promise<{ success: boolean; error?: string }>;
   checkAuthStatus: () => Promise<void>;
 }
 

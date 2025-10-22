@@ -84,7 +84,7 @@ const PreReservationModal = ({ isOpen, onClose, planTitle, planPrice }: PreReser
           </div>
 
           <Link
-            href="/signup"
+            href="/signup?preregistered=true"
             onClick={onClose}
             className="block w-full bg-[#003DA5] text-white text-center py-3.5 rounded-xl font-bold text-[17px] hover:bg-[#002A7A] active:bg-[#001F5C] transition-colors active:scale-95"
           >

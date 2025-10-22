@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Text from '@/components/common/Text';
@@ -20,16 +21,23 @@ interface SignupFormData {
   agreePrivacy: boolean;
 }
 
-const SignupPage = () => {
+const SignupForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm<SignupFormData>();
   const { register: registerUser, isLoading } = useAuthContext();
-  // const router = useRouter();
+  const searchParams = useSearchParams();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [isPreRegistered, setIsPreRegistered] = useState<boolean>(false);
 
   const password = watch('password');
+
+  // 쿼리 파라미터에서 사전예약 여부 확인
+  useEffect(() => {
+    const preregistered = searchParams.get('preregistered');
+    setIsPreRegistered(preregistered === 'true');
+  }, [searchParams]);
 
   const onSubmit = async (data: SignupFormData) => {
     try {
@@ -40,6 +48,9 @@ const SignupPage = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        phone: '',
+        isPreRegistered: !!isPreRegistered,
+        referralSource: ''
       });
 
       if (result.success) {
@@ -73,6 +84,11 @@ const SignupPage = () => {
                 <Text variant="title" className="text-2xl">
                   회원가입
                 </Text>
+                {isPreRegistered && (
+                  <div className="bg-[#003DA5] text-white px-3 py-1 rounded-full text-sm font-medium mt-2">
+                    🎉 사전예약자
+                  </div>
+                )}
                 <Text variant="body" className="text-gray-600 mt-2">
                   <span className="font-semibold tracking-wide mr-[0.2px]">Jelly University</span>와 함께 시작하세요
                 </Text>
@@ -276,6 +292,14 @@ const SignupPage = () => {
         content={privacyPolicy}
       />
     </div>
+  );
+};
+
+const SignupPage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">로딩 중...</div>}>
+      <SignupForm />
+    </Suspense>
   );
 };
 
