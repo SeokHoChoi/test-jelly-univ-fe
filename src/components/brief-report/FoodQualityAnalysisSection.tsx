@@ -416,6 +416,12 @@ const FoodQualityAnalysisSection = () => {
               return `현재 급여 제품이 ${name}${josa}는 별개로 신뢰할 수 있는 제품인지 평가해요!`;
             })()}
           </p>
+
+          {/* 무료 버전 안내 */}
+          <p className="text-[#666666] font-normal text-[14px] md:text-[16px] max-w-4xl mx-auto mt-3">
+            무료 버전의 경우 가장 3개 중 한개의 사료만<br className="md:hidden" />
+            <span className="hidden md:inline"> </span>등급 분석을 제공해 드립니다
+          </p>
         </div>
 
         <div className="bg-[#F2F2F2] rounded-[40px] px-6 py-8 md:px-[138px] md:py-[74px]">

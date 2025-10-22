@@ -36,10 +36,21 @@ const DietReportPage = () => {
               현재 급여 방식이 적절한지 최종적으로 진단하고 해결책을 제시해 드려요!
             </p>
 
+            {/* 무료 버전 안내 */}
+            <p className="hidden md:block text-[#666666] font-normal text-[16px] max-w-4xl mx-auto mt-3">
+              무료 버전의 경우 가장 3개 중 한개의 사료만 등급 분석을 제공해 드립니다
+            </p>
+
             {/* 모바일 텍스트 */}
             <p className="md:hidden text-[#525252] font-normal text-[18px] max-w-4xl mx-auto">
               현재 급여 제품이 {petInfo?.name || '반려견'}와는 별개로<br />
               신뢰할 수 있는 제품인지 평가해요!
+            </p>
+
+            {/* 모바일 무료 버전 안내 */}
+            <p className="md:hidden text-[#666666] font-normal text-[14px] max-w-4xl mx-auto mt-3">
+              무료 버전의 경우 가장 3개 중 한개의 사료만<br />
+              등급 분석을 제공해 드립니다
             </p>
           </div>
         </div>
