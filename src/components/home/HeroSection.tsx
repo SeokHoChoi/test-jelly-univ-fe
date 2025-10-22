@@ -28,13 +28,13 @@ const HeroSection = () => {
           <div className="flex flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto px-[61.5px] sm:px-0">
             <Link
               href="/product-analysis"
-              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-xs sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
+              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-base sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
             >
               무료로 시작하기
             </Link>
             <Link
               href="#service"
-              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-white text-[#1E1E1E] hover:bg-gray-50 active:bg-gray-100 border-0 px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-xs sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
+              className="inline-flex items-center justify-center rounded-xl font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-white text-[#1E1E1E] hover:bg-gray-50 active:bg-gray-100 border-0 px-[22.5px] sm:px-8 py-[11px] sm:py-4 text-base sm:text-xl whitespace-nowrap flex-1 sm:w-auto"
             >
               더 알아보기 →
             </Link>
@@ -51,8 +51,8 @@ const HeroSection = () => {
         <Image
           src="/img/home/hero-bg-mobile.png"
           alt="Hero background decoration"
-          width={327}
-          height={100}
+          width={420}
+          height={128}
           className="block md:hidden h-auto"
           priority
         />
