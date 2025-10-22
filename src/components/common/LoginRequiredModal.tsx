@@ -21,11 +21,11 @@ export default function LoginRequiredModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* 배경 오버레이 */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* 모달 컨텐츠 */}
       <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col">
         {/* 헤더 */}
@@ -72,7 +72,7 @@ export default function LoginRequiredModal({
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-600">프리미엄 플랜</span>
               <div className="text-right">
-                <span className="text-lg font-bold text-blue-600">29,000원</span>
+                <span className="text-lg font-bold text-blue-600">39,000원</span>
                 <span className="text-sm text-gray-500 ml-2 line-through">45,000원</span>
               </div>
             </div>

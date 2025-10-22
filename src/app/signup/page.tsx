@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Text from '@/components/common/Text';
@@ -25,18 +25,24 @@ const SignupForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm<SignupFormData>();
   const { register: registerUser, isLoading } = useAuthContext();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [isPreRegistered, setIsPreRegistered] = useState<boolean>(false);
+  const [redirectUrl, setRedirectUrl] = useState<string>('/');
 
   const password = watch('password');
 
-  // 쿼리 파라미터에서 사전예약 여부 확인
+  // 쿼리 파라미터에서 사전예약 여부 및 리다이렉트 URL 확인
   useEffect(() => {
     const preregistered = searchParams.get('preregistered');
+    const redirect = searchParams.get('redirect');
     setIsPreRegistered(preregistered === 'true');
+    if (redirect) {
+      setRedirectUrl(redirect);
+    }
   }, [searchParams]);
 
   const onSubmit = async (data: SignupFormData) => {
@@ -54,11 +60,17 @@ const SignupForm = () => {
       });
 
       if (result.success) {
-        setSubmitSuccess('회원가입 성공! 잠시 후 홈으로 이동합니다...');
-        // 성공 메시지를 보여준 후 Header의 useEffect가 리다이렉트 처리하도록 약간의 지연
-        setTimeout(() => {
-          // Header의 useEffect가 처리하도록 빈 함수 (실제 리다이렉트는 Header에서)
-        }, 1500);
+        if (redirectUrl && redirectUrl !== '/') {
+          // 리다이렉트 URL이 있는 경우 즉시 이동 (결제 페이지 포함)
+          // 전체 URL을 그대로 사용 (파라미터 포함)
+          window.location.href = redirectUrl;
+        } else {
+          // 리다이렉트 URL이 없는 경우 성공 메시지 표시 후 Header의 useEffect가 처리
+          setSubmitSuccess('회원가입 성공! 잠시 후 홈으로 이동합니다...');
+          setTimeout(() => {
+            // Header의 useEffect가 처리하도록 빈 함수
+          }, 1500);
+        }
       } else {
         setSubmitError(result.error || '회원가입에 실패했습니다.');
       }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
 import ReviewSlider from '@/components/home/ReviewSlider';
@@ -17,6 +17,7 @@ export default function CheckoutPage() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Process cards data
   const processCards = [
@@ -185,16 +186,24 @@ export default function CheckoutPage() {
       // JWT 토큰 확인
       const token = getToken();
       if (!token) {
+        // 현재 URL을 리다이렉트 URL로 설정
+        const currentUrl = window.location.href;
+        sessionStorage.setItem('redirectAfterLogin', currentUrl);
         setLoginModalOpen(true);
         return;
       }
 
-      // 결제 준비 API 호출 (1원 테스트)
-      const response = await preparePayment(token, {
-        planType: 'premium',
-        amount: 100, // 100원으로 테스트
-        goodsName: '젤리유 프리미엄 플랜 (3개월) - 테스트',
-      });
+      // URL 파라미터에서 플랜 정보 읽기
+      const plan = searchParams.get('plan');
+      const isPremium = plan === 'premium';
+
+      // 플랜에 따른 가격 설정
+      const planInfo = isPremium
+        ? { planType: 'premium', amount: 79000, goodsName: '젤리유 프리미엄 플랜 (3개월)' }
+        : { planType: 'basic', amount: 39000, goodsName: '젤리유 베이직 플랜 (3개월)' };
+
+      // 결제 준비 API 호출
+      const response = await preparePayment(token, planInfo);
 
       if (!response?.success) throw new Error('결제 준비 실패');
       const { data } = response;
@@ -470,11 +479,13 @@ export default function CheckoutPage() {
         onClose={() => setLoginModalOpen(false)}
         onLogin={() => {
           setLoginModalOpen(false);
-          router.push('/login');
+          const currentUrl = window.location.href;
+          router.push(`/login?redirect=${encodeURIComponent(currentUrl)}`);
         }}
         onSignup={() => {
           setLoginModalOpen(false);
-          router.push('/signup');
+          const currentUrl = window.location.href;
+          router.push(`/signup?redirect=${encodeURIComponent(currentUrl)}`);
         }}
       />
     </div>
