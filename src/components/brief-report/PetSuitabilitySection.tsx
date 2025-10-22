@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRatingStore } from '@/contexts/RatingStore';
 import { Check, ChevronDown } from 'lucide-react';
+import {
+  ALERT_MESSAGES,
+  formatAlertMessage,
+  type AlertMessageKey,
+  type AlertLevel
+} from '@/constants/alert-messages';
 
 const PetSuitabilitySection = () => {
   const router = useRouter();
@@ -12,32 +18,61 @@ const PetSuitabilitySection = () => {
   const response = useRatingStore((s) => s.response);
   const overall = response?.overallSummary;
   const first = response?.foodRatings?.[0];
-  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
-  const improvements = first?.rating?.overallRating?.improvements ?? [];
+  const dogInfo = response?.dogInfo;
 
-  // Alert 정보 활용
-  const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
-  const hasCautionAlert = overall?.hasCautionAlert ?? false;
+  // Alert 정보 활용 - 새로운 시스템 사용
+  const alertLevel = first?.rating?.alertLevel;
+  const alertMessageKey = first?.rating?.alertMessageKey as AlertMessageKey;
+  const alertDetails = first?.rating?.alertDetails;
 
-  // Alert 레벨에 따른 이모지와 텍스트 결정
+  // Alert 메시지 생성
   const getAlertInfo = () => {
+    if (alertMessageKey && ALERT_MESSAGES[alertMessageKey]) {
+      const alertMessage = ALERT_MESSAGES[alertMessageKey];
+
+      // 변수 준비
+      const variables = {
+        dogName: dogInfo?.name || '반려견',
+        dogAge: dogInfo?.age ? parseInt(dogInfo.age) : undefined,
+        feedName: first?.foodInfo ? `${first.foodInfo.brandName} ${first.foodInfo.productName}`.trim() : undefined,
+        ...alertDetails
+      };
+
+      // 포맷팅된 메시지 생성
+      const formattedMessage = formatAlertMessage(alertMessageKey, variables);
+
+      return {
+        emoji: alertMessage.icon,
+        title: alertMessage.title,
+        description: formattedMessage,
+        level: alertLevel
+      };
+    }
+
+    // 기존 fallback 로직 (alertMessageKey가 없는 경우)
+    const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
+    const hasCautionAlert = overall?.hasCautionAlert ?? false;
+
     if (hasUrgentAlert) {
       return {
         emoji: '🚨',
         title: '즉시 개선이 필요한 심각한 문제',
-        description: null
+        description: null,
+        level: 'urgent' as AlertLevel
       };
     } else if (hasCautionAlert) {
       return {
         emoji: '⚠️',
         title: '장기적으로 문제가 될 수 있는 잠재적 위험',
-        description: null
+        description: null,
+        level: 'caution' as AlertLevel
       };
     } else {
       return {
         emoji: '🤔',
         title: '최적화를 위한 개선 포인트 발견',
-        description: null // 점검 상태에서는 설명 텍스트 없음
+        description: null,
+        level: 'checkup' as AlertLevel
       };
     }
   };
@@ -133,27 +168,68 @@ const PetSuitabilitySection = () => {
 
           {/* 확장된 내용 - 애니메이션 */}
           <div className="bg-white py-6 px-8 space-y-3">
-            {/* 모든 상세 내용 - 순차적 등장 애니메이션 */}
-            {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).map((text, idx) => (
+            {/* 새로운 Alert 메시지 시스템 사용 */}
+            {alertInfo.description ? (
+              // 새로운 Alert 메시지가 있는 경우
               <div
-                key={idx}
                 className="flex items-start gap-2"
                 style={{
-                  animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
+                  animation: `fadeInUp 0.5s ease-out 0.2s both`
                 }}
               >
-                <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {text}
-                </p>
+                <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">•</span>
+                <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                  {alertInfo.description}
+                </div>
               </div>
-            ))}
+            ) : (
+              // 기존 fallback 로직 (recommendations, improvements 등)
+              <>
+                {(() => {
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+
+                  return fallbackTexts.map((text, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-2"
+                      style={{
+                        animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
+                      }}
+                    >
+                      <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {text}
+                      </p>
+                    </div>
+                  ));
+                })()}
+              </>
+            )}
 
             {/* 면책 조항 - 애니메이션 */}
             <div
               className="flex items-start gap-2"
               style={{
-                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.4}s both`
+                animation: `fadeInUp 0.5s ease-out ${(() => {
+                  if (alertInfo.description) return 0.4;
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+                  return fallbackTexts.length * 0.1 + 0.4;
+                })()}s both`
               }}
             >
               <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">*</span>
@@ -166,7 +242,18 @@ const PetSuitabilitySection = () => {
             <div
               className="pt-2"
               style={{
-                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.6}s both`
+                animation: `fadeInUp 0.5s ease-out ${(() => {
+                  if (alertInfo.description) return 0.6;
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+                  return fallbackTexts.length * 0.1 + 0.6;
+                })()}s both`
               }}
             >
               <button

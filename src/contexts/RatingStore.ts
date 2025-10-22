@@ -6,6 +6,7 @@ export interface RatingData {
     name: string;
     weight: string;
     breed: string;
+    age?: string;
   };
   foodRatings: Array<{
     foodInfo: {
