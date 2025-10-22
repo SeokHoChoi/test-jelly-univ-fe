@@ -260,7 +260,7 @@ const PetSuitabilitySection = () => {
                 onClick={handleLearnMore}
                 className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-4 rounded-[50px] font-semibold text-base transition-colors"
               >
-                내 맞춤 식단 확인하기
+                내 아이 식단 분석하기
               </button>
             </div>
           </div>
