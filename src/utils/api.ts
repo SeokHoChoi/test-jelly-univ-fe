@@ -15,8 +15,8 @@ export interface FoodSearchResult {
   phosphorus: string;
   omega3: string;
   omega6: string;
-  dha: string;
-  epa: string;
+  dha: string | null;
+  epa: string | null;
   thumbnail_url: string;
   description: string;
   country_of_origin: string;
@@ -113,4 +113,31 @@ export const submitRating = async (payload: RatingRequestBody) => {
   }
 
   return response.json();
+};
+
+// 사료 상세 조회 API
+export interface FoodDetail extends FoodSearchResult {
+  target_age?: string;
+  manufacturer?: string;
+  importer?: string;
+  package_sizes?: string;
+  crawled_from?: string;
+  data_quality_score?: number;
+  created_at?: string;
+  updated_at?: string;
+  product_type?: string;
+  additional_images?: string[];
+  price?: number;
+  category?: string;
+  ingredients_text?: string;
+  nutrition_text?: string;
+}
+
+export const getFoodDetail = async (id: number): Promise<{ success: boolean; data: FoodDetail }> => {
+  const resp = await fetch(`${INTERNAL_API_BASE_URL}/foods/${id}`);
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error || `HTTP error! status: ${resp.status}`);
+  }
+  return resp.json();
 };

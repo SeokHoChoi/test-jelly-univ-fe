@@ -7,7 +7,9 @@ import Image from 'next/image';
 import Text from '@/components/common/Text';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
+import TermsModal from '@/components/common/TermsModal';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { termsOfService, privacyPolicy } from '@/data/terms';
 
 interface SignupFormData {
   name: string;
@@ -24,6 +26,8 @@ const SignupPage = () => {
   // const router = useRouter();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
   const password = watch('password');
 
@@ -165,9 +169,13 @@ const SignupPage = () => {
                 />
                 <span className="ml-2 text-sm text-gray-600">
                   <span className="text-red-500 mr-1">*</span>
-                  <Link href="/terms" className="text-brand-blue hover:text-brand-blue-dark">
+                  <button
+                    type="button"
+                    onClick={() => setShowTermsModal(true)}
+                    className="text-brand-blue hover:text-brand-blue-dark underline"
+                  >
                     이용약관
-                  </Link>
+                  </button>
                   에 동의합니다 (필수)
                 </span>
               </label>
@@ -183,9 +191,13 @@ const SignupPage = () => {
                 />
                 <span className="ml-2 text-sm text-gray-600">
                   <span className="text-red-500 mr-1">*</span>
-                  <Link href="/privacy" className="text-brand-blue hover:text-brand-blue-dark">
+                  <button
+                    type="button"
+                    onClick={() => setShowPrivacyModal(true)}
+                    className="text-brand-blue hover:text-brand-blue-dark underline"
+                  >
                     개인정보처리방침
-                  </Link>
+                  </button>
                   에 동의합니다 (필수)
                 </span>
               </label>
@@ -248,6 +260,21 @@ const SignupPage = () => {
           </div>
         </Card>
       </div>
+
+      {/* 약관 모달들 */}
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+        title="이용약관"
+        content={termsOfService}
+      />
+
+      <TermsModal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+        title="개인정보처리방침"
+        content={privacyPolicy}
+      />
     </div>
   );
 };

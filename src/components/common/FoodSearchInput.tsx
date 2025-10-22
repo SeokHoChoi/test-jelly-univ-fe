@@ -28,7 +28,7 @@ const FoodSearchInput = ({
       // API 응답을 AutocompleteOption 형태로 변환
       const options: AutocompleteOption[] = response.data.map((food: FoodSearchResult) => ({
         id: food.id.toString(),
-        label: `${food.brand_name} ${food.product_name}`,
+        label: `${food.product_name}`,
         subtitle: `단백질 ${food.crude_protein}% 지방 ${food.crude_fat}%`,
         thumbnail: food.thumbnail_url,
         originalData: food
@@ -68,7 +68,7 @@ const FoodSearchInput = ({
     } else {
       // 사료 선택 시
       const food = option.originalData as FoodSearchResult;
-      onChange(`${food.brand_name} ${food.product_name}`);
+      onChange(`${food.product_name}`);
       onSelect(food);
     }
   };

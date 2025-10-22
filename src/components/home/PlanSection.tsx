@@ -1,8 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import Card from '@/components/common/Card';
 import { Check } from 'lucide-react';
+import PreReservationModal from '@/components/common/PreReservationModal';
+import { useState } from 'react';
 
 const PlanSection = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<{ title: string; price: string } | null>(null);
+
   const freeFeatures = [
     '영양 정보 신뢰도, 영양 설계 균형도, 원료 품질, 제조 품질',
     '현재 급여 제품의 주식 여부 (최대 3개)',
@@ -13,6 +20,7 @@ const PlanSection = () => {
     {
       title: '현재 급여 식단 분석',
       subtitle: '현재 식단이 우리 아이에게 잘 맞는지 걱정이라면',
+      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
       price: '3.9만원',
       originalPrice: '4.5만원',
       discount: '13% 할인',
@@ -34,11 +42,11 @@ const PlanSection = () => {
       ],
       buttonText: '신청하기',
       buttonVariant: 'primary' as const,
-      href: '/signup',
     },
     {
       title: '맞춤형 식단 설계',
       subtitle: '저속노화를 위해 무엇을, 얼마나 먹일지 고민이라면',
+      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
       price: '7.9만원',
       originalPrice: '12만원',
       discount: '34% 할인',
@@ -60,7 +68,6 @@ const PlanSection = () => {
       ],
       buttonText: '신청하기',
       buttonVariant: 'outline' as const,
-      href: '/signup',
     },
   ];
 
@@ -94,7 +101,7 @@ const PlanSection = () => {
             <div className="shrink-0 w-full md:w-auto">
               <Link
                 href="/product-analysis"
-                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
               >
                 30초 만에 분석하기
               </Link>
@@ -118,12 +125,26 @@ const PlanSection = () => {
               )}
 
               <div className="text-left mb-8">
-                <h3 className="text-[20px] md:text-[30px] font-medium text-[#000000]">
+                {plan.subtitle && (
+                  <p className="text-[15px] md:text-[20px] font-medium text-[#003DA5] mb-1">
+                    {plan.subtitle}
+                  </p>
+                )}
+                <h3 className="text-[20px] md:text-[30px] font-medium text-[#000000] mb-2">
                   {plan.title}
                 </h3>
-                {plan.subtitle && (
-                  <p className="text-[15px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)] mb-6">
-                    {plan.subtitle}
+                {plan.description && (
+                  <p className="text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium">
+                    {plan.description.split('영양·품질·안전성').map((part, idx) => (
+                      idx === 0 ? (
+                        <span key={idx}>{part}</span>
+                      ) : (
+                        <span key={idx}>
+                          <span className="text-orange-500">영양·품질·안전성</span>
+                          {part}
+                        </span>
+                      )
+                    ))}
                   </p>
                 )}
 
@@ -138,11 +159,6 @@ const PlanSection = () => {
                           / 정가 {plan.originalPrice}
                         </span>
                       )}
-                      {/* {plan.discount && (
-                        <Text variant="caption" className="text-gray-500">
-                          ({plan.discount})
-                        </Text>
-                      )} */}
                     </div>
                   </div>
                 )}
@@ -166,21 +182,33 @@ const PlanSection = () => {
                 })}
               </ul>
 
-              <Link
-                href={plan.href}
-                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
+              <button
+                onClick={() => {
+                  setSelectedPlan({ title: plan.title, price: plan.price });
+                  setModalOpen(true);
+                }}
+                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
                   ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
                   : plan.buttonVariant === 'primary'
                     ? 'bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark'
-                    : 'border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white active:bg-brand-blue active:text-white'
+                    : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
                   }`}
               >
                 {plan.buttonText}
-              </Link>
+              </button>
             </Card>
           ))}
         </div>
       </div>
+
+      {selectedPlan && (
+        <PreReservationModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          planTitle={selectedPlan.title}
+          planPrice={selectedPlan.price}
+        />
+      )}
     </section>
   );
 };

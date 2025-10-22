@@ -233,7 +233,7 @@ const AutocompleteInput = ({
             <div className="py-2">
               {options.map((option, index) => (
                 <div
-                  key={option.id}
+                  key={`${option.id}-${index}`}
                   className={`px-4 py-3 cursor-pointer transition-colors ${index === selectedIndex
                     ? 'bg-blue-50'
                     : 'hover:bg-gray-50'

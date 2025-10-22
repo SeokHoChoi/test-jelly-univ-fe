@@ -1,11 +1,9 @@
-import { Instagram, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Mail, href: '#', label: 'Email' },
+    { icon: Instagram, href: 'https://www.instagram.com/jelly_university?igsh=MW5ldXRjaTlqZzY2dA==', label: 'Instagram' },
+    { icon: Mail, href: 'mailto:allong.contact@gmail.com', label: 'Email' },
   ];
 
   return (

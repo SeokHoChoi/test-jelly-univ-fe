@@ -1,91 +1,185 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useRatingStore } from '@/contexts/RatingStore';
+import { Check, ChevronDown } from 'lucide-react';
 
 const PetSuitabilitySection = () => {
+  const router = useRouter();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const response = useRatingStore((s) => s.response);
-  const dog = response?.dogInfo;
   const overall = response?.overallSummary;
   const first = response?.foodRatings?.[0];
   const recommendations = first?.rating?.overallRating?.recommendations ?? [];
   const improvements = first?.rating?.overallRating?.improvements ?? [];
-  const badge = first?.rating?.overallRating?.badge ?? overall?.badge;
-  const score = first?.rating?.overallRating?.score ?? overall?.score;
 
-  const petName = useMemo(() => {
-    const name = dog?.name || '반려견';
-    return name;
-  }, [dog?.name]);
+  // Alert 정보 활용
+  const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
+  const hasCautionAlert = overall?.hasCautionAlert ?? false;
 
-  const headerTitle = useMemo(() => {
-    return `그래서 이 사료,\n${petName}에게 잘 맞을까?`;
-  }, [petName]);
+  // Alert 레벨에 따른 이모지와 텍스트 결정
+  const getAlertInfo = () => {
+    if (hasUrgentAlert) {
+      return {
+        emoji: '🚨',
+        title: '즉시 개선이 필요한 심각한 문제',
+        description: null
+      };
+    } else if (hasCautionAlert) {
+      return {
+        emoji: '⚠️',
+        title: '장기적으로 문제가 될 수 있는 잠재적 위험',
+        description: null
+      };
+    } else {
+      return {
+        emoji: '🤔',
+        title: '최적화를 위한 개선 포인트 발견',
+        description: null // 점검 상태에서는 설명 텍스트 없음
+      };
+    }
+  };
+
+  const alertInfo = getAlertInfo();
+
+  // 플로팅 버튼 토글 함수
+  const toggleExpanded = () => {
+    if (isExpanded) {
+      // 닫기 애니메이션
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsExpanded(false);
+        setIsAnimating(false);
+      }, 300);
+    } else {
+      // 열기
+      setIsExpanded(true);
+    }
+  };
+
+  // Survey 페이지로 이동하는 함수
+  const handleLearnMore = () => {
+    router.push('/survey');
+  };
+
+  // const petName = useMemo(() => {
+  //   const name = dog?.name || '반려견';
+  //   return name;
+  // }, [dog?.name]);
+
+  // const headerTitle = useMemo(() => {
+  //   return `그래서 이 사료,\n${petName}에게 잘 맞을까?`;
+  // }, [petName]);
 
   return (
-    <section id="pet-suitability" className="bg-[#003DA5] pt-[40px] sm:pt-[60px] md:pt-[93.5px] pb-[30px] sm:pb-[45px] md:pb-[64.5px] px-[20px] sm:px-[40px] md:px-[64px]">
-      <div className="max-w-7xl mx-auto">
-        {/* 메인 제목 */}
-        <div className="text-center mb-[30px] sm:mb-[45px] md:mb-[62px]">
-          <h1 className="text-[#F2F2F2] font-medium text-[16px] sm:text-[18px] md:text-[20px] mb-[15px] sm:mb-[18px] md:mb-[20px]">
-            {petName}의 맞춤 식단 분석
-          </h1>
-          <h2 className="text-[#FFFFFF] font-medium text-[24px] sm:text-[32px] md:text-[45px] mb-[12px] sm:mb-[18px] md:mb-[24px]">
-            {headerTitle.split('\\n')[0]}<br className="sm:hidden" />
-            {headerTitle.split('\\n')[1]}
-          </h2>
-          {(badge || typeof score === 'number') && (
-            <div className="text-[#E6ECF7] text-[14px] sm:text-[16px] md:text-[18px] mb-[24px] sm:mb-[36px] md:mb-[48px]">
-              {badge && <span className="mr-2">[{badge}]</span>}
-              {typeof score === 'number' && <span>종합 점수 {score}점</span>}
-            </div>
-          )}
-          <p className="text-[#F2F2F2] font-normal text-[16px] sm:text-[20px] md:text-[25px] max-w-4xl mx-auto leading-relaxed px-[10px] sm:px-[20px]">
-            급여 중인 사료가 {petName}의 현재 건강 상태와<br className="sm:hidden" />
-            필요 영양에 부합하는지, 그리고<br className="sm:hidden" />
-            현재 급여 방식이 적절한지<br className="sm:hidden" />
-            최종적으로 진단하고 해결책을 제시해 드려요!<br className="sm:hidden" />
-            <span className="hidden sm:inline">
-              급여 중인 사료가 {petName}의 현재 건강 상태와 필요 영양에 부합하는지, 그리고 현재 급여 방식이 적절한지 최종적으로 진단하고 해결책을 제시해 드려요!
+    <div className="fixed bottom-4 left-4 right-4 z-50">
+      {!isExpanded ? (
+        // 닫혀있을 때: 파란 버튼 (이전 스타일)
+        <div
+          className="flex justify-center"
+          style={{
+            animation: 'fadeIn 0.3s ease-out'
+          }}
+        >
+          <button
+            onClick={toggleExpanded}
+            className="bg-[#003DA5] hover:bg-[#002A7A] text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 flex items-center gap-3 min-w-[200px] justify-center relative overflow-hidden"
+            style={{
+              animation: 'gentlePulse 4s ease-in-out infinite'
+            }}
+          >
+            {/* 은은한 반짝이 효과 */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                backgroundSize: '300% 100%',
+                animation: 'shimmer 6s linear infinite'
+              }}
+            />
+            <span className="text-2xl relative z-10">{alertInfo.emoji}</span>
+            <span className="font-semibold text-sm relative z-10">{alertInfo.title}</span>
+            <span className="text-lg transition-transform duration-300 relative z-10" style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+              ▼
             </span>
-          </p>
+          </button>
         </div>
+      ) : (
+        // 열렸을 때: 현재 UI (토스 스타일) - 애니메이션 포함
+        <div
+          className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden"
+          style={{
+            animation: isAnimating ? 'fadeOut 0.3s ease-in-out' : 'slideUp 0.4s ease-out'
+          }}
+        >
+          {/* 카드 헤더 */}
+          <div className="p-2 pt-8 text-center">
+            <div className="text-2xl mb-2">{alertInfo.emoji}</div>
+            <h3 className="text-red-600 font-bold text-lg mb-2">
+              {alertInfo.title}
+            </h3>
 
-        {/* 하얀 박스 */}
-        <div className="bg-white rounded-[15px] sm:rounded-[18px] md:rounded-[20px] py-[20px] sm:py-[23px] md:py-[26px] px-[15px] sm:px-[20px] md:px-0">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-[30px] sm:gap-[40px] md:gap-[52px] max-w-4xl mx-auto">
-            {/* 왼쪽: 경고 영역 */}
-            <div className="text-center w-full sm:w-[280px] md:w-[300px] flex-shrink-0">
-              <div className="text-[30px] sm:text-[35px] md:text-[40px] mb-[5px]">🤯</div>
-              <div className="text-[#DA0E0E] font-medium text-[16px] sm:text-[18px] md:text-[20px] leading-[20px] sm:leading-[23px] md:leading-[26px] mb-[20px] sm:mb-[22px] md:mb-[25px]">
-                {overall?.recommendedAction || '권장 조치를 확인해 주세요.'}
-              </div>
-              <button className="bg-[#003DA5] hover:bg-[#002A7A] text-white px-[20px] sm:px-[24px] md:px-8 py-[10px] sm:py-[12px] md:py-3 rounded-[40px] sm:rounded-[45px] md:rounded-[50px] font-semibold text-[14px] sm:text-[15px] md:text-[16px] transition-colors">
-                더 알아보기 →
-              </button>
-            </div>
+            {/* 더 자세히 보기 버튼 */}
+            <button
+              onClick={toggleExpanded}
+              className="text-gray-600 text-sm hover:text-gray-800 transition-colors flex items-center justify-center gap-1 mx-auto"
+            >
+              더 자세히 보기
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
 
-            {/* 오른쪽: 상세 분석 */}
-            <div className="space-y-[8px] sm:space-y-[10px] md:space-y-2 w-full sm:w-[350px] md:w-auto">
-              {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).map((text, idx) => (
-                <div key={idx} className="flex items-start gap-[12px] sm:gap-[14px] md:gap-3">
-                  <span className="text-[#525252] text-[14px] sm:text-[16px] md:text-[18px] mt-1 flex-shrink-0">✓</span>
-                  <p className="text-[#525252] font-normal text-[14px] sm:text-[16px] md:text-[18px] leading-relaxed">
-                    {text}
-                  </p>
-                </div>
-              ))}
-              <div className="flex items-start gap-[12px] sm:gap-[14px] md:gap-3">
-                <span className="text-transparent text-[14px] sm:text-[16px] md:text-[18px] mt-1 w-[14px] sm:w-[16px] md:w-[18px] flex-shrink-0">*</span>
-                <p className="text-gray-500 text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed">
-                  *위 결과는 추가적인 반려동물 정보에 따라 달라질 수 있습니다.
+          {/* 확장된 내용 - 애니메이션 */}
+          <div className="bg-white py-6 px-8 space-y-3">
+            {/* 모든 상세 내용 - 순차적 등장 애니메이션 */}
+            {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).map((text, idx) => (
+              <div
+                key={idx}
+                className="flex items-start gap-2"
+                style={{
+                  animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
+                }}
+              >
+                <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {text}
                 </p>
               </div>
+            ))}
+
+            {/* 면책 조항 - 애니메이션 */}
+            <div
+              className="flex items-start gap-2"
+              style={{
+                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.4}s both`
+              }}
+            >
+              <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">*</span>
+              <p className="text-gray-500 text-xs leading-relaxed">
+                *위 결과는 추가적인 반려동물 정보에 따라 달라질 수 있습니다.
+              </p>
+            </div>
+
+            {/* 액션 버튼 - 애니메이션 */}
+            <div
+              className="pt-2"
+              style={{
+                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.6}s both`
+              }}
+            >
+              <button
+                onClick={handleLearnMore}
+                className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-4 rounded-[50px] font-semibold text-base transition-colors"
+              >
+                내 맞춤 식단 확인하기
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 };
 
