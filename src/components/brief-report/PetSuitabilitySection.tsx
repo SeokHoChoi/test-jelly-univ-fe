@@ -161,7 +161,7 @@ const PetSuitabilitySection = () => {
               onClick={toggleExpanded}
               className="text-gray-600 text-sm hover:text-gray-800 transition-colors flex items-center justify-center gap-1 mx-auto"
             >
-              더 자세히 보기
+              요약보기
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
             </button>
           </div>
