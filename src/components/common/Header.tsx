@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, User as UserIcon } from 'lucide-react';
+import AnimatedChevronIcon from './AnimatedChevronIcon';
 import Button from '@/components/common/Button';
 import { useAuthContext } from '@/contexts/AuthContext';
 
@@ -18,6 +19,7 @@ const Header = () => {
   const isSignupPage = pathname === '/signup';
   const isProductAnalysisPage = pathname === '/product-analysis';
   const isBriefReportPage = pathname === '/brief-report';
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // 페이지 이동 시 메뉴 닫기
   useEffect(() => {
@@ -69,15 +71,25 @@ const Header = () => {
                 {/* 홈페이지 */}
                 {isHomePage && (
                   <>
-                    {navigationItems.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
+                        {navigationItems.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                            title="현재 페이지 내 이동"
+                            aria-label={`${item.label} 섹션으로 스크롤`}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-1 text-[#64748B]">
+                        <span className="text-[12px] leading-none">페이지 내</span>
+                        <AnimatedChevronIcon className="w-4 h-4 text-[#94A3B8]" />
+                      </div>
+                    </div>
                     <Link
                       href="/login"
                       className="bg-[#F8F8F8] hover:bg-[#E8E8E8] active:bg-[#D8D8D8] rounded-[12px] text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors w-[76px] h-[47px] flex items-center justify-center"
@@ -147,55 +159,101 @@ const Header = () => {
                 {/* 홈페이지: 네비게이션 + 사용자 이름 + 로그아웃 */}
                 {isHomePage && (
                   <>
-                    {navigationItems.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
+                        {navigationItems.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                            title="현재 페이지 내 이동"
+                            aria-label={`${item.label} 섹션으로 스크롤`}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-1 text-[#64748B]">
+                        <span className="text-[12px] leading-none">페이지 내</span>
+                        <AnimatedChevronIcon className="w-4 h-4 text-[#94A3B8]" />
+                      </div>
+                    </div>
+                    {/* Toss 스타일 사용자 메뉴 */}
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsUserMenuOpen((v) => !v)}
+                        className="group flex items-center gap-2 rounded-full bg-[#EEF4FF] hover:bg-[#E6EFFF] active:bg-[#DDE9FF] transition-colors px-4 py-2 border border-[#D6E4FF]"
+                        aria-haspopup="menu"
+                        aria-expanded={isUserMenuOpen}
                       >
-                        {item.label}
-                      </Link>
-                    ))}
-                    <span className="text-[#000000] font-medium text-[16px]">
-                      {user?.name}님
-                    </span>
-                    <Link
-                      href="/mypage"
-                      className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
-                    >
-                      마이페이지
-                    </Link>
-                    <Button
-                      variant="hero-primary"
-                      size="sm"
-                      className="w-[76px] h-[47px] text-[16px] whitespace-nowrap"
-                      onClick={() => logout()}
-                    >
-                      로그아웃
-                    </Button>
+                        <span className="text-[15px] font-semibold text-[#0B5FFF] leading-none">
+                          {user?.name}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-[#3B82F6] group-hover:text-[#1D4ED8]" />
+                      </button>
+
+                      {isUserMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-[#E6ECF2] bg-white shadow-[0_8px_24px_rgba(2,6,23,0.08)] overflow-hidden z-50">
+                          <Link
+                            href="/mypage"
+                            className="flex items-center gap-2 px-3.5 py-3 text-[14px] text-[#0F172A] hover:bg-[#F8FAFC]"
+                            onClick={() => setIsUserMenuOpen(false)}
+                          >
+                            <UserIcon className="w-4 h-4 text-[#64748B]" /> 마이페이지
+                          </Link>
+                          <button
+                            className="w-full text-left px-3.5 py-3 text-[14px] text-[#DC2626] hover:bg-[#FFF1F2]"
+                            onClick={() => {
+                              setIsUserMenuOpen(false);
+                              logout();
+                            }}
+                          >
+                            로그아웃
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </>
                 )}
 
                 {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 마이페이지 + 로그아웃 */}
                 {(isProductAnalysisPage || isBriefReportPage) && (
                   <>
-                    <span className="text-[#000000] font-medium text-[16px]">
-                      {user?.name}님
-                    </span>
-                    <Link
-                      href="/mypage"
-                      className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors"
-                    >
-                      마이페이지
-                    </Link>
-                    <Button
-                      variant="hero-primary"
-                      size="sm"
-                      className="w-[139px] h-[47px] text-[16px] whitespace-nowrap"
-                      onClick={() => logout()}
-                    >
-                      로그아웃
-                    </Button>
+                    {/* Toss 스타일 사용자 메뉴 */}
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsUserMenuOpen((v) => !v)}
+                        className="group flex items-center gap-2 rounded-full bg-[#EEF4FF] hover:bg-[#E6EFFF] active:bg-[#DDE9FF] transition-colors px-4 py-2 border border-[#D6E4FF]"
+                        aria-haspopup="menu"
+                        aria-expanded={isUserMenuOpen}
+                      >
+                        <span className="text-[15px] font-semibold text-[#0B5FFF] leading-none">
+                          {user?.name}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-[#3B82F6] group-hover:text-[#1D4ED8]" />
+                      </button>
+
+                      {isUserMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-[#E6ECF2] bg-white shadow-[0_8px_24px_rgba(2,6,23,0.08)] overflow-hidden z-50">
+                          <Link
+                            href="/mypage"
+                            className="flex items-center gap-2 px-3.5 py-3 text-[14px] text-[#0F172A] hover:bg-[#F8FAFC]"
+                            onClick={() => setIsUserMenuOpen(false)}
+                          >
+                            <UserIcon className="w-4 h-4 text-[#64748B]" /> 마이페이지
+                          </Link>
+                          <button
+                            className="w-full text-left px-3.5 py-3 text-[14px] text-[#DC2626] hover:bg-[#FFF1F2]"
+                            onClick={() => {
+                              setIsUserMenuOpen(false);
+                              logout();
+                            }}
+                          >
+                            로그아웃
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </>
                 )}
               </>
@@ -275,27 +333,42 @@ const Header = () => {
               {/* 로그인된 경우 */}
               {isMounted && !isLoading && isLoggedIn && (
                 <>
-                  {/* 제품분석, 간단리포트 페이지: 사용자 이름 + 마이페이지 + 로그아웃 */}
+                  {/* 제품분석, 간단리포트 페이지: 토스 스타일 사용자 메뉴 (모바일) */}
                   {(isProductAnalysisPage || isBriefReportPage) && (
-                    <>
-                      <span className="text-[#000000] font-medium text-[12px]">
-                        {user?.name}님
-                      </span>
-                      <Link
-                        href="/mypage"
-                        className="text-[#000000] font-medium text-[12px] hover:text-brand-blue transition-colors"
+                    <div className="relative">
+                      <button
+                        onClick={() => setIsUserMenuOpen((v) => !v)}
+                        className="group flex items-center gap-1.5 rounded-full bg-[#EEF4FF] hover:bg-[#E6EFFF] active:bg-[#DDE9FF] transition-colors px-3.5 py-1.5 border border-[#D6E4FF]"
+                        aria-haspopup="menu"
+                        aria-expanded={isUserMenuOpen}
                       >
-                        마이페이지
-                      </Link>
-                      <Button
-                        variant="hero-primary"
-                        size="sm"
-                        className="text-[11px] py-[10px] px-[15px] whitespace-nowrap"
-                        onClick={() => logout()}
-                      >
-                        로그아웃
-                      </Button>
-                    </>
+                        <span className="text-[13px] font-semibold text-[#0B5FFF] leading-none">
+                          {user?.name}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-[#3B82F6] group-hover:text-[#1D4ED8]" />
+                      </button>
+
+                      {isUserMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-40 rounded-2xl border border-[#E6ECF2] bg-white shadow-[0_8px_24px_rgba(2,6,23,0.08)] overflow-hidden z-50">
+                          <Link
+                            href="/mypage"
+                            className="flex items-center gap-2 px-3 py-2.5 text-[13px] text-[#0F172A] hover:bg-[#F8FAFC]"
+                            onClick={() => setIsUserMenuOpen(false)}
+                          >
+                            <UserIcon className="w-4 h-4 text-[#64748B]" /> 마이페이지
+                          </Link>
+                          <button
+                            className="w-full text-left px-3 py-2.5 text-[13px] text-[#DC2626] hover:bg-[#FFF1F2]"
+                            onClick={() => {
+                              setIsUserMenuOpen(false);
+                              logout();
+                            }}
+                          >
+                            로그아웃
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </>
               )}
@@ -306,17 +379,26 @@ const Header = () => {
         {/* Mobile Navigation - 홈페이지에서만 표시 */}
         {isMenuOpen && isHomePage && (
           <div className="md:hidden border-t border-gray-200 py-4">
-            <nav className="flex flex-col space-y-4">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            <nav className="flex flex-col space-y-2">
+              <div className="flex items-center justify-between px-4 py-2">
+                <div className="text-[12px] px-2 py-0.5 rounded-full bg-[#EEF4FF] text-[#0B5FFF] border border-[#D6E4FF]">페이지 내</div>
+                <AnimatedChevronIcon className="w-5 h-5 text-[#94A3B8]" />
+              </div>
+              <div className="flex flex-col divide-y divide-gray-100">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="inline-flex items-center justify-between px-4 py-3 text-[#0F172A] font-medium text-[16px] hover:text-brand-blue transition-colors"
+                    title="현재 페이지 내 이동"
+                    aria-label={`${item.label} 섹션으로 스크롤`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                    <span className="text-[12px] text-[#94A3B8]">섹션</span>
+                  </Link>
+                ))}
+              </div>
 
               {/* 마운트되지 않았거나 로딩 중일 때 */}
               {(!isMounted || isLoading) && (
@@ -350,30 +432,34 @@ const Header = () => {
               {/* 로그인된 경우 사용자 이름과 마이페이지, 로그아웃 버튼 표시 */}
               {isMounted && !isLoading && isLoggedIn && (
                 <>
-                  <div className="px-4 py-2">
-                    <span className="text-[#000000] font-medium text-[16px]">
-                      {user?.name}님
-                    </span>
+                  {/* 사용자 이름 - 상단 라벨형 배치 (간격 확대) */}
+                  <div className="px-4 pt-1 pb-4">
+                    <span className="text-[13px] text-[#64748B]">안녕하세요</span>
+                    <div className="mt-0.5 text-[16px] font-semibold text-[#111827]">{user?.name}님</div>
                   </div>
-                  <Link
-                    href="/mypage"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-[#000000] font-medium text-[16px] hover:text-brand-blue transition-colors px-4 py-2"
-                  >
-                    마이페이지
-                  </Link>
-                  <div className="px-4">
-                    <Button
-                      variant="hero-primary"
-                      size="lg"
-                      className="w-full py-3 px-4 text-[16px] whitespace-nowrap"
+
+                  {/* 메뉴 아이템들 */}
+                  <div className="px-4 space-y-3">
+                    {/* 마이페이지: 파란 배경 / 하얀 글자 + 이모지 */}
+                    <Link
+                      href="/mypage"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-lg font-bold active:scale-95 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] px-4 py-3 text-[15px]"
+                    >
+                      <span className="text-[16px] leading-none" aria-hidden>👤</span>
+                      마이페이지
+                    </Link>
+
+                    {/* 로그아웃: 흰 배경 / 파란 테두리 & 텍스트, 상태 컬러 반영 */}
+                    <button
+                      className="w-full flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-[14px] font-semibold border transition-colors border-[#0B5FFF] text-[#0B5FFF] hover:border-[#1D4ED8] hover:text-[#1D4ED8] hover:bg-[#F8FAFF] active:border-[#0A46E9] active:text-[#0A46E9] active:bg-[#EEF4FF]"
                       onClick={() => {
                         logout();
                         setIsMenuOpen(false);
                       }}
                     >
                       로그아웃
-                    </Button>
+                    </button>
                   </div>
                 </>
               )}
