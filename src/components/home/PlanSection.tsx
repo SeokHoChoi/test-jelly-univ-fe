@@ -20,7 +20,7 @@ const PlanSection = () => {
     {
       title: '현재 급여 식단 분석',
       subtitle: '현재 식단이 우리 아이에게 잘 맞는지 걱정이라면',
-      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
+      description: '현재 급여 중인 식단 <span class="text-orange-500">최대 5종에 대하여 영양·품질·안전성</span>을 분석하고, 우리 아이에게 꼭 맞는 새로운 맞춤 식단 2개를 설계해 드립니다.',
       price: '3.9만원',
       originalPrice: '4.5만원',
       discount: '13% 할인',
@@ -46,7 +46,7 @@ const PlanSection = () => {
     {
       title: '맞춤형 식단 설계',
       subtitle: '저속노화를 위해 무엇을, 얼마나 먹일지 고민이라면',
-      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
+      description: '현재 급여 중인 식단 <span class="text-orange-500">최대 5종에 대하여 영양·품질·안전성</span>을 분석하고, 우리 아이에게 꼭 맞는 새로운 맞춤 식단 2개를 설계해 드립니다.',
       price: '7.9만원',
       originalPrice: '12만원',
       discount: '34% 할인',
