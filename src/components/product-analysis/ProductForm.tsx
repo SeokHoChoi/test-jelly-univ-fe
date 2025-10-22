@@ -9,6 +9,7 @@ import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
 import BreedSearchInput from '@/components/common/BreedSearchInput';
 import FoodSearchInput from '@/components/common/FoodSearchInput';
+import Toast from '@/components/common/Toast';
 import { submitRating } from '@/utils/api';
 import { useRatingStore } from '@/contexts/RatingStore';
 
@@ -72,6 +73,7 @@ const ProductForm = () => {
 
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
+  const [showToast, setShowToast] = useState<boolean>(false);
 
   const onSubmit = async (data: FormData) => {
     // 품종 필수 검증
@@ -151,6 +153,21 @@ const ProductForm = () => {
 
       router.push('/brief-report');
     } catch (e: unknown) {
+      // 404 에러인 경우 채널톡으로 이동
+      if (e instanceof Error && ((e as any).status === 404 || e.message.includes('404'))) {
+        // 토스트 표시
+        setShowToast(true);
+
+        // 채널톡 열기 (토스트와 함께)
+        if (typeof window !== 'undefined' && (window as any).ChannelIO) {
+          (window as any).ChannelIO('show');
+        } else {
+          // 채널톡이 로드되지 않은 경우 대체 메시지
+          setSubmitError('사료 정보를 찾을 수 없습니다. 고객센터로 문의해주세요.');
+        }
+        return;
+      }
+
       const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';
       setSubmitError(message);
     } finally {
@@ -329,6 +346,15 @@ const ProductForm = () => {
           </Card>
         </div>
       </div>
+
+      {/* 토스트 알림 */}
+      <Toast
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+        message="사료 데이터가 더 자세한 정보가 필요해서 채널톡으로 문의 남겨주시면 상담사가 더 상세하게 안내해드릴게요!"
+        type="info"
+        duration={5000}
+      />
     </section>
   );
 };

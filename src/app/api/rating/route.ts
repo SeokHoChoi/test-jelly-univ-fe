@@ -39,6 +39,13 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      if (response.status === 404) {
+        const err = await response.json().catch(() => ({}));
+        return NextResponse.json(
+          { success: false, ...err },
+          { status: 404 }
+        );
+      }
       if (response.status === 503) {
         return NextResponse.json(
           { success: false, error: 'AI 서비스 사용 불가' },

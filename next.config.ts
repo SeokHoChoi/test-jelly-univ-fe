@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // 이미지 최적화 전체 비활성화 - 원본 품질 유지
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
