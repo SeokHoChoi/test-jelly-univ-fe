@@ -302,7 +302,7 @@ export default function CheckoutPage() {
                 현재 급여 식단 분석
               </h3>
               <p className='text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium'>
-                현재 급여 중인 식단 <span className='text-orange-500'>최대 5종에 대하여 영양·품질·안전성</span>을 분석하고, 우리 아이에게 꼭 맞는 새로운 맞춤 식단 2개를 설계해 드립니다.
+                아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 <span className='text-orange-500'>최대 3종을 영양·품질·안전성</span>까지 맞춤 분석합니다!
               </p>
 
               <div className='mb-6'>
