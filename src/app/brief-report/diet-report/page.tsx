@@ -38,7 +38,7 @@ const DietReportPage = () => {
 
             {/* 무료 버전 안내 */}
             <p className="hidden md:block text-[#666666] font-normal text-[16px] max-w-4xl mx-auto mt-3">
-              무료 버전의 경우 가장 3개 중 한개의 사료만 등급 분석을 제공해 드립니다
+              무료 버전의 경우 3개 중 한개의 사료만 등급 분석을 제공해 드립니다
             </p>
 
             {/* 모바일 텍스트 */}
@@ -49,7 +49,7 @@ const DietReportPage = () => {
 
             {/* 모바일 무료 버전 안내 */}
             <p className="md:hidden text-[#666666] font-normal text-[14px] max-w-4xl mx-auto mt-3">
-              무료 버전의 경우 가장 3개 중 한개의 사료만<br />
+              무료 버전의 경우 3개 중 한개의 사료만<br />
               등급 분석을 제공해 드립니다
             </p>
           </div>

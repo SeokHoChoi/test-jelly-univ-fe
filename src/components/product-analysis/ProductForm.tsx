@@ -153,14 +153,23 @@ const ProductForm = () => {
 
       router.push('/brief-report');
     } catch (e: unknown) {
-      // 404 에러인 경우 채널톡으로 이동
+      // 404 에러인 경우 채널톡 워크플로우로 이동
       if (e instanceof Error && ((e as { status?: number }).status === 404 || e.message.includes('404'))) {
         // 토스트 표시
         setShowToast(true);
 
-        // 채널톡 열기 (토스트와 함께)
-        if (typeof window !== 'undefined' && (window as unknown as { ChannelIO?: (action: string) => void }).ChannelIO) {
-          (window as unknown as { ChannelIO: (action: string) => void }).ChannelIO('show');
+        // 채널톡 워크플로우 열기
+        if (typeof window !== 'undefined' && (window as unknown as { ChannelIO?: (action: string, ...args: unknown[]) => void }).ChannelIO) {
+          const ChannelIO = (window as unknown as { ChannelIO: (action: string, ...args: unknown[]) => void }).ChannelIO;
+
+          // 워크플로우 ID를 사용하여 특정 워크플로우 열기
+          ChannelIO('openWorkflow', '790324');
+
+          // 또는 채널톡을 먼저 열고 워크플로우를 여는 방법
+          // ChannelIO('show');
+          // setTimeout(() => {
+          //   ChannelIO('openWorkflow', '790324');
+          // }, 300);
         } else {
           // 채널톡이 로드되지 않은 경우 대체 메시지
           setSubmitError('사료 정보를 찾을 수 없습니다. 고객센터로 문의해주세요.');
