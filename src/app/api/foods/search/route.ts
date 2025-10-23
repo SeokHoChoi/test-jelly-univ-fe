@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const EXTERNAL_API_BASE_URL = 'https://dog-food-db.onrender.com/api';
+import { API_URLS } from '@/utils/constants';
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,7 +10,7 @@ export async function GET(request: NextRequest) {
 
     // 외부 API 호출
     const response = await fetch(
-      `${EXTERNAL_API_BASE_URL}/foods/search?q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}`,
+      `${API_URLS.BACKEND_BASE_URL}/foods/search?q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}`,
       {
         method: 'GET',
         headers: {

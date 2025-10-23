@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_URLS } from '@/utils/constants';
 
 export async function POST(req: NextRequest) {
   const token = req.headers.get('authorization') || '';
   const body = await req.json();
-  const res = await fetch('https://dog-food-db.onrender.com/api/payment/prepare', {
+  const res = await fetch(`${API_URLS.BACKEND_BASE_URL}/payment/prepare`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

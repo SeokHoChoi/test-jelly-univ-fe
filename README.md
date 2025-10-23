@@ -42,6 +42,24 @@ src/
 
 ## 🚀 시작하기
 
+### 환경변수 설정
+
+프로젝트 루트에 `.env` 파일을 생성하고 다음 환경변수를 설정하세요:
+
+```bash
+# 프론트엔드 도메인
+NEXT_PUBLIC_FRONTEND_URL=https://www.jellyuniversity.com
+
+# 백엔드 API 도메인
+NEXT_PUBLIC_BACKEND_URL=https://dog-food-db.onrender.com/api
+
+# NicePay SDK URL
+NEXT_PUBLIC_NICEPAY_SDK_URL=https://pay.nicepay.co.kr/v1/js/
+
+# 기타 환경변수들
+NEXT_PUBLIC_HOTJAR_ID=your_hotjar_id_here
+```
+
 ### 개발 서버 실행
 
 ```bash

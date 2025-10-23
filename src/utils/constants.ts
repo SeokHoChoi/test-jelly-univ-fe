@@ -1,3 +1,13 @@
+// 환경변수 기반 URL 설정
+export const API_URLS = {
+  // 백엔드 API URL
+  BACKEND_BASE_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://dog-food-db.onrender.com/api',
+  // 프론트엔드 URL
+  FRONTEND_BASE_URL: process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://www.jellyuniversity.com',
+  // NicePay SDK URL
+  NICEPAY_SDK_URL: process.env.NEXT_PUBLIC_NICEPAY_SDK_URL || 'https://pay.nicepay.co.kr/v1/js/',
+} as const;
+
 export const BRAND_COLORS = {
   blue: '#003DA5',
   blueLight: '#E6F0FF',

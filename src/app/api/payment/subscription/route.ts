@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_URLS } from '@/utils/constants';
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get('authorization') || '';
-  const res = await fetch('https://dog-food-db.onrender.com/api/payment/subscription', {
-    headers: { 
-      Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}` 
+  const res = await fetch(`${API_URLS.BACKEND_BASE_URL}/payment/subscription`, {
+    headers: {
+      Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`
     },
   });
   const data = await res.json();

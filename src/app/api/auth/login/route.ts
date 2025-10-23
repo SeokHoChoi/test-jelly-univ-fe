@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const EXTERNAL_API_BASE_URL = 'https://dog-food-db.onrender.com/api';
+import { API_URLS } from '@/utils/constants';
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 외부 API 호출
-    const response = await fetch(`${EXTERNAL_API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${API_URLS.BACKEND_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

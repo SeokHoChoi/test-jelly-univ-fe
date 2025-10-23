@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
+import { API_URLS } from '@/utils/constants';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import LoginRequiredModal from '@/components/common/LoginRequiredModal';
@@ -164,14 +165,14 @@ function CheckoutPageContent() {
         resolve();
         return;
       }
-      const existing = document.querySelector('script[src="https://pay.nicepay.co.kr/v1/js/"]');
+      const existing = document.querySelector(`script[src="${API_URLS.NICEPAY_SDK_URL}"]`);
       if (existing) {
         existing.addEventListener('load', () => resolve());
         existing.addEventListener('error', () => reject(new Error('SDK 로드 실패')));
         return;
       }
       const script = document.createElement('script');
-      script.src = 'https://pay.nicepay.co.kr/v1/js/';
+      script.src = API_URLS.NICEPAY_SDK_URL;
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => reject(new Error('SDK 로드 실패'));
@@ -228,7 +229,7 @@ function CheckoutPageContent() {
         amount: modifiedData.amount,
         goodsName: modifiedData.goodsName,
         returnUrl: modifiedData.returnUrl,
-        sandbox: true,
+        sandbox: process.env.NODE_ENV === 'development',
         ...(modifiedData.timestamp && { timestamp: Number(modifiedData.timestamp) }),
         ...(modifiedData.signature && { signature: modifiedData.signature }),
         buyerName: modifiedData.buyerName ?? '',

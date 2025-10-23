@@ -1,4 +1,5 @@
 // API 서비스 함수들
+import { API_URLS } from './constants';
 
 const INTERNAL_API_BASE_URL = '/api';
 

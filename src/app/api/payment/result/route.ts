@@ -15,14 +15,14 @@ export async function POST(request: NextRequest) {
     const resultMsg = formData.get('resultMsg') as string;
     const tid = formData.get('tid') as string;
 
-    console.log('Payment callback received:', {
-      error,
-      message,
-      orderId,
-      resultCode,
-      resultMsg,
-      tid
-    });
+    // console.log('Payment callback received:', {
+    //   error,
+    //   message,
+    //   orderId,
+    //   resultCode,
+    //   resultMsg,
+    //   tid
+    // });
 
     // 결제 취소/실패 처리
     if (error === 'approve_failed' || (resultCode && resultCode !== '0000')) {
@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
   const tid = searchParams.get('tid');
   const amount = searchParams.get('amount');
 
-  console.log('GET request received:', { error, message, orderId, tid, amount });
+  // console.log('GET request received:', { error, message, orderId, tid, amount });
 
   let redirectUrl: string;
 

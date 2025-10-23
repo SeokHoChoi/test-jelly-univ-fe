@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const EXTERNAL_API_BASE_URL = 'https://dog-food-db.onrender.com/api';
+import { API_URLS } from '@/utils/constants';
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
     const token = authHeader.substring(7); // 'Bearer ' 제거
 
     // 외부 API 호출
-    const response = await fetch(`${EXTERNAL_API_BASE_URL}/auth/me`, {
+    const response = await fetch(`${API_URLS.BACKEND_BASE_URL}/auth/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
