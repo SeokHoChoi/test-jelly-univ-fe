@@ -14,7 +14,7 @@ import { useKeenSlider } from 'keen-slider/react';
 function CheckoutPageContent() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
-  const [dogName, setDogName] = useState<string>('반려견');
+  const [dogName, setDogName] = useState<string>('우리 아이');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
