@@ -24,7 +24,7 @@ interface FeedStored {
 const DietReportExample = ({ onPetInfoChange }: { onPetInfoChange?: (petInfo: PetInfo) => void }) => {
   const { response: ratingResponse } = useRatingStore();
   const [petInfo, setPetInfo] = useState({
-    name: '하이',
+    name: '최젤리',
     breed: '셔틀랜드 쉽독',
     gender: '남아',
     age: '1년 2개월',

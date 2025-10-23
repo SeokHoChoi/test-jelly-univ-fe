@@ -117,7 +117,7 @@ const SignupForm = () => {
                 {...register('name', { required: '이름을 입력해주세요' })}
                 type="text"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
-                placeholder="홍길동"
+                placeholder="최대학"
               />
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
