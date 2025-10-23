@@ -47,7 +47,7 @@ function CheckoutPageContent() {
     renderMode: 'performance',
     slides: {
       origin: 'center',
-      perView: 1.37,
+      perView: 1.25,
       spacing: 2,
     },
     breakpoints: {
