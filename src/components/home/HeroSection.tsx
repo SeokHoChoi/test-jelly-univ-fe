@@ -40,7 +40,7 @@ const HeroSection = () => {
             </Link>
           </div>
 
-          <p className="text-[9px] md:text-[17px] text-[#003DA5] font-medium mt-[30px] md:mt-[45px] mb-[30px] md:mb-[60px] text-center">
+          <p className="text-[12px] md:text-[17px] text-[#003DA5] font-medium mt-[20px] md:mt-[25px] mb-[30px] md:mb-[60px] text-center">
             이미 1,000+의 반려견의 보호자가 분석을 신청했어요!
           </p>
         </div>
