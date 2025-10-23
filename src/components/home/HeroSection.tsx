@@ -51,9 +51,9 @@ const HeroSection = () => {
         <Image
           src="/img/home/hero-bg-mobile.png"
           alt="Hero background decoration"
-          width={420}
-          height={128}
-          className="block md:hidden h-auto"
+          width={320}
+          height={98}
+          className="block md:hidden h-auto mx-4"
           priority
         />
         <Image
