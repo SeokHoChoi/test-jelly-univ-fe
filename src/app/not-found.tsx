@@ -20,12 +20,6 @@ export default function NotFound() {
           />
         </div>
 
-        {/* 404 아이콘 */}
-        <div className="mb-8">
-          <div className="text-8xl font-bold text-[#003DA5] mb-4">404</div>
-          <div className="w-24 h-1 bg-[#003DA5] mx-auto rounded-full"></div>
-        </div>
-
         {/* 메시지 */}
         <div className="mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
