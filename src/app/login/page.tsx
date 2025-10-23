@@ -72,7 +72,7 @@ function LoginPageContent() {
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-4 mb-4">
               <Image
-                src="/img/jellyu-logo.png"
+                src="/img/logo-3x.png"
                 alt="Jelly University Logo"
                 width={64}
                 height={64}

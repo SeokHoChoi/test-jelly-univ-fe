@@ -46,7 +46,7 @@ const Header = () => {
           {/* Logo */}
           <Link href="/home" className="flex items-center gap-2">
             <Image
-              src="/img/jellyu-logo.png"
+              src="/img/logo-3x.png"
               alt="Jelly University Logo"
               width={40}
               height={40}
