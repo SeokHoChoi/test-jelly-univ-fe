@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Text from '@/components/common/Text';
@@ -20,16 +21,29 @@ interface SignupFormData {
   agreePrivacy: boolean;
 }
 
-const SignupPage = () => {
+const SignupForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm<SignupFormData>();
   const { register: registerUser, isLoading } = useAuthContext();
-  // const router = useRouter();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [isPreRegistered, setIsPreRegistered] = useState<boolean>(false);
+  const [redirectUrl, setRedirectUrl] = useState<string>('/');
 
   const password = watch('password');
+
+  // 쿼리 파라미터에서 사전예약 여부 및 리다이렉트 URL 확인
+  useEffect(() => {
+    const preregistered = searchParams.get('preregistered');
+    const redirect = searchParams.get('redirect');
+    setIsPreRegistered(preregistered === 'true');
+    if (redirect) {
+      setRedirectUrl(redirect);
+    }
+  }, [searchParams]);
 
   const onSubmit = async (data: SignupFormData) => {
     try {
@@ -40,14 +54,23 @@ const SignupPage = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        phone: '',
+        isPreRegistered: !!isPreRegistered,
+        referralSource: ''
       });
 
       if (result.success) {
-        setSubmitSuccess('회원가입 성공! 잠시 후 홈으로 이동합니다...');
-        // 성공 메시지를 보여준 후 Header의 useEffect가 리다이렉트 처리하도록 약간의 지연
-        setTimeout(() => {
-          // Header의 useEffect가 처리하도록 빈 함수 (실제 리다이렉트는 Header에서)
-        }, 1500);
+        if (redirectUrl && redirectUrl !== '/') {
+          // 리다이렉트 URL이 있는 경우 즉시 이동 (결제 페이지 포함)
+          // 전체 URL을 그대로 사용 (파라미터 포함)
+          window.location.href = redirectUrl;
+        } else {
+          // 리다이렉트 URL이 없는 경우 성공 메시지 표시 후 Header의 useEffect가 처리
+          setSubmitSuccess('회원가입 성공! 잠시 후 홈으로 이동합니다...');
+          setTimeout(() => {
+            // Header의 useEffect가 처리하도록 빈 함수
+          }, 1500);
+        }
       } else {
         setSubmitError(result.error || '회원가입에 실패했습니다.');
       }
@@ -63,7 +86,7 @@ const SignupPage = () => {
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-4 mb-4">
               <Image
-                src="/img/jellyu-logo.png"
+                src="/img/logo-3x.png"
                 alt="Jelly University Logo"
                 width={64}
                 height={64}
@@ -73,6 +96,11 @@ const SignupPage = () => {
                 <Text variant="title" className="text-2xl">
                   회원가입
                 </Text>
+                {isPreRegistered && (
+                  <div className="bg-[#003DA5] text-white px-3 py-1 rounded-full text-sm font-medium mt-2">
+                    🎉 사전예약자
+                  </div>
+                )}
                 <Text variant="body" className="text-gray-600 mt-2">
                   <span className="font-semibold tracking-wide mr-[0.2px]">Jelly University</span>와 함께 시작하세요
                 </Text>
@@ -89,7 +117,7 @@ const SignupPage = () => {
                 {...register('name', { required: '이름을 입력해주세요' })}
                 type="text"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent"
-                placeholder="홍길동"
+                placeholder="최대학"
               />
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -276,6 +304,14 @@ const SignupPage = () => {
         content={privacyPolicy}
       />
     </div>
+  );
+};
+
+const SignupPage = () => {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">로딩 중...</div>}>
+      <SignupForm />
+    </Suspense>
   );
 };
 

@@ -90,12 +90,6 @@ const FoodQualityAnalysisSection = () => {
         score: fr.rating.overallRatingWeighted.score,
         badge: fr.rating.overallRatingWeighted.badge,
       } : undefined,
-      // Alert 필드들 (rating 객체 내부에 직접 위치)
-      alertLevel: fr.rating?.alertLevel,
-      alertMessageKey: fr.rating?.alertMessageKey,
-      alertSeverity: fr.rating?.alertSeverity,
-      alertCategory: fr.rating?.alertCategory,
-      alertDetails: fr.rating?.alertDetails,
     }));
   }, [response]);
   const first = foods[0];
@@ -264,24 +258,11 @@ const FoodQualityAnalysisSection = () => {
     })();
 
   // 긴급 경고 배너 노출 판단 및 문구 매핑
-  const firstRating = response?.foodRatings?.[0]?.rating;
-  const hasUrgent = firstRating?.alertSeverity === 'urgent' || response?.overallSummary?.hasUrgentAlert === true;
-  const urgentTitle = (() => {
-    switch (firstRating?.alertMessageKey) {
-      case 'low_reliability_feed':
-        return '주요 영양소 최소 권장량 미달 의심';
-      default:
-        return firstRating?.alertCategory || '긴급 점검 필요';
-    }
-  })();
-  const urgentDesc = (() => {
-    switch (firstRating?.alertMessageKey) {
-      case 'low_reliability_feed':
-        return 'AAFCO/FEDIAF에서 제시하는 주요 영양소 최소 권장량에 부합하지 않음';
-      default:
-        return '해당 사료는 중요한 안전/영양 이슈가 발견되어 즉시 점검이 필요합니다.';
-    }
-  })();
+  const alerts = useRatingStore((s) => s.getAlerts());
+  const urgentAlert = alerts?.find((alert: { level: string; category: string; details?: Record<string, unknown> }) => alert.level === 'urgent');
+  const hasUrgent = !!urgentAlert || response?.overallSummary?.hasUrgentAlert === true;
+  const urgentTitle = urgentAlert?.category || '긴급 점검 필요';
+  const urgentDesc = urgentAlert?.details?.description as string || '해당 사료는 중요한 안전/영양 이슈가 발견되어 즉시 점검이 필요합니다.';
 
   const overallGrades = [
     { label: '영양 정보 신뢰도', grade: reliabilityGrade },
@@ -415,6 +396,12 @@ const FoodQualityAnalysisSection = () => {
               const josa = hasJong ? '과' : '와';
               return `현재 급여 제품이 ${name}${josa}는 별개로 신뢰할 수 있는 제품인지 평가해요!`;
             })()}
+          </p>
+
+          {/* 무료 버전 안내 */}
+          <p className="text-[#666666] font-normal text-[14px] md:text-[16px] max-w-4xl mx-auto mt-3">
+            무료 버전의 경우 가장 3개 중 한개의 사료만<br className="md:hidden" />
+            <span className="hidden md:inline"> </span>등급 분석을 제공해 드립니다
           </p>
         </div>
 

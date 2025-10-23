@@ -126,7 +126,7 @@ const SurveyPage = () => {
       title: '보호자 정보',
       subtitle: '이름을 알려주세요',
       type: 'text',
-      placeholder: '최석호',
+      placeholder: '최대학',
       required: true
     },
     {
@@ -134,7 +134,7 @@ const SurveyPage = () => {
       title: '보호자 정보',
       subtitle: '휴대폰번호를 알려주세요',
       type: 'tel',
-      placeholder: '010-1234-5678',
+      placeholder: '010-2345-6789',
       required: true
     },
     {
@@ -142,7 +142,7 @@ const SurveyPage = () => {
       title: '보호자 정보',
       subtitle: '이메일을 알려주세요',
       type: 'email',
-      placeholder: 'seokho9473@gmail.com',
+      placeholder: 'example@email.com',
       required: true
     },
 

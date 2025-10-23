@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRatingStore } from '@/contexts/RatingStore';
 import { Check, ChevronDown } from 'lucide-react';
+import {
+  ALERT_MESSAGES,
+  formatAlertMessage,
+  type AlertMessageKey,
+  type AlertLevel
+} from '@/constants/alert-messages';
 
 const PetSuitabilitySection = () => {
   const router = useRouter();
@@ -12,32 +18,59 @@ const PetSuitabilitySection = () => {
   const response = useRatingStore((s) => s.response);
   const overall = response?.overallSummary;
   const first = response?.foodRatings?.[0];
-  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
-  const improvements = first?.rating?.overallRating?.improvements ?? [];
+  const dogInfo = response?.dogInfo;
 
-  // Alert 정보 활용
-  const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
-  const hasCautionAlert = overall?.hasCautionAlert ?? false;
+  // Alert 정보 활용 - 새로운 alerts 배열 시스템 사용
+  const alerts = first?.rating?.alerts || [];
+  const firstAlert = alerts[0]; // 첫 번째 alert 사용
 
-  // Alert 레벨에 따른 이모지와 텍스트 결정
+  // Alert 메시지 생성
   const getAlertInfo = () => {
+    if (firstAlert && ALERT_MESSAGES[firstAlert.messageKey as AlertMessageKey]) {
+      const alertMessage = ALERT_MESSAGES[firstAlert.messageKey as AlertMessageKey];
+
+      // 변수 준비
+      const variables = {
+        dogName: dogInfo?.name || '반려견',
+        feedName: first?.foodInfo ? `${first.foodInfo.brandName} ${first.foodInfo.productName}`.trim() : undefined,
+        ...firstAlert.details
+      };
+
+      // 포맷팅된 메시지 생성
+      const formattedMessage = formatAlertMessage(firstAlert.messageKey as AlertMessageKey, variables);
+
+      return {
+        emoji: alertMessage.icon,
+        title: alertMessage.title,
+        description: formattedMessage,
+        level: firstAlert.level
+      };
+    }
+
+    // 기존 fallback 로직 (alertMessageKey가 없는 경우)
+    const hasUrgentAlert = overall?.hasUrgentAlert ?? false;
+    const hasCautionAlert = overall?.hasCautionAlert ?? false;
+
     if (hasUrgentAlert) {
       return {
         emoji: '🚨',
         title: '즉시 개선이 필요한 심각한 문제',
-        description: null
+        description: null,
+        level: 'urgent' as AlertLevel
       };
     } else if (hasCautionAlert) {
       return {
         emoji: '⚠️',
         title: '장기적으로 문제가 될 수 있는 잠재적 위험',
-        description: null
+        description: null,
+        level: 'caution' as AlertLevel
       };
     } else {
       return {
         emoji: '🤔',
         title: '최적화를 위한 개선 포인트 발견',
-        description: null // 점검 상태에서는 설명 텍스트 없음
+        description: null,
+        level: 'checkup' as AlertLevel
       };
     }
   };
@@ -126,34 +159,83 @@ const PetSuitabilitySection = () => {
               onClick={toggleExpanded}
               className="text-gray-600 text-sm hover:text-gray-800 transition-colors flex items-center justify-center gap-1 mx-auto"
             >
-              더 자세히 보기
+              요약보기
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
             </button>
           </div>
 
           {/* 확장된 내용 - 애니메이션 */}
           <div className="bg-white py-6 px-8 space-y-3">
-            {/* 모든 상세 내용 - 순차적 등장 애니메이션 */}
-            {(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).map((text, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2"
-                style={{
-                  animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
-                }}
-              >
-                <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {text}
-                </p>
-              </div>
-            ))}
+            {/* 새로운 Alert 메시지 시스템 사용 */}
+            {alertInfo.description ? (
+              // 새로운 Alert 메시지가 있는 경우
+              <>
+                {alertInfo.description
+                  .split('\n')
+                  .filter(line => line.trim())
+                  .map((line, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-2"
+                      style={{
+                        animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
+                      }}
+                    >
+                      <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {line.replace(/^- /, '')}
+                      </p>
+                    </div>
+                  ))}
+              </>
+            ) : (
+              // 기존 fallback 로직 (recommendations, improvements 등)
+              <>
+                {(() => {
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+
+                  return fallbackTexts.map((text, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-2"
+                      style={{
+                        animation: `fadeInUp 0.5s ease-out ${idx * 0.1 + 0.2}s both`
+                      }}
+                    >
+                      <Check className="text-gray-500 w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {text}
+                      </p>
+                    </div>
+                  ));
+                })()}
+              </>
+            )}
 
             {/* 면책 조항 - 애니메이션 */}
             <div
               className="flex items-start gap-2"
               style={{
-                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.4}s both`
+                animation: `fadeInUp 0.5s ease-out ${(() => {
+                  if (alertInfo.description) return 0.4;
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+                  return fallbackTexts.length * 0.1 + 0.4;
+                })()}s both`
               }}
             >
               <span className="text-transparent text-sm mt-0.5 w-4 flex-shrink-0">*</span>
@@ -166,14 +248,28 @@ const PetSuitabilitySection = () => {
             <div
               className="pt-2"
               style={{
-                animation: `fadeInUp 0.5s ease-out ${(recommendations.length > 0 ? recommendations : improvements.length > 0 ? improvements : [overall?.summary].filter(Boolean)).length * 0.1 + 0.6}s both`
+                animation: `fadeInUp 0.5s ease-out ${(() => {
+                  if (alertInfo.description) {
+                    const lines = alertInfo.description.split('\n').filter(line => line.trim());
+                    return lines.length * 0.1 + 0.6;
+                  }
+                  const recommendations = first?.rating?.overallRating?.recommendations ?? [];
+                  const improvements = first?.rating?.overallRating?.improvements ?? [];
+                  const summary = overall?.summary;
+                  const fallbackTexts = recommendations.length > 0
+                    ? recommendations
+                    : improvements.length > 0
+                      ? improvements
+                      : summary ? [summary] : [];
+                  return fallbackTexts.length * 0.1 + 0.6;
+                })()}s both`
               }}
             >
               <button
                 onClick={handleLearnMore}
                 className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-4 rounded-[50px] font-semibold text-base transition-colors"
               >
-                내 맞춤 식단 확인하기
+                내 아이 식단 분석하기
               </button>
             </div>
           </div>

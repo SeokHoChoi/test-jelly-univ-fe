@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { API_URLS } from '@/utils/constants';
 
 // NICEPAY SDK 타입 정의
 declare global {
@@ -60,14 +61,14 @@ export default function NicePayButton({
 }: Props) {
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = 'https://pay.nicepay.co.kr/v1/js/';
+    script.src = API_URLS.NICEPAY_SDK_URL;
     script.async = true;
     script.onload = () => { };
     script.onerror = () => console.error('SDK 로드 실패');
     document.body.appendChild(script);
 
     return () => {
-      const existingScript = document.querySelector('script[src*="pay.nicepay.co.kr"]');
+      const existingScript = document.querySelector(`script[src="${API_URLS.NICEPAY_SDK_URL}"]`);
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
@@ -87,7 +88,7 @@ export default function NicePayButton({
       amount,
       goodsName,
       returnUrl,
-      sandbox: true,
+      sandbox: process.env.NODE_ENV === 'development',
       ...(timestamp && { timestamp }),
       ...(signature && { signature }),
       buyerName,

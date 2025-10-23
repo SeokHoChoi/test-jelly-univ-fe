@@ -87,7 +87,7 @@ export const useAuth = () => {
   };
 
   // 회원가입 함수
-  const register = async (userData: { email: string; password: string; name: string }) => {
+  const register = async (userData: { email: string; password: string; name: string; phone?: string; isPreRegistered?: boolean; referralSource?: string }) => {
     try {
       setIsLoading(true);
 

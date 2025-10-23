@@ -1,22 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
+import { API_URLS } from '@/utils/constants';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import LoginRequiredModal from '@/components/common/LoginRequiredModal';
 import { Check } from 'lucide-react';
 import { useKeenSlider } from 'keen-slider/react';
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
-  const [dogName, setDogName] = useState<string>('냥구');
+  const [dogName, setDogName] = useState<string>('우리 아이');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Process cards data
   const processCards = [
@@ -45,28 +47,42 @@ export default function CheckoutPage() {
     renderMode: 'performance',
     slides: {
       origin: 'center',
-      perView: 1.37,
-      spacing: 2,
-    },
-    breakpoints: {
-      '(min-width: 640px)': {
-        slides: { perView: 1.4, spacing: 2 },
-      },
-      '(min-width: 768px)': {
-        slides: { perView: 1.6, spacing: 2 },
-      },
+      perView: 'auto', // 자동 계산
+      spacing: 12, // 모든 해상도에서 일정한 2px 간격
     },
   });
 
-  // 세션스토리지에서 강아지 이름 가져오기
+  // 세션스토리지/로컬스토리지에서 강아지 이름 가져오기
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = sessionStorage.getItem('rating-store');
-        if (raw) {
-          const parsed = JSON.parse(raw);
+        // 1. 로컬스토리지에서 productAnalysisData 확인
+        const productAnalysisData = localStorage.getItem('productAnalysisData');
+        if (productAnalysisData) {
+          const parsed = JSON.parse(productAnalysisData);
+          if (parsed.dogName) {
+            setDogName(parsed.dogName);
+            return;
+          }
+        }
+
+        // 2. 세션스토리지에서 surveyData 확인
+        const surveyData = sessionStorage.getItem('surveyData');
+        if (surveyData) {
+          const parsed = JSON.parse(surveyData);
+          if (parsed.dogName) {
+            setDogName(parsed.dogName);
+            return;
+          }
+        }
+
+        // 3. 세션스토리지에서 rating-store 확인
+        const ratingStore = sessionStorage.getItem('rating-store');
+        if (ratingStore) {
+          const parsed = JSON.parse(ratingStore);
           if (parsed?.state?.response?.dogInfo?.name) {
             setDogName(parsed.state.response.dogInfo.name);
+            return;
           }
         }
       } catch (error) {
@@ -163,14 +179,14 @@ export default function CheckoutPage() {
         resolve();
         return;
       }
-      const existing = document.querySelector('script[src="https://pay.nicepay.co.kr/v1/js/"]');
+      const existing = document.querySelector(`script[src="${API_URLS.NICEPAY_SDK_URL}"]`);
       if (existing) {
         existing.addEventListener('load', () => resolve());
         existing.addEventListener('error', () => reject(new Error('SDK 로드 실패')));
         return;
       }
       const script = document.createElement('script');
-      script.src = 'https://pay.nicepay.co.kr/v1/js/';
+      script.src = API_URLS.NICEPAY_SDK_URL;
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => reject(new Error('SDK 로드 실패'));
@@ -185,16 +201,24 @@ export default function CheckoutPage() {
       // JWT 토큰 확인
       const token = getToken();
       if (!token) {
+        // 현재 URL을 리다이렉트 URL로 설정
+        const currentUrl = window.location.href;
+        sessionStorage.setItem('redirectAfterLogin', currentUrl);
         setLoginModalOpen(true);
         return;
       }
 
-      // 결제 준비 API 호출 (1원 테스트)
-      const response = await preparePayment(token, {
-        planType: 'premium',
-        amount: 100, // 100원으로 테스트
-        goodsName: '젤리유 프리미엄 플랜 (3개월) - 테스트',
-      });
+      // URL 파라미터에서 플랜 정보 읽기
+      const plan = searchParams.get('plan');
+      const isPremium = plan === 'premium';
+
+      // 플랜에 따른 가격 설정
+      const planInfo = isPremium
+        ? { planType: 'premium', amount: 79000, goodsName: '젤리유 프리미엄 플랜 (3개월)' }
+        : { planType: 'basic', amount: 39000, goodsName: '젤리유 베이직 플랜 (3개월)' };
+
+      // 결제 준비 API 호출
+      const response = await preparePayment(token, planInfo);
 
       if (!response?.success) throw new Error('결제 준비 실패');
       const { data } = response;
@@ -219,7 +243,7 @@ export default function CheckoutPage() {
         amount: modifiedData.amount,
         goodsName: modifiedData.goodsName,
         returnUrl: modifiedData.returnUrl,
-        sandbox: true,
+        sandbox: process.env.NODE_ENV === 'development',
         ...(modifiedData.timestamp && { timestamp: Number(modifiedData.timestamp) }),
         ...(modifiedData.signature && { signature: modifiedData.signature }),
         buyerName: modifiedData.buyerName ?? '',
@@ -302,7 +326,7 @@ export default function CheckoutPage() {
                 현재 급여 식단 분석
               </h3>
               <p className='text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium'>
-                아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 <span className='text-orange-500'>영양·품질·안전성</span>까지 맞춤 분석합니다!
+                아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 <span className='text-orange-500'>최대 3종을 영양·품질·안전성</span>까지 맞춤 분석합니다!
               </p>
 
               <div className='mb-6'>
@@ -470,14 +494,24 @@ export default function CheckoutPage() {
         onClose={() => setLoginModalOpen(false)}
         onLogin={() => {
           setLoginModalOpen(false);
-          router.push('/login');
+          const currentUrl = window.location.href;
+          router.push(`/login?redirect=${encodeURIComponent(currentUrl)}`);
         }}
         onSignup={() => {
           setLoginModalOpen(false);
-          router.push('/signup');
+          const currentUrl = window.location.href;
+          router.push(`/signup?redirect=${encodeURIComponent(currentUrl)}`);
         }}
       />
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutPageContent />
+    </Suspense>
   );
 }
 

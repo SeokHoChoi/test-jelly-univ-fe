@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Text from '@/components/common/Text';
@@ -15,12 +16,23 @@ interface LoginFormData {
   rememberMe: boolean;
 }
 
-const LoginPage = () => {
+function LoginPageContent() {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
   const { login, isLoading } = useAuthContext();
-  // const router = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
+  const [redirectUrl, setRedirectUrl] = useState<string>('/');
+
+  // URL 파라미터에서 리다이렉트 URL 읽기
+  useEffect(() => {
+    const redirect = searchParams.get('redirect');
+    // console.log('받은 redirect URL:', redirect);
+    if (redirect) {
+      setRedirectUrl(redirect);
+    }
+  }, [searchParams]);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -34,11 +46,17 @@ const LoginPage = () => {
       });
 
       if (result.success) {
-        setSubmitSuccess('로그인 성공! 잠시 후 홈으로 이동합니다...');
-        // 성공 메시지를 보여준 후 Header의 useEffect가 리다이렉트 처리하도록 약간의 지연
-        setTimeout(() => {
-          // Header의 useEffect가 처리하도록 빈 함수 (실제 리다이렉트는 Header에서)
-        }, 1500);
+        if (redirectUrl && redirectUrl !== '/') {
+          // 리다이렉트 URL이 있는 경우 즉시 이동 (결제 페이지 포함)
+          // 전체 URL을 그대로 사용 (파라미터 포함)
+          window.location.href = redirectUrl;
+        } else {
+          // 리다이렉트 URL이 없는 경우 성공 메시지 표시 후 Header의 useEffect가 처리
+          setSubmitSuccess('로그인 성공! 잠시 후 홈으로 이동합니다...');
+          setTimeout(() => {
+            // Header의 useEffect가 처리하도록 빈 함수
+          }, 1500);
+        }
       } else {
         setSubmitError(result.error || '로그인에 실패했습니다.');
       }
@@ -54,7 +72,7 @@ const LoginPage = () => {
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-4 mb-4">
               <Image
-                src="/img/jellyu-logo.png"
+                src="/img/logo-3x.png"
                 alt="Jelly University Logo"
                 width={64}
                 height={64}
@@ -185,6 +203,12 @@ const LoginPage = () => {
       </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
+  );
+}

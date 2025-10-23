@@ -61,7 +61,7 @@ const PreReservationModal = ({ isOpen, onClose, planTitle, planPrice }: PreReser
         <div className="p-8 pt-12">
           <div className="flex justify-center mb-6">
             <Image
-              src="/img/jellyu-logo.png"
+              src="/img/logo-3x.png"
               alt="Jelly University"
               width={56}
               height={56}
@@ -84,7 +84,7 @@ const PreReservationModal = ({ isOpen, onClose, planTitle, planPrice }: PreReser
           </div>
 
           <Link
-            href="/signup"
+            href="/signup?preregistered=true"
             onClick={onClose}
             className="block w-full bg-[#003DA5] text-white text-center py-3.5 rounded-xl font-bold text-[17px] hover:bg-[#002A7A] active:bg-[#001F5C] transition-colors active:scale-95"
           >

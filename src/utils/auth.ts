@@ -96,6 +96,9 @@ export const register = async (userData: {
   email: string;
   password: string;
   name: string;
+  phone?: string;
+  isPreRegistered?: boolean;
+  referralSource?: string;
 }): Promise<AuthResponse> => {
   return apiRequest<AuthResponse>('/auth/register', {
     method: 'POST',

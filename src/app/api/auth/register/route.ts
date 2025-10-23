@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const EXTERNAL_API_BASE_URL = 'https://dog-food-db.onrender.com/api';
+import { API_URLS } from '@/utils/constants';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password, name } = body;
+    const {
+      email,
+      password,
+      name,
+      phone = '',
+      isPreRegistered = false,
+      referralSource = ''
+    } = body;
 
     // 필수 필드 검증
     if (!email || !password || !name) {
@@ -19,12 +25,12 @@ export async function POST(request: NextRequest) {
     }
 
     // 외부 API 호출
-    const response = await fetch(`${EXTERNAL_API_BASE_URL}/auth/register`, {
+    const response = await fetch(`${API_URLS.BACKEND_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ email, password, name, phone, isPreRegistered, referralSource }),
     });
 
     if (!response.ok) {

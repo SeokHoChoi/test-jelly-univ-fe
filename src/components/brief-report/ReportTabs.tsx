@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const tabs = [
   { id: 'summary', label: '사료 분석 요약', path: '/brief-report' },
-  { id: 'diet', label: '식단 설계', path: '/brief-report/diet-report' },
+  { id: 'diet', label: '맞춤 분석', path: '/brief-report/diet-report' },
 ];
 
 const ReportTabs = () => {
