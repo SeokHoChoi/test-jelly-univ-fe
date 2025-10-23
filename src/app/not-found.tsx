@@ -22,7 +22,7 @@ export default function NotFound() {
 
         {/* 404 아이콘 */}
         <div className="mb-8">
-          <div className="text-8xl font-bold text-[#003DA5] mb-4">404</div>
+          <div className="text-7xl font-bold text-[#003DA5] mb-4">404</div>
           <div className="w-24 h-1 bg-[#003DA5] mx-auto rounded-full"></div>
         </div>
 
