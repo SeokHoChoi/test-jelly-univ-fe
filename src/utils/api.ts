@@ -113,7 +113,7 @@ export const submitRating = async (payload: RatingRequestBody) => {
     // 404 에러인 경우 특별히 처리
     if (response.status === 404) {
       const error = new Error(message);
-      (error as any).status = 404;
+      (error as unknown as { status: number }).status = 404;
       throw error;
     }
 

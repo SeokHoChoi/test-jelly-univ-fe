@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
@@ -10,7 +10,7 @@ import LoginRequiredModal from '@/components/common/LoginRequiredModal';
 import { Check } from 'lucide-react';
 import { useKeenSlider } from 'keen-slider/react';
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
   const [dogName, setDogName] = useState<string>('냥구');
@@ -489,6 +489,14 @@ export default function CheckoutPage() {
         }}
       />
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutPageContent />
+    </Suspense>
   );
 }
 

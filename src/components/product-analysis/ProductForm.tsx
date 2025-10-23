@@ -154,13 +154,13 @@ const ProductForm = () => {
       router.push('/brief-report');
     } catch (e: unknown) {
       // 404 에러인 경우 채널톡으로 이동
-      if (e instanceof Error && ((e as any).status === 404 || e.message.includes('404'))) {
+      if (e instanceof Error && ((e as { status?: number }).status === 404 || e.message.includes('404'))) {
         // 토스트 표시
         setShowToast(true);
 
         // 채널톡 열기 (토스트와 함께)
-        if (typeof window !== 'undefined' && (window as any).ChannelIO) {
-          (window as any).ChannelIO('show');
+        if (typeof window !== 'undefined' && (window as unknown as { ChannelIO?: (action: string) => void }).ChannelIO) {
+          (window as unknown as { ChannelIO: (action: string) => void }).ChannelIO('show');
         } else {
           // 채널톡이 로드되지 않은 경우 대체 메시지
           setSubmitError('사료 정보를 찾을 수 없습니다. 고객센터로 문의해주세요.');

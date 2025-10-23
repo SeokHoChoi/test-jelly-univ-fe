@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ interface LoginFormData {
   rememberMe: boolean;
 }
 
-const LoginPage = () => {
+function LoginPageContent() {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
   const { login, isLoading } = useAuthContext();
   const router = useRouter();
@@ -203,6 +203,12 @@ const LoginPage = () => {
       </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
+  );
+}
