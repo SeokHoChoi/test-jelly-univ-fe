@@ -62,12 +62,14 @@ export interface RatingData {
         score: number;
         badge: string;
       };
-      // Alert 필드들 (rating 객체 내부에 직접 위치)
-      alertLevel?: 'urgent' | 'caution' | 'checkup' | null;
-      alertMessageKey?: string;
-      alertSeverity?: 'urgent' | 'caution' | 'checkup';
-      alertCategory?: string;
-      alertDetails?: Record<string, unknown>;
+      // Alert 배열 (각 사료별)
+      alerts?: Array<{
+        level: 'urgent' | 'caution' | 'checkup';
+        messageKey: string;
+        details?: Record<string, unknown>;
+        severity: 'urgent' | 'caution' | 'checkup';
+        category: string;
+      }>;
       // 디버그 정보
       _sectionWeightedScores?: Record<string, number>;
       // 세부 필드 생략: 필요 시 확장
@@ -81,8 +83,18 @@ export interface RatingData {
     feedCount: number;
     hasUrgentAlert?: boolean;
     hasCautionAlert?: boolean;
+    hasCheckupAlert?: boolean;
     totalFatalFlaws?: number;
     recommendedAction?: string;
+    allAlerts?: Array<{
+      foodId: number;
+      foodName: string;
+      level: 'urgent' | 'caution' | 'checkup';
+      messageKey: string;
+      details?: Record<string, unknown>;
+      severity: 'urgent' | 'caution' | 'checkup';
+      category: string;
+    }>;
   };
 }
 
@@ -116,13 +128,8 @@ interface RatingState {
       score: number;
       badge: string;
     };
-    // Alert 필드들 (rating 객체 내부에 직접 위치)
-    alertLevel?: 'urgent' | 'caution' | 'checkup' | null;
-    alertMessageKey?: string;
-    alertSeverity?: 'urgent' | 'caution' | 'checkup';
-    alertCategory?: string;
-    alertDetails?: Record<string, unknown>;
   }>;
+  getAlerts: () => RatingData['overallSummary']['allAlerts'] | null;
   getOverallSummary: () => RatingData['overallSummary'] | null;
 }
 
@@ -158,13 +165,11 @@ export const useRatingStore = create<RatingState>()(
             score: fr.rating.overallRatingWeighted.score,
             badge: fr.rating.overallRatingWeighted.badge,
           } : undefined,
-          // Alert 필드들 (rating 객체 내부에 직접 위치)
-          alertLevel: fr.rating?.alertLevel,
-          alertMessageKey: fr.rating?.alertMessageKey,
-          alertSeverity: fr.rating?.alertSeverity,
-          alertCategory: fr.rating?.alertCategory,
-          alertDetails: fr.rating?.alertDetails,
         }));
+      },
+      getAlerts: () => {
+        const res = get().response;
+        return res?.overallSummary?.allAlerts || null;
       },
       getOverallSummary: () => {
         const res = get().response;
