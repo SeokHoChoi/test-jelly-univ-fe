@@ -14,7 +14,7 @@ import { useKeenSlider } from 'keen-slider/react';
 function CheckoutPageContent() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('plan');
-  const [dogName, setDogName] = useState<string>('냥구');
+  const [dogName, setDogName] = useState<string>('반려견');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const router = useRouter();
@@ -60,15 +60,37 @@ function CheckoutPageContent() {
     },
   });
 
-  // 세션스토리지에서 강아지 이름 가져오기
+  // 세션스토리지/로컬스토리지에서 강아지 이름 가져오기
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const raw = sessionStorage.getItem('rating-store');
-        if (raw) {
-          const parsed = JSON.parse(raw);
+        // 1. 로컬스토리지에서 productAnalysisData 확인
+        const productAnalysisData = localStorage.getItem('productAnalysisData');
+        if (productAnalysisData) {
+          const parsed = JSON.parse(productAnalysisData);
+          if (parsed.dogName) {
+            setDogName(parsed.dogName);
+            return;
+          }
+        }
+
+        // 2. 세션스토리지에서 surveyData 확인
+        const surveyData = sessionStorage.getItem('surveyData');
+        if (surveyData) {
+          const parsed = JSON.parse(surveyData);
+          if (parsed.dogName) {
+            setDogName(parsed.dogName);
+            return;
+          }
+        }
+
+        // 3. 세션스토리지에서 rating-store 확인
+        const ratingStore = sessionStorage.getItem('rating-store');
+        if (ratingStore) {
+          const parsed = JSON.parse(ratingStore);
           if (parsed?.state?.response?.dogInfo?.name) {
             setDogName(parsed.state.response.dogInfo.name);
+            return;
           }
         }
       } catch (error) {

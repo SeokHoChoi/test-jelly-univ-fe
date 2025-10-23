@@ -21,10 +21,7 @@ export const metadata: Metadata = {
   title: "Jelly University - 반려동물 맞춤 식단 솔루션",
   description: "서울대·한국수의영양학회 임원 수의사가 검증한 반려동물 맞춤 식단 솔루션",
   icons: {
-    icon: [
-      { url: '/img/jellyu-logo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/img/jellyu-logo.png', sizes: '16x16', type: 'image/png' },
-    ],
+    icon: '/img/jellyu-logo.png',
     shortcut: '/img/jellyu-logo.png',
     apple: '/img/jellyu-logo.png',
   },
