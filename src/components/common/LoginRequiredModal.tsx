@@ -62,8 +62,6 @@ export default function LoginRequiredModal({
             <ul className="text-sm text-gray-600 space-y-1">
               <li>• 서울대·한국수의영양학회 임원 수의사 검증</li>
               <li>• 1:1 맞춤 식단 분석 리포트</li>
-              <li>• 3개월간 무제한 분석 서비스</li>
-              <li>• 전문가 상담 및 피드백</li>
             </ul>
           </div>
 
