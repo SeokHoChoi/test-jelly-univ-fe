@@ -1,12 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Card from '@/components/common/Card';
 import { Check } from 'lucide-react';
 import PreReservationModal from '@/components/common/PreReservationModal';
 import { useState } from 'react';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 const PlanSection = () => {
+  const router = useRouter();
+  const { user } = useAuthContext();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{ title: string; price: string } | null>(null);
 
@@ -101,7 +105,7 @@ const PlanSection = () => {
             <div className="shrink-0 w-full md:w-auto">
               <Link
                 href="/product-analysis"
-                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg w-full md:w-[199px] whitespace-nowrap mx-auto md:mx-0"
               >
                 30초 만에 분석하기
               </Link>
@@ -184,9 +188,18 @@ const PlanSection = () => {
 
               <button
                 onClick={() => {
-                  setSelectedPlan({ title: plan.title, price: plan.price });
-                  setModalOpen(true);
+                  // 3.9만원 플랜(첫 번째)은 바로 프로덕트 분석 페이지로 이동
+                  if (index === 0) {
+                    router.push('/product-analysis');
+                  } else {
+                    // 7.9만원 플랜은 팝업 열기 (로그인한 사용자는 비활성화)
+                    if (!user) {
+                      setSelectedPlan({ title: plan.title, price: plan.price });
+                      setModalOpen(true);
+                    }
+                  }
                 }}
+                disabled={index === 1 && !!user} // 7.9만원 플랜이고 로그인한 사용자면 비활성화
                 className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
                   ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
                   : plan.buttonVariant === 'primary'
@@ -194,7 +207,7 @@ const PlanSection = () => {
                     : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
                   }`}
               >
-                {plan.buttonText}
+                {index === 1 && user ? '이미 회원가입 완료' : plan.buttonText}
               </button>
             </Card>
           ))}
