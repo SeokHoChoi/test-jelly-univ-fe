@@ -48,7 +48,7 @@ function CheckoutPageContent() {
     slides: {
       origin: 'center',
       perView: 'auto', // 자동 계산
-      spacing: 12, // 모든 해상도에서 일정한 2px 간격
+      spacing: 12, // 모든 해상도에서 일정한 간격
     },
   });
 
