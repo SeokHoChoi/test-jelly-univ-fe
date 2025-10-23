@@ -23,40 +23,55 @@ export default function PaymentResultPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
+    try {
+      const search = window.location.search || ''; // Safe URL handling
+      const query = new URLSearchParams(search);
+      const error = query.get('error');
+      const errorMessage = query.get('message');
 
-    const tid = query.get('tid') || '';
-    const orderId = query.get('orderId') || sessionStorage.getItem('np_orderId') || '';
-    const amountStr = query.get('amount') || sessionStorage.getItem('np_amount') || '0';
-    const amount = Number(amountStr) || 0;
-
-    if (!tid || !orderId || !amount) {
-      setError('결제 정보가 올바르지 않습니다.');
-      setLoading(false);
-      return;
-    }
-
-    const token = getToken();
-    if (!token) {
-      setError('인증이 필요합니다.');
-      setLoading(false);
-      return;
-    }
-
-    (async () => {
-      try {
-        const response = await approvePayment(token, { tid, orderId, amount });
-        if (!response?.success) throw new Error(response?.message || '결제 승인 실패');
-        setResult(response.data);
-        sessionStorage.removeItem('np_orderId');
-        sessionStorage.removeItem('np_amount');
-      } catch (err) {
-        const message = err instanceof Error ? err.message : '결제 승인 실패';
-        setError(message);
-      } finally {
+      if (error) {
+        setError(errorMessage || '결제가 취소되었습니다.');
         setLoading(false);
+        return;
       }
-    })();
+
+      const tid = query.get('tid') || '';
+      const orderId = query.get('orderId') || sessionStorage.getItem('np_orderId') || '';
+      const amountStr = query.get('amount') || sessionStorage.getItem('np_amount') || '0';
+      const amount = Number(amountStr) || 0;
+
+      if (!tid || !orderId || !amount) {
+        setError('결제 정보가 올바르지 않습니다.');
+        setLoading(false);
+        return;
+      }
+
+      const token = getToken();
+      if (!token) {
+        setError('인증이 필요합니다.');
+        setLoading(false);
+        return;
+      }
+
+      (async () => {
+        try {
+          const response = await approvePayment(token, { tid, orderId, amount });
+          if (!response?.success) throw new Error(response?.message || '결제 승인 실패');
+          setResult(response.data);
+          sessionStorage.removeItem('np_orderId');
+          sessionStorage.removeItem('np_amount');
+        } catch (err) {
+          const message = err instanceof Error ? err.message : '결제 승인 실패';
+          setError(message);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    } catch (err) {
+      console.error('URL 처리 오류:', err);
+      setError('페이지 로딩 중 오류가 발생했습니다.');
+      setLoading(false);
+    }
   }, []);
 
   const formatAmount = (amount: number) => {

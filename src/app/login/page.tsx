@@ -46,15 +46,12 @@ const LoginPage = () => {
       });
 
       if (result.success) {
-        console.log('로그인 성공! redirectUrl:', redirectUrl);
         if (redirectUrl && redirectUrl !== '/') {
           // 리다이렉트 URL이 있는 경우 즉시 이동 (결제 페이지 포함)
-          console.log('리다이렉트할 전체 URL:', redirectUrl);
           // 전체 URL을 그대로 사용 (파라미터 포함)
           window.location.href = redirectUrl;
         } else {
           // 리다이렉트 URL이 없는 경우 성공 메시지 표시 후 Header의 useEffect가 처리
-          console.log('홈으로 이동');
           setSubmitSuccess('로그인 성공! 잠시 후 홈으로 이동합니다...');
           setTimeout(() => {
             // Header의 useEffect가 처리하도록 빈 함수
