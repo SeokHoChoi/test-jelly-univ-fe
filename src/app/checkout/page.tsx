@@ -47,16 +47,8 @@ function CheckoutPageContent() {
     renderMode: 'performance',
     slides: {
       origin: 'center',
-      perView: 1.25,
-      spacing: 2,
-    },
-    breakpoints: {
-      '(min-width: 640px)': {
-        slides: { perView: 1.4, spacing: 2 },
-      },
-      '(min-width: 768px)': {
-        slides: { perView: 1.6, spacing: 2 },
-      },
+      perView: 'auto', // 자동 계산
+      spacing: 12, // 모든 해상도에서 일정한 2px 간격
     },
   });
 
