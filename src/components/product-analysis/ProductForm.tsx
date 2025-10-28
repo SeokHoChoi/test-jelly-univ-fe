@@ -324,7 +324,7 @@ const ProductForm = () => {
                           inputMode="numeric"
                           pattern="[0-9]*"
                           className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
-                          placeholder="급여량을 입력해주세요"
+                          placeholder="급여량"
                         />
                         <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                           g
