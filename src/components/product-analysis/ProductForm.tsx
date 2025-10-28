@@ -199,7 +199,7 @@ const ProductForm = () => {
                   <input
                     {...register('dogName', { required: '반려견 이름을 입력해주세요' })}
                     className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
-                    placeholder="예: 뽀삐"
+                    placeholder="반려견 이름을 입력해주세요"
                   />
                   {errors.dogName && (
                     <p className="text-red-500 text-sm mt-1">{errors.dogName.message}</p>
@@ -216,7 +216,7 @@ const ProductForm = () => {
                       type="number"
                       step="0.1"
                       className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent pr-12 text-[18px] font-normal"
-                      placeholder="예: 5.5"
+                      placeholder="몸무게를 입력해주세요"
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
                       kg
@@ -249,7 +249,7 @@ const ProductForm = () => {
                       }
                     }
                   }}
-                  placeholder="예: 골든 리트리버"
+                  placeholder="품종을 입력해주세요"
                 />
                 {breedError && (
                   <p className="text-red-500 text-sm mt-1">{breedError}</p>
@@ -273,7 +273,7 @@ const ProductForm = () => {
                               updateFeed(index, 'name', `${food.product_name}`);
                             }
                           }}
-                          placeholder="사료이름을 입력해주세요!"
+                          placeholder="사료 이름을 입력해주세요"
                         />
                         {feedNameErrors[index] && (
                           <p className="text-red-500 text-sm mt-1">{feedNameErrors[index]}</p>
@@ -324,7 +324,7 @@ const ProductForm = () => {
                           inputMode="numeric"
                           pattern="[0-9]*"
                           className="w-full px-4 py-4 border border-gray-300 rounded-[20px] focus:ring-2 focus:ring-brand-blue focus:border-transparent text-[18px] font-normal"
-                          placeholder="예: 150"
+                          placeholder="급여량을 입력해주세요"
                         />
                         <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                           g
