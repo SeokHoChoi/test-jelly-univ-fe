@@ -53,8 +53,8 @@ const PetSuitabilitySection = () => {
             top.level === 'urgent'
               ? '즉시 개선이 필요한 심각한 문제'
               : top.level === 'caution'
-              ? '장기적으로 문제가 될 수 있는 잠재적 위험'
-              : '최적화를 위한 개선 포인트 발견',
+                ? '장기적으로 문제가 될 수 있는 잠재적 위험'
+                : '최적화를 위한 개선 포인트 발견',
           description: descriptions.filter(Boolean).join('\n'),
           level: top.level as AlertLevel
         };
