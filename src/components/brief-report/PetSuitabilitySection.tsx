@@ -20,31 +20,45 @@ const PetSuitabilitySection = () => {
   const first = response?.foodRatings?.[0];
   const dogInfo = response?.dogInfo;
 
-  // Alert 정보 활용 - 새로운 alerts 배열 시스템 사용
+  // Alert 정보 활용 - 새로운 alerts 배열 시스템 사용 (전체 배열 처리)
   const alerts = first?.rating?.alerts || [];
-  const firstAlert = alerts[0]; // 첫 번째 alert 사용
 
   // Alert 메시지 생성
   const getAlertInfo = () => {
-    if (firstAlert && ALERT_MESSAGES[firstAlert.messageKey as AlertMessageKey]) {
-      const alertMessage = ALERT_MESSAGES[firstAlert.messageKey as AlertMessageKey];
+    if (alerts.length > 0) {
+      // 유효한 템플릿을 가진 alert들만 처리
+      const validAlerts = alerts.filter((a) => !!ALERT_MESSAGES[a.messageKey as AlertMessageKey]);
 
-      // 변수 준비
-      const variables = {
-        dogName: dogInfo?.name || '반려견',
-        feedName: first?.foodInfo ? `${first.foodInfo.brandName} ${first.foodInfo.productName}`.trim() : undefined,
-        ...firstAlert.details
-      };
+      if (validAlerts.length > 0) {
+        // 심각도 우선순위로 대표 레벨/이모지/타이틀 결정
+        const priority = { urgent: 3, caution: 2, checkup: 1 } as const;
+        const top = [...validAlerts].sort((a, b) => (priority[b.level as keyof typeof priority] || 0) - (priority[a.level as keyof typeof priority] || 0))[0];
 
-      // 포맷팅된 메시지 생성
-      const formattedMessage = formatAlertMessage(firstAlert.messageKey as AlertMessageKey, variables);
+        // 전체 메시지 포맷팅 후 합치기
+        const descriptions: string[] = validAlerts.map((a) => {
+          const vars = {
+            dogName: dogInfo?.name || '반려견',
+            feedName: first?.foodInfo ? `${first.foodInfo.brandName} ${first.foodInfo.productName}`.trim() : undefined,
+            ...a.details
+          };
+          return formatAlertMessage(a.messageKey as AlertMessageKey, vars);
+        });
 
-      return {
-        emoji: alertMessage.icon,
-        title: alertMessage.title,
-        description: formattedMessage,
-        level: firstAlert.level
-      };
+        const topMsg = ALERT_MESSAGES[top.messageKey as AlertMessageKey];
+
+        return {
+          emoji: topMsg.icon,
+          // 여러 항목일 경우 대표 타이틀은 레벨에 따른 일반 타이틀로 노출
+          title:
+            top.level === 'urgent'
+              ? '즉시 개선이 필요한 심각한 문제'
+              : top.level === 'caution'
+              ? '장기적으로 문제가 될 수 있는 잠재적 위험'
+              : '최적화를 위한 개선 포인트 발견',
+          description: descriptions.filter(Boolean).join('\n'),
+          level: top.level as AlertLevel
+        };
+      }
     }
 
     // 기존 fallback 로직 (alertMessageKey가 없는 경우)
