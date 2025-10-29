@@ -144,7 +144,7 @@ const FoodQualityAnalysisSection = () => {
         }
       })();
       const base = `${part1} 또한, ${part2}`;
-      const hasFatal = Boolean((rel?.fatalFlaws && rel.fatalFlaws.length > 0) || (rel?.fatalFlawConditions && rel.fatalFlawConditions.length > 0));
+      const hasFatal = Boolean(rel?.standardCompliance?.grade === 'C' || rel?.transparencyLevel?.grade === 'C');
       // return hasFatal ? `${base} ⛔️ 핵심 영양 정보 누락 또는 기준 미달이 확인되었습니다.` : base;
       return base;
     })();
@@ -200,7 +200,7 @@ const FoodQualityAnalysisSection = () => {
       })();
       const parts = [mText, minText, fText].filter(Boolean);
       const base = parts.length ? parts.join(' ') : '주요 영양소 비율과 미네랄/지방산 균형을 확인할 수 있습니다.';
-      const hasFatal = Boolean((bal?.fatalFlaws && bal.fatalFlaws.length > 0) || (bal?.fatalFlawConditions && bal.fatalFlawConditions.length > 0));
+      const hasFatal = Boolean(bal?.macronutrientRatio?.grade === 'C' || bal?.mineralBalance?.grade === 'C' || bal?.fattyAcidBalance?.grade === 'C');
       // return hasFatal ? `${base} ⛔️ 필수 영양소 또는 미네랄/지방산 기준 미달이 확인되었습니다.` : base;
       return base;
     })();
@@ -239,7 +239,7 @@ const FoodQualityAnalysisSection = () => {
       })();
       const parts = [pText, sText].filter(Boolean);
       const base = parts.length ? parts.join(' ') : '주원료의 구성과 안전성을 검토했습니다.';
-      const hasFatal = Boolean((ing?.fatalFlaws && ing.fatalFlaws.length > 0) || (ing?.fatalFlawConditions && ing.fatalFlawConditions.length > 0));
+      const hasFatal = Boolean(ing?.primaryIngredients?.grade === 'C' || ing?.ingredientSafety?.grade === 'C');
       // return hasFatal ? `${base} ⛔️ 저품질/위험 신호 원료가 확인되었습니다.` : base;
       return base;
     })();
@@ -267,11 +267,23 @@ const FoodQualityAnalysisSection = () => {
   const urgentTitle = urgentAlert?.category || '긴급 점검 필요';
   const urgentDesc = urgentAlert?.details?.description as string || '해당 사료는 중요한 안전/영양 이슈가 발견되어 즉시 점검이 필요합니다.';
 
-  // 섹션별 치명적 결함 존재 여부 확인
-  const hasRelFatal = Boolean((rel?.fatalFlaws && rel.fatalFlaws.length > 0) || (rel?.fatalFlawConditions && rel.fatalFlawConditions.length > 0));
-  const hasBalFatal = Boolean((bal?.fatalFlaws && bal.fatalFlaws.length > 0) || (bal?.fatalFlawConditions && bal.fatalFlawConditions.length > 0));
-  const hasIngFatal = Boolean((ing?.fatalFlaws && ing.fatalFlaws.length > 0) || (ing?.fatalFlawConditions && ing.fatalFlawConditions.length > 0));
-  const hasMfgFatal = Boolean((mfg?.fatalFlaws && mfg.fatalFlaws.length > 0) || (mfg?.fatalFlawConditions && mfg.fatalFlawConditions.length > 0));
+  // 섹션별 치명적 결함 존재 여부 확인 (grade가 C인 경우)
+  const hasRelFatal = Boolean(
+    rel?.standardCompliance?.grade === 'C' ||
+    rel?.transparencyLevel?.grade === 'C'
+  );
+  const hasBalFatal = Boolean(
+    bal?.macronutrientRatio?.grade === 'C' ||
+    bal?.mineralBalance?.grade === 'C' ||
+    bal?.fattyAcidBalance?.grade === 'C'
+  );
+  const hasIngFatal = Boolean(
+    ing?.primaryIngredients?.grade === 'C' ||
+    ing?.ingredientSafety?.grade === 'C'
+  );
+  const hasMfgFatal = Boolean(
+    mfg?.countryReliability?.grade === 'C'
+  );
 
   // 전체 사료에 치명적 결함이 있는지 확인 (4개 섹션 중 하나라도 있으면)
   const hasAnyFatal = hasRelFatal || hasBalFatal || hasIngFatal || hasMfgFatal;
@@ -382,51 +394,47 @@ const FoodQualityAnalysisSection = () => {
     },
   ];
 
-  // 각 항목에 치명적 결함이 직접 존재하는지 확인하고 메시지를 반환
+  // 각 항목에 치명적 결함이 직접 존재하는지 확인하고 메시지를 반환 (grade가 C인 경우 detail 사용)
   const getItemFatalMessage = (sectionId: string, itemIndex: number): string | null => {
     // 01 영양 정보 신뢰도: [0] 국제 표준 기준 충족도, [1] 영양 정보 공개 수준
     if (sectionId === '1') {
-      const list = [...(rel?.fatalFlaws ?? []), ...(rel?.fatalFlawConditions ?? [])];
       if (itemIndex === 0) {
-        const keys = ['국제', '기준', '미달', 'standard'];
-        const m = list.find(t => typeof t === 'string' && keys.some(k => (t as string).includes(k)));
-        return (m as string) || null;
+        return rel?.standardCompliance?.grade === 'C' ? rel.standardCompliance.detail : null;
       }
       if (itemIndex === 1) {
-        const keys = ['투명', '공개', '정보', 'transparency'];
-        const m = list.find(t => typeof t === 'string' && keys.some(k => (t as string).includes(k)));
-        return (m as string) || null;
+        return rel?.transparencyLevel?.grade === 'C' ? rel.transparencyLevel.detail : null;
       }
       return null;
     }
     // 02 영양 설계 균형도: [0] 비율 적정성, [1] 핵심 미네랄(Ca:P), [2] 필수 지방산
     if (sectionId === '2') {
-      const list = ([...(bal?.fatalFlaws ?? []), ...(bal?.fatalFlawConditions ?? [])] as string[]);
-      const mineral = list.find(t => t && t.includes('Ca:P')) || null;
-      const omega = list.find(t => t && t.includes('오메가')) || null;
-      if (itemIndex === 1) return mineral;
-      if (itemIndex === 2) return omega;
-      // 0번은 'Ca:P', '오메가'에 해당하지 않는 나머지 fatal만 표시
-      const other = list.find(t => t && !t.includes('Ca:P') && !t.includes('오메가')) || null;
-      return other;
+      if (itemIndex === 0) {
+        return bal?.macronutrientRatio?.grade === 'C' ? bal.macronutrientRatio.detail : null;
+      }
+      if (itemIndex === 1) {
+        return bal?.mineralBalance?.grade === 'C' ? bal.mineralBalance.detail : null;
+      }
+      if (itemIndex === 2) {
+        return bal?.fattyAcidBalance?.grade === 'C' ? bal.fattyAcidBalance.detail : null;
+      }
+      return null;
     }
     // 03 원료 품질: [0] 주원료 구성, [1] 원료 안전성
     if (sectionId === '3') {
-      const list = [...(ing?.fatalFlaws ?? []), ...(ing?.fatalFlawConditions ?? [])];
-      const keySets: string[][] = [
-        ['주원료', '원료', '구성', '단백질'],
-        ['안전', 'BHA', 'BHT', '첨가', '부산물']
-      ];
-      const keys = keySets[itemIndex] || [];
-      const m = list.find(t => typeof t === 'string' && keys.some(k => (t as string).includes(k)));
-      return (m as string) || null;
+      if (itemIndex === 0) {
+        return ing?.primaryIngredients?.grade === 'C' ? ing.primaryIngredients.detail : null;
+      }
+      if (itemIndex === 1) {
+        return ing?.ingredientSafety?.grade === 'C' ? ing.ingredientSafety.detail : null;
+      }
+      return null;
     }
     // 04 제조 품질: [0] 제조국 신뢰도
     if (sectionId === '4') {
-      const list = [...(mfg?.fatalFlaws ?? []), ...(mfg?.fatalFlawConditions ?? [])];
-      const keys = ['제조', 'country', '신뢰'];
-      const m = list.find(t => typeof t === 'string' && keys.some(k => (t as string).includes(k)));
-      return (m as string) || null;
+      if (itemIndex === 0) {
+        return mfg?.countryReliability?.grade === 'C' ? mfg.countryReliability.detail : null;
+      }
+      return null;
     }
     return null;
   };
