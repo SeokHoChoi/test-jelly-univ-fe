@@ -514,8 +514,8 @@ const FoodQualityAnalysisSection = () => {
               {first ? first.title : '사료명'}
               {hasAnyFatal && (
                 <span
-                  className="inline-flex items-center rounded-[80px] font-semibold"
-                  style={{ backgroundColor: '#F95C3B', color: '#FFFFFF', fontSize: '15px', padding: '7px 19px' }}
+                  className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                  style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
                 >
                   치명적 결함 주의
                 </span>
@@ -546,8 +546,8 @@ const FoodQualityAnalysisSection = () => {
                   <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🔍 영양 정보 신뢰도</div>
                   {hasRelFatal && (
                     <span
-                      className="inline-flex items-center rounded-[80px] font-semibold"
-                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF', fontSize: '15px', padding: '7px 19px' }}
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
                     >
                       치명적 결함 주의
                     </span>
@@ -560,8 +560,8 @@ const FoodQualityAnalysisSection = () => {
                   <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚖️ 영양 설계 균형도</div>
                   {hasBalFatal && (
                     <span
-                      className="inline-flex items-center rounded-[80px] font-semibold"
-                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF', fontSize: '15px', padding: '7px 19px' }}
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
                     >
                       치명적 결함 주의
                     </span>
@@ -574,8 +574,8 @@ const FoodQualityAnalysisSection = () => {
                   <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🥗 원료 품질</div>
                   {hasIngFatal && (
                     <span
-                      className="inline-flex items-center rounded-[80px] font-semibold"
-                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF', fontSize: '15px', padding: '7px 19px' }}
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
                     >
                       치명적 결함 주의
                     </span>
@@ -588,8 +588,8 @@ const FoodQualityAnalysisSection = () => {
                   <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚙️ 제조 품질</div>
                   {hasMfgFatal && (
                     <span
-                      className="inline-flex items-center rounded-[80px] font-semibold"
-                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF', fontSize: '15px', padding: '7px 19px' }}
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
                     >
                       치명적 결함 주의
                     </span>
