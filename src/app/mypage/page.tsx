@@ -129,9 +129,6 @@ export default function MyPage() {
         }
       }
 
-      // console.log('파싱된 에러 메시지:', errorMessage);
-      // console.log('에러 제목:', errorTitle);
-
       setAlertModal({
         isOpen: true,
         type: 'error',

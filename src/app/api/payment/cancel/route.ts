@@ -6,10 +6,6 @@ export async function POST(req: NextRequest) {
     const token = req.headers.get('authorization') || '';
     const body = await req.json();
 
-    // console.log('=== 결제 취소 API 요청 ===');
-    // console.log('Authorization:', token);
-    // console.log('Request Body:', body);
-
     const res = await fetch(`${API_URLS.BACKEND_BASE_URL}/payment/cancel`, {
       method: 'POST',
       headers: {
@@ -20,8 +16,6 @@ export async function POST(req: NextRequest) {
     });
 
     const data = await res.json();
-    // console.log('Backend Response Status:', res.status);
-    // console.log('Backend Response Data:', data);
 
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
