@@ -482,7 +482,7 @@ const SampleReportModal = ({ isOpen, onClose }: SampleReportModalProps) => {
                   샘플 리포트
                 </h2>
                 <p className="text-[12px] md:text-[14px] text-gray-500 mt-0.5">
-                  실제 발송되는 리포트 형식입니다
+                  유료 결제 시, 실제 발송되는 리포트 예시입니다.
                 </p>
               </div>
             </div>
