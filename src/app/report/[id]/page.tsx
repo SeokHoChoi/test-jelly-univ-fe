@@ -35,7 +35,7 @@ export default function SharedReportPage() {
               id: 0, // 임시 ID
               brandName: data.foodInfo.brand_name,
               productName: data.foodInfo.product_name,
-              dailyAmount: 0 // 임시 값
+              dailyAmount: '0' // 임시 값 (string)
             },
             rating: {
               // 기존 categoryResults 구조를 새로운 구조로 변환
@@ -82,7 +82,7 @@ export default function SharedReportPage() {
                   grade: data.evaluation.categoryResults['2-3_fatty_acid_balance'].grade,
                   score: data.evaluation.categoryResults['2-3_fatty_acid_balance'].score,
                   detail: data.evaluation.categoryResults['2-3_fatty_acid_balance'].details?.reason ||
-                         (data.evaluation.categoryResults['2-3_fatty_acid_balance'].fatalFlaws?.[0]) || ''
+                    (data.evaluation.categoryResults['2-3_fatty_acid_balance'].fatalFlaws?.[0]) || ''
                 },
                 overallGrade: calculateWeightedGrade(
                   data.evaluation.categoryResults['2-1_macro_balance'].score * 0.5 +
@@ -108,11 +108,11 @@ export default function SharedReportPage() {
                 },
                 ingredientSafety: {
                   grade: data.evaluation.categoryResults['3-2_manufacturing_quality']?.grade ||
-                         data.evaluation.categoryResults['4_safety_certification']?.grade || 'B',
+                    data.evaluation.categoryResults['4_safety_certification']?.grade || 'B',
                   score: data.evaluation.categoryResults['3-2_manufacturing_quality']?.score ||
-                         data.evaluation.categoryResults['4_safety_certification']?.score || 75,
+                    data.evaluation.categoryResults['4_safety_certification']?.score || 75,
                   detail: data.evaluation.categoryResults['3-2_manufacturing_quality']?.details?.country ||
-                         data.evaluation.categoryResults['4_safety_certification']?.details?.certifications || ''
+                    data.evaluation.categoryResults['4_safety_certification']?.details?.certifications || ''
                 },
                 overallGrade: calculateWeightedGrade(
                   data.evaluation.categoryResults['3-1_ingredient_quality'].score * 0.7 +
