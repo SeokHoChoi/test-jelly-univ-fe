@@ -15,15 +15,6 @@ export async function POST(request: NextRequest) {
     const resultMsg = formData.get('resultMsg') as string;
     const tid = formData.get('tid') as string;
 
-    // console.log('Payment callback received:', {
-    //   error,
-    //   message,
-    //   orderId,
-    //   resultCode,
-    //   resultMsg,
-    //   tid
-    // });
-
     // 결제 취소/실패 처리
     if (error === 'approve_failed' || (resultCode && resultCode !== '0000')) {
       const redirectUrl = `/payment/result?error=approve_failed&message=${encodeURIComponent(message || resultMsg || '결제에 실패했습니다.')}&orderId=${orderId || ''}`;
@@ -120,8 +111,6 @@ export async function GET(request: NextRequest) {
   const orderId = searchParams.get('orderId');
   const tid = searchParams.get('tid');
   const amount = searchParams.get('amount');
-
-  // console.log('GET request received:', { error, message, orderId, tid, amount });
 
   let redirectUrl: string;
 

@@ -144,8 +144,9 @@ const FoodQualityAnalysisSection = () => {
         }
       })();
       const base = `${part1} 또한, ${part2}`;
-      const hasFatal = Boolean((rel?.fatalFlaws && rel.fatalFlaws.length > 0) || (rel?.fatalFlawConditions && rel.fatalFlawConditions.length > 0));
-      return hasFatal ? `${base} ⛔️ 핵심 영양 정보 누락 또는 기준 미달이 확인되었습니다.` : base;
+      const hasFatal = Boolean(rel?.standardCompliance?.grade === 'C' || rel?.transparencyLevel?.grade === 'C');
+      // return hasFatal ? `${base} ⛔️ 핵심 영양 정보 누락 또는 기준 미달이 확인되었습니다.` : base;
+      return base;
     })();
   const balanceText =
     (() => {
@@ -199,8 +200,9 @@ const FoodQualityAnalysisSection = () => {
       })();
       const parts = [mText, minText, fText].filter(Boolean);
       const base = parts.length ? parts.join(' ') : '주요 영양소 비율과 미네랄/지방산 균형을 확인할 수 있습니다.';
-      const hasFatal = Boolean((bal?.fatalFlaws && bal.fatalFlaws.length > 0) || (bal?.fatalFlawConditions && bal.fatalFlawConditions.length > 0));
-      return hasFatal ? `${base} ⛔️ 필수 영양소 또는 미네랄/지방산 기준 미달이 확인되었습니다.` : base;
+      const hasFatal = Boolean(bal?.macronutrientRatio?.grade === 'C' || bal?.mineralBalance?.grade === 'C' || bal?.fattyAcidBalance?.grade === 'C');
+      // return hasFatal ? `${base} ⛔️ 필수 영양소 또는 미네랄/지방산 기준 미달이 확인되었습니다.` : base;
+      return base;
     })();
   const ingredientText =
     (() => {
@@ -237,8 +239,9 @@ const FoodQualityAnalysisSection = () => {
       })();
       const parts = [pText, sText].filter(Boolean);
       const base = parts.length ? parts.join(' ') : '주원료의 구성과 안전성을 검토했습니다.';
-      const hasFatal = Boolean((ing?.fatalFlaws && ing.fatalFlaws.length > 0) || (ing?.fatalFlawConditions && ing.fatalFlawConditions.length > 0));
-      return hasFatal ? `${base} ⛔️ 저품질/위험 신호 원료가 확인되었습니다.` : base;
+      const hasFatal = Boolean(ing?.primaryIngredients?.grade === 'C' || ing?.ingredientSafety?.grade === 'C');
+      // return hasFatal ? `${base} ⛔️ 저품질/위험 신호 원료가 확인되었습니다.` : base;
+      return base;
     })();
   const manufacturingText =
     (() => {
@@ -263,6 +266,27 @@ const FoodQualityAnalysisSection = () => {
   const hasUrgent = !!urgentAlert || response?.overallSummary?.hasUrgentAlert === true;
   const urgentTitle = urgentAlert?.category || '긴급 점검 필요';
   const urgentDesc = urgentAlert?.details?.description as string || '해당 사료는 중요한 안전/영양 이슈가 발견되어 즉시 점검이 필요합니다.';
+
+  // 섹션별 치명적 결함 존재 여부 확인 (grade가 C인 경우)
+  const hasRelFatal = Boolean(
+    rel?.standardCompliance?.grade === 'C' ||
+    rel?.transparencyLevel?.grade === 'C'
+  );
+  const hasBalFatal = Boolean(
+    bal?.macronutrientRatio?.grade === 'C' ||
+    bal?.mineralBalance?.grade === 'C' ||
+    bal?.fattyAcidBalance?.grade === 'C'
+  );
+  const hasIngFatal = Boolean(
+    ing?.primaryIngredients?.grade === 'C' ||
+    ing?.ingredientSafety?.grade === 'C'
+  );
+  const hasMfgFatal = Boolean(
+    mfg?.countryReliability?.grade === 'C'
+  );
+
+  // 전체 사료에 치명적 결함이 있는지 확인 (4개 섹션 중 하나라도 있으면)
+  const hasAnyFatal = hasRelFatal || hasBalFatal || hasIngFatal || hasMfgFatal;
 
   const overallGrades = [
     { label: '영양 정보 신뢰도', grade: reliabilityGrade },
@@ -370,6 +394,83 @@ const FoodQualityAnalysisSection = () => {
     },
   ];
 
+  // 각 항목에 치명적 결함이 직접 존재하는지 확인하고 메시지를 반환 (grade가 C인 경우 detail 사용)
+  const getItemFatalMessage = (sectionId: string, itemIndex: number): string | null => {
+    // 01 영양 정보 신뢰도: [0] 국제 표준 기준 충족도, [1] 영양 정보 공개 수준
+    if (sectionId === '1') {
+      if (itemIndex === 0) {
+        return rel?.standardCompliance?.grade === 'C' ? rel.standardCompliance.detail : null;
+      }
+      if (itemIndex === 1) {
+        return rel?.transparencyLevel?.grade === 'C' ? rel.transparencyLevel.detail : null;
+      }
+      return null;
+    }
+    // 02 영양 설계 균형도: [0] 비율 적정성, [1] 핵심 미네랄(Ca:P), [2] 필수 지방산
+    if (sectionId === '2') {
+      if (itemIndex === 0) {
+        return bal?.macronutrientRatio?.grade === 'C' ? bal.macronutrientRatio.detail : null;
+      }
+      if (itemIndex === 1) {
+        return bal?.mineralBalance?.grade === 'C' ? bal.mineralBalance.detail : null;
+      }
+      if (itemIndex === 2) {
+        return bal?.fattyAcidBalance?.grade === 'C' ? bal.fattyAcidBalance.detail : null;
+      }
+      return null;
+    }
+    // 03 원료 품질: [0] 주원료 구성, [1] 원료 안전성
+    if (sectionId === '3') {
+      if (itemIndex === 0) {
+        return ing?.primaryIngredients?.grade === 'C' ? ing.primaryIngredients.detail : null;
+      }
+      if (itemIndex === 1) {
+        return ing?.ingredientSafety?.grade === 'C' ? ing.ingredientSafety.detail : null;
+      }
+      return null;
+    }
+    // 04 제조 품질: [0] 제조국 신뢰도
+    if (sectionId === '4') {
+      if (itemIndex === 0) {
+        return mfg?.countryReliability?.grade === 'C' ? mfg.countryReliability.detail : null;
+      }
+      return null;
+    }
+    return null;
+  };
+
+  // 섹션 앞면 하단에 렌더링할 주황 바들(Label + Message) 구성
+  const getFrontOrangeBadges = (sectionId: string): Array<{ label: string; message: string; order: string }> => {
+    const list: Array<{ label: string; message: string; order: string }> = [];
+    if (sectionId === '1') {
+      const l0 = getItemFatalMessage('1', 0);
+      if (l0) list.push({ label: '국제 표준\n기준 충족도', message: l0, order: '1-1' });
+      const l1 = getItemFatalMessage('1', 1);
+      if (l1) list.push({ label: '영양 정보\n공개 수준', message: l1, order: '1-2' });
+      return list;
+    }
+    if (sectionId === '2') {
+      const l1 = getItemFatalMessage('2', 1); // Ca:P
+      if (l1) list.push({ label: '핵심 미네랄\n균형도', message: l1, order: '2-2' });
+      const l2 = getItemFatalMessage('2', 2); // 오메가
+      if (l2) list.push({ label: '필수 지방산\n충족도', message: l2, order: '2-3' });
+      return list;
+    }
+    if (sectionId === '3') {
+      const l0 = getItemFatalMessage('3', 0);
+      if (l0) list.push({ label: '주원료의 구성\n및 영양 밀도', message: l0, order: '3-1' });
+      const l1 = getItemFatalMessage('3', 1);
+      if (l1) list.push({ label: '원료의 안전성\n및 기능성', message: l1, order: '3-2' });
+      return list;
+    }
+    if (sectionId === '4') {
+      const l0 = getItemFatalMessage('4', 0);
+      if (l0) list.push({ label: '제조국의\n신뢰도', message: l0, order: '4-1' });
+      return list;
+    }
+    return list;
+  };
+
   return (
     <section id="food-analysis" className="pt-10 md:pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -417,8 +518,16 @@ const FoodQualityAnalysisSection = () => {
               </Pill> */}
             </div>
 
-            <h2 className="text-[30px] md:text-[35px] font-semibold text-[#003DA5] mb-6">
+            <h2 className="text-[30px] md:text-[35px] font-semibold text-[#003DA5] mb-6 flex items-center gap-2 flex-wrap">
               {first ? first.title : '사료명'}
+              {hasAnyFatal && (
+                <span
+                  className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                  style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
+                >
+                  치명적 결함 주의
+                </span>
+              )}
             </h2>
 
             {/* 종합 평가 타이틀 */}
@@ -441,19 +550,59 @@ const FoodQualityAnalysisSection = () => {
             {/* 요약 박스들 (요청한 4개 섹션으로 교체) */}
             <div className="space-y-3 mb-10">
               <InfoBar>
-                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🔍 영양 정보 신뢰도</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🔍 영양 정보 신뢰도</div>
+                  {hasRelFatal && (
+                    <span
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
+                    >
+                      치명적 결함 주의
+                    </span>
+                  )}
+                </div>
                 <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{reliabilityText}</div>
               </InfoBar>
               <InfoBar>
-                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚖️ 영양 설계 균형도</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚖️ 영양 설계 균형도</div>
+                  {hasBalFatal && (
+                    <span
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
+                    >
+                      치명적 결함 주의
+                    </span>
+                  )}
+                </div>
                 <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{balanceText}</div>
               </InfoBar>
               <InfoBar>
-                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🥗 원료 품질</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🥗 원료 품질</div>
+                  {hasIngFatal && (
+                    <span
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
+                    >
+                      치명적 결함 주의
+                    </span>
+                  )}
+                </div>
                 <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{ingredientText}</div>
               </InfoBar>
               <InfoBar>
-                <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚙️ 제조 품질</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚙️ 제조 품질</div>
+                  {hasMfgFatal && (
+                    <span
+                      className="inline-flex items-center rounded-[80px] font-semibold text-[13px] md:text-[15px] py-[6px] px-[12px] md:py-[7px] md:px-[19px]"
+                      style={{ backgroundColor: '#F95C3B', color: '#FFFFFF' }}
+                    >
+                      치명적 결함 주의
+                    </span>
+                  )}
+                </div>
                 <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{manufacturingText}</div>
               </InfoBar>
             </div>
@@ -513,14 +662,54 @@ const FoodQualityAnalysisSection = () => {
                       </div>
 
                       <div className="flex-1 space-y-4 md:space-y-5">
-                        {assessment.items.map((item, index) => (
-                          <RatingBar
-                            key={index}
-                            label={item.label}
-                            selectedGrade={item.grade}
-                            orderNumber={`${assessment.id}-${index + 1}`}
-                          />
-                        ))}
+                        {assessment.items.map((item, index) => {
+                          const fatalMsg = getItemFatalMessage(assessment.id, index);
+                          // 치명적 결함이 있는 항목은 흰 배지를 렌더링하지 않음
+                          if (fatalMsg) return null;
+                          return (
+                            <RatingBar
+                              key={`${assessment.id}-${index}`}
+                              label={item.label}
+                              selectedGrade={item.grade}
+                              orderNumber={`${assessment.id}-${index + 1}`}
+                            />
+                          );
+                        })}
+                        {/* 흰 배지들 아래에 주황 바(들) 배치 */}
+                        {(() => {
+                          const badges = getFrontOrangeBadges(assessment.id);
+                          if (badges.length === 0) return null;
+                          return (
+                            <div className="mt-5 space-y-4 md:space-y-5">
+                              {badges.map((b, i) => (
+                                <div key={i} className="relative">
+                                  {/* 모바일 타이틀: RatingBar와 동일한 구조 (플로우에 포함, mb-5로 간격 확보) */}
+                                  <div className="md:hidden mb-5">
+                                    <h5 className="text-[13px] font-medium text-[#003DA5] text-center">
+                                      {`${b.order} ${b.label.replace('\n', ' ')}`}
+                                    </h5>
+                                  </div>
+                                  {/* 메인 바 컨테이너: RatingBar와 동일한 스타일 */}
+                                  <div
+                                    className="bg-[#F95C3B] rounded-[40px] md:rounded-[80px] flex flex-row items-center justify-between relative overflow-visible py-[9px] px-[4px] md:py-[10px] md:pl-[20px] md:pr-[39px] min-h-[68px] md:min-h-[80px]"
+                                    style={{ boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.25)' }}
+                                  >
+                                    {/* 데스크톱 라벨: RatingBar와 동일한 위치/크기 */}
+                                    <span className="hidden md:block text-[12px] md:text-[17px] font-bold text-white leading-tight whitespace-pre-line text-center w-[90px] md:w-[110px] md:flex-shrink-0">
+                                      {b.label}
+                                    </span>
+                                    {/* 우측 메시지: 하얀 배지의 등급들이 시작하는 지점과 동일하게 */}
+                                    <div className="flex-1 flex items-center justify-center md:justify-start w-full md:w-auto px-[4px] md:px-0 md:pl-0 md:ml-7">
+                                      <div className="text-white text-[14px] md:text-[16px] font-semibold">
+                                        {`⛔️ ${b.message}`}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
 

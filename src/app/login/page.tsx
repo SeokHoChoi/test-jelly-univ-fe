@@ -28,7 +28,6 @@ function LoginPageContent() {
   // URL 파라미터에서 리다이렉트 URL 읽기
   useEffect(() => {
     const redirect = searchParams.get('redirect');
-    // console.log('받은 redirect URL:', redirect);
     if (redirect) {
       setRedirectUrl(redirect);
     }

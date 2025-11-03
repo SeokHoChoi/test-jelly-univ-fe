@@ -21,14 +21,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 외부 API에 그대로 프록시
+    // 외부 API에 그대로 프록시 (60초 타임아웃)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60초 타임아웃
+
     const response = await fetch(`${API_URLS.BACKEND_BASE_URL}/rating`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ dogName, dogWeight, dogBreed, feeds }),
       // Next.js App Router의 fetch 캐시 비활성화
       cache: 'no-store',
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       if (response.status === 400) {
@@ -63,6 +69,15 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('사료 등급 평가 API 에러:', error);
+
+    // 타임아웃 에러 처리
+    if (error instanceof Error && error.name === 'AbortError') {
+      return NextResponse.json(
+        { success: false, error: '요청 시간이 초과되었습니다. 잠시 후 다시 시도해주세요.' },
+        { status: 504 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: '서버 오류가 발생했습니다.' },
       { status: 500 }

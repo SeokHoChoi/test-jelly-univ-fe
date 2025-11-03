@@ -150,7 +150,7 @@ export const ALERT_MESSAGES: Record<AlertMessageKey, AlertMessage> = {
     title: '최적화를 위한 개선 포인트 발견',
     template: `- 급여 중인 사료는 최근 논란이 되는 그레인프리 이슈에 대응하기 위해 제조사에서 '타우린'을 직접 추가한 제품이에요.
 
-- 하지만 제조사의 노력과는 별개로, 이 사료의 영양 설계가 지금 우리 [반려견 이름 ]의 나이와 활동량에 딱 맞는 최적의 선택일까요? 혹시 함께 먹이는 영양제와 궁합이 맞지 않는 성분은 없을까요?
+- 하지만 제조사의 노력과는 별개로, 이 사료의 영양 설계가 지금 우리 [반려견 이름]의 나이와 활동량에 딱 맞는 최적의 선택일까요? 혹시 함께 먹이는 영양제와 궁합이 맞지 않는 성분은 없을까요?
 
 - 이제 몇 가지 추가 질문에 답변하고, [이름]만을 위한 최종 맞춤 리포트를 받아보세요. 지금 주신 정보에 더해진 상세 정보를 바탕으로 결과가 어떻게 달라지는지, 숨어있는 1%의 개선점을 찾아드릴게요!`,
   },
@@ -196,6 +196,7 @@ export function formatAlertMessage(
   if (variables.dogName) {
     formattedMessage = formattedMessage
       .replace(/\[반려견 이름\]/g, variables.dogName)
+      .replace(/\[반려견 이름 \]/g, variables.dogName)  // 공백 포함 패턴 추가
       .replace(/\[반려견의 이름\]/g, variables.dogName)
       .replace(/\[이름\]/g, variables.dogName);
   }

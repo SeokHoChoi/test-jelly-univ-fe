@@ -8,6 +8,7 @@ import { API_URLS } from '@/utils/constants';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import LoginRequiredModal from '@/components/common/LoginRequiredModal';
+import SampleReportModal from '@/components/common/SampleReportModal';
 import { Check } from 'lucide-react';
 import { useKeenSlider } from 'keen-slider/react';
 
@@ -16,6 +17,7 @@ function CheckoutPageContent() {
   const [activeTab, setActiveTab] = useState<string>('plan');
   const [dogName, setDogName] = useState<string>('우리 아이');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [sampleReportModalOpen, setSampleReportModalOpen] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -48,7 +50,7 @@ function CheckoutPageContent() {
     slides: {
       origin: 'center',
       perView: 'auto', // 자동 계산
-      spacing: 12, // 모든 해상도에서 일정한 2px 간격
+      spacing: 12, // 모든 해상도에서 일정한 간격
     },
   });
 
@@ -90,6 +92,14 @@ function CheckoutPageContent() {
       }
     }
   }, []);
+
+  // ?dir=true 쿼리 파라미터 확인하여 모달 자동 열기
+  useEffect(() => {
+    const dirParam = searchParams.get('dir');
+    if (dirParam === 'true') {
+      setSampleReportModalOpen(true);
+    }
+  }, [searchParams]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -307,6 +317,14 @@ function CheckoutPageContent() {
             <span className='text-[#000000] font-medium'>의 현재 식단, 정말 안전한지<br />
               서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span>
           </h1>
+          {/* 샘플 리포트 보기 버튼 */}
+          <button
+            onClick={() => setSampleReportModalOpen(true)}
+            className='mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[15px] md:text-[17px] font-semibold text-white bg-gradient-to-r from-[#003DA5] to-[#0052CC] rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200'
+          >
+            <span className="text-[20px]">📊</span>
+            <span>샘플 리포트 미리보기</span>
+          </button>
         </div>
 
         {/* 가격 카드 */}
@@ -502,6 +520,12 @@ function CheckoutPageContent() {
           const currentUrl = window.location.href;
           router.push(`/signup?redirect=${encodeURIComponent(currentUrl)}`);
         }}
+      />
+
+      {/* 샘플 리포트 모달 */}
+      <SampleReportModal
+        isOpen={sampleReportModalOpen}
+        onClose={() => setSampleReportModalOpen(false)}
       />
     </div>
   );

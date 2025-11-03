@@ -124,25 +124,25 @@ const SurveyPage = () => {
     {
       id: 'ownerName',
       title: '보호자 정보',
-      subtitle: '이름을 알려주세요',
+      subtitle: '보호자분의 이름을 알려주세요',
       type: 'text',
-      placeholder: '최대학',
+      placeholder: '이름을 입력해주세요',
       required: true
     },
     {
       id: 'phoneNumber',
       title: '보호자 정보',
-      subtitle: '휴대폰번호를 알려주세요',
+      subtitle: '보호자분의 휴대폰 번호를 알려주세요',
       type: 'tel',
-      placeholder: '010-2345-6789',
+      placeholder: '휴대폰 번호를 입력해주세요',
       required: true
     },
     {
       id: 'email',
       title: '보호자 정보',
-      subtitle: '이메일을 알려주세요',
+      subtitle: '보호자분의 이메일 주소를 알려주세요',
       type: 'email',
-      placeholder: 'example@email.com',
+      placeholder: '이메일 주소를 입력해주세요',
       required: true
     },
 
@@ -150,7 +150,7 @@ const SurveyPage = () => {
     {
       id: 'birthDate',
       title: '반려견 정보',
-      subtitle: '(추정) 생년월일을 알려주세요',
+      subtitle: '반려견의 (추정) 생년월일을 알려주세요',
       type: 'date',
       placeholder: 'YYYY-MM-DD',
       required: true
@@ -158,7 +158,7 @@ const SurveyPage = () => {
     {
       id: 'gender',
       title: '반려견 정보',
-      subtitle: '성별과 중성화 여부를 알려주세요',
+      subtitle: '반려견의 성별과 중성화 여부를 알려주세요',
       type: 'select',
       options: [
         '남아, 중성화 완료',
@@ -171,7 +171,7 @@ const SurveyPage = () => {
     {
       id: 'pregnant',
       title: '반려견 정보',
-      subtitle: '현재 임신 또는 수유중인가요?',
+      subtitle: '반려견이 현재 임신 또는 수유중인가요?',
       type: 'select',
       options: ['네', '아니오', '해당없음'],
       required: true
@@ -179,7 +179,7 @@ const SurveyPage = () => {
     {
       id: 'bcs',
       title: '반려견 정보',
-      subtitle: 'BCS(Body Condition Score)를 선택해주세요',
+      subtitle: '반려견의 BCS(Body Condition Score)를 선택해주세요',
       description: 'BCS란? BCS(신체충실지수)는 반려동물의 비만도를 평가하는 대표적인 방법으로, 체중이나 키가 아니라 외형과 촉진(만져보기)으로 판단하는 것입니다.',
       image: '/img/survey/bcs.png',
       type: 'select',
@@ -189,7 +189,7 @@ const SurveyPage = () => {
     {
       id: 'rawsome',
       title: '반려견 정보',
-      subtitle: '아이의 갈비뼈를 직접 만진 후, 가장 유사한 촉감을 선택해주세요',
+      subtitle: '반려견의 갈비뼈를 직접 만진 후, 가장 유사한 촉감을 선택해주세요',
       description: 'Rawsome이란? Rawsome 체크는 미국생식제조업체 자료에서 유래한 간단한 촉진법으로, 손의 감각을 활용해 반려동물의 갈비뼈 상태를 평가하는 것입니다.',
       image: '/img/survey/rawsome.png',
       type: 'select',
@@ -204,7 +204,7 @@ const SurveyPage = () => {
     {
       id: 'activityLevel',
       title: '반려견 정보',
-      subtitle: '아이의 활동 수준에 대해 알려주세요',
+      subtitle: '반려견의 활동 수준에 대해 알려주세요',
       type: 'select',
       options: [
         '저활동 (Low activity) / 일일 운동 시간: 30분 미만',
@@ -218,28 +218,28 @@ const SurveyPage = () => {
     {
       id: 'healthIssues',
       title: '건강 정보',
-      subtitle: '과거와 현재를 포함하여 겪고 있는 질병/질환이나 건강 문제가 있다면 알려주세요',
+      subtitle: '반려견의 과거와 현재를 포함하여 겪고 있는 질병/질환이나 건강 문제가 있다면 알려주세요',
       description: '없을 경우, "없다"라고 작성해주세요.',
       type: 'textarea',
-      placeholder: '없다',
+      placeholder: '건강 문제를 입력해주세요',
       required: true
     },
     {
       id: 'allergies',
       title: '건강 정보',
-      subtitle: '알러지원 또는 민감성을 가진 음식이 있다면 알려주세요',
+      subtitle: '반려견의 알러지원 또는 민감성을 가진 음식이 있다면 알려주세요',
       description: '없을 경우, "없다"라고 작성해주세요.',
       type: 'textarea',
-      placeholder: '없다',
+      placeholder: '알러지 정보를 입력해주세요',
       required: true
     },
     {
       id: 'medications',
       title: '건강 정보',
-      subtitle: '현재 복용 중인 약물이 있다면 알려주세요 (영양제가 아닌 약물)',
+      subtitle: '반려견이 현재 복용 중인 약물이 있다면 알려주세요 (영양제가 아닌 약물)',
       description: '없을 경우, "없다"라고 작성해주세요.',
       type: 'textarea',
-      placeholder: '없다',
+      placeholder: '복용 중인 약물을 입력해주세요',
       required: true
     },
 
@@ -247,27 +247,27 @@ const SurveyPage = () => {
     {
       id: 'currentFoods',
       title: '사료 정보',
-      subtitle: '현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 브랜드 및 제품명을 모두 알려주세요',
+      subtitle: '반려견의 현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 브랜드 및 제품명을 모두 알려주세요',
       description: '⚠️ 꼭 정확한 브랜드와 제품명을 기입해주시기 바랍니다. 부정확할 경우, 다른 제품으로 분석 및 리포트가 작성될 수 있습니다!',
       example: '1. 주식(사료): 카나간 스코티쉬 살몬 포 독\n2. 주식(사료): 지위픽 스팀드라이 독 닭고기&과일\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨\n4. 영양제: 묘견서 프로바이오틱스 덴센',
       type: 'textarea',
-      placeholder: '위 예시를 참고하여 작성해주세요',
+      placeholder: '사료 및 영양제 정보를 입력해주세요',
       required: true
     },
     {
       id: 'feedingAmount',
       title: '사료 정보',
-      subtitle: '현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 1일 급여량 및 급여 횟수를 알려주세요',
+      subtitle: '반려견의 현재 급여 중인 주식(사료)/ 보조식(토퍼)/ 영양제의 1일 급여량 및 급여 횟수를 알려주세요',
       description: '⚠️ 꼭 정확한 급여량(g)을 기입해주시기 바랍니다. 부정확할 경우, 현재 섭취 에너지와 영양소 분석이 다르게 작성될 수 있습니다!',
       example: '급여 타이밍: 아침 1회, 저녁 1회 = 총 2회\n1. 주식(사료): 카나간 스코티쉬 살몬 포 독 / 하루 기준 45g\n2. 보조식(토퍼): 지위픽 스팀드라이 독 닭고기&과일 / 하루 기준 25g\n3. 보조식(토퍼): 스텔라앤츄이스 디너패티 치킨 / 하루 기준 1개\n4. 영양제: 묘견서 프로바이오틱스 덴센 / 하루 기준 1알',
       type: 'textarea',
-      placeholder: '위 예시를 참고하여 작성해주세요',
+      placeholder: '급여량 및 급여 횟수를 입력해주세요',
       required: true
     },
     {
       id: 'foodReaction',
       title: '사료 정보',
-      subtitle: '현재 먹고 있는 사료에 대한 반응은 어떤가요?',
+      subtitle: '반려견의 현재 먹고 있는 사료에 대한 반응은 어떤가요?',
       type: 'select',
       options: [
         '매우 즐긴다',
@@ -281,9 +281,9 @@ const SurveyPage = () => {
     {
       id: 'additionalInfo',
       title: '추가 정보',
-      subtitle: '현재 급여 중인 사료 분석을 위하여 참고하면 좋을 정보와 궁금하신 점을 자유롭게 작성해주세요 😊',
+      subtitle: '반려견의 현재 급여 중인 사료 분석을 위하여 참고하면 좋을 정보와 궁금하신 점을 자유롭게 작성해주세요 😊',
       type: 'textarea',
-      placeholder: '자유롭게 작성해주세요...',
+      placeholder: '추가 정보를 자유롭게 작성해주세요',
       required: false
     }
   ];

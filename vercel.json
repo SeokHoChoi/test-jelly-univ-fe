@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "src/app/api/rating/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}
