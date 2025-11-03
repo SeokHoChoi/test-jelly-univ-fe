@@ -29,7 +29,7 @@ interface DogInfo {
 interface EvaluationResult {
   grade: string;
   score: number;
-  details: any;
+  details: Record<string, unknown>;
   fatalFlaws?: string[];
 }
 
