@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { getToken } from '@/utils/auth';
-import { getSubscription, getPaymentHistory, cancelPayment } from '@/lib/paymentClient';
+import { getSubscription, getPaymentHistory } from '@/lib/paymentClient';
+// TODO: 결제 취소 기능은 관리자 페이지에서 처리하도록 변경됨 (주석 처리 후 재활성화 가능)
+// import { cancelPayment } from '@/lib/paymentClient';
 import { SubscriptionResponse, PaymentHistoryResponse } from '@/lib/paymentClient';
 import Card from '@/components/common/Card';
 import Button from '@/components/common/Button';
-import PaymentCancelModal from '@/components/common/PaymentCancelModal';
+// TODO: PaymentCancelModal (관리자 페이지로 이전됨 - 필요시 재활성화)
+// import PaymentCancelModal from '@/components/common/PaymentCancelModal';
 import AlertModal from '@/components/common/AlertModal';
-import { Calendar, CreditCard, Receipt, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { CreditCard, Receipt, AlertCircle, CheckCircle, XCircle, Clock } from 'lucide-react';
+// TODO: Calendar (사용하지 않음 - 필요시 재활성화)
+// import { Calendar } from 'lucide-react';
 
 export default function MyPage() {
   const { isLoggedIn, user, isLoading } = useAuthContext();
@@ -19,13 +24,14 @@ export default function MyPage() {
   const [subscription, setSubscription] = useState<SubscriptionResponse['data']>(null);
   const [paymentHistory, setPaymentHistory] = useState<PaymentHistoryResponse['data']>([]);
   const [loading, setLoading] = useState(true);
-  const [cancelling, setCancelling] = useState<string | null>(null);
-  const [cancelModalOpen, setCancelModalOpen] = useState(false);
-  const [selectedPayment, setSelectedPayment] = useState<{
-    orderId: string;
-    amount: number;
-    goodsName: string;
-  } | null>(null);
+  // TODO: 결제 취소 관련 state (관리자 페이지로 이전됨 - 필요시 재활성화)
+  // const [cancelling, setCancelling] = useState<string | null>(null);
+  // const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  // const [selectedPayment, setSelectedPayment] = useState<{
+  //   orderId: string;
+  //   amount: number;
+  //   goodsName: string;
+  // } | null>(null);
   const [alertModal, setAlertModal] = useState<{
     isOpen: boolean;
     type: 'success' | 'error' | 'warning';
@@ -70,75 +76,76 @@ export default function MyPage() {
     }
   };
 
-  const handleCancelPayment = (payment: { orderId: string; amount: number; goodsName: string }) => {
-    setSelectedPayment(payment);
-    setCancelModalOpen(true);
-  };
+  // TODO: 결제 취소 핸들러 (관리자 페이지로 이전됨 - 필요시 재활성화)
+  // const handleCancelPayment = (payment: { orderId: string; amount: number; goodsName: string }) => {
+  //   setSelectedPayment(payment);
+  //   setCancelModalOpen(true);
+  // };
 
-  const handleConfirmCancel = async (reason: string) => {
-    if (!selectedPayment) return;
+  // const handleConfirmCancel = async (reason: string) => {
+  //   if (!selectedPayment) return;
 
-    try {
-      setCancelling(selectedPayment.orderId);
-      const token = getToken();
-      if (!token) return;
+  //   try {
+  //     setCancelling(selectedPayment.orderId);
+  //     const token = getToken();
+  //     if (!token) return;
 
-      const response = await cancelPayment(token, {
-        orderId: selectedPayment.orderId,
-        reason
-      });
+  //     const response = await cancelPayment(token, {
+  //       orderId: selectedPayment.orderId,
+  //       reason
+  //     });
 
-      if (response.success) {
-        // 성공 모달 표시
-        setAlertModal({
-          isOpen: true,
-          type: 'success',
-          title: '결제 취소 완료',
-          message: '결제가 성공적으로 취소되었습니다. 환불은 영업일 기준 2-3일 소요됩니다.'
-        });
-        await loadData(); // 데이터 새로고침
-        setCancelModalOpen(false);
-        setSelectedPayment(null);
-      } else {
-        // API에서 에러 응답
-        setAlertModal({
-          isOpen: true,
-          type: 'error',
-          title: '결제 취소 실패',
-          message: response.message || '결제 취소에 실패했습니다. 다시 시도해주세요.'
-        });
-      }
-    } catch (error) {
-      console.error('결제 취소 실패:', error);
+  //     if (response.success) {
+  //       // 성공 모달 표시
+  //       setAlertModal({
+  //         isOpen: true,
+  //         type: 'success',
+  //         title: '결제 취소 완료',
+  //         message: '결제가 성공적으로 취소되었습니다. 환불은 영업일 기준 2-3일 소요됩니다.'
+  //       });
+  //       await loadData(); // 데이터 새로고침
+  //       setCancelModalOpen(false);
+  //       setSelectedPayment(null);
+  //     } else {
+  //       // API에서 에러 응답
+  //       setAlertModal({
+  //         isOpen: true,
+  //         type: 'error',
+  //         title: '결제 취소 실패',
+  //         message: response.message || '결제 취소에 실패했습니다. 다시 시도해주세요.'
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('결제 취소 실패:', error);
 
-      // 에러 메시지 파싱
-      let errorMessage = '결제 취소에 실패했습니다.';
-      let errorTitle = '결제 취소 실패';
+  //     // 에러 메시지 파싱
+  //     let errorMessage = '결제 취소에 실패했습니다.';
+  //     let errorTitle = '결제 취소 실패';
 
-      if (error instanceof Error) {
-        try {
-          const errorData = JSON.parse(error.message);
-          if (errorData.error) {
-            errorMessage = errorData.error;
-          }
-          if (errorData.code) {
-            errorTitle = `결제 취소 실패 (${errorData.code})`;
-          }
-        } catch {
-          errorMessage = error.message;
-        }
-      }
+  //     if (error instanceof Error) {
+  //       try {
+  //         const errorData = JSON.parse(error.message);
+  //         if (errorData.error) {
+  //           errorMessage = errorData.error;
+  //         }
+  //         if (errorData.code) {
+  //           errorTitle = `결제 취소 실패 (${errorData.code})`;
+  //         }
+  //       } catch {
+  //         errorMessage = error.message;
+  //       }
+  //     }
 
-      setAlertModal({
-        isOpen: true,
-        type: 'error',
-        title: errorTitle,
-        message: errorMessage
-      });
-    } finally {
-      setCancelling(null);
-    }
-  };
+  //     setAlertModal({
+  //       isOpen: true,
+  //       type: 'error',
+  //       title: errorTitle,
+  //       message: errorMessage
+  //     });
+  //   } finally {
+  //     setCancelling(null);
+  //   }
+  // };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ko-KR', {
@@ -327,6 +334,19 @@ export default function MyPage() {
         {/* 결제 내역 탭 */}
         {activeTab === 'history' && (
           <div className="space-y-4">
+            {/* 안내 메시지 */}
+            <Card className="p-4 bg-blue-50 border-blue-200">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm text-blue-900 font-medium">결제 취소 안내</p>
+                  <p className="text-xs text-blue-700 mt-1">
+                    결제 취소는 관리자 페이지에서 처리됩니다. 취소를 원하시면 고객센터로 문의해주세요.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
             {loading ? (
               <Card className="p-8 text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#003DA5] mx-auto mb-4"></div>
@@ -385,7 +405,8 @@ export default function MyPage() {
                           </Button>
                         )}
                       </div>
-                      {payment.status === 'approved' && (
+                      {/* TODO: 결제 취소 버튼 (관리자 페이지로 이전됨 - 필요시 재활성화) */}
+                      {/* {payment.status === 'approved' && (
                         <Button
                           variant="outline"
                           size="sm"
@@ -399,7 +420,7 @@ export default function MyPage() {
                         >
                           {cancelling === payment.order_id ? '취소 중...' : '결제 취소'}
                         </Button>
-                      )}
+                      )} */}
                     </div>
                   </Card>
                 ))}
@@ -423,8 +444,8 @@ export default function MyPage() {
         )}
       </div>
 
-      {/* 결제 취소 모달 */}
-      {selectedPayment && (
+      {/* TODO: 결제 취소 모달 (관리자 페이지로 이전됨 - 필요시 재활성화) */}
+      {/* {selectedPayment && (
         <PaymentCancelModal
           isOpen={cancelModalOpen}
           onClose={() => {
@@ -435,7 +456,7 @@ export default function MyPage() {
           paymentInfo={selectedPayment}
           isLoading={cancelling === selectedPayment.orderId}
         />
-      )}
+      )} */}
 
       {/* 알림 모달 */}
       <AlertModal
