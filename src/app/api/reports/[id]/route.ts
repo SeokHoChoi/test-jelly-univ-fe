@@ -8,7 +8,7 @@ export async function GET(
     const { id } = await params;
 
     // Admin portal API로 프록시
-    const adminApiUrl = process.env.ADMIN_API_URL || 'https://admin-jellyu.vercel.app';
+    const adminApiUrl = process.env.ADMIN_API_URL || 'https://admin-three-pearl.vercel.app';
     const response = await fetch(`${adminApiUrl}/api/reports/${id}`, {
       cache: 'no-store',
     });
