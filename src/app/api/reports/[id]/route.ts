@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // admin-portal API로 프록시
     const adminApiUrl = process.env.ADMIN_API_URL || 'https://admin-three-pearl.vercel.app';

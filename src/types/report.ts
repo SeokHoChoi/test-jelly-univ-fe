@@ -30,7 +30,7 @@ export interface DogInfo {
 export interface EvaluationResult {
   grade: string;
   score: number;
-  details: any;
+  details: Record<string, unknown>;
   fatalFlaws?: string[];
   displayText?: string; // 리포트에 표시될 설명 텍스트
 }

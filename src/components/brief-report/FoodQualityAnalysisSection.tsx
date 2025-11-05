@@ -409,7 +409,10 @@ const FoodQualityAnalysisSection = () => {
     // 02 영양 설계 균형도: [0] 비율 적정성, [1] 핵심 미네랄(Ca:P), [2] 필수 지방산
     if (sectionId === '2') {
       if (itemIndex === 0) {
-        return bal?.macronutrientRatio?.grade === 'C' ? bal.macronutrientRatio.detail : null;
+        if (bal?.macronutrientRatio?.grade === 'C') {
+          return bal.macronutrientRatio.detail || '주요 영양소 비율 부적합';
+        }
+        return null;
       }
       if (itemIndex === 1) {
         return bal?.mineralBalance?.grade === 'C' ? bal.mineralBalance.detail : null;
@@ -450,6 +453,8 @@ const FoodQualityAnalysisSection = () => {
       return list;
     }
     if (sectionId === '2') {
+      const l0 = getItemFatalMessage('2', 0); // 주요 영양소 비율 및 적정성
+      if (l0) list.push({ label: '주요 영양소\n비율 및 적정성', message: l0, order: '2-1' });
       const l1 = getItemFatalMessage('2', 1); // Ca:P
       if (l1) list.push({ label: '핵심 미네랄\n균형도', message: l1, order: '2-2' });
       const l2 = getItemFatalMessage('2', 2); // 오메가
