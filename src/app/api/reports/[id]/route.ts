@@ -7,21 +7,34 @@ export async function GET(
   try {
     const { id } = await params;
 
-    // Admin portal API로 프록시
+    // admin-portal API로 프록시
     const adminApiUrl = process.env.ADMIN_API_URL || 'https://admin-three-pearl.vercel.app';
     const response = await fetch(`${adminApiUrl}/api/reports/${id}`, {
       cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
     });
 
     if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Report not found' },
-        { status: 404 }
-      );
+      if (response.status === 404) {
+        return NextResponse.json(
+          { error: 'Report not found' },
+          { status: 404 }
+        );
+      }
+      throw new Error(`Admin API error: ${response.status}`);
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   } catch (error) {
     console.error('Failed to fetch report:', error);
     return NextResponse.json(
@@ -30,3 +43,7 @@ export async function GET(
     );
   }
 }
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
