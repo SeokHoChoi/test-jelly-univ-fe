@@ -77,7 +77,7 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
     const parts = [];
     if (result1.displayText) parts.push(result1.displayText);
     if (result2.displayText) parts.push(result2.displayText);
-    return parts.join(' / ');
+    return parts.join('\n');
   };
 
   const getBalanceText = () => {
@@ -90,7 +90,7 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
     if (mineralResult.displayText) parts.push(mineralResult.displayText);
     if (fattyResult.displayText) parts.push(fattyResult.displayText);
 
-    return parts.join(' ');
+    return parts.join('\n');
   };
 
   const getIngredientText = () => {
@@ -99,7 +99,7 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
     const parts = [];
     if (result1.displayText) parts.push(result1.displayText);
     if (result2.displayText) parts.push(result2.displayText);
-    return parts.join(' ');
+    return parts.join('\n');
   };
 
   const getManufacturingText = () => {
@@ -170,7 +170,14 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                 return reliabilityText && reliabilityText.trim() !== '' ? (
                   <InfoBar>
                     <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🔍 영양 정보 신뢰도</div>
-                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{reliabilityText}</div>
+                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">
+                      {reliabilityText.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < reliabilityText.split('\n').length - 1 && <br />}
+                        </span>
+                      ))}
+                    </div>
                   </InfoBar>
                 ) : null;
               })()}
@@ -179,7 +186,14 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                 return balanceText && balanceText.trim() !== '' ? (
                   <InfoBar>
                     <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚖️ 영양 설계 균형도</div>
-                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{balanceText}</div>
+                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">
+                      {balanceText.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < balanceText.split('\n').length - 1 && <br />}
+                        </span>
+                      ))}
+                    </div>
                   </InfoBar>
                 ) : null;
               })()}
@@ -188,7 +202,14 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                 return ingredientText && ingredientText.trim() !== '' ? (
                   <InfoBar>
                     <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">🥗 원료 품질</div>
-                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{ingredientText}</div>
+                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">
+                      {ingredientText.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < ingredientText.split('\n').length - 1 && <br />}
+                        </span>
+                      ))}
+                    </div>
                   </InfoBar>
                 ) : null;
               })()}
@@ -197,7 +218,14 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                 return manufacturingText && manufacturingText.trim() !== '' ? (
                   <InfoBar>
                     <div className="text-[18px] md:text-[20px] font-semibold text-[#000000]">⚙️ 제조 품질</div>
-                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">{manufacturingText}</div>
+                    <div className="text-[16px] md:text-[18px] font-normal text-[#1E1E1E]">
+                      {manufacturingText.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < manufacturingText.split('\n').length - 1 && <br />}
+                        </span>
+                      ))}
+                    </div>
                   </InfoBar>
                 ) : null;
               })()}
