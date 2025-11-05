@@ -399,40 +399,56 @@ const FoodQualityAnalysisSection = () => {
     // 01 영양 정보 신뢰도: [0] 국제 표준 기준 충족도, [1] 영양 정보 공개 수준
     if (sectionId === '1') {
       if (itemIndex === 0) {
-        return rel?.standardCompliance?.grade === 'C' ? rel.standardCompliance.detail : null;
+        return rel?.standardCompliance?.grade === 'C'
+          ? (rel.standardCompliance.detail || '국제 기준 미달')
+          : null;
       }
       if (itemIndex === 1) {
-        return rel?.transparencyLevel?.grade === 'C' ? rel.transparencyLevel.detail : null;
+        return rel?.transparencyLevel?.grade === 'C'
+          ? (rel.transparencyLevel.detail || '필수 영양 정보 누락')
+          : null;
       }
       return null;
     }
     // 02 영양 설계 균형도: [0] 비율 적정성, [1] 핵심 미네랄(Ca:P), [2] 필수 지방산
     if (sectionId === '2') {
       if (itemIndex === 0) {
-        return bal?.macronutrientRatio?.grade === 'C' ? bal.macronutrientRatio.detail : null;
+        return bal?.macronutrientRatio?.grade === 'C'
+          ? (bal.macronutrientRatio.detail || '주요 영양소 비율 부적합')
+          : null;
       }
       if (itemIndex === 1) {
-        return bal?.mineralBalance?.grade === 'C' ? bal.mineralBalance.detail : null;
+        return bal?.mineralBalance?.grade === 'C'
+          ? (bal.mineralBalance.detail || 'Ca:P 비율 부적합')
+          : null;
       }
       if (itemIndex === 2) {
-        return bal?.fattyAcidBalance?.grade === 'C' ? bal.fattyAcidBalance.detail : null;
+        return bal?.fattyAcidBalance?.grade === 'C'
+          ? (bal.fattyAcidBalance.detail || '필수 지방산 부족')
+          : null;
       }
       return null;
     }
     // 03 원료 품질: [0] 주원료 구성, [1] 원료 안전성
     if (sectionId === '3') {
       if (itemIndex === 0) {
-        return ing?.primaryIngredients?.grade === 'C' ? ing.primaryIngredients.detail : null;
+        return ing?.primaryIngredients?.grade === 'C'
+          ? (ing.primaryIngredients.detail || '원료 품질 미흡')
+          : null;
       }
       if (itemIndex === 1) {
-        return ing?.ingredientSafety?.grade === 'C' ? ing.ingredientSafety.detail : null;
+        return ing?.ingredientSafety?.grade === 'C'
+          ? (ing.ingredientSafety.detail || '원료 안전성 의심')
+          : null;
       }
       return null;
     }
     // 04 제조 품질: [0] 제조국 신뢰도
     if (sectionId === '4') {
       if (itemIndex === 0) {
-        return mfg?.countryReliability?.grade === 'C' ? mfg.countryReliability.detail : null;
+        return mfg?.countryReliability?.grade === 'C'
+          ? (mfg.countryReliability.detail || '제조국 신뢰도 낮음')
+          : null;
       }
       return null;
     }
@@ -450,6 +466,8 @@ const FoodQualityAnalysisSection = () => {
       return list;
     }
     if (sectionId === '2') {
+      const l0 = getItemFatalMessage('2', 0); // 주요 영양소 비율 및 적정성
+      if (l0) list.push({ label: '주요 영양소\n비율 및 적정성', message: l0, order: '2-1' });
       const l1 = getItemFatalMessage('2', 1); // Ca:P
       if (l1) list.push({ label: '핵심 미네랄\n균형도', message: l1, order: '2-2' });
       const l2 = getItemFatalMessage('2', 2); // 오메가
