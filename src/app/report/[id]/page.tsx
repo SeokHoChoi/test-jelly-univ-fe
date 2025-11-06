@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useRatingStore } from '@/contexts/RatingStore';
+import FoodQualityAnalysisSection from '@/components/brief-report/FoodQualityAnalysisSection';
+import PetSuitabilitySection from '@/components/brief-report/PetSuitabilitySection';
 import SavedReportView from '@/components/SavedReportView';
 import { FoodInfo, DogInfo, FoodEvaluation } from '@/types/report';
 
@@ -9,6 +12,7 @@ export default function SharedReportPage() {
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const setResponse = useRatingStore((s) => s.setResponse);
   const [reportData, setReportData] = useState<{
     foodInfo: FoodInfo;
     dogInfo: DogInfo;
@@ -20,9 +24,7 @@ export default function SharedReportPage() {
       try {
         const response = await fetch(`/api/reports/${params.id}`, {
           cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
+          headers: { 'Cache-Control': 'no-cache' }
         });
 
         if (!response.ok) {
@@ -30,11 +32,10 @@ export default function SharedReportPage() {
         }
 
         const data = await response.json();
-
         setReportData({
-          foodInfo: data.foodInfo,
-          dogInfo: data.dogInfo,
-          evaluation: data.evaluation
+          foodInfo: data.foodInfo as FoodInfo,
+          dogInfo: data.dogInfo as DogInfo,
+          evaluation: data.evaluation as FoodEvaluation
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : '리포트를 불러오는데 실패했습니다.');
@@ -79,4 +80,19 @@ export default function SharedReportPage() {
       />
     </div>
   );
+}
+
+function calculateWeightedGrade(score: number): string {
+  if (score >= 95) return 'A+';
+  if (score >= 90) return 'A';
+  if (score >= 85) return 'B+';
+  if (score >= 75) return 'B';
+  return 'C';
+}
+
+function getBadge(score: number): string {
+  if (score >= 90) return '프리미엄';
+  if (score >= 80) return '밸런스드';
+  if (score >= 70) return '베이직';
+  return '개선필요';
 }
