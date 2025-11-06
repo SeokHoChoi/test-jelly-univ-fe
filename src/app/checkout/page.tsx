@@ -325,6 +325,10 @@ function CheckoutPageContent() {
             <span className="text-[20px]">📊</span>
             <span>샘플 리포트 미리보기</span>
           </button>
+          {/* 안내 문구: 모달 외부에서도 무엇을 보는지 설명 */}
+          <p className='mt-3 text-[13px] md:text-[15px] text-[#666666]'>
+            결제 시 이메일로 받게 될 <span className='font-semibold text-[#003DA5]'>실제 리포트 예시</span>를 미리 확인해보세요.
+          </p>
         </div>
 
         {/* 가격 카드 */}
