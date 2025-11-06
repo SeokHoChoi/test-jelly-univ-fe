@@ -48,6 +48,11 @@ interface SurveyData {
   feedingAmount: string;
   foodReaction: string;
   additionalInfo: string;
+
+  // 분석 페이지 미경유입 시 보조 입력
+  paDogName?: string;
+  paDogBreed?: string;
+  paDogWeight?: string;
 }
 
 const SurveyPage = () => {
@@ -74,6 +79,8 @@ const SurveyPage = () => {
     additionalInfo: ''
   });
 
+  const [needsProductAnalysis, setNeedsProductAnalysis] = useState(false);
+
   const [isAnimating, setIsAnimating] = useState(false);
   const [phoneError, setPhoneError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -94,6 +101,16 @@ const SurveyPage = () => {
       }));
     }
   }, [meData]);
+
+  // 분석페이지 경유 여부 확인
+  useEffect(() => {
+    try {
+      const productAnalysisData = localStorage.getItem('productAnalysisData');
+      setNeedsProductAnalysis(!productAnalysisData);
+    } catch {
+      setNeedsProductAnalysis(true);
+    }
+  }, []);
 
   // 전화번호 포맷팅 함수
   const formatPhoneNumber = (value: string) => {
@@ -119,6 +136,7 @@ const SurveyPage = () => {
     return emailRegex.test(email);
   };
 
+  // 질문 구성
   const questions = [
     // 보호자 정보
     {
@@ -145,6 +163,34 @@ const SurveyPage = () => {
       placeholder: '이메일 주소를 입력해주세요',
       required: true
     },
+
+    // 분석페이지 미경유입 시 추가 항목
+    ...(needsProductAnalysis ? ([
+      {
+        id: 'paDogName',
+        title: '반려견 정보',
+        subtitle: '반려견의 이름을 알려주세요',
+        type: 'text',
+        placeholder: '반려견 이름을 입력해주세요',
+        required: true
+      },
+      {
+        id: 'paDogBreed',
+        title: '반려견 정보',
+        subtitle: '반려견의 품종을 알려주세요',
+        type: 'text',
+        placeholder: '예: 골든 리트리버',
+        required: true
+      },
+      {
+        id: 'paDogWeight',
+        title: '반려견 정보',
+        subtitle: '반려견의 체중을 알려주세요 (kg)',
+        type: 'number',
+        placeholder: '예: 10.5',
+        required: true
+      }
+    ]) : []),
 
     // 반려견 정보
     {
@@ -359,7 +405,28 @@ const SurveyPage = () => {
 
     try {
       // 로컬스토리지에서 product-analysis 데이터 가져오기
-      const productAnalysisData = localStorage.getItem('productAnalysisData');
+      let productAnalysisData = localStorage.getItem('productAnalysisData');
+
+      // 분석페이지 미경유입 시 설문 입력으로 대체
+      if (!productAnalysisData && needsProductAnalysis) {
+        const paDogName = (formData.paDogName || '').trim();
+        const paDogBreed = (formData.paDogBreed || '').trim();
+        const paDogWeight = (formData.paDogWeight || '').trim();
+
+        if (!paDogName || !paDogBreed || !paDogWeight) {
+          setSubmitError('반려견 이름/품종/체중을 모두 입력해주세요.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        const fallback = {
+          dogName: paDogName,
+          dogBreed: paDogBreed,
+          dogWeight: paDogWeight,
+          feeds: [] as Array<{ name: string; amount: string }>,
+        };
+        productAnalysisData = JSON.stringify(fallback);
+      }
 
       if (!productAnalysisData) {
         setSubmitError('Product analysis 데이터를 찾을 수 없습니다. 먼저 product-analysis 페이지에서 데이터를 입력해주세요.');
@@ -389,8 +456,8 @@ const SurveyPage = () => {
           healthIssues: formData.healthIssues,
           allergies: formData.allergies,
           medications: formData.medications,
-          currentFoods: buildCurrentFoodsString(parsedProductAnalysisData.feeds, formData.currentFoods),
-          feedingAmount: buildFeedingAmountString(parsedProductAnalysisData.feeds, formData.feedingAmount),
+          currentFoods: buildCurrentFoodsString(parsedProductAnalysisData.feeds || [], formData.currentFoods),
+          feedingAmount: buildFeedingAmountString(parsedProductAnalysisData.feeds || [], formData.feedingAmount),
           foodResponse: formData.foodReaction,
           additionalInfo: formData.additionalInfo || ""
         }
@@ -536,7 +603,7 @@ const SurveyPage = () => {
                 <input
                   ref={inputRef as React.RefObject<HTMLInputElement>}
                   type={currentQuestion.type}
-                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  value={String(formData[currentQuestion.id as keyof SurveyData] ?? '')}
                   onChange={(e) => handleInputChange(e.target.value)}
                   placeholder={currentQuestion.placeholder}
                   className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
@@ -549,7 +616,7 @@ const SurveyPage = () => {
                   <input
                     ref={inputRef as React.RefObject<HTMLInputElement>}
                     type="email"
-                    value={formData[currentQuestion.id as keyof SurveyData] as string}
+                    value={String(formData[currentQuestion.id as keyof SurveyData] ?? '')}
                     onChange={(e) => handleInputChange(e.target.value)}
                     placeholder={currentQuestion.placeholder}
                     className={`w-full px-4 py-4 border rounded-xl focus:ring-2 focus:border-transparent text-base ${emailError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-blue-500'
@@ -567,7 +634,7 @@ const SurveyPage = () => {
                   <input
                     ref={inputRef as React.RefObject<HTMLInputElement>}
                     type="tel"
-                    value={formData[currentQuestion.id as keyof SurveyData] as string}
+                    value={String(formData[currentQuestion.id as keyof SurveyData] ?? '')}
                     onChange={(e) => handleInputChange(e.target.value)}
                     placeholder={currentQuestion.placeholder}
                     className={`w-full px-4 py-4 border rounded-xl focus:ring-2 focus:border-transparent text-base ${phoneError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-blue-500'
@@ -578,6 +645,20 @@ const SurveyPage = () => {
                     <p className="text-red-500 text-sm mt-2">{phoneError}</p>
                   )}
                 </div>
+              )}
+
+              {currentQuestion.type === 'number' && (
+                <input
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  value={String(formData[currentQuestion.id as keyof SurveyData] ?? '')}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  placeholder={currentQuestion.placeholder}
+                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  required={currentQuestion.required}
+                />
               )}
 
               {currentQuestion.type === 'date' && (
@@ -708,7 +789,7 @@ const SurveyPage = () => {
               {currentQuestion.type === 'textarea' && (
                 <textarea
                   ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-                  value={formData[currentQuestion.id as keyof SurveyData] as string}
+                  value={String(formData[currentQuestion.id as keyof SurveyData] ?? '')}
                   onChange={(e) => handleInputChange(e.target.value)}
                   placeholder={currentQuestion.placeholder}
                   rows={6}
