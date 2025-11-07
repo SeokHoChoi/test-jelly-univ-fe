@@ -245,8 +245,8 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
           {/* 세부 평가 카드들 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {detailedAssessments.map((assessment) => {
-              // 각 항목의 치명적 결함 체크 함수
-              const getItemFatalMessage = (assessmentId: string, itemIndex: number): string | null => {
+              // 각 항목의 치명적 결함 가져오기
+              const getItemFatalFlaws = (assessmentId: string, itemIndex: number): string[] => {
                 const itemMapping: Record<string, Record<number, string>> = {
                   '1': {
                     0: '1-1_nutrition_reliability',
@@ -267,18 +267,22 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                 };
 
                 const categoryKey = itemMapping[assessmentId]?.[itemIndex];
-                if (!categoryKey) return null;
+                if (!categoryKey) return [];
 
                 const category = results[categoryKey as keyof typeof results];
-                if (!category) return null;
+                if (!category) return [];
 
-                const hasFatal = category.fatalFlaws && category.fatalFlaws.length > 0;
-                const isCGrade = category.grade === 'C';
-
-                if (hasFatal || isCGrade) {
-                  return '치명적 결함';
+                // fatalFlaws 배열이 있으면 반환 (빈 문자열 제외)
+                if (category.fatalFlaws && category.fatalFlaws.length > 0) {
+                  return category.fatalFlaws.filter(f => f.trim() !== '');
                 }
-                return null;
+
+                // C등급이면 "치명적 결함" 메시지 반환
+                if (category.grade === 'C') {
+                  return ['치명적 결함'];
+                }
+
+                return [];
               };
 
               return (
@@ -298,10 +302,10 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
 
                     <div className="flex-1 space-y-4 md:space-y-5">
                       {assessment.items.map((item, index) => {
-                        const fatalMsg = getItemFatalMessage(assessment.id, index);
+                        const fatalFlaws = getItemFatalFlaws(assessment.id, index);
 
                         // 치명적 결함이 있는 항목은 주황색 바로 표시
-                        if (fatalMsg) {
+                        if (fatalFlaws.length > 0) {
                           return (
                             <div key={index} className="relative">
                               {/* 모바일 타이틀 */}
@@ -312,7 +316,7 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                               </div>
                               {/* 주황색 바 */}
                               <div
-                                className="bg-[#F95C3B] rounded-[40px] md:rounded-[80px] flex flex-row items-center justify-between relative overflow-visible py-[9px] px-[4px] md:py-[10px] md:pl-[20px] md:pr-[39px] min-h-[68px] md:min-h-[80px]"
+                                className="bg-[#F95C3B] rounded-[40px] md:rounded-[80px] flex flex-col md:flex-row items-center justify-between relative overflow-visible py-[9px] px-[4px] md:py-[10px] md:pl-[20px] md:pr-[39px] min-h-[68px] md:min-h-[80px]"
                                 style={{ boxShadow: '0px 4px 20px 0px rgba(0, 0, 0, 0.25)' }}
                               >
                                 {/* 데스크톱 라벨 */}
@@ -320,10 +324,12 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
                                   {item.label}
                                 </span>
                                 {/* 우측 메시지 */}
-                                <div className="flex-1 flex items-center justify-center md:justify-start w-full md:w-auto px-[4px] md:px-0 md:pl-0 md:ml-7">
-                                  <div className="text-white text-[14px] md:text-[16px] font-semibold">
-                                    ⛔️ {fatalMsg}
-                                  </div>
+                                <div className="flex-1 flex flex-col items-start justify-center w-full md:w-auto px-[12px] md:px-0 md:pl-0 md:ml-7">
+                                  {fatalFlaws.map((flaw, fIndex) => (
+                                    <div key={fIndex} className="text-white text-[14px] md:text-[16px] font-semibold mb-1 last:mb-0">
+                                      ⛔️ {flaw}
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                             </div>
@@ -351,11 +357,11 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
           {(() => {
             const allFatalFlaws: string[] = [];
 
-            // displayText가 없는 카테고리의 fatalFlaws만 수집
+            // 모든 카테고리의 fatalFlaws 수집 (빈 문자열 제외)
             Object.values(results).forEach((result) => {
-              // displayText가 있으면 해당 카테고리의 fatalFlaws는 무시
-              if (!result.displayText && result.fatalFlaws && result.fatalFlaws.length > 0) {
-                allFatalFlaws.push(...result.fatalFlaws);
+              if (result.fatalFlaws && result.fatalFlaws.length > 0) {
+                const validFlaws = result.fatalFlaws.filter((f: string) => f.trim() !== '');
+                allFatalFlaws.push(...validFlaws);
               }
             });
 
@@ -386,6 +392,25 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
               </div>
             );
           })()}
+
+          {/* 젤리대에서 꼭 전하고 싶은 말 */}
+          {evaluation.customMessage && evaluation.customMessage.trim() !== '' && (
+            <div className="mt-8 md:mt-10">
+              <div className="bg-[#E8F4F8] border-2 border-[#003DA5] rounded-[20px] px-6 py-6 md:px-8 md:py-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[24px]">💬</span>
+                  <h3 className="text-[#003DA5] font-bold text-[20px] md:text-[24px]">
+                    젤리대에서 꼭 전하고 싶은 말
+                  </h3>
+                </div>
+                <div className="bg-white rounded-[14px] px-5 py-4">
+                  <p className="text-[#1E1E1E] text-[15px] md:text-[17px] leading-[22px] md:leading-[26px] whitespace-pre-wrap">
+                    {evaluation.customMessage}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* 참고 배너 */}
           <div className="mt-6 md:mt-8">

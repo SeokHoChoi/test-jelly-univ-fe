@@ -63,4 +63,5 @@ export interface FoodEvaluation {
   sectionResults: SectionResults;
   overallScore: number;
   overallGrade: string;
+  customMessage?: string; // 젤리대에서 꼭 전하고 싶은 말
 }
