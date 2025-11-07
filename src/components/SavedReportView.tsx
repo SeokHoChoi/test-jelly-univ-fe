@@ -131,8 +131,10 @@ export default function SavedReportView({ foodInfo, dogInfo, evaluation }: Saved
           </p>
 
           <p className="text-[#666666] font-normal text-[14px] md:text-[16px] max-w-4xl mx-auto mt-3">
-            무료 버전의 경우 가장 3개 중 한개의 사료만<br className="md:hidden" />
-            <span className="hidden md:inline"> </span>등급 분석을 제공해 드립니다
+            무료 버전의 경우 최대 1개, <br className="md:hidden" />
+            <span className="hidden md:inline"> </span>유료 버전의 경우 최대 3개와 영양제까지
+            <br className="md:hidden" />
+            <span className="hidden md:inline"> </span>모두 분석해 드립니다.
           </p>
         </div>
 
