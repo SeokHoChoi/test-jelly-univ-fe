@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRatingStore } from '@/contexts/RatingStore';
 import { ArrowLeft } from 'lucide-react';
+import ProgressStepper from '@/components/common/ProgressStepper';
 
 /**
  * 냥구 식단 설명 페이지
@@ -118,63 +119,11 @@ export default function NyanguDietPage() {
           </div>
 
           {/* 헤더 하단: 세그먼트형 스텝퍼 */}
-          <div className="mb-6 md:mb-8">
-            <div className="mx-auto max-w-[720px] md:max-w-[820px]">
-              <div className="relative flex items-center px-1 md:px-2 overflow-visible pb-7 md:pb-8">
-                {([1, 2, 3, 4, 5] as const).map((step) => {
-                  const labels = ['무료 분석', '설문', '맞춤 리포트', '실행', '결과'] as const;
-                  const label = labels[step - 1];
-                  const isDone = step < currentStep;
-                  const isCurrent = step === currentStep;
-                  const isLast = step === 5;
-                  return (
-                    <div
-                      key={`head-step-${step}`}
-                      className={isLast ? 'flex items-center shrink-0' : 'flex items-center flex-1 min-w-0'}
-                    >
-                      {/* 노드 + 라벨 */}
-                      <div className="relative shrink-0">
-                        <div
-                          className={[
-                            'relative z-10 flex items-center justify-center rounded-full',
-                            'w-8 h-8 md:w-9 md:h-9',
-                            isCurrent
-                              ? 'bg-[#003DA5] text-white ring-4 ring-[#003DA5]/20'
-                              : isDone
-                                ? 'bg-[#E6EEF9] text-[#003DA5]'
-                                : 'bg-[#E5E7EB] text-[#94A3B8]',
-                            'text-[12px] md:text-[13px] font-bold'
-                          ].join(' ')}
-                          aria-current={isCurrent ? 'step' : undefined}
-                        >
-                          {isDone ? '✓' : step}
-                        </div>
-                        <div className={['absolute left-1/2 -translate-x-1/2 top-full mt-2 text-[11px] md:text-[12px] text-[#64748B] text-center whitespace-nowrap', isCurrent ? 'font-semibold text-[#003DA5]' : ''].join(' ')}>
-                          {label}
-                        </div>
-                      </div>
-                      {/* 커넥터 */}
-                      {!isLast && (
-                        <div
-                          className={[
-                            'h-2 mx-1 md:mx-2 rounded-full flex-1',
-                            isDone
-                              ? 'bg-[#C6D7F5]'
-                              : isCurrent
-                                ? 'bg-gradient-to-r from-[#003DA5] to-[#4F8BFF]'
-                                : 'bg-[#E5E7EB]'
-                          ].join(' ')}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="mt-1 text-right text-[11px] md:text-[12px] text-[#334155]">
-                <span className="font-semibold text-[#003DA5]">{currentStep}/5</span> 현재: 무료 분석 · 다음: 설문
-              </div>
-            </div>
-          </div>
+          <ProgressStepper
+            currentStep={currentStep}
+            currentStepLabel="무료 분석"
+            nextStepLabel="설문"
+          />
 
           {/* 스토리 타임라인 */}
           <div className="mb-6 md:mb-10 bg-white rounded-2xl border border-gray-100 p-5 md:p-6">
