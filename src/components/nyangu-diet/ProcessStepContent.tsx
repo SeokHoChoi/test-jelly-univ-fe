@@ -12,13 +12,13 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
     return (
       <div>
         <p className="text-[14px] md:text-[16px] text-gray-700 mb-6 leading-relaxed">
-          현재 급여 중인 사료(주식)가 우리 아이와는 별개로, 객관적으로 얼마나 잘 만들어진 '신뢰할 수 있는 제품'인지 평가합니다.
+          현재 급여 중인 사료(주식)가 우리 아이와는 별개로, 객관적으로 얼마나 잘 만들어진 &apos;신뢰할 수 있는 제품&apos;인지 평가합니다.
         </p>
         <div className="space-y-0">
           <AccordionItem title="사료 품질 종합 평가">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                현재 급여 중인 사료(주식)가 우리 아이와는 별개로, 객관적으로 얼마나 잘 만들어진 '신뢰할 수 있는 제품'인지 평가합니다.
+                현재 급여 중인 사료(주식)가 우리 아이와는 별개로, 객관적으로 얼마나 잘 만들어진 &apos;신뢰할 수 있는 제품&apos;인지 평가합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 영양 정보 신뢰도, 설계 균형도, 원료 및 제조 품질까지 총 4가지 항목을 젤리대학교의 사료 등급 기준에 맞춰 분석하고 주요 장단점과 함께 알려드립니다.
@@ -28,13 +28,13 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="주식 자격 검증">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                이 제품이 단독으로 급여 가능한 '완전 균형식'인지, 국제 표준 기준을 제시하는 AAFCO와 FEDIAF의 보증서가 있는지 평가합니다.
+                이 제품이 단독으로 급여 가능한 &apos;완전 균형식&apos;인지, 국제 표준 기준을 제시하는 AAFCO와 FEDIAF의 보증서가 있는지 평가합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                냥구의 현재 주식인 '아카나 라이트 앤 피트 레시피'와 '디어니스트 키친 탈수건조 그레인프리 피쉬'의 경우 제조사가 소비자에게 보내는 법적인 약속 '영양 적절성 선언(Nutritional Adequacy Statement)'이라는 공식적인 보증 문구가 기재되어 있습니다.
+                냥구의 현재 주식인 &apos;아카나 라이트 앤 피트 레시피&apos;와 &apos;디어니스트 키친 탈수건조 그레인프리 피쉬&apos;의 경우 제조사가 소비자에게 보내는 법적인 약속 &apos;영양 적절성 선언(Nutritional Adequacy Statement)&apos;이라는 공식적인 보증 문구가 기재되어 있습니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                꼭 기억해야 할 점은 '영양 적절성 선언문'과 'AAFCO 기준 설계'라고 판매 페이지에 적은 것과는 다릅니다. 실제 많은 사료가 'AAFCO 기준 설계'라고 하지만 실제 분석시 기준을 충족하지 못하는 경우가 꽤 많습니다.
+                꼭 기억해야 할 점은 &apos;영양 적절성 선언문&apos;과 &apos;AAFCO 기준 설계&apos;라고 판매 페이지에 적은 것과는 다릅니다. 실제 많은 사료가 &apos;AAFCO 기준 설계&apos;라고 하지만 실제 분석시 기준을 충족하지 못하는 경우가 꽤 많습니다.
               </p>
             </div>
           </AccordionItem>
@@ -47,7 +47,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                 해당 항목의 경우, 제조사에서 제공하는 AS FED(급여 기준)이 아닌, 수분을 제외한 DM(Dry Matter, 건물 기준)으로 수치를 전환하여 평가합니다.
               </p>
               <div className="bg-[#F4F8FF] border border-[#D6E4FF] rounded-lg p-4 mt-4">
-                <p className="text-[13px] md:text-[15px] font-semibold text-[#003DA5] mb-2">국제 표준 기준에서 제시하는 '성견 사료' 최소 요구량(DM 기준)</p>
+                <p className="text-[13px] md:text-[15px] font-semibold text-[#003DA5] mb-2">국제 표준 기준에서 제시하는 &apos;성견 사료&apos; 최소 요구량(DM 기준)</p>
                 <ul className="space-y-1 text-[12px] md:text-[14px] text-gray-700">
                   <li>• 단백질: AAFCO 최소 18%, FEDIAF 최소 20%</li>
                   <li>• 지방: AAFCO & FEDIAF 최소 5.5%</li>
@@ -60,10 +60,10 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                   조단백 39.8%, 조지방 12.5%으로 국제 표준 기준에서 제시하는 최소 요구량을 모두 충족합니다. 또한 탄수화물의 경우, 30.7%로 일반적으로 추천되는 20~40%로 적절합니다.
                 </p>
                 <p className="text-[12px] md:text-[14px] text-gray-700 leading-relaxed mt-2">
-                  기본 요구량을 충족했다고 해서 모든 사료가 같은 방식으로 에너지를 내는 것은 아닙니다. '실제 에너지 기여도(%ME)' 분석을 통해 이 사료의 진짜 '에너지 설계 컨셉'을 꿰뚫어 볼 수 있습니다.
+                  기본 요구량을 충족했다고 해서 모든 사료가 같은 방식으로 에너지를 내는 것은 아닙니다. &apos;실제 에너지 기여도(%ME)&apos; 분석을 통해 이 사료의 진짜 &apos;에너지 설계 컨셉&apos;을 꿰뚫어 볼 수 있습니다.
                 </p>
                 <p className="text-[12px] md:text-[14px] text-gray-700 leading-relaxed mt-2">
-                  아카나의 경우 단백질이 39.5%로 주된 에너지원이며 지방과 탄수화물까지 '균형 잡힌 에너지' 사료로 설계되었습니다. 세 영양소가 고르게 에너지를 공급하는 표준적인 설계 컨셉을 가집니다.
+                  아카나의 경우 단백질이 39.5%로 주된 에너지원이며 지방과 탄수화물까지 &apos;균형 잡힌 에너지&apos; 사료로 설계되었습니다. 세 영양소가 고르게 에너지를 공급하는 표준적인 설계 컨셉을 가집니다.
                 </p>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="주요 영양소 비율의 적정성">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                사료에 포함된 개별 영양소의 양을 넘어, 영양소들 간의 '균형'과 '상호작용'이 잘 설계되었는지 심층적으로 분석합니다.
+                사료에 포함된 개별 영양소의 양을 넘어, 영양소들 간의 &apos;균형&apos;과 &apos;상호작용&apos;이 잘 설계되었는지 심층적으로 분석합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 평가는 제품이 표방하는 생애주기의 일반적인 권장 범위를 기준으로 이루어집니다. 단백질:에너지(P:E Ratio), 칼슘:인, 오메가6:오메가3 총 3가지 주요 영양소 비율을 국제 표준 기준에 적절하게 설계되었는지 알려드립니다.
@@ -81,10 +81,10 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="필수 영양소 포함 여부">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                이 사료가 단독으로만 급여해도 생명 유지와 기본적인 건강에 필요한 모든 영양소를 공급하는 '완전 균형식(주식)'으로서의 자격을 갖추었는지를 평가합니다.
+                이 사료가 단독으로만 급여해도 생명 유지와 기본적인 건강에 필요한 모든 영양소를 공급하는 &apos;완전 균형식(주식)&apos;으로서의 자격을 갖추었는지를 평가합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                반려견은 하루에 약 40가지의 필수 영양소를 섭취해야 합니다. AAFCO/FEDIAF가 요구하는 필수 아미노산, 필수 지방산, 비타민, 미네랄의 포함 여부를, 소비자가 가장 확실하게 확인할 수 있는 방법인 'AAFCO/FEDIAF 영양 적절성 선언' 문구의 유무를 통해 최종적으로 판단합니다.
+                반려견은 하루에 약 40가지의 필수 영양소를 섭취해야 합니다. AAFCO/FEDIAF가 요구하는 필수 아미노산, 필수 지방산, 비타민, 미네랄의 포함 여부를, 소비자가 가장 확실하게 확인할 수 있는 방법인 &apos;AAFCO/FEDIAF 영양 적절성 선언&apos; 문구의 유무를 통해 최종적으로 판단합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 만약 영양 적절성 선언 문구가 없을 경우, 제조사에서 제공하는 영양 분석표와 원재료를 바탕으로 준공식 보증, 전문가적 추정, 보증 불가로 나누어 정보를 제공합니다.
@@ -94,7 +94,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="기능성 영양소 포함 여부">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                생명 유지에 필수적이지는 않지만, 특정 건강 문제 예방이나 기능 개선에 도움을 줄 수 있는 '기능성 원료(옵션)'의 함유 현황을 분석합니다.
+                생명 유지에 필수적이지는 않지만, 특정 건강 문제 예방이나 기능 개선에 도움을 줄 수 있는 &apos;기능성 원료(옵션)&apos;의 함유 현황을 분석합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 관절 건강(글루코사민 등), 장 건강(유산균 등), 두뇌 및 피부 건강(DHA/EPA) 등, 제조사가 우리 아이의 더 건강한 삶을 위해 어떤 특별한 성분들을 추가했는지 살펴봅니다.
@@ -130,7 +130,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="목표 체중 및 하루 권장 칼로리 설정">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                현재 신체 상태를 과학적으로 분석하여, 건강을 위한 현실적인 '목표 체중'과 '하루 목표 섭취 칼로리'를 설정합니다.
+                현재 신체 상태를 과학적으로 분석하여, 건강을 위한 현실적인 &apos;목표 체중&apos;과 &apos;하루 목표 섭취 칼로리&apos;를 설정합니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 기본적으로 NRC(국립연구위원회, National Research Council)에서 제시하는 생애주기와 중성화 여부, 활동 수준 등을 바탕으로 하되, 임상학적으로 권장되는 수준을 고려하여 최대한 과체중과 비만을 예방하는 방향으로 제시합니다.
@@ -163,17 +163,17 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
               <div className="bg-[#F4F8FF] border border-[#D6E4FF] rounded-lg p-4 mt-4">
                 <p className="text-[13px] md:text-[15px] font-semibold text-[#003DA5] mb-2">이유와 중요성</p>
                 <ul className="space-y-2 text-[12px] md:text-[14px] text-gray-700">
-                  <li>• 반려견의 적정 체중 유지와 비만 예방, 건강한 성장 및 활동 지원을 위해 "하루에 꼭 필요한 에너지(칼로리)"를 먼저 산출합니다.</li>
+                  <li>• 반려견의 적정 체중 유지와 비만 예방, 건강한 성장 및 활동 지원을 위해 &quot;하루에 꼭 필요한 에너지(칼로리)&quot;를 먼저 산출합니다.</li>
                   <li>• 사료별로 영양 조성이나 g(그램)당 칼로리가 다르므로, g 단위가 아닌 kcal 단위로 맞춰야 개별 맞춤 급여가 가능합니다.</li>
                   <li>• 동일 무게의 사료라도 제품에 따라 칼로리가 1.5~3배 이상 차이 날 수 있어, kcal 기준 급여가 아니면 과식·영양불균형 위험이 높아집니다.</li>
                 </ul>
                 <p className="text-[12px] md:text-[14px] text-gray-700 mt-3 leading-relaxed">
-                  또한 젤리대학교는 '실생활 적용 가능한 급여 플랜'을 제공하기 위해 자체 프레임워크인 '뉴트리맵'을 통해 아이들의 섭취 영양소 목표를 설정하여 제공합니다.
+                  또한 젤리대학교는 &apos;실생활 적용 가능한 급여 플랜&apos;을 제공하기 위해 자체 프레임워크인 &apos;뉴트리맵&apos;을 통해 아이들의 섭취 영양소 목표를 설정하여 제공합니다.
                 </p>
                 <div className="bg-white rounded-lg p-3 mt-3">
                   <p className="text-[12px] md:text-[14px] font-semibold text-gray-900 mb-1">*젤리대학교 뉴트리 맵이란?</p>
                   <p className="text-[12px] md:text-[14px] text-gray-700 leading-relaxed">
-                    AAFCO, NRC 등 공신력 있는 국제 영양 기준이 제시하는 '과학적 이상'과 실제 시장의 제품으로 달성 가능한 '현실' 사이의 간극을 메우기 위해 만들어졌습니다. 이 맵은 반려견의 생애주기, 중성화 여부, 건강 상태(과체중/비만 등)에 따라, 과학적이면서도 실현 가능한 최적의 영양 목표를 제시하는 독자적인 맞춤형 가이드라인입니다.
+                    AAFCO, NRC 등 공신력 있는 국제 영양 기준이 제시하는 &apos;과학적 이상&apos;과 실제 시장의 제품으로 달성 가능한 &apos;현실&apos; 사이의 간극을 메우기 위해 만들어졌습니다. 이 맵은 반려견의 생애주기, 중성화 여부, 건강 상태(과체중/비만 등)에 따라, 과학적이면서도 실현 가능한 최적의 영양 목표를 제시하는 독자적인 맞춤형 가이드라인입니다.
                   </p>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <AccordionItem title="현재 주식과 영양제의 상호작용 평가">
             <div className="space-y-3">
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
-                '과하면 부족한 것보다 못하다'라는 말이 있습니다. 영양제는 잘 짜여진 '주식+보조식'에 부족함을 보충해주는 목적으로 급여하시는 것을 추천드립니다.
+                &apos;과하면 부족한 것보다 못하다&apos;라는 말이 있습니다. 영양제는 잘 짜여진 &apos;주식+보조식&apos;에 부족함을 보충해주는 목적으로 급여하시는 것을 추천드립니다.
               </p>
               <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
                 이러한 젤리대학교의 철학을 반영하여 영양학적 밸런스를 분석하여 제공해 드립니다.
@@ -233,7 +233,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           {/* 플랜 제목 배너 */}
           <div className="bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] rounded-xl p-4 mb-6">
             <h4 className="text-[16px] md:text-[18px] font-bold text-white">
-              Type A '구리 안심' 및 점진적 체중 관리 플랜
+              Type A &apos;구리 안심&apos; 및 점진적 체중 관리 플랜
             </h4>
           </div>
 
@@ -496,7 +496,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           {/* 플랜 제목 배너 */}
           <div className="bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] rounded-xl p-4 mb-6">
             <h4 className="text-[16px] md:text-[18px] font-bold text-white">
-              Type B '이상적인 저지방' 목표 달성을 위한 전문 관리 플랜
+              Type B &apos;이상적인 저지방&apos; 목표 달성을 위한 전문 관리 플랜
             </h4>
           </div>
 
@@ -539,7 +539,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                   </div>
                   <div className="pt-2 border-t border-gray-200">
                     <div className="text-[11px] text-gray-500 mb-1">추가 설명</div>
-                    <div className="text-[11px] text-gray-700 leading-relaxed">체중 감량을 위해 과학적으로 설계된 처방식 사료입니다. 낮은 지방과 높은 식이섬유로 포만감을 주어 배고픔을 줄여주고, 필수 비타민과 미네랄을 공급하는 식단의 '베이스' 역할을 합니다.</div>
+                    <div className="text-[11px] text-gray-700 leading-relaxed">체중 감량을 위해 과학적으로 설계된 처방식 사료입니다. 낮은 지방과 높은 식이섬유로 포만감을 주어 배고픔을 줄여주고, 필수 비타민과 미네랄을 공급하는 식단의 &apos;베이스&apos; 역할을 합니다.</div>
                   </div>
                 </div>
               </div>
@@ -579,7 +579,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                   </div>
                   <div className="pt-2 border-t border-gray-200">
                     <div className="text-[11px] text-gray-500 mb-1">추가 설명</div>
-                    <div className="text-[11px] text-gray-700 leading-relaxed">지방이 거의 없는 순수 단백질원으로, 칼로리 제한 증가장 중요한 '근육 손실'을 막아줍니다. 부드러운 식감과 높은 기호성으로 식단의 만족도를 높이는 '솔버' 역할을 합니다.</div>
+                    <div className="text-[11px] text-gray-700 leading-relaxed">지방이 거의 없는 순수 단백질원으로, 칼로리 제한 증가장 중요한 &apos;근육 손실&apos;을 막아줍니다. 부드러운 식감과 높은 기호성으로 식단의 만족도를 높이는 &apos;솔버&apos; 역할을 합니다.</div>
                   </div>
                 </div>
               </div>
@@ -751,7 +751,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                   </div>
                   <div className="flex-1">
                     <h5 className="text-[13px] font-semibold text-gray-900 mb-1">힐스 프리스크립션 다이어트 r/d</h5>
-                    <p className="text-[12px] text-gray-700 leading-relaxed">체중 감량을 위해 과학적으로 설계된 처방식 사료입니다. 낮은 지방과 높은 식이섬유로 포만감을 주어 배고픔을 줄여주고, 필수 비타민과 미네랄을 공급하는 식단의 '베이스' 역할을 합니다.</p>
+                    <p className="text-[12px] text-gray-700 leading-relaxed">체중 감량을 위해 과학적으로 설계된 처방식 사료입니다. 낮은 지방과 높은 식이섬유로 포만감을 주어 배고픔을 줄여주고, 필수 비타민과 미네랄을 공급하는 식단의 &apos;베이스&apos; 역할을 합니다.</p>
                   </div>
                 </div>
               </div>
@@ -762,7 +762,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
                   </div>
                   <div className="flex-1">
                     <h5 className="text-[13px] font-semibold text-gray-900 mb-1">하림펫푸드 더리얼 필렛 닭가슴살</h5>
-                    <p className="text-[12px] text-gray-700 leading-relaxed">지방이 거의 없는 순수 단백질원으로, 칼로리 제한 증가장 중요한 '근육 손실'을 막아줍니다. 부드러운 식감과 높은 기호성으로 식단의 만족도를 높이는 '솔버' 역할을 합니다.</p>
+                    <p className="text-[12px] text-gray-700 leading-relaxed">지방이 거의 없는 순수 단백질원으로, 칼로리 제한 증가장 중요한 &apos;근육 손실&apos;을 막아줍니다. 부드러운 식감과 높은 기호성으로 식단의 만족도를 높이는 &apos;솔버&apos; 역할을 합니다.</p>
                   </div>
                 </div>
               </div>
@@ -813,7 +813,7 @@ export default function ProcessStepContent({ stepId }: ProcessStepContentProps) 
           <div className="text-center mb-6">
             <h4 className="text-[18px] md:text-[22px] font-bold mb-2 text-center">젤리대학교 식단 설계 3원칙</h4>
             <p className="text-[14px] md:text-[16px] opacity-90 text-center mb-6">
-              이건 단순한 "좋은 사료 추천"이 아니에요.
+              이건 단순한 &quot;좋은 사료 추천&quot;이 아니에요.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">

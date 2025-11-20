@@ -127,7 +127,7 @@ export default function NyanguDietPage() {
               </p>
               <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed">
                 단순한 프리미엄 사료 추천이 아닌 <span className="font-bold text-gray-900">과학적 근거</span>를 바탕으로{' '}
-                <span className="font-bold text-gray-900">'왜 이 사료가 우리 아이에게 맞는지'</span> 설명합니다.
+                <span className="font-bold text-gray-900">&apos;왜 이 사료가 우리 아이에게 맞는지&apos;</span> 설명합니다.
               </p>
             </div>
           </div>
