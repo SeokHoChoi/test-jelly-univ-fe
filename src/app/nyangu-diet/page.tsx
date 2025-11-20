@@ -80,7 +80,7 @@ export default function NyanguDietPage() {
         <div className="relative mx-auto max-w-7xl">
           {/* 헤더 섹션 */}
           <div className="text-center mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-700 px-5 py-2.5 rounded-lg text-[13px] md:text-[14px] font-medium mb-6">
+            <div className="inline-flex items-center gap-2 bg-[#ECF2FF] text-[#003DA5] px-4 py-2 rounded-full text-[12px] md:text-[13px] font-semibold mb-4">
               <span>🔬</span>
               <span>젤리대 1호 학생 냥구</span>
             </div>
@@ -119,10 +119,10 @@ export default function NyanguDietPage() {
               <p className="text-[18px] md:text-[20px] font-bold text-gray-900 mb-4">
                 ⚠️ 기억하세요! 프리미엄 사료와 식단은 없습니다.
               </p>
-              <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed mb-3">
+              <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed mb-2 md:mb-0">
                 냥구에게 완벽한 식단이 우리 아이에게는 맞지 않은 식단일 수 있어요.
               </p>
-              <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed mb-3">
+              <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed mb-2 md:mb-0">
                 나이가 다르고, 체중이 다르고, 활동량이 다르고, 알레르기가 다르고, 심지어 사는 환경까지 다르니까요.
               </p>
               <p className="text-[16px] md:text-[17px] text-gray-700 leading-relaxed">
