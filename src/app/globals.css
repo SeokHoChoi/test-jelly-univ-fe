@@ -364,3 +364,32 @@ body {
     opacity: 0;
   }
 }
+
+/* 롤링 이미지 갤러리 애니메이션 */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    /* 정확히 한 세트(5개 이미지)의 너비만큼 이동: 216px × 5 = 1080px */
+    transform: translateX(-1080px);
+  }
+}
+
+@media (min-width: 768px) {
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      /* 정확히 한 세트(5개 이미지)의 너비만큼 이동: 266px × 5 = 1330px */
+      transform: translateX(-1330px);
+    }
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
