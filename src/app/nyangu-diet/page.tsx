@@ -133,85 +133,79 @@ export default function NyanguDietPage() {
           </div>
 
           {/* 하단 CTA 섹션 */}
-          <div className="bg-white rounded-lg p-10 md:p-14 lg:p-20 mb-12 md:mb-16 border border-gray-200">
+          <div className="bg-white rounded-lg p-6 md:p-8 lg:p-10 mb-12 md:mb-16 border border-gray-200">
             <div className="max-w-5xl mx-auto">
               {/* 헤더 */}
-              <div className="text-center mb-12 md:mb-16">
-                <h3 className="text-[32px] md:text-[40px] lg:text-[44px] font-bold mb-6 leading-tight text-gray-900">
+              <div className="text-center mb-8 md:mb-10">
+                <h3 className="text-[26px] md:text-[32px] lg:text-[36px] font-bold mb-3 leading-tight text-gray-900">
                   냥구처럼 {dogName}도<br className="md:hidden" />
                   <span className="text-[#003DA5]">젤리대학교 식단</span>을 받아보세요
                 </h3>
-                <p className="text-[18px] md:text-[20px] text-gray-600 leading-relaxed">
+                <p className="text-[15px] md:text-[16px] text-gray-600 leading-relaxed">
                   냥구가 받은 것과 동일한 3원칙 검증 프로세스로<br className="hidden md:block" />
                   {dogName}만을 위한 맞춤 식단을 설계해드립니다
                 </p>
               </div>
 
-              {/* 서비스 항목 리스트 */}
-              <div className="bg-gray-50 rounded-lg p-8 md:p-10 mb-10 md:mb-12 border border-gray-200">
-                <div className="space-y-5 md:space-y-6">
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[15px] md:text-[16px] mt-0.5">
-                      1
-                    </div>
-                    <p className="text-[17px] md:text-[18px] text-gray-700 leading-relaxed pt-0.5">
-                      주식/보조식 최대 5개 및 영양제 제품 안전성 분석
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[15px] md:text-[16px] mt-0.5">
-                      2
-                    </div>
-                    <p className="text-[17px] md:text-[18px] text-gray-700 leading-relaxed pt-0.5">
-                      1:1 우리 아이 맞춤 데이터 기반 1일 에너지 및 급여량 설정
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[15px] md:text-[16px] mt-0.5">
-                      3
-                    </div>
-                    <p className="text-[17px] md:text-[18px] text-gray-700 leading-relaxed pt-0.5">
-                      목표 에너지 및 급여량에 따른 맞춤 식단 설계 2가지 제공
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[15px] md:text-[16px] mt-0.5">
-                      4
-                    </div>
-                    <p className="text-[17px] md:text-[18px] text-gray-700 leading-relaxed pt-0.5">
-                      영양학 전문 수의사 최종 검토
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-5">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[15px] md:text-[16px] mt-0.5">
-                      5
-                    </div>
-                    <p className="text-[17px] md:text-[18px] text-gray-700 leading-relaxed pt-0.5">
-                      영양학 전문 상담사의 관련 Q&A 1회 제공
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 멘트 */}
-              <div className="text-center mb-10 md:mb-12">
-                <p className="text-[20px] md:text-[22px] text-gray-900 font-semibold">
+              {/* CTA 영역 (상단 배치) */}
+              <div className="text-center mb-8 md:mb-10">
+                <p className="text-[16px] md:text-[17px] text-gray-900 font-semibold mb-5 md:mb-6">
                   이것이 젤리대학교가 추구하는<br className="md:hidden" />
                   <span className="text-[#003DA5]">맞춤 식단 설계</span>입니다
                 </p>
-              </div>
-
-              {/* CTA 버튼 */}
-              <div className="text-center">
                 <button
                   onClick={goCheckout}
-                  className="w-full md:w-auto bg-[#003DA5] text-white py-6 md:py-7 px-14 md:px-20 rounded-lg font-bold text-[19px] md:text-[21px] hover:bg-[#002A7A] transition-colors mb-5"
+                  className="w-full md:w-auto bg-[#003DA5] text-white py-4 md:py-5 px-12 md:px-16 rounded-lg font-bold text-[17px] md:text-[19px] hover:bg-[#002A7A] transition-colors mb-3"
                 >
                   1:1 맞춤 서비스 신청하기
                 </button>
-                <p className="text-[15px] text-gray-500">
+                <p className="text-[13px] md:text-[14px] text-gray-500">
                   서울대·한국수의영양학회 임원 수의사 검증
                 </p>
+              </div>
+
+              {/* 서비스 항목 리스트 (2컬럼 그리드) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[14px] md:text-[15px] mt-0.5">
+                    1
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-gray-700 leading-relaxed pt-0.5">
+                    주식/보조식 최대 5개 및 영양제 제품 안전성 분석
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[14px] md:text-[15px] mt-0.5">
+                    2
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-gray-700 leading-relaxed pt-0.5">
+                    1:1 우리 아이 맞춤 데이터 기반 1일 에너지 및 급여량 설정
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[14px] md:text-[15px] mt-0.5">
+                    3
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-gray-700 leading-relaxed pt-0.5">
+                    목표 에너지 및 급여량에 따른 맞춤 식단 설계 2가지 제공
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[14px] md:text-[15px] mt-0.5">
+                    4
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-gray-700 leading-relaxed pt-0.5">
+                    영양학 전문 수의사 최종 검토
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 md:gap-4 md:col-span-2">
+                  <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#003DA5] text-white flex items-center justify-center font-bold text-[14px] md:text-[15px] mt-0.5">
+                    5
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-gray-700 leading-relaxed pt-0.5">
+                    영양학 전문 상담사의 관련 Q&A 1회 제공
+                  </p>
+                </div>
               </div>
             </div>
           </div>
