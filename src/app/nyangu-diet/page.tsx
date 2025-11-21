@@ -99,12 +99,12 @@ export default function NyanguDietPage() {
           {/* 메인 레이아웃: 왼쪽 고정 패널 + 오른쪽 캐러셀 */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 mb-16">
             {/* 왼쪽: 냥구 정보 패널 (고정) */}
-            <div className="lg:col-span-1 order-2 lg:order-1">
+            <div className="lg:col-span-1 order-1">
               <NyanguInfoPanel />
             </div>
 
             {/* 오른쪽: 프로세스 단계 캐러셀 */}
-            <div className="lg:col-span-2 order-1 lg:order-2">
+            <div className="lg:col-span-2 order-2">
               <ProcessStepCarousel
                 steps={processSteps}
                 activeStep={activeStep}
