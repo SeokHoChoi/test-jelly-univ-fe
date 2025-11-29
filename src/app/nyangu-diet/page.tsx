@@ -54,7 +54,7 @@ export default function NyanguDietPage() {
               <br />
               이 장기가 망가지는 줄도 모릅니다.
             </p>
-            <div className="mt-8 flex md:justify-center animate-bounce">
+            <div className="mt-8 flex justify-center animate-bounce">
               <ChevronDown className="w-6 h-6 text-gray-400" />
             </div>
           </div>
@@ -548,11 +548,11 @@ export default function NyanguDietPage() {
             </div>
 
             {/* 상단 원형 3개 - 피그마 구조 반영 */}
-            <div className="mb-8 rounded-2xl bg-[#F5F7FB] px-4 py-8 md:px-8">
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 lg:gap-16">
+            <div className="mb-8 rounded-2xl bg-[#F5F7FB] px-3 py-4 md:py-8 md:px-8">
+              <div className="flex flex-row items-center justify-center gap-5 md:gap-10 lg:gap-16">
                 <div className="flex items-center justify-center">
-                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    <p className="text-center text-[13px] md:text-[15px] font-semibold text-[#003DA5] leading-snug">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center shadow-sm">
+                    <p className="text-center text-[12px] md:text-[15px] font-semibold text-[#003DA5] leading-snug">
                       국제 표준
                       <br />
                       영양 검증
@@ -560,8 +560,8 @@ export default function NyanguDietPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
-                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-[#DBEAFE] flex items-center justify-center shadow-sm">
-                    <p className="text-center text-[13px] md:text-[15px] font-semibold text-[#1E3A8A] leading-snug">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#FFCF7D] flex items-center justify-center shadow-sm">
+                    <p className="text-center text-[12px] md:text-[15px] font-semibold text-[#003DA5] leading-snug">
                       개체별
                       <br />
                       맞춤 데이터 설계
@@ -569,8 +569,8 @@ export default function NyanguDietPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
-                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-[#003DA5] flex items-center justify-center shadow-sm">
-                    <p className="text-center text-[13px] md:text-[15px] font-semibold text-white leading-snug">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#0052CC] flex items-center justify-center shadow-sm">
+                    <p className="text-center text-[12px] md:text-[15px] font-semibold text-white leading-snug">
                       AI + 수의사
                       <br />
                       이중 검증
