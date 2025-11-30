@@ -156,31 +156,26 @@ export default function NyanguDietPage() {
               {/* 게이지 바 시각화 */}
               <div className="relative h-6 bg-gray-100 rounded-full mb-12 mt-4">
                 {/* 구간 표시 */}
-                <div className="absolute left-0 w-[20%] h-full bg-[#E0F2FE] rounded-l-full" />
-                <div className="absolute left-[20%] w-[50%] h-full bg-[#F8FAFC]" />
-                <div className="absolute right-0 w-[30%] h-full bg-[#FFE4E6] rounded-r-full" />
-
-                {/* 구분선 및 라벨 */}
-                <div className="absolute left-[20%] -top-2 bottom-0 w-0.5 bg-white">
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-[12px] font-bold text-[#003DA5]">
-                    균형
-                  </div>
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-gray-400">
-                    -1
-                  </div>
+                <div className="absolute left-0 w-[20%] h-full bg-[#E0F2FE] rounded-l-full flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-[#003DA5]">균형</span>
                 </div>
-                <div className="absolute left-[70%] -top-2 bottom-0 w-0.5 bg-white">
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-[12px] font-bold text-[#4B5563]">
-                    보통
-                  </div>
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-gray-400">
-                    1.5
-                  </div>
+                <div className="absolute left-[20%] w-[50%] h-full bg-[#F8FAFC] flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-[#4B5563]">보통</span>
+                </div>
+                <div className="absolute right-0 w-[30%] h-full bg-[#FFE4E6] rounded-r-full flex items-center justify-start pl-28">
+                  <span className="text-[10px] font-bold text-[#E11D48]">불균형</span>
                 </div>
 
-                {/* 위험 구간 라벨 */}
-                <div className="absolute right-2 -top-8 text-[12px] font-bold text-[#E11D48]">
-                  불균형
+                {/* 구분선 */}
+                <div className="absolute left-[20%] top-0 bottom-0 w-0.5 bg-white" />
+                <div className="absolute left-[70%] top-0 bottom-0 w-0.5 bg-white" />
+
+                {/* 숫자 라벨 */}
+                <div className="absolute left-[20%] top-full mt-2 -translate-x-1/2">
+                  <div className="text-[12px] text-gray-400">-1</div>
+                </div>
+                <div className="absolute left-[70%] top-full mt-2 -translate-x-1/2">
+                  <div className="text-[12px] text-gray-400">1.5</div>
                 </div>
 
                 {/* 현재 상태 포인터 (예시) */}
