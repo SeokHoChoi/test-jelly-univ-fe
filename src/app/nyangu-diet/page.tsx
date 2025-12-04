@@ -11,6 +11,7 @@ import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 export default function NyanguDietPage() {
   const router = useRouter();
   const [isNyanguDietOpen, setIsNyanguDietOpen] = useState(false);
+  const [isStoolOpen, setIsStoolOpen] = useState(false);
 
   const goCheckout = () => {
     router.push('/checkout?plan=basic&dir=true&campaign=nyangu');
@@ -458,6 +459,84 @@ export default function NyanguDietPage() {
                   <p className="text-[13px] text-gray-600">
                     <span className="font-semibold text-gray-900">하루 급여량:</span> 120g |{' '}
                     <span className="font-semibold text-gray-900">목표 칼로리:</span> 451~632kcal
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 경고 문구 - 버튼 위에 표시 */}
+            <div className="mt-6 mb-3 flex items-center gap-2 text-[13px] text-gray-500">
+              <span>⚠️</span>
+              <span>다소 불쾌할 수 있는 이미지가 포함되어 있습니다</span>
+            </div>
+
+            {/* 냥구의 변 Before & After 토글 버튼 */}
+            <button
+              onClick={() => setIsStoolOpen(!isStoolOpen)}
+              className="w-full bg-gray-50 hover:bg-gray-100 rounded-xl p-5 border border-gray-200 transition-colors flex items-center justify-between"
+            >
+              <span className="text-[16px] font-semibold text-[#003DA5]">
+                냥구의 변 Before & After
+              </span>
+              {isStoolOpen ? (
+                <ChevronUp className="w-5 h-5 text-gray-500" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-gray-500" />
+              )}
+            </button>
+
+            {/* 변 Before & After 토글 콘텐츠 */}
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${isStoolOpen ? 'max-h-[2000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+                }`}
+            >
+              <div className="bg-gray-50 rounded-xl p-4 md:p-6 border border-gray-200">
+                {/* Before & After 비교 */}
+                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 mb-6">
+                  {/* Before */}
+                  <div className="flex-1 flex flex-col w-full md:w-auto">
+                    <p className="text-[14px] font-semibold text-gray-900 mb-4 text-center">
+                      Before
+                      <br />
+                      <span className="text-[12px] font-normal text-gray-500">(맞춤 식단 적용 전)</span>
+                    </p>
+                    <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white shadow-sm">
+                      <img
+                        src="/img/nyangu-page/stool-before.png"
+                        alt="냥구의 변 Before"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 화살표 */}
+                  <div className="flex md:flex-col items-center justify-center my-2 md:my-0">
+                    <div className="text-[28px] md:text-[32px] text-[#003DA5] rotate-90 md:rotate-0">→</div>
+                  </div>
+
+                  {/* After */}
+                  <div className="flex-1 flex flex-col w-full md:w-auto">
+                    <p className="text-[14px] font-semibold text-gray-900 mb-4 text-center">
+                      After
+                      <br />
+                      <span className="text-[12px] font-normal text-gray-500">(맞춤 식단 적용 후)</span>
+                    </p>
+                    <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white shadow-sm">
+                      <img
+                        src="/img/nyangu-page/stool-after.png"
+                        alt="냥구의 변 After"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 설명 텍스트 */}
+                <div className="bg-white rounded-lg p-4 border border-gray-100">
+                  <p className="text-[14px] text-gray-700 leading-relaxed text-center">
+                    맞춤 식단 적용 전에는 묽고 형태가 없는 변을 보였으나,
+                    <br />
+                    식단 적용 후 건강하고 단단한 형태의 변으로 개선되었습니다.
                   </p>
                 </div>
               </div>
