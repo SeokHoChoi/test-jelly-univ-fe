@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const HeroSection = () => {
   return (
-    <section className="relative pt-16 md:pt-24 pb-0 mb-35 md:mb-135" style={{
+    <section className="relative pt-16 md:pt-24 pb-0 mb-50 md:mb-135" style={{
       background: 'linear-gradient(to top, rgba(0, 61, 165, 0.5) 0%, rgba(121, 151, 203, 0.3) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0) 90%, transparent 100%)'
     }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -52,8 +52,8 @@ const HeroSection = () => {
           <Image
             src="/img/home/hero-bg-mobile.png"
             alt="Hero background decoration"
-            width={320}
-            height={98}
+            width={420}
+            height={198}
             className="block md:hidden h-auto mx-auto"
             priority
           />
