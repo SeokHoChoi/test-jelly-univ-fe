@@ -369,7 +369,7 @@ function CheckoutPageContent() {
                   disabled={loading}
                   className='w-full bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg font-bold rounded-lg transition-colors disabled:opacity-50'
                 >
-                  {loading ? '결제 준비 중...' : '결제하기'}
+                  {loading ? '서비스 준비 중...' : '서비스 신청하기'}
                 </button>
               </div>
             </div>
@@ -505,7 +505,7 @@ function CheckoutPageContent() {
             disabled={loading}
             className='w-full md:w-auto min-w-[200px] bg-[#003DA5] hover:bg-[#002A7A] text-white px-6 py-3 rounded-[10px] font-semibold disabled:opacity-50'
           >
-            {loading ? '결제 준비 중...' : '결제하기'}
+            {loading ? '서비스 준비 중...' : '서비스 신청하기'}
           </button>
         </div>
       </div>

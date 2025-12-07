@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 const HeroSection = () => {
   return (
-    <section className="relative py-16 md:py-24" style={{
+    <section className="relative pt-16 md:pt-24 pb-0 mb-35 md:mb-135" style={{
       background: 'linear-gradient(to top, rgba(0, 61, 165, 0.5) 0%, rgba(121, 151, 203, 0.3) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0) 90%, transparent 100%)'
     }}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
           <h1 className="text-[25px] md:text-[50px] font-medium text-[#1E1E1E] mb-6 leading-tight text-center">
             <span className="block md:hidden">
@@ -46,26 +46,28 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* 하단 데코레이션 이미지 */}
-      <div className="w-full flex justify-center -mb-16 md:-mb-24">
-        <Image
-          src="/img/home/hero-bg-mobile.png"
-          alt="Hero background decoration"
-          width={320}
-          height={98}
-          className="block md:hidden h-auto mx-4"
-          priority
-        />
-        <Image
-          src="/img/home/hero-bg-desktop.png"
-          alt="Hero background decoration"
-          width={922}
-          height={200}
-          className="hidden md:block h-auto"
-          priority
-        />
+      {/* 하단 데코레이션 이미지 - 반 정도만 삐져나오게 */}
+      <div className="relative mt-2 md:mt-12 flex justify-center h-[80px]">
+        <div className="relative md:-translate-y-[calc(50%+10px)]">
+          <Image
+            src="/img/home/hero-bg-mobile.png"
+            alt="Hero background decoration"
+            width={320}
+            height={98}
+            className="block md:hidden h-auto mx-auto"
+            priority
+          />
+          <Image
+            src="/img/home/hero-bg-desktop.png"
+            alt="Hero background decoration"
+            width={922}
+            height={200}
+            className="hidden md:block h-auto mx-auto"
+            priority
+          />
+        </div>
       </div>
-    </section>
+    </section >
   );
 };
 
