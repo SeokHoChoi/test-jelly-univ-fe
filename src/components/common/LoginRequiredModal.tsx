@@ -8,14 +8,32 @@ interface LoginRequiredModalProps {
   onClose: () => void;
   onLogin: () => void;
   onSignup: () => void;
+  planType?: 'basic' | 'premium' | 'both';
 }
 
 export default function LoginRequiredModal({
   isOpen,
   onClose,
   onLogin,
-  onSignup
+  onSignup,
+  planType = 'both'
 }: LoginRequiredModalProps) {
+  const showAllPlans = planType === 'both' || !planType;
+  const basicPlan = {
+    title: '현재 급여 식단 분석',
+    price: '39,000원',
+    originalPrice: '45,000원',
+    discount: '13% 할인 중',
+    planName: '베이직 플랜'
+  };
+
+  const premiumPlan = {
+    title: '맞춤형 식단 설계',
+    price: '79,000원',
+    originalPrice: '120,000원',
+    discount: '34% 할인 중',
+    planName: '프리미엄 플랜'
+  };
   if (!isOpen) return null;
 
   return (
@@ -58,7 +76,7 @@ export default function LoginRequiredModal({
 
           {/* 서비스 소개 */}
           <div className="bg-gray-50 rounded-xl p-4">
-            <h3 className="font-medium text-gray-900 mb-2">젤리유 프리미엄 플랜</h3>
+            <h3 className="font-medium text-gray-900 mb-2">젤리유 플랜</h3>
             <ul className="text-sm text-gray-600 space-y-1">
               <li>• 서울대·한국수의영양학회 임원 수의사 검증</li>
               <li>• 1:1 맞춤 식단 분석 리포트</li>
@@ -66,16 +84,46 @@ export default function LoginRequiredModal({
           </div>
 
           {/* 가격 정보 */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">프리미엄 플랜</span>
-              <div className="text-right">
-                <span className="text-lg font-bold text-blue-600">39,000원</span>
-                <span className="text-sm text-gray-500 ml-2 line-through">45,000원</span>
+          {showAllPlans ? (
+            // 두 플랜 모두 표시
+            <div className="space-y-3">
+              {/* 베이직 플랜 */}
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">{basicPlan.planName}</span>
+                  <div className="text-right">
+                    <span className="text-lg font-bold text-blue-600">{basicPlan.price}</span>
+                    <span className="text-sm text-gray-500 ml-2 line-through">{basicPlan.originalPrice}</span>
+                  </div>
+                </div>
+                <div className="text-xs text-blue-600 mt-1">{basicPlan.discount}</div>
+              </div>
+
+              {/* 프리미엄 플랜 */}
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">{premiumPlan.planName}</span>
+                  <div className="text-right">
+                    <span className="text-lg font-bold text-blue-600">{premiumPlan.price}</span>
+                    <span className="text-sm text-gray-500 ml-2 line-through">{premiumPlan.originalPrice}</span>
+                  </div>
+                </div>
+                <div className="text-xs text-blue-600 mt-1">{premiumPlan.discount}</div>
               </div>
             </div>
-            <div className="text-xs text-blue-600 mt-1">13% 할인 중</div>
-          </div>
+          ) : (
+            // 선택한 플랜만 표시
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">{planType === 'premium' ? premiumPlan.planName : basicPlan.planName}</span>
+                <div className="text-right">
+                  <span className="text-lg font-bold text-blue-600">{planType === 'premium' ? premiumPlan.price : basicPlan.price}</span>
+                  <span className="text-sm text-gray-500 ml-2 line-through">{planType === 'premium' ? premiumPlan.originalPrice : basicPlan.originalPrice}</span>
+                </div>
+              </div>
+              <div className="text-xs text-blue-600 mt-1">{planType === 'premium' ? premiumPlan.discount : basicPlan.discount}</div>
+            </div>
+          )}
         </div>
 
         {/* 푸터 버튼들 */}
