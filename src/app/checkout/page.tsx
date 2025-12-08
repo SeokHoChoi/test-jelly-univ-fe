@@ -18,6 +18,7 @@ function CheckoutPageContent() {
   const [dogName, setDogName] = useState<string>('우리 아이');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [sampleReportModalOpen, setSampleReportModalOpen] = useState(false);
+  const [figmaModalOpen, setFigmaModalOpen] = useState(false);
   const [selectedPlanForModal, setSelectedPlanForModal] = useState<'basic' | 'premium' | 'both'>('both');
 
   const router = useRouter();
@@ -326,18 +327,6 @@ function CheckoutPageContent() {
             <span className='text-[#000000] font-medium'>의 현재 식단, 정말 안전한지<br />
               서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span>
           </h1>
-          {/* 샘플 리포트 보기 버튼 */}
-          <button
-            onClick={() => setSampleReportModalOpen(true)}
-            className='mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[15px] md:text-[17px] font-semibold text-white bg-gradient-to-r from-[#003DA5] to-[#0052CC] rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200'
-          >
-            <span className="text-[20px]">📊</span>
-            <span>샘플 리포트 미리보기</span>
-          </button>
-          {/* 안내 문구: 모달 외부에서도 무엇을 보는지 설명 */}
-          <p className='mt-3 text-[13px] md:text-[15px] text-[#666666]'>
-            결제 시 이메일로 받게 될 <span className='font-semibold text-[#003DA5]'>실제 리포트 예시</span>를 미리 확인해보세요.
-          </p>
         </div>
 
         {/* 가격 카드 */}
@@ -371,6 +360,17 @@ function CheckoutPageContent() {
                       / 정가 4.5만원
                     </span>
                   </div>
+                </div>
+
+                {/* 샘플 리포트 미리보기 버튼 */}
+                <div className='mb-4'>
+                  <button
+                    onClick={() => setSampleReportModalOpen(true)}
+                    className='w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#003DA5] bg-[#F3F6FF] border border-[#003DA5] rounded-lg hover:bg-[#E6F0FF] transition-colors'
+                  >
+                    <span className="text-[16px]">📊</span>
+                    <span>샘플 리포트 미리보기</span>
+                  </button>
                 </div>
 
                 {/* 결제 버튼 (UI 동일, 클릭 시 프리페어 후 즉시 결제) */}
@@ -438,6 +438,17 @@ function CheckoutPageContent() {
                       / 정가 12만원
                     </span>
                   </div>
+                </div>
+
+                {/* 샘플 리포트 미리보기 버튼 */}
+                <div className='mb-4'>
+                  <button
+                    onClick={() => setFigmaModalOpen(true)}
+                    className='w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#003DA5] bg-[#F3F6FF] border border-[#003DA5] rounded-lg hover:bg-[#E6F0FF] transition-colors'
+                  >
+                    <span className="text-[16px]">📊</span>
+                    <span>샘플 리포트 미리보기</span>
+                  </button>
                 </div>
 
                 {/* 결제 버튼 */}
@@ -620,11 +631,39 @@ function CheckoutPageContent() {
         }}
       />
 
-      {/* 샘플 리포트 모달 */}
+      {/* 샘플 리포트 모달 (3.9만원) */}
       <SampleReportModal
         isOpen={sampleReportModalOpen}
         onClose={() => setSampleReportModalOpen(false)}
       />
+
+      {/* Figma 샘플 리포트 모달 (7.9만원) */}
+      {figmaModalOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setFigmaModalOpen(false)} />
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-7xl w-full h-[90vh] flex flex-col">
+            {/* 헤더 */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">샘플 리포트 미리보기</h2>
+              <button
+                onClick={() => setFigmaModalOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <span className="text-2xl">×</span>
+              </button>
+            </div>
+            {/* Figma 임베드 */}
+            <div className="flex-1 overflow-hidden">
+              <iframe
+                src="https://jelly-univ-joedy20240615.figma.site/"
+                className="w-full h-full border-0"
+                allow="fullscreen"
+                title="Figma 샘플 리포트"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
