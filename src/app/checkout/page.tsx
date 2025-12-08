@@ -362,18 +362,18 @@ function CheckoutPageContent() {
                   </div>
                 </div>
 
-                {/* 샘플 리포트 미리보기 버튼 */}
+                {/* 예시 리포트 미리보기 버튼 */}
                 <div className='mb-4'>
                   <button
                     onClick={() => setSampleReportModalOpen(true)}
-                    className='w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#003DA5] bg-[#F3F6FF] border border-[#003DA5] rounded-lg hover:bg-[#E6F0FF] transition-colors'
+                    className='w-full flex flex-col items-center justify-center px-4 py-3 text-center bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors'
                   >
-                    <span className="text-[16px]">📊</span>
-                    <span>샘플 리포트 미리보기</span>
+                    <span className="text-[16px] font-semibold text-gray-900">예시 리포트 미리보기</span>
+                    <span className="text-[13px] text-gray-600 mt-0.5">결제 후, 실제 받게 될 리포트를 확인해보세요</span>
                   </button>
                 </div>
 
-                {/* 결제 버튼 (UI 동일, 클릭 시 프리페어 후 즉시 결제) */}
+                {/* 서비스 신청하기 버튼 */}
                 <div className='mb-8'>
                   <button
                     onClick={() => {
@@ -381,9 +381,10 @@ function CheckoutPageContent() {
                       handlePrepareAndPay('basic');
                     }}
                     disabled={loading}
-                    className='w-full bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg font-bold rounded-lg transition-colors disabled:opacity-50'
+                    className='w-full flex flex-col items-center justify-center px-4 py-3 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] rounded-lg transition-colors disabled:opacity-50'
                   >
-                    {loading ? '서비스 준비 중...' : '서비스 신청하기'}
+                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '서비스 신청하기'}</span>
+                    <span className="text-[13px] font-normal opacity-90">이미 15명이 신청했어요!</span>
                   </button>
                 </div>
               </div>
@@ -440,18 +441,18 @@ function CheckoutPageContent() {
                   </div>
                 </div>
 
-                {/* 샘플 리포트 미리보기 버튼 */}
+                {/* 예시 리포트 미리보기 버튼 */}
                 <div className='mb-4'>
                   <button
                     onClick={() => setFigmaModalOpen(true)}
-                    className='w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[14px] font-semibold text-[#003DA5] bg-[#F3F6FF] border border-[#003DA5] rounded-lg hover:bg-[#E6F0FF] transition-colors'
+                    className='w-full flex flex-col items-center justify-center px-4 py-3 text-center bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors'
                   >
-                    <span className="text-[16px]">📊</span>
-                    <span>샘플 리포트 미리보기</span>
+                    <span className="text-[16px] font-semibold text-gray-900">예시 리포트 미리보기</span>
+                    <span className="text-[13px] text-gray-600 mt-0.5">결제 후, 실제 받게 될 리포트를 확인해보세요</span>
                   </button>
                 </div>
 
-                {/* 결제 버튼 */}
+                {/* 서비스 신청하기 버튼 */}
                 <div className='mb-8'>
                   <button
                     onClick={() => {
@@ -459,9 +460,10 @@ function CheckoutPageContent() {
                       handlePrepareAndPay('premium');
                     }}
                     disabled={loading}
-                    className='w-full bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] h-12 px-6 text-lg font-bold rounded-lg transition-colors disabled:opacity-50'
+                    className='w-full flex flex-col items-center justify-center px-4 py-3 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] rounded-lg transition-colors disabled:opacity-50'
                   >
-                    {loading ? '서비스 준비 중...' : '서비스 신청하기'}
+                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '서비스 신청하기'}</span>
+                    <span className="text-[13px] font-normal opacity-90">이미 10명이 신청했어요!</span>
                   </button>
                 </div>
               </div>
@@ -597,7 +599,7 @@ function CheckoutPageContent() {
 
       {/* 하단 고정 결제 영역 */}
       <div className='sticky bottom-0 left-0 right-0 bg-white'>
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex justify-center'>
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex flex-col items-center'>
           <button
             onClick={() => {
               // 하단 버튼은 둘 다 보여야 하므로 'both'로 설정
@@ -607,10 +609,11 @@ function CheckoutPageContent() {
               handlePrepareAndPay(plan === 'premium' ? 'premium' : 'basic');
             }}
             disabled={loading}
-            className='w-full md:w-auto min-w-[200px] bg-[#003DA5] hover:bg-[#002A7A] text-white px-6 py-3 rounded-[10px] font-semibold disabled:opacity-50'
+            className='w-full md:w-auto min-w-[200px] px-4 py-3 bg-[#003DA5] hover:bg-[#002A7A] text-white rounded-[10px] disabled:opacity-50 font-semibold'
           >
             {loading ? '서비스 준비 중...' : '서비스 신청하기'}
           </button>
+          <p className='text-[12px] text-gray-600 mt-2 text-center'>이미 25명이 신청했어요!</p>
         </div>
       </div>
 
