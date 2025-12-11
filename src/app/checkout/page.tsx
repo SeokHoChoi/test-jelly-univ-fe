@@ -333,35 +333,80 @@ function CheckoutPageContent() {
         <div id="plan" className='mb-12 md:mb-16'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto'>
             {/* 3.9만원 플랜 */}
-            <Card className='relative w-full border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px]'>
+            <Card className='relative w-full border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px] flex flex-col'>
               {/* 할인 배지 */}
               <div className='absolute -top-3 left-1/2 -translate-x-1/2'>
                 <span className='bg-red-500 text-white px-4 py-2 rounded-full text-base font-medium'>
-                  13% 할인
+                  50% 할인
                 </span>
               </div>
-              <div className='text-left mb-8'>
-                <p className='text-[15px] md:text-[20px] font-semibold text-[#003DA5] mb-1'>
-                  현재 식단이 우리 아이에게 잘 맞는지 걱정이라면
-                </p>
-                <h3 className='text-[20px] md:text-[30px] font-bold text-[#000000] mb-2'>
-                  현재 급여 식단 분석
+              <div className='text-left flex-1 flex flex-col'>
+                <h3 className='text-[20px] md:text-[30px] font-bold text-[#000000] mb-4'>
+                  현재 급여 식단 맞춤 설계
                 </h3>
-                <p className='text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium'>
-                  아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 <span className='text-orange-500'>최대 3종을 영양·품질·안전성</span>까지 맞춤 분석합니다!
-                </p>
-
                 <div className='mb-6'>
                   <div className='flex items-baseline gap-2'>
                     <span className='text-[40px] md:text-[55px] font-bold text-[#003DA5]'>
-                      3.9만원
+                      19,500원
                     </span>
                     <span className='line-through text-[17px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)]'>
-                      / 정가 4.5만원
+                      / 정가 3.9만원
                     </span>
                   </div>
                 </div>
+                <div className='mb-6'>
+                  <p className='text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3'>
+                    이런 분들에게 추천드려요!
+                  </p>
+                  <ul className='space-y-2 text-[14px] md:text-[16px] text-[#666666]'>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 주식(사료)가 잘 맞아서 새롭게 변경하지 않아도 되는 보호자</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 주식을 활용해 우리 아이의 건강 상태에 맞게 맞춤 설계하고 싶은 보호자</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 먹이는 제품의 품질이 좋은지, 정말 안전한지 궁금한 보호자</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className='mb-6'>
+                  <p className='text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3'>
+                    이런걸 받으실 수 있어요!
+                  </p>
+                  <ul className='space-y-2 text-[14px] md:text-[16px] text-[#666666]'>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 식단 평가 및 솔루션</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>우리 아이의 현재 신체 상태 진단 및 분석</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>하루 권장 에너지량, 주요 영양소 섭취 함량 설계</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 주식과 보조식을 활용한 맞춤 식단 설계</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>우리 아이가 먹는 제품의 품질과 안전성에 대한 정밀 분석 *최대 3종</span>
+                    </li>
+                  </ul>
+                  <p className='text-[13px] md:text-[14px] text-[#666666] mt-3 italic'>
+                    *글로벌 수의영양학 데이터를 학습한 전문 AI가 제공해드립니다.
+                  </p>
+                </div>
+              </div>
 
+              {/* 버튼 영역 - 하단 고정 */}
+              <div className='mt-auto pt-6'>
                 {/* 예시 리포트 미리보기 버튼 */}
                 <div className='mb-4'>
                   <button
@@ -374,7 +419,7 @@ function CheckoutPageContent() {
                 </div>
 
                 {/* 서비스 신청하기 버튼 */}
-                <div className='mb-8'>
+                <div>
                   <button
                     onClick={() => {
                       setSelectedPlanForModal('basic');
@@ -389,58 +434,98 @@ function CheckoutPageContent() {
                 </div>
               </div>
 
-              <ul className='space-y-[6px] md:space-y-2'>
-                {[
-                  '현재 급여 사료의 국제 표준(AAFCO /FEDIAF) 준수 여부',
-                  '현재 급여 사료의 에너지원 구성 및 주요 영양소 비율의 적정성',
-                  '현재 급여 사료의 필수 및 기능성 영양소 포함 여부',
-                  '반려견의 현재 신체 상태 진단',
-                  '목표 체중 및 일일 목표 칼로리 설정',
-                  '현재 섭취 칼로리 및 영양소 함량 분석',
-                  '현재 vs 목표 영양 섭취량 비교 분석',
-                  '급여 식단과 영양제의 상호작용 및 평가',
-                  '종합 결론 및 솔루션'
-                ].map((feature, index) => (
-                  <li key={index} className='flex items-start gap-[6px] md:gap-2'>
-                    <Check className='text-[#1E1E1E] flex-shrink-0 mt-0.5' size={20} />
-                    <span className='font-medium text-[14px] md:text-[18px] leading-[25px] text-[#1E1E1E]'>
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </Card>
 
-            {/* 7.9만원 플랜 */}
-            <Card className='relative w-full border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px]'>
+            {/* 79,000원 플랜 */}
+            <Card className='relative w-full border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px] flex flex-col'>
               {/* 할인 배지 */}
               <div className='absolute -top-3 left-1/2 -translate-x-1/2'>
                 <span className='bg-red-500 text-white px-4 py-2 rounded-full text-base font-medium'>
-                  34% 할인
+                  47% 할인
                 </span>
               </div>
-              <div className='text-left mb-8'>
-                <p className='text-[15px] md:text-[20px] font-semibold text-[#003DA5] mb-1'>
-                  저속노화를 위해 무엇을, 얼마나 먹일지 고민이라면
-                </p>
-                <h3 className='text-[20px] md:text-[30px] font-bold text-[#000000] mb-2'>
-                  맞춤형 식단 설계
+              <div className='text-left flex-1 flex flex-col'>
+                <h3 className='text-[20px] md:text-[30px] font-bold text-[#000000] mb-4'>
+                  <span className='inline-block'>신규 맞춤 식단 설계</span>
+                  <span className='text-[14px] md:text-[16px] text-[#003DA5] font-normal ml-2 md:ml-3 whitespace-nowrap'>
+                    영양학 전문 수의사 직접 검증
+                  </span>
+                  <br className='md:hidden' />
+                  <span className='md:hidden text-[14px] text-[#003DA5] font-normal block mt-1'>
+                    영양학 전문 수의사 직접 검증
+                  </span>
                 </h3>
-                <p className='text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium'>
-                  현재 급여 중인 식단 최대 5종에 대하여 영양·품질·안전성을 분석하고, 우리 아이에게 꼭 맞는 새로운 맞춤 식단 2개를 설계해 드립니다.
-                </p>
-
                 <div className='mb-6'>
                   <div className='flex items-baseline gap-2'>
                     <span className='text-[40px] md:text-[55px] font-bold text-[#003DA5]'>
-                      7.9만원
+                      79,000원
                     </span>
                     <span className='line-through text-[17px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)]'>
-                      / 정가 12만원
+                      / 정가 15만원
                     </span>
                   </div>
                 </div>
+                <div className='mb-6'>
+                  <p className='text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3'>
+                    이런 분들에게 추천드려요!
+                  </p>
+                  <ul className='space-y-2 text-[14px] md:text-[16px] text-[#666666]'>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>새로운 주식(사료)로 변경하고 싶은 보호자</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>새로운 주식을 활용해 우리 아이의 건강 상태에 맞게 맞춤 설계하고 싶은 보호자</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>신규 제품의 품질이 좋은지, 정말 안전한지 궁금한 보호자</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className='mb-6'>
+                  <p className='text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3'>
+                    이런걸 받으실 수 있어요!
+                  </p>
+                  <ul className='space-y-2 text-[14px] md:text-[16px] text-[#666666]'>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 식단 평가 및 진단</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>우리 아이의 현재 신체 상태 진단 및 분석</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>하루 권장 에너지량, 주요 영양소 섭취 함량 설계</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>새로운 맞춤 식단 2가지 설계 제공</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>현재 → 신규 식단 단계별 변경 플랜</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>신규 식단 관련 영양학 Q&A 1회 제공</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <span>✓</span>
+                      <span>우리 아이가 먹는 제품의 품질과 안전성에 대한 정밀 분석</span>
+                    </li>
+                  </ul>
+                  <p className='text-[13px] md:text-[14px] text-[#666666] mt-3 italic'>
+                    *수의영양학 전문 수의사가 최종 검증 후 제공해드립니다.
+                  </p>
+                </div>
+              </div>
 
+              {/* 버튼 영역 - 하단 고정 */}
+              <div className='mt-auto pt-6'>
                 {/* 예시 리포트 미리보기 버튼 */}
                 <div className='mb-4'>
                   <button
@@ -453,7 +538,7 @@ function CheckoutPageContent() {
                 </div>
 
                 {/* 서비스 신청하기 버튼 */}
-                <div className='mb-8'>
+                <div>
                   <button
                     onClick={() => {
                       setSelectedPlanForModal('premium');
@@ -468,31 +553,6 @@ function CheckoutPageContent() {
                 </div>
               </div>
 
-              <ul className='space-y-[6px] md:space-y-2'>
-                {[
-                  '국제 표준 준수 여부',
-                  '에너지원 구성의 적정성',
-                  '주요 영양소 비율의 적정성',
-                  '필수 영양소 포함 여부',
-                  '기능성 영양소 포함 여부',
-                  '반려견의 현재 신체 상태 진단',
-                  '목표 체중 및 일일 목표 칼로리 설정',
-                  '현재 섭취 칼로리 및 영양소 함량 분석',
-                  '현재 vs 목표 영양 섭취량 비교 분석',
-                  '급여 식단과 영양제의 상호작용 및 평가',
-                  '종합 결론 및 솔루션',
-                  '맞춤형 식단 설계 2가지 타입',
-                  '주식, 보조식, 영양제 신규 제품 추천',
-                  '1일 급여량 및 급여 주기 상세 계획'
-                ].map((feature, index) => (
-                  <li key={index} className='flex items-start gap-[6px] md:gap-2'>
-                    <Check className='text-[#1E1E1E] flex-shrink-0 mt-0.5' size={20} />
-                    <span className='font-medium text-[14px] md:text-[18px] leading-[25px] text-[#1E1E1E]'>
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </Card>
           </div>
         </div>

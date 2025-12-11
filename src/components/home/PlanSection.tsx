@@ -16,56 +16,56 @@ const PlanSection = () => {
 
   const plans = [
     {
-      title: '현재 급여 식단 분석',
-      subtitle: '현재 식단이 우리 아이에게 잘 맞는지 걱정이라면',
-      description: '아이의 에너지량과 필요 영양소를 바탕으로, 현재 급여 중인 식단 최대 3종을 영양·품질·안전성까지 맞춤 분석합니다!',
-      price: '3.9만원',
-      originalPrice: '4.5만원',
-      discount: '13% 할인',
+      title: '현재 급여 식단 맞춤 설계',
+      subtitle: '',
+      description: '',
+      price: '19,500원',
+      originalPrice: '3.9만원',
+      discount: '50% 할인',
       features: [
-        '국제 표준 준수 여부',
-        '에너지원 구성의 적정성',
-        '주요 영양소 비율의 적정성',
-        '필수 영양소 포함 여부',
-        '기능성 영양소 포함 여부',
-        '반려견의 현재 신체 상태 진단',
-        '목표 체중 및 일일 목표 칼로리 설정',
-        '현재 섭취 칼로리 및 영양소 함량 분석',
-        '현재 vs 목표 영양 섭취량 비교 분석',
-        '급여 식단과 영영제의 상호작용 및 평가',
-        '종합 결론 및 솔루션',
-        { text: '맞춤형 식단 설계 2가지 타입', disabled: true },
-        { text: '주식, 보조식, 영양제 신규 제품 추천', disabled: true },
-        { text: '1일 급여량 및 급여 주기 상세 계획', disabled: true },
+        '현재 식단 평가 및 솔루션',
+        '우리 아이의 현재 신체 상태 진단 및 분석',
+        '하루 권장 에너지량, 주요 영양소 섭취 함량 설계',
+        '현재 주식과 보조식을 활용한 맞춤 식단 설계',
+        '우리 아이가 먹는 제품의 품질과 안전성에 대한 정밀 분석 *최대 3종',
       ],
       buttonText: '신청하기',
       buttonVariant: 'primary' as const,
+      recommendationTitle: '이런 분들에게 추천드려요!',
+      recommendations: [
+        '현재 주식(사료)가 잘 맞아서 새롭게 변경하지 않아도 되는 보호자',
+        '현재 주식을 활용해 우리 아이의 건강 상태에 맞게 맞춤 설계하고 싶은 보호자',
+        '현재 먹이는 제품의 품질이 좋은지, 정말 안전한지 궁금한 보호자',
+      ],
+      benefitsTitle: '이런걸 받으실 수 있어요!',
+      footerNote: '*글로벌 수의영양학 데이터를 학습한 전문 AI가 제공해드립니다.',
     },
     {
-      title: '맞춤형 식단 설계',
-      subtitle: '저속노화를 위해 무엇을, 얼마나 먹일지 고민이라면',
-      description: '현재 급여 중인 식단 최대 5종에 대하여 영양·품질·안전성을 분석하고, 우리 아이에게 꼭 맞는 새로운 맞춤 식단 2개를 설계해 드립니다.',
-      price: '7.9만원',
-      originalPrice: '12만원',
-      discount: '34% 할인',
+      title: '신규 맞춤 식단 설계',
+      subtitle: '영양학 전문 수의사 직접 검증',
+      description: '',
+      price: '79,000원',
+      originalPrice: '15만원',
+      discount: '47% 할인',
       features: [
-        '국제 표준 준수 여부',
-        '에너지원 구성의 적정성',
-        '주요 영양소 비율의 적정성',
-        '필수 영양소 포함 여부',
-        '기능성 영양소 포함 여부',
-        '반려견의 현재 신체 상태 진단',
-        '목표 체중 및 일일 목표 칼로리 설정',
-        '현재 섭취 칼로리 및 영양소 함량 분석',
-        '현재 vs 목표 영양 섭취량 비교 분석',
-        '급여 식단과 영영제의 상호작용 및 평가',
-        '종합 결론 및 솔루션',
-        { text: '맞춤형 식단 설계 2가지 타입', disabled: false },
-        { text: '주식, 보조식, 영양제 신규 제품 추천', disabled: false },
-        { text: '1일 급여량 및 급여 주기 상세 계획', disabled: false },
+        '현재 식단 평가 및 진단',
+        '우리 아이의 현재 신체 상태 진단 및 분석',
+        '하루 권장 에너지량, 주요 영양소 섭취 함량 설계',
+        '새로운 맞춤 식단 2가지 설계 제공',
+        '현재 → 신규 식단 단계별 변경 플랜',
+        '신규 식단 관련 영양학 Q&A 1회 제공',
+        '우리 아이가 먹는 제품의 품질과 안전성에 대한 정밀 분석',
       ],
       buttonText: '신청하기',
       buttonVariant: 'outline' as const,
+      recommendationTitle: '이런 분들에게 추천드려요!',
+      recommendations: [
+        '새로운 주식(사료)로 변경하고 싶은 보호자',
+        '새로운 주식을 활용해 우리 아이의 건강 상태에 맞게 맞춤 설계하고 싶은 보호자',
+        '신규 제품의 품질이 좋은지, 정말 안전한지 궁금한 보호자',
+      ],
+      benefitsTitle: '이런걸 받으실 수 있어요!',
+      footerNote: '*수의영양학 전문 수의사가 최종 검증 후 제공해드립니다.',
     },
   ];
 
@@ -112,7 +112,7 @@ const PlanSection = () => {
           {plans.map((plan, index) => (
             <Card
               key={index}
-              className="relative border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px]"
+              className="relative border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px] flex flex-col"
             >
               {plan.discount && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -122,32 +122,23 @@ const PlanSection = () => {
                 </div>
               )}
 
-              <div className="text-left mb-8">
-                {plan.subtitle && (
-                  <p className="text-[15px] md:text-[20px] font-medium text-[#003DA5] mb-1">
-                    {plan.subtitle}
-                  </p>
-                )}
-                <h3 className="text-[20px] md:text-[30px] font-medium text-[#000000] mb-2">
-                  {plan.title}
+              <div className="text-left flex-1 flex flex-col">
+                <h3 className="text-[20px] md:text-[30px] font-bold text-[#000000] mb-4">
+                  <span className="inline-block">{plan.title}</span>
+                  {plan.subtitle && (
+                    <>
+                      <span className="text-[14px] md:text-[16px] text-[#003DA5] font-normal ml-2 md:ml-3 whitespace-nowrap">
+                        {plan.subtitle}
+                      </span>
+                      <br className="md:hidden" />
+                      <span className="md:hidden text-[14px] text-[#003DA5] font-normal block mt-1">
+                        {plan.subtitle}
+                      </span>
+                    </>
+                  )}
                 </h3>
-                {plan.description && (
-                  <p className="text-[14px] md:text-[16px] text-[#666666] mb-2 font-medium">
-                    {plan.description.split('최대 3종을 영양·품질·안전성').map((part, idx) => (
-                      idx === 0 ? (
-                        <span key={idx}>{part}</span>
-                      ) : (
-                        <span key={idx}>
-                          <span className="text-orange-500">최대 3종을 영양·품질·안전성</span>
-                          {part}
-                        </span>
-                      )
-                    ))}
-                  </p>
-                )}
-
                 {plan.price && (
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <div className="flex items-baseline gap-2">
                       <span className="text-[40px] md:text-[55px] font-bold text-brand-blue">
                         {plan.price}
@@ -160,40 +151,60 @@ const PlanSection = () => {
                     </div>
                   </div>
                 )}
+                {plan.recommendationTitle && (
+                  <div className="mb-6">
+                    <p className="text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3">
+                      {plan.recommendationTitle}
+                    </p>
+                    <ul className="space-y-2 text-[14px] md:text-[16px] text-[#666666]">
+                      {plan.recommendations?.map((rec, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span>✓</span>
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {plan.benefitsTitle && (
+                  <div className="mb-6">
+                    <p className="text-[15px] md:text-[18px] font-semibold text-[#000000] mb-3">
+                      {plan.benefitsTitle}
+                    </p>
+                    <ul className="space-y-2 text-[14px] md:text-[16px] text-[#666666]">
+                      {plan.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start gap-2">
+                          <span>✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {plan.footerNote && (
+                      <p className="text-[13px] md:text-[14px] text-[#666666] mt-3 italic">
+                        {plan.footerNote}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
 
-              <ul className="space-y-[6px] md:space-y-2 mb-8">
-                {plan.features.map((feature, featureIndex) => {
-                  const isDisabled = typeof feature === 'object' && feature.disabled;
-                  const featureText = typeof feature === 'string' ? feature : feature.text;
-                  return (
-                    <li key={featureIndex} className="flex items-start gap-[6px] md:gap-2">
-                      <Check
-                        className={`flex-shrink-0 mt-0.5 ${isDisabled ? 'text-[#C1C1C1]' : 'text-[#1E1E1E]'}`}
-                        size={20}
-                      />
-                      <span className={`font-medium text-[14px] md:text-[18px] leading-[25px] ${isDisabled ? 'text-[#C1C1C1]' : 'text-[#1E1E1E]'}`}>
-                        {featureText}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <button
-                onClick={() => {
-                  // 모든 플랜은 프로덕트 분석 페이지로 이동
-                  router.push('/product-analysis');
-                }}
-                className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
-                  ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
-                  : plan.buttonVariant === 'primary'
-                    ? 'bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark'
-                    : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
-                  }`}
-              >
-                {plan.buttonText}
-              </button>
+              {/* 버튼 영역 - 하단 고정 */}
+              <div className="mt-auto pt-6">
+                <button
+                  onClick={() => {
+                    // 모든 플랜은 프로덕트 분석 페이지로 이동
+                    router.push('/product-analysis');
+                  }}
+                  className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
+                    ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
+                    : plan.buttonVariant === 'primary'
+                      ? 'bg-brand-blue text-white hover:bg-brand-blue-dark active:bg-brand-blue-dark'
+                      : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
+                    }`}
+                >
+                  {plan.buttonText}
+                </button>
+              </div>
             </Card>
           ))}
         </div>
