@@ -65,7 +65,9 @@ export default function NyanguDietPage() {
         <section className="px-5 py-12 bg-gray-50">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-[15px] text-gray-600 mb-2">면역 세포의</p>
+              <p className="text-[26px] md:text-[32px] font-semibold text-gray-700 mb-2">
+                면역 세포의
+              </p>
               <p className="text-[60px] md:text-[80px] font-black text-[#003DA5] leading-none tracking-tight">
                 70<span className="text-[30px] md:text-[40px] font-bold">%</span>
               </p>
