@@ -788,7 +788,7 @@ function CheckoutPageContent() {
             {/* Figma 임베드 */}
             <div className="flex-1 overflow-hidden">
               <iframe
-                src="https://jelly-univ-joedy20240615.figma.site/"
+                src="https://jelly-univ-joedy20240615.figma.site/joedy_20240615_diet_plan"
                 className="w-full h-full border-0"
                 allow="fullscreen"
                 title="Figma 샘플 리포트"
