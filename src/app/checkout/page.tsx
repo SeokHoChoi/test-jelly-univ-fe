@@ -29,17 +29,18 @@ function CheckoutPageContent() {
     {
       no: '01',
       title: '문답지 작성',
-      desc: '1:1 맞춤 리포트를 위하여 문답지 작성 시 제출해주세요. 내용에 따라 이전 결과와 달라질 수 있습니다.'
+      desc: '결제 이후, 1:1 맞춤 리포트를 위한 문답지 링크를 발송해드립니다.'
     },
     {
       no: '02',
       title: '리포트 제작',
-      desc: '제출하신 정보를 바탕으로\n국제적으로 신뢰받는 기관들의\n데이터를 학습한 AI와 서울대\n출신 수의영양 전문가가\n리포트를 제작합니다.'
+      desc: '수의영양학 전문 AI와 \n서울대 출신 수의사가 \n리포트를 제작하여 발송해드립니다.'
     },
     {
       no: '03',
-      title: '리포트 발송',
-      desc: '결제 이후, 영업일 기준\n5일 이내 회원가입 시\n기재한 이메일 주소로\n리포트를 발송해드립니다.'
+      title: '식단 관리',
+      desc: '젤리대학교의 영양학 전문가 상담사가 Q&A 1회를 제공해드립니다.',
+      note: '맞춤 식단 설계에 한하며, 리포트 수령 이후 2주이내 상담이 가능합니다.'
     }
   ];
 
@@ -671,11 +672,19 @@ function CheckoutPageContent() {
                         <div className='text-[30px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
                         <div className='text-[25px] font-medium text-white leading-none mb-[60px]'>{item.title}</div>
                         <p
-                          className='text-[18px] font-normal text-white opacity-90'
+                          className='text-[18px] font-normal text-white opacity-90 whitespace-pre-line'
                           style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
                         >
                           {item.desc}
                         </p>
+                        {item.note && (
+                          <p
+                            className='text-[12px] font-normal text-white opacity-70 mt-2'
+                            style={{ wordBreak: 'keep-all', lineHeight: '1.4' }}
+                          >
+                            {item.note}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -699,11 +708,19 @@ function CheckoutPageContent() {
                 <div className='text-[40px] font-bold text-white mb-0.5 leading-none'>{item.no}</div>
                 <div className='text-[35px] font-medium text-white leading-none' style={{ marginBottom: '85px' }}>{item.title}</div>
                 <p
-                  className='text-[25px] font-normal text-white opacity-90'
+                  className='text-[25px] font-normal text-white opacity-90 whitespace-pre-line'
                   style={{ wordBreak: 'keep-all', lineHeight: '1.3' }}
                 >
                   {item.desc}
                 </p>
+                {item.note && (
+                  <p
+                    className='text-[14px] font-normal text-white opacity-70 mt-3'
+                    style={{ wordBreak: 'keep-all', lineHeight: '1.4' }}
+                  >
+                    {item.note}
+                  </p>
+                )}
               </div>
             ))}
           </div>
