@@ -270,7 +270,9 @@ export default function NyanguDietPage() {
                       />
                     </div>
                     <div>
-                      <p className="text-[12px] text-[#003DA5] font-semibold mb-1">면역의 최전선</p>
+                      <p className="text-[14px] md:text-[16px] text-[#003DA5] font-semibold mb-1">
+                        면역의 최전선
+                      </p>
                       <p className="text-[18px] font-bold text-gray-900">장-면역 축</p>
                     </div>
                   </div>
@@ -305,7 +307,9 @@ export default function NyanguDietPage() {
                       />
                     </div>
                     <div>
-                      <p className="text-[12px] text-[#003DA5] font-semibold mb-1">제2의 뇌</p>
+                      <p className="text-[14px] md:text-[16px] text-[#003DA5] font-semibold mb-1">
+                        제2의 뇌
+                      </p>
                       <p className="text-[18px] font-bold text-gray-900">장-뇌 축</p>
                     </div>
                   </div>
@@ -342,7 +346,9 @@ export default function NyanguDietPage() {
                       />
                     </div>
                     <div>
-                      <p className="text-[12px] text-[#003DA5] font-semibold mb-1">전신 해독기</p>
+                      <p className="text-[14px] md:text-[16px] text-[#003DA5] font-semibold mb-1">
+                        전신 해독기
+                      </p>
                       <p className="text-[18px] font-bold text-gray-900">장-신장/피부 축</p>
                     </div>
                   </div>
