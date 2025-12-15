@@ -300,17 +300,18 @@ export default function NyanguInfoPanel() {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg">🌞</span>
-              <h4 className="text-[16px] md:text-[17px] font-semibold text-gray-900">아침 08:00</h4>
+              <h4 className="text-[16px] md:text-[17px] font-semibold text-gray-900">아침 8시</h4>
             </div>
             <div className="bg-gray-50 rounded-lg p-5 space-y-4">
               <div>
                 <p className="text-[14px] md:text-[15px] font-semibold text-gray-900 mb-2">주식</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">아카나 라이트 앤 피트 레시피 50g</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">디어니스트키친 탈수건조 그레인프리 피쉬 11g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">아카나 라이트 앤 피트 레시피 약 35g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">디어니스트키친 탈수건조 그레인프리 피쉬 25g</p>
               </div>
               <div>
                 <p className="text-[14px] md:text-[15px] font-semibold text-gray-900 mb-2">보조식</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">쥬쥬그린 저스트 그린 블랜드 1 테이블스푼(약 2.5g) 또는 습식 사료(디어니스트키친/테라카니스/지위픽/포틀랜드 제품 중) 약 10g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">쥬쥬그린 저스트 그린 블랜드 약 2g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">습식 사료 약 20g</p>
               </div>
               <div>
                 <p className="text-[14px] md:text-[15px] font-semibold text-gray-900 mb-2">영양제</p>
@@ -341,17 +342,17 @@ export default function NyanguInfoPanel() {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg">🌚</span>
-              <h4 className="text-[16px] md:text-[17px] font-semibold text-gray-900">저녁 19:00</h4>
+              <h4 className="text-[16px] md:text-[17px] font-semibold text-gray-900">저녁 7시</h4>
             </div>
             <div className="bg-gray-50 rounded-lg p-5 space-y-4">
               <div>
                 <p className="text-[14px] md:text-[15px] font-semibold text-gray-900 mb-2">주식</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">아카나 라이트 앤 피트 레시피 50g</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">디어니스트키친 탈수건조 그레인프리 피쉬 11g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">아카나 라이트 앤 피트 레시피 약 35g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">디어니스트키친 탈수건조 그레인프리 피쉬 25g</p>
               </div>
               <div>
                 <p className="text-[14px] md:text-[15px] font-semibold text-gray-900 mb-2">보조식</p>
-                <p className="text-[13px] md:text-[14px] text-gray-700">습식 사료 또는 락토프리 요거트 약 10g</p>
+                <p className="text-[13px] md:text-[14px] text-gray-700">습식 사료 20g 또는 락토프리 요거트 약 20g</p>
               </div>
               <div className="pt-4 border-t border-gray-200">
                 <p className="text-[13px] md:text-[14px] font-semibold text-gray-900 mb-3">📍급여 방법</p>
@@ -379,7 +380,7 @@ export default function NyanguInfoPanel() {
             </div>
             <div className="bg-gray-50 rounded-lg p-5">
               <p className="text-[13px] md:text-[14px] text-gray-700 leading-relaxed mb-3">
-                냥구는 &apos;아카나 라이트 앤 피트&apos; 사료를 산책과 노즈워크 진행 시 간식으로 급여하고 있어요. 하루 총 120g 중, 약 100g을 아침과 저녁에 제공하고 나머지는 간식으로 주는 형태예요.
+                냥구는 &apos;아카나 라이트 앤 피트&apos; 사료를 산책과 노즈워크 진행 시 간식으로 급여하고 있어요. 아침과 점심을 제외한 약 15~20g을 아침과 저녁에 제공하고 나머지는 간식으로 주는 형태예요.
               </p>
               <p className="text-[13px] md:text-[14px] text-gray-700 leading-relaxed mb-3">
                 하루에 약 10~20% 미만의 간식을 급여하고 있어요. 물론 활동량이 유독 많은 날이나 여행을 갔을 땐 평소보다 많이 주기도 하지만 그래도 20%를 넘기지는 않는 편이에요.
@@ -396,11 +397,23 @@ export default function NyanguInfoPanel() {
           <div className="bg-gray-50 rounded-lg p-5 space-y-3 mb-6">
             <div className="flex justify-between">
               <span className="text-[14px] md:text-[15px] text-gray-700">냥구 하루 급여량:</span>
-              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">120g</span>
+              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">총 135g</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[14px] md:text-[15px] text-gray-700">하루 목표 칼로리:</span>
-              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">451 ~ 632kcal</span>
+              <span className="text-[14px] md:text-[15px] text-gray-700">목표 칼로리:</span>
+              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">451~632kcal</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[14px] md:text-[15px] text-gray-700">목표 단백질:</span>
+              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">36.1g 이상</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[14px] md:text-[15px] text-gray-700">목표 지방:</span>
+              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">18.1g 이하</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[14px] md:text-[15px] text-gray-700">목표 탄수화물:</span>
+              <span className="text-[14px] md:text-[15px] font-semibold text-gray-900">23~41g</span>
             </div>
             <div className="flex justify-between">
               <span className="text-[14px] md:text-[15px] text-gray-700">주식 기준 총 섭취 칼로리:</span>

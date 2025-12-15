@@ -212,7 +212,7 @@ export default function NyanguDietPage() {
         <section className="px-5 py-10 bg-white">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-[14px] text-[#003DA5] font-semibold mb-2">🔑 건강의 핵심</p>
+              <p className="text-[16px] md:text-[18px] text-[#003DA5] font-semibold mb-2">🔑 건강의 핵심</p>
               <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 leading-tight">
                 우리 아이 건강의 골든 키
                 <br />
@@ -379,7 +379,7 @@ export default function NyanguDietPage() {
         {/* ========== 섹션 7: 냥구 스토리 ========== */}
         <section className="px-5 py-16 bg-gradient-to-b from-[#003DA5] to-[#002A7A]">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="text-[14px] text-[#93C5FD] font-semibold mb-4">🏆 실제 케이스</p>
+            <p className="text-[16px] md:text-[18px] text-[#93C5FD] font-semibold mb-4">🏆 실제 케이스</p>
             <h2 className="text-[28px] md:text-[32px] font-bold text-white leading-tight mb-4">
               407마리 중 단 4마리
               <br />
@@ -395,7 +395,7 @@ export default function NyanguDietPage() {
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mb-8 text-left">
               <p className="text-[13px] text-[#93C5FD] font-semibold mb-2">*변 공여견이란?</p>
               <p className="text-[14px] text-white/90 leading-relaxed">
-                장 질환을 겪는 아픈 강아지에게 이식할 건강한 미생물을 제공하는 강아지예요.
+                장 질환을 겪는 아픈 강아지에게 이식할 건강한 미생물을 제공하는 강아지예요. 건강한 분변 이식(FMT)은 무너진 장 생태계를 복원하는 치료법입니다.
               </p>
             </div>
 
@@ -403,8 +403,11 @@ export default function NyanguDietPage() {
               <p>
                 건강한 분변 이식(FMT)은 무너진 장 생태계를 복원하는 강력한 치료법입니다.
               </p>
-              <p className="font-semibold text-white">
-                즉, 냥구의 장은 그 자체로 &apos;치료제&apos;로 쓰일 만큼 완벽하다는 의미예요.
+              <p className="font-semibold text-white text-[18px]">
+                냥구도 처음엔 평범한 강아지였어요. <br />
+                묽은 변, 예민한 소화기 컨디션 등으로 고민하던 시절
+                하지만 맞춤 식단 1년 후,
+                장 튼튼왕에 선정됐습니다.
               </p>
             </div>
           </div>
@@ -447,26 +450,36 @@ export default function NyanguDietPage() {
               <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 space-y-6">
                 {/* 아침 */}
                 <div>
-                  <p className="text-[14px] font-semibold text-gray-900 mb-3">🌞 아침 08:00</p>
+                  <p className="text-[14px] font-semibold text-gray-900 mb-3">🌞 아침 8시</p>
                   <div className="space-y-2 text-[14px] text-gray-700">
-                    <p><span className="font-medium">주식:</span> 아카나 라이트 앤 피트 레시피 50g + 디어니스트키친 탈수건조 그레인프리 피쉬 11g</p>
-                    <p><span className="font-medium">보조식:</span> 쥬쥬그린 저스트 그린 블랜드 1 테이블스푼</p>
+                    <p><span className="font-medium">주식:</span> 아카나 라이트 앤 피트 레시피 약 35g, 디어니스트키친 탈수건조 그레인프리 피쉬 25g</p>
+                    <p><span className="font-medium">보조식:</span> 쥬쥬그린 저스트 그린 블랜드 약 2g, 습식 사료 약 20g</p>
                     <p><span className="font-medium">영양제:</span> 프로바이오틱스 1알, 오메가3 2알</p>
                   </div>
                 </div>
                 {/* 저녁 */}
                 <div>
-                  <p className="text-[14px] font-semibold text-gray-900 mb-3">🌚 저녁 19:00</p>
+                  <p className="text-[14px] font-semibold text-gray-900 mb-3">🌚 저녁 7시</p>
                   <div className="space-y-2 text-[14px] text-gray-700">
-                    <p><span className="font-medium">주식:</span> 아카나 라이트 앤 피트 레시피 50g + 디어니스트키친 탈수건조 그레인프리 피쉬 11g</p>
-                    <p><span className="font-medium">보조식:</span> 습식 사료 또는 락토프리 요거트 약 10g</p>
+                    <p><span className="font-medium">주식:</span> 아카나 라이트 앤 피트 레시피 약 35g, 디어니스트키친 탈수건조 그레인프리 피쉬 25g</p>
+                    <p><span className="font-medium">보조식:</span> 습식 사료 20g 또는 락토프리 요거트 약 20g</p>
+                  </div>
+                </div>
+                {/* 간식 */}
+                <div>
+                  <p className="text-[14px] font-semibold text-gray-900 mb-3">🥨 간식</p>
+                  <div className="space-y-2 text-[14px] text-gray-700">
+                    <p>냥구는 &apos;아카나 라이트 앤 피트&apos; 사료를 산책과 노즈워크 진행 시 간식으로 급여하고 있어요. 아침과 점심을 제외한 약 15~20g을 아침과 저녁에 제공하고 나머지는 간식으로 주는 형태예요.</p>
+                    <p>하루에 약 10~20% 미만의 간식을 급여하고 있어요. 물론 활동량이 유독 많은 날이나 여행을 갔을 땐 평소보다 많이 주기도 하지만 그래도 20%를 넘기지는 않는 편이에요.</p>
+                    <p>간식 중에 완제품도 있지만 사과, 파프리카, 당근, 오이 등의 과일과 야채 등이 더 많은 비중을 차지해요.</p>
                   </div>
                 </div>
                 {/* 급여 정보 */}
                 <div className="bg-white rounded-lg p-4">
                   <p className="text-[13px] text-gray-600">
-                    <span className="font-semibold text-gray-900">하루 급여량:</span> 120g |{' '}
-                    <span className="font-semibold text-gray-900">목표 칼로리:</span> 451~632kcal
+                    <span className="font-semibold text-gray-900">하루 급여량:</span> 총 135g |{' '}
+                    <span className="font-semibold text-gray-900">목표 칼로리:</span> 451~632kcal |{' '}
+                    <span className="font-semibold text-gray-900">목표 단백질:</span> 36.1g 이상, <span className="font-semibold text-gray-900">지방:</span> 18.1g 이하, <span className="font-semibold text-gray-900">탄수화물:</span> 23~41g
                   </p>
                 </div>
               </div>
@@ -556,7 +569,7 @@ export default function NyanguDietPage() {
         <section className="px-5 py-12 bg-white">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-[14px] text-[#003DA5] font-semibold mb-3">⚠️ 잠깐!</p>
+              <p className="text-[16px] md:text-[18px] text-[#003DA5] font-semibold mb-3">⚠️ 잠깐!</p>
               <h2 className="text-[22px] md:text-[26px] font-bold text-gray-900 leading-tight">
                 냥구에게 좋은 식단 ≠
                 <br />
@@ -608,9 +621,9 @@ export default function NyanguDietPage() {
             <div className="text-center mb-10">
               <p className="text-[14px] text-[#003DA5] font-semibold mb-3">🎓 젤리대학교</p>
               <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 leading-tight mb-3">
-                젤리대학교에서
+                냥구를 장 튼튼왕으로 만든
                 <br />
-                우리 아이의 <span className="text-[#003DA5]">건강 성적표</span>를 바꿔주세요
+                젤리대학교 <span className="text-[#003DA5]">식단 설계</span>  3원칙!
               </h2>
               <p className="text-[15px] text-gray-600">
                 글로벌 수의영양학 데이터 기준으로
@@ -713,9 +726,9 @@ export default function NyanguDietPage() {
         <section className="px-5 py-10 bg-white">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-[24px] md:text-[28px] font-bold text-gray-900 leading-tight mb-4">
-              더이상 감으로 먹이지 마세요
+              냥구의 비결, 맞춤 식단이었습니다
               <br />
-              이제 우리 아이에게 <span className="text-[#003DA5]">딱 맞게</span> 먹이세요.
+              우리 아이에게도 <span className="text-[#003DA5]">딱 맞는</span> 식단을 설계하세요.
             </h2>
           </div>
         </section>
