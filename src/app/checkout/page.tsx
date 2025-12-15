@@ -330,7 +330,7 @@ function CheckoutPageContent() {
               서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span> */}
           </h1>
 
-          <div className='max-w-4xl mx-auto flex flex-col items-center'>
+          <div className='max-w-4xl mx-auto flex flex-col items-center mb-14 md:mb-20'>
             <div className='relative w-full flex items-start justify-center gap-2 md:gap-3'>
               {/* 왼쪽 그래프 영역 */}
               <div className='flex flex-col items-center w-[60%] md:w-[66.1%]'>
