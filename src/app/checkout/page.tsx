@@ -330,55 +330,58 @@ function CheckoutPageContent() {
               서울대·한국수의영양학회 임원 수의사가 분석해 드려요!</span> */}
           </h1>
 
-          <div className='max-w-4xl mx-auto flex flex-col items-center mb-14 md:mb-20'>
-            <div className='relative w-full flex items-start justify-center gap-2 md:gap-3'>
-              {/* 왼쪽 그래프 영역 */}
-              <div className='flex flex-col items-center w-[60%] md:w-[66.1%]'>
-                {/* 상단 라벨 - 그래프 범위 내 위에, 구분선 쪽으로 정렬 */}
-                <div className='mb-2 w-full text-right'>
-                  <p className='text-[12px] md:text-[14px] font-medium text-[#383838]'>병원비</p>
-                  <p className='text-[10px] md:text-[12px] text-[#383838]'>(연 평균)</p>
+          {/* 비교 인포그래픽 - 콜아웃 스타일 */}
+          <div className='max-w-4xl mx-auto mb-14 md:mb-20'>
+            <div className='bg-gray-50 rounded-xl shadow-sm border border-gray-100 p-6 md:p-8'>
+              <div className='relative w-full flex items-start justify-center gap-2 md:gap-3'>
+                {/* 왼쪽 그래프 영역 */}
+                <div className='flex flex-col items-center w-[60%] md:w-[66.1%]'>
+                  {/* 상단 라벨 - 그래프 범위 내 위에, 구분선 쪽으로 정렬 */}
+                  <div className='mb-2 w-full text-right'>
+                    <p className='text-[12px] md:text-[14px] font-medium text-[#383838]'>병원비</p>
+                    <p className='text-[10px] md:text-[12px] text-[#383838]'>(연 평균)</p>
+                  </div>
+
+                  {/* 왼쪽 바 - 병원비 (주황/노랑 그라데이션) */}
+                  <div
+                    className='relative h-[62px] md:h-[80px] rounded-l-[31px] md:rounded-l-[40px] rounded-r-[5px] md:rounded-r-[7px] flex items-center justify-end pr-3 md:pr-4 w-full'
+                    style={{
+                      background: 'linear-gradient(to right, #F05B1B 0%, #F05B1B 60%, #FFCC00 100%)'
+                    }}
+                  >
+                    <p className='text-[12px] md:text-[16px] font-semibold text-[#383838]'>190,000원</p>
+                  </div>
                 </div>
 
-                {/* 왼쪽 바 - 병원비 (주황/노랑 그라데이션) */}
-                <div
-                  className='relative h-[62px] md:h-[80px] rounded-l-[31px] md:rounded-l-[40px] rounded-r-[5px] md:rounded-r-[7px] flex items-center justify-end pr-3 md:pr-4 w-full'
-                  style={{
-                    background: 'linear-gradient(to right, #F05B1B 31.25%, #FFCC00 100%)'
-                  }}
-                >
-                  <p className='text-[12px] md:text-[16px] font-semibold text-[#383838]'>190,000원</p>
+                {/* 구분선 - 그래프와 떨어져 있음 */}
+                <div className='w-px h-[62px] md:h-[80px] bg-[#8E8E93] self-end' />
+
+                {/* 오른쪽 그래프 영역 */}
+                <div className='flex flex-col items-center w-[20%] md:w-[13.1%]'>
+                  {/* 상단 라벨 - 그래프 범위 내 위에, 구분선 쪽으로 정렬 */}
+                  <div className='mb-2 w-full text-left'>
+                    <p className='text-[12px] md:text-[14px] font-medium text-[#383838] whitespace-nowrap'>맞춤 식단 설계</p>
+                    <p className='text-[10px] md:text-[12px] text-[#383838] whitespace-nowrap'>(평생)</p>
+                  </div>
+
+                  {/* 오른쪽 바 - 맞춤 식단 (노란색) */}
+                  <div
+                    className='relative h-[62px] md:h-[80px] rounded-r-[31px] md:rounded-r-[40px] rounded-l-[5px] md:rounded-l-[7px] flex items-center justify-start pl-2 md:pl-3 w-full'
+                    style={{
+                      background: '#FFCC00'
+                    }}
+                  >
+                    <p className='text-[12px] md:text-[16px] font-semibold text-[#383838] whitespace-nowrap'>19,500원</p>
+                  </div>
                 </div>
               </div>
 
-              {/* 구분선 - 그래프와 떨어져 있음 */}
-              <div className='w-px h-[62px] md:h-[80px] bg-[#8E8E93] self-end' />
-
-              {/* 오른쪽 그래프 영역 */}
-              <div className='flex flex-col items-center w-[20%] md:w-[13.1%]'>
-                {/* 상단 라벨 - 그래프 범위 내 위에, 구분선 쪽으로 정렬 */}
-                <div className='mb-2 w-full text-left'>
-                  <p className='text-[12px] md:text-[14px] font-medium text-[#383838] whitespace-nowrap'>맞춤 식단 설계</p>
-                  <p className='text-[10px] md:text-[12px] text-[#383838] whitespace-nowrap'>(평생)</p>
-                </div>
-
-                {/* 오른쪽 바 - 맞춤 식단 (노란색) */}
-                <div
-                  className='relative h-[62px] md:h-[80px] rounded-r-[31px] md:rounded-r-[40px] rounded-l-[5px] md:rounded-l-[7px] flex items-center justify-start pl-2 md:pl-3 w-full'
-                  style={{
-                    background: '#FFCC00'
-                  }}
-                >
-                  <p className='text-[12px] md:text-[16px] font-semibold text-[#383838] whitespace-nowrap'>19,500원</p>
-                </div>
+              {/* 하단 메시지 - 구분선 아래 */}
+              <div className='text-center mt-4'>
+                <p className='text-[12px] md:text-[15px] font-semibold text-black'>
+                  예방이 치료보다 약 10배 효율적입니다
+                </p>
               </div>
-            </div>
-
-            {/* 하단 메시지 - 구분선 아래 */}
-            <div className='text-center mt-4'>
-              <p className='text-[12px] md:text-[15px] font-semibold text-black'>
-                예방이 치료보다 약 10배 효율적입니다
-              </p>
             </div>
           </div>
         </div>
