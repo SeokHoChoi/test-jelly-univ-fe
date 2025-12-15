@@ -29,9 +29,9 @@ export default function LoginRequiredModal({
 
   const premiumPlan = {
     title: '맞춤형 식단 설계',
-    price: '79,000원',
+    price: '59,000원',
     originalPrice: '150,000원',
-    discount: '런칭 기념 47% 할인',
+    discount: '런칭 기념 60% 할인',
     planName: '신규 맞춤 식단 설계 '
   };
   if (!isOpen) return null;

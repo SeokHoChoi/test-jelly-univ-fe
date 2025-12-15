@@ -505,12 +505,12 @@ function CheckoutPageContent() {
 
             </Card>
 
-            {/* 79,000원 플랜 */}
+            {/* 59,000원 플랜 */}
             <Card className='relative w-full border-[0.5px] border-black/10 shadow-[0_0_4.4px_0_rgba(0,0,0,0.06),0_5px_19px_0_rgba(0,0,0,0.08)] px-[30px] py-[40px] flex flex-col'>
               {/* 할인 배지 */}
               <div className='absolute -top-3 left-1/2 -translate-x-1/2'>
                 <span className='bg-red-500 text-white px-4 py-2 rounded-full text-base font-medium'>
-                  47% 할인
+                  60% 할인
                 </span>
               </div>
               <div className='text-left flex-1 flex flex-col'>
@@ -527,7 +527,7 @@ function CheckoutPageContent() {
                 <div className='mb-6'>
                   <div className='flex items-baseline gap-2'>
                     <span className='text-[40px] md:text-[55px] font-bold text-[#003DA5]'>
-                      79,000원
+                      59,000원
                     </span>
                     <span className='line-through text-[17px] md:text-[20px] font-medium text-[rgba(0,0,0,0.55)]'>
                       / 정가 15만원

@@ -44,9 +44,9 @@ const PlanSection = () => {
       title: '신규 맞춤 식단 설계',
       subtitle: '영양학 전문 수의사 직접 검증',
       description: '',
-      price: '79,000원',
+      price: '59,000원',
       originalPrice: '15만원',
-      discount: '47% 할인',
+      discount: '60% 할인',
       features: [
         '현재 식단 평가 및 진단',
         '우리 아이의 현재 신체 상태 진단 및 분석',
