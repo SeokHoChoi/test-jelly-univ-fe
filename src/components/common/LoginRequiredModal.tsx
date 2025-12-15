@@ -21,18 +21,18 @@ export default function LoginRequiredModal({
   const showAllPlans = planType === 'both' || !planType;
   const basicPlan = {
     title: '현재 급여 식단 분석',
-    price: '39,000원',
-    originalPrice: '45,000원',
-    discount: '13% 할인 중',
-    planName: '베이직 플랜'
+    price: '19,500원',
+    originalPrice: '39,000원',
+    discount: '런칭 기념 50% 할인',
+    planName: '현재 급여 식단 맞춤 설계'
   };
 
   const premiumPlan = {
     title: '맞춤형 식단 설계',
     price: '79,000원',
-    originalPrice: '120,000원',
-    discount: '34% 할인 중',
-    planName: '프리미엄 플랜'
+    originalPrice: '150,000원',
+    discount: '런칭 기념 47% 할인',
+    planName: '신규 맞춤 식단 설계 '
   };
   if (!isOpen) return null;
 
@@ -76,10 +76,11 @@ export default function LoginRequiredModal({
 
           {/* 서비스 소개 */}
           <div className="bg-gray-50 rounded-xl p-4">
-            <h3 className="font-medium text-gray-900 mb-2">젤리유 플랜</h3>
+            <h3 className="font-medium text-gray-900 mb-2">젤리대학교 맞춤 식단 설계 플랜</h3>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• 서울대·한국수의영양학회 임원 수의사 검증</li>
-              <li>• 1:1 맞춤 식단 분석 리포트</li>
+              <li>• 우리 아이 완전 진단</li>
+              <li>• 1:1 맞춤 식단 솔루션</li>
+              <li>• 서울대・한국수의영양학회 임원 수의사 검증</li>
             </ul>
           </div>
 
