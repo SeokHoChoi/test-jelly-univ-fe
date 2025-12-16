@@ -6,8 +6,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // 필수 필드 검증 및 최대 3개 제한
+    // 이제 dogName, dogWeight는 선택값이므로 dogBreed, feeds만 필수 체크
     const { dogName, dogWeight, dogBreed, feeds } = body || {};
-    if (!dogName || !dogWeight || !dogBreed || !Array.isArray(feeds)) {
+    if (!dogBreed || !Array.isArray(feeds)) {
       return NextResponse.json(
         { success: false, error: '필수 필드가 누락되었습니다.' },
         { status: 400 }

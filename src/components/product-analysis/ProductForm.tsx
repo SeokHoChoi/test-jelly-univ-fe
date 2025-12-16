@@ -19,8 +19,11 @@ interface FeedItem {
 }
 
 interface FormData {
-  dogName: string;
-  dogWeight: string;
+  // 기존에는 반려견 이름/체중도 함께 받았으나,
+  // 현재는 분석페이지에서 품종, 사료 브랜드, 급여량만 사용하므로
+  // dogName, dogWeight는 일단 주석 처리
+  // dogName: string;
+  // dogWeight: string;
   dogBreed: string;
   feeds: FeedItem[];
 }
@@ -74,6 +77,19 @@ const ProductForm = () => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
   const [showToast, setShowToast] = useState<boolean>(false);
+
+  // 채널톡 워크플로우 열기 헬퍼
+  const openChannelTalkWorkflow = () => {
+    if (typeof window !== 'undefined' && (window as unknown as { ChannelIO?: (action: string, ...args: unknown[]) => void }).ChannelIO) {
+      const ChannelIO = (window as unknown as { ChannelIO: (action: string, ...args: unknown[]) => void }).ChannelIO;
+
+      // 워크플로우 ID를 사용하여 특정 워크플로우 열기
+      ChannelIO('openWorkflow', '790324');
+    } else {
+      // 채널톡이 로드되지 않은 경우 대체 메시지
+      setSubmitError('사료 정보를 찾을 수 없습니다. 고객센터로 문의해주세요.');
+    }
+  };
 
   const onSubmit = async (data: FormData) => {
     // 품종 필수 검증
@@ -133,55 +149,82 @@ const ProductForm = () => {
     setFeedNameErrors([]);
     setAmountErrors([]);
 
-    // 등록 API 호출
-    try {
-      setSubmitting(true);
-      setSubmitError('');
-      const payload = {
-        dogName: data.dogName,
-        dogWeight: data.dogWeight,
-        dogBreed: data.dogBreed,
-        feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
-      };
+    // ============================================
+    // [임시 처리] 응답 여부와 관계없이 무조건 채널톡으로 유도
+    // TODO: 나중에 원래 로직으로 복구 가능하도록 주석 처리된 기존 코드 참고
+    // ============================================
+    setSubmitting(true);
+    setSubmitError('');
 
-      const res = await submitRating(payload);
-      // 전역 스토어에 응답 저장 (brief-report 등에서 재사용)
-      useRatingStore.getState().setResponse(res?.data ?? null);
+    const payload = {
+      // dogName, dogWeight는 이제 백엔드에서도 선택값이므로 전송하지 않음
+      dogBreed: data.dogBreed,
+      feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
+    };
 
-      // product-analysis 데이터를 로컬스토리지에 저장 (survey에서 사용)
-      localStorage.setItem('productAnalysisData', JSON.stringify(payload));
+    // API 호출은 백그라운드에서 시도하되, 응답 여부와 관계없이 채널톡으로 유도
+    // (필수 필드 누락 등 에러가 발생해도 무조건 채널톡으로 이동)
+    submitRating(payload)
+      .then((res) => {
+        // 성공 시에도 데이터는 저장해두되, 채널톡으로 유도
+        // 전역 스토어에 응답 저장 (brief-report 등에서 재사용) - 일단 유지
+        useRatingStore.getState().setResponse(res?.data ?? null);
+        // product-analysis 데이터를 로컬스토리지에 저장 (survey에서 사용) - dogName/Weight는 사용 안 함
+        localStorage.setItem('productAnalysisData', JSON.stringify(payload));
+      })
+      .catch((e: unknown) => {
+        // 에러가 발생해도 무시하고 채널톡으로 유도
+        console.log('API 호출 에러 (채널톡으로 유도):', e);
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
 
-      router.push('/brief-report');
-    } catch (e: unknown) {
-      // 404 에러인 경우 채널톡 워크플로우로 이동
-      if (e instanceof Error && ((e as { status?: number }).status === 404 || e.message.includes('404'))) {
-        // 토스트 표시
-        setShowToast(true);
+    // 응답 여부와 관계없이 무조건 채널톡으로 유도
+    setShowToast(true);
+    openChannelTalkWorkflow();
 
-        // 채널톡 워크플로우 열기
-        if (typeof window !== 'undefined' && (window as unknown as { ChannelIO?: (action: string, ...args: unknown[]) => void }).ChannelIO) {
-          const ChannelIO = (window as unknown as { ChannelIO: (action: string, ...args: unknown[]) => void }).ChannelIO;
-
-          // 워크플로우 ID를 사용하여 특정 워크플로우 열기
-          ChannelIO('openWorkflow', '790324');
-
-          // 또는 채널톡을 먼저 열고 워크플로우를 여는 방법
-          // ChannelIO('show');
-          // setTimeout(() => {
-          //   ChannelIO('openWorkflow', '790324');
-          // }, 300);
-        } else {
-          // 채널톡이 로드되지 않은 경우 대체 메시지
-          setSubmitError('사료 정보를 찾을 수 없습니다. 고객센터로 문의해주세요.');
-        }
-        return;
-      }
-
-      const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';
-      setSubmitError(message);
-    } finally {
-      setSubmitting(false);
-    }
+    /* ============================================
+     * [기존 로직 - 주석 처리됨] 나중에 복구 시 참고용
+     * ============================================
+     * 
+     * // 등록 API 호출
+     * try {
+     *   setSubmitting(true);
+     *   setSubmitError('');
+     *   const payload = {
+     *     dogBreed: data.dogBreed,
+     *     feeds: feeds.map((f) => ({ name: f.name.trim(), amount: f.amount.trim() })),
+     *   };
+     * 
+     *   const res = await submitRating(payload);
+     *   // 전역 스토어에 응답 저장 (brief-report 등에서 재사용) - 일단 유지
+     *   useRatingStore.getState().setResponse(res?.data ?? null);
+     * 
+     *   // product-analysis 데이터를 로컬스토리지에 저장 (survey에서 사용) - dogName/Weight는 사용 안 함
+     *   localStorage.setItem('productAnalysisData', JSON.stringify(payload));
+     * 
+     *   // ✅ 사료가 있어도 이제는 브리프 리포트 대신 채널톡으로 유도
+     *   setShowToast(true);
+     *   openChannelTalkWorkflow();
+     *   return;
+     * } catch (e: unknown) {
+     *   // 404 에러인 경우 채널톡 워크플로우로 이동
+     *   if (e instanceof Error && ((e as { status?: number }).status === 404 || e.message.includes('404'))) {
+     *     // 토스트 표시
+     *     setShowToast(true);
+     * 
+     *     // 채널톡 워크플로우 열기
+     *     openChannelTalkWorkflow();
+     *     return;
+     *   }
+     * 
+     *   const message = e instanceof Error ? e.message : '요청 처리 중 오류가 발생했어요.';
+     *   setSubmitError(message);
+     * } finally {
+     *   setSubmitting(false);
+     * }
+     */
   };
 
   return (
@@ -190,7 +233,9 @@ const ProductForm = () => {
         <div style={{ boxShadow: '10px 5px 30px 2px rgba(0, 0, 0, 0.15)' }} className='max-w-[982px] mx-auto !rounded-[20px]'>
           <Card className="p-8 !rounded-[20px]">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* 반려견 기본 정보 */}
+              {/* 반려견 기본 정보 - 기존 이름/몸무게 질문은 현재 사용하지 않아 주석 처리
+                  (품종, 사료 브랜드, 급여량만 수집) */}
+              {/*
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-[17px] font-medium text-gray-700 mb-2">
@@ -227,6 +272,7 @@ const ProductForm = () => {
                   )}
                 </div>
               </div>
+              */}
 
               {/* 반려견 품종 */}
               <div>

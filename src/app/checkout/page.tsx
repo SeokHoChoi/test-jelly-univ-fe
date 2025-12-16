@@ -401,6 +401,17 @@ function CheckoutPageContent() {
           <ReviewSlider reviews={reviews} showDots={true} />
         </div>
 
+        {/* 젤리대학교 서비스 vs 타사 서비스 비교 섹션 자리 (사용자 구현 영역) */}
+        <div
+          id="service-comparison"
+          className="mb-16 md:mb-24 flex justify-center"
+        >
+          <div className="w-full max-w-5xl border border-dashed border-gray-300 rounded-2xl p-6 md:p-10 text-center text-sm text-gray-500">
+            {/* TODO: 이 영역에 젤리대학교 서비스 vs 타사 서비스 비교 UI를 구현하세요. */}
+            젤리대학교 서비스 vs 타사 서비스 비교 섹션 자리
+          </div>
+        </div>
+
         {/* 가격 카드 */}
         <div id="plan" className='mb-16 md:mb-24'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto'>
