@@ -1,13 +1,14 @@
 'use client';
 
-import { X, LogIn, UserPlus } from 'lucide-react';
+import { useState } from 'react';
+import { X, LogIn, UserPlus, Check } from 'lucide-react';
 import Button from '@/components/common/Button';
 
 interface LoginRequiredModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: () => void;
-  onSignup: () => void;
+  onLogin: (selectedPlan?: 'basic' | 'premium') => void;
+  onSignup: (selectedPlan?: 'basic' | 'premium') => void;
   planType?: 'basic' | 'premium' | 'both';
 }
 
@@ -18,6 +19,7 @@ export default function LoginRequiredModal({
   onSignup,
   planType = 'both'
 }: LoginRequiredModalProps) {
+  const [selectedPlan, setSelectedPlan] = useState<'basic' | 'premium' | null>(null);
   const showAllPlans = planType === 'both' || !planType;
   const basicPlan = {
     title: '현재 급여 식단 분석',
@@ -84,14 +86,29 @@ export default function LoginRequiredModal({
             </ul>
           </div>
 
-          {/* 가격 정보 */}
+          {/* 가격 선택 */}
           {showAllPlans ? (
-            // 두 플랜 모두 표시
+            // 두 플랜 모두 표시 (선택 가능)
             <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <p className="text-sm font-semibold text-gray-900">플랜을 선택해주세요</p>
+                <span className="text-red-500 text-xs">*</span>
+              </div>
               {/* 베이직 플랜 */}
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div
+                onClick={() => setSelectedPlan('basic')}
+                className={`relative bg-blue-50 border-2 rounded-xl p-4 cursor-pointer transition-all ${selectedPlan === 'basic'
+                  ? 'border-blue-500 bg-blue-100 shadow-md'
+                  : 'border-blue-200 hover:border-blue-300'
+                  }`}
+              >
+                {selectedPlan === 'basic' && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                    <Check className="w-4 h-4 text-white" />
+                  </div>
+                )}
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">{basicPlan.planName}</span>
+                  <span className="text-sm font-medium text-gray-700">{basicPlan.planName}</span>
                   <div className="text-right">
                     <span className="text-lg font-bold text-blue-600">{basicPlan.price}</span>
                     <span className="text-sm text-gray-500 ml-2 line-through">{basicPlan.originalPrice}</span>
@@ -101,9 +118,20 @@ export default function LoginRequiredModal({
               </div>
 
               {/* 프리미엄 플랜 */}
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div
+                onClick={() => setSelectedPlan('premium')}
+                className={`relative bg-blue-50 border-2 rounded-xl p-4 cursor-pointer transition-all ${selectedPlan === 'premium'
+                  ? 'border-blue-500 bg-blue-100 shadow-md'
+                  : 'border-blue-200 hover:border-blue-300'
+                  }`}
+              >
+                {selectedPlan === 'premium' && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
+                    <Check className="w-4 h-4 text-white" />
+                  </div>
+                )}
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">{premiumPlan.planName}</span>
+                  <span className="text-sm font-medium text-gray-700">{premiumPlan.planName}</span>
                   <div className="text-right">
                     <span className="text-lg font-bold text-blue-600">{premiumPlan.price}</span>
                     <span className="text-sm text-gray-500 ml-2 line-through">{premiumPlan.originalPrice}</span>
@@ -113,7 +141,7 @@ export default function LoginRequiredModal({
               </div>
             </div>
           ) : (
-            // 선택한 플랜만 표시
+            // 선택한 플랜만 표시 (자동 선택)
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">{planType === 'premium' ? premiumPlan.planName : basicPlan.planName}</span>
@@ -131,16 +159,24 @@ export default function LoginRequiredModal({
         <div className="p-6 border-t border-gray-200 bg-gray-50 flex-shrink-0 rounded-b-2xl">
           <div className="space-y-3">
             <Button
-              onClick={onLogin}
-              className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white h-12 text-base font-semibold"
+              onClick={() => {
+                const plan = showAllPlans ? (selectedPlan || 'basic') : (planType === 'premium' ? 'premium' : 'basic');
+                onLogin(plan);
+              }}
+              disabled={showAllPlans && !selectedPlan}
+              className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white h-12 text-base font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
             >
               <LogIn className="w-5 h-5 mr-2" />
               로그인하기
             </Button>
             <Button
-              onClick={onSignup}
+              onClick={() => {
+                const plan = showAllPlans ? (selectedPlan || 'basic') : (planType === 'premium' ? 'premium' : 'basic');
+                onSignup(plan);
+              }}
+              disabled={showAllPlans && !selectedPlan}
               variant="outline"
-              className="w-full h-12 text-base"
+              className="w-full h-12 text-base disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200 disabled:hover:bg-gray-100"
             >
               <UserPlus className="w-5 h-5 mr-2" />
               회원가입하기

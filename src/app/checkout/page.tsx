@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { preparePayment } from '@/lib/paymentClient';
 import { getToken } from '@/utils/auth';
@@ -8,6 +8,7 @@ import { API_URLS } from '@/utils/constants';
 import ReviewSlider from '@/components/home/ReviewSlider';
 import Card from '@/components/common/Card';
 import LoginRequiredModal from '@/components/common/LoginRequiredModal';
+import PlanSelectionModal from '@/components/common/PlanSelectionModal';
 import SampleReportModal from '@/components/common/SampleReportModal';
 import { Check } from 'lucide-react';
 import { useKeenSlider } from 'keen-slider/react';
@@ -17,6 +18,7 @@ function CheckoutPageContent() {
   const [activeTab, setActiveTab] = useState<string>('plan');
   const [dogName, setDogName] = useState<string>('우리 아이');
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [planSelectionModalOpen, setPlanSelectionModalOpen] = useState(false);
   const [sampleReportModalOpen, setSampleReportModalOpen] = useState(false);
   const [figmaModalOpen, setFigmaModalOpen] = useState(false);
   const [selectedPlanForModal, setSelectedPlanForModal] = useState<'basic' | 'premium' | 'both'>('both');
@@ -207,7 +209,7 @@ function CheckoutPageContent() {
     });
   };
 
-  const handlePrepareAndPay = async (planType?: 'basic' | 'premium') => {
+  const handlePrepareAndPay = useCallback(async (planType?: 'basic' | 'premium') => {
     try {
       setLoading(true);
 
@@ -284,7 +286,20 @@ function CheckoutPageContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchParams]);
+
+  // 로그인/회원가입 후 리다이렉트 시 자동 결제 진행
+  useEffect(() => {
+    const autoPay = searchParams.get('autoPay');
+    const plan = searchParams.get('plan') as 'basic' | 'premium' | null;
+
+    if (autoPay === 'true' && plan && getToken()) {
+      // 약간의 딜레이를 주어 페이지가 완전히 로드된 후 결제 진행
+      setTimeout(() => {
+        handlePrepareAndPay(plan);
+      }, 500);
+    }
+  }, [searchParams, handlePrepareAndPay]);
 
   return (
     <div className='min-h-screen bg-white'>
@@ -505,13 +520,18 @@ function CheckoutPageContent() {
                 <div>
                   <button
                     onClick={() => {
-                      setSelectedPlanForModal('basic');
-                      handlePrepareAndPay('basic');
+                      const token = getToken();
+                      if (!token) {
+                        setSelectedPlanForModal('basic');
+                        setLoginModalOpen(true);
+                      } else {
+                        handlePrepareAndPay('basic');
+                      }
                     }}
                     disabled={loading}
                     className='w-full flex flex-col items-center justify-center px-4 py-3 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] rounded-lg transition-colors disabled:opacity-50'
                   >
-                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '서비스 신청하기'}</span>
+                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '19,500원으로 시작하기'}</span>
                     <span className="text-[13px] font-normal opacity-90">이미 15명이 신청했어요!</span>
                   </button>
                 </div>
@@ -624,13 +644,18 @@ function CheckoutPageContent() {
                 <div>
                   <button
                     onClick={() => {
-                      setSelectedPlanForModal('premium');
-                      handlePrepareAndPay('premium');
+                      const token = getToken();
+                      if (!token) {
+                        setSelectedPlanForModal('premium');
+                        setLoginModalOpen(true);
+                      } else {
+                        handlePrepareAndPay('premium');
+                      }
                     }}
                     disabled={loading}
                     className='w-full flex flex-col items-center justify-center px-4 py-3 bg-[#003DA5] text-white hover:bg-[#002A7A] active:bg-[#001F5C] rounded-lg transition-colors disabled:opacity-50'
                   >
-                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '서비스 신청하기'}</span>
+                    <span className="text-lg font-bold">{loading ? '서비스 준비 중...' : '59,000원으로 시작하기'}</span>
                     <span className="text-[13px] font-normal opacity-90">이미 10명이 신청했어요!</span>
                   </button>
                 </div>
@@ -746,16 +771,20 @@ function CheckoutPageContent() {
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex flex-col items-center'>
           <button
             onClick={() => {
-              // 하단 버튼은 둘 다 보여야 하므로 'both'로 설정
-              setSelectedPlanForModal('both');
-              // URL 파라미터에서 플랜 정보 읽기
-              const plan = searchParams.get('plan');
-              handlePrepareAndPay(plan === 'premium' ? 'premium' : 'basic');
+              const token = getToken();
+              if (!token) {
+                // 미로그인: 로그인/회원가입 모달 표시 (가격 선택 가능)
+                setSelectedPlanForModal('both');
+                setLoginModalOpen(true);
+              } else {
+                // 로그인됨: 플랜 선택 모달 표시
+                setPlanSelectionModalOpen(true);
+              }
             }}
             disabled={loading}
             className='w-full md:w-auto min-w-[200px] px-4 py-3 bg-[#003DA5] hover:bg-[#002A7A] text-white rounded-[10px] disabled:opacity-50 font-semibold'
           >
-            {loading ? '서비스 준비 중...' : '서비스 신청하기'}
+            {loading ? '서비스 준비 중...' : '19,500원으로 시작하기'}
           </button>
           <p className='text-[12px] text-gray-600 mt-2 text-center'>이미 25명이 신청했어요!</p>
         </div>
@@ -766,15 +795,29 @@ function CheckoutPageContent() {
         isOpen={loginModalOpen}
         onClose={() => setLoginModalOpen(false)}
         planType={selectedPlanForModal}
-        onLogin={() => {
+        onLogin={(selectedPlan) => {
           setLoginModalOpen(false);
-          const currentUrl = window.location.href;
-          router.push(`/login?redirect=${encodeURIComponent(currentUrl)}`);
+          // 선택한 플랜 정보를 URL 파라미터로 전달
+          const plan = selectedPlan || 'basic';
+          const redirectUrl = `${window.location.origin}/checkout?plan=${plan}&autoPay=true`;
+          router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
         }}
-        onSignup={() => {
+        onSignup={(selectedPlan) => {
           setLoginModalOpen(false);
-          const currentUrl = window.location.href;
-          router.push(`/signup?redirect=${encodeURIComponent(currentUrl)}`);
+          // 선택한 플랜 정보를 URL 파라미터로 전달
+          const plan = selectedPlan || 'basic';
+          const redirectUrl = `${window.location.origin}/checkout?plan=${plan}&autoPay=true`;
+          router.push(`/signup?redirect=${encodeURIComponent(redirectUrl)}`);
+        }}
+      />
+
+      {/* 플랜 선택 모달 (로그인된 경우) */}
+      <PlanSelectionModal
+        isOpen={planSelectionModalOpen}
+        onClose={() => setPlanSelectionModalOpen(false)}
+        onSelectPlan={(plan) => {
+          setPlanSelectionModalOpen(false);
+          handlePrepareAndPay(plan);
         }}
       />
 
