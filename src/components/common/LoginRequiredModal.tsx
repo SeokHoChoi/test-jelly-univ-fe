@@ -161,6 +161,10 @@ export default function LoginRequiredModal({
             <Button
               onClick={() => {
                 const plan = showAllPlans ? (selectedPlan || 'basic') : (planType === 'premium' ? 'premium' : 'basic');
+                if (typeof window !== 'undefined') {
+                  // 새로운 자동 결제 플로우를 시작하므로 이전 자동결제 상태 초기화
+                  sessionStorage.removeItem('autoPayTriggered');
+                }
                 onLogin(plan);
               }}
               disabled={showAllPlans && !selectedPlan}
@@ -172,6 +176,10 @@ export default function LoginRequiredModal({
             <Button
               onClick={() => {
                 const plan = showAllPlans ? (selectedPlan || 'basic') : (planType === 'premium' ? 'premium' : 'basic');
+                if (typeof window !== 'undefined') {
+                  // 새로운 자동 결제 플로우를 시작하므로 이전 자동결제 상태 초기화
+                  sessionStorage.removeItem('autoPayTriggered');
+                }
                 onSignup(plan);
               }}
               disabled={showAllPlans && !selectedPlan}

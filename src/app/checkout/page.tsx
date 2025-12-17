@@ -294,6 +294,15 @@ function CheckoutPageContent() {
     const plan = searchParams.get('plan') as 'basic' | 'premium' | null;
 
     if (autoPay === 'true' && plan && getToken()) {
+      if (typeof window !== 'undefined') {
+        // 이미 한 번 자동 결제를 시도했는지 체크 (새로고침 시 재실행 방지)
+        const alreadyTriggered = sessionStorage.getItem('autoPayTriggered');
+        if (alreadyTriggered === 'true') {
+          return;
+        }
+        sessionStorage.setItem('autoPayTriggered', 'true');
+      }
+
       // 약간의 딜레이를 주어 페이지가 완전히 로드된 후 결제 진행
       setTimeout(() => {
         handlePrepareAndPay(plan);
