@@ -425,32 +425,201 @@ function CheckoutPageContent() {
           <ReviewSlider reviews={reviews} showDots={true} />
         </div>
 
-        {/* 젤리대학교 서비스 vs 타사 서비스 비교 섹션 (사용자 구현 영역) */}
+        {/* 젤리대학교 서비스 vs 타사 서비스 비교 섹션 */}
         <div
           id="service-comparison"
+          className="mb-16 md:mb-28 flex justify-center"
         >
-          {/* 좌측 패널 */}
-          <div>
-            {/* 헤더 */}
-            <span></span>
-            {/* 바디 */}
-            <div></div>
-          </div>
+          <div className="w-full max-w-7xl px-4 md:px-8">
+            {/* 데스크톱: 레퍼런스와 정확히 일치하는 UI */}
+            <div className="hidden md:block">
+              {/* 전체 파란 배경 컨테이너 - #003DA5 기반 */}
+              <div
+                className="relative rounded-[40px] p-8"
+                style={{
+                  background: "#003DA5"//'linear-gradient(135deg, #5B7FE4 0%, #003DA5 100%)'
+                }}
+              >
+                {/* 3개 카드를 담는 컨테이너 - 중앙 카드가 위아래로 튀어나올 공간 확보 */}
+                <div className="relative flex items-center justify-center py-8">
 
-          {/* 중앙 패널 */}
-          <div>
-            {/* 헤더 */}
-            <span>젤리대학교<br />서비스</span>
-            {/* 바디 */}
-            <div></div>
-          </div>
+                  {/* 좌측 카드 - 소제목 (중앙 정렬) */}
+                  <div className="flex-1 z-10">
+                    <div
+                      className="h-full rounded-l-[32px] border-y border-l border-white/40 backdrop-blur-sm"
+                      style={{ background: 'rgba(255, 255, 255, 0.8)' }}
+                    >
+                      <div className="px-8 py-10 flex flex-col gap-6">
+                        {/* 헤더 공간 */}
+                        <div className="h-20" />
 
-          {/* 우측 패널 */}
-          <div>
-            {/* 헤더 */}
-            <span>타사<br />서비스</span>
-            {/* 바디 */}
-            <div></div>
+                        {/* 라벨들 - 중앙 정렬 + 구분선 */}
+                        <div className="flex items-center justify-center h-20 border-b border-[#E5E7EB]/50 pb-6">
+                          <p className="text-[18px] font-bold text-[#002A7A] text-center">👨‍⚕️ 상담 주체</p>
+                        </div>
+                        <div className="flex items-center justify-center h-24 border-b border-[#E5E7EB]/50 pb-6">
+                          <p className="text-[18px] font-bold text-[#002A7A] text-center">💬 상담 방식</p>
+                        </div>
+                        <div className="flex items-center justify-center h-20">
+                          <p className="text-[18px] font-bold text-[#002A7A] text-center">💰 가격</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 중앙 카드 - 전체 둥글게, 돋보기 효과 (scale로 확대) */}
+                  <div className="relative flex-1 z-30">
+                    {/* 글로우 효과 */}
+                    <div
+                      className="absolute -inset-8 rounded-[52px] blur-3xl opacity-50"
+                      style={{ background: 'rgba(59, 130, 246, 0.3)' }}
+                      aria-hidden="true"
+                    />
+
+                    {/* 중간 카드: scale로 확대해서 돋보기 효과 - 비율은 좌/우와 동일 */}
+                    <div
+                      className="relative bg-white rounded-[40px] shadow-[0_32px_80px_rgba(0,0,0,0.3)] transform scale-[1.15] origin-center ring-2 ring-[#003DA5]/30"
+                    >
+                      {/* 추천 배지 */}
+                      <div className="absolute -top-4.5 left-1/2 -translate-x-1/2 z-10">
+                        <div className="bg-gradient-to-r from-[#003DA5] to-[#0051D5] text-white px-5 py-1.5 rounded-full text-[13px] font-semibold shadow-lg flex items-center gap-1.5">
+                          <span className="text-[16px]">💙</span> 우리 아이 첫걸음
+                        </div>
+                      </div>
+
+                      <div className="px-8 py-10 flex flex-col gap-6">
+                        {/* 헤더 */}
+                        <div className="h-20 flex items-center justify-center border-b-2 border-[#003DA5]/10 pb-4">
+                          <div className="text-center">
+                            <p className="text-[18px] font-semibold text-[#003DA5]">젤리대학교</p>
+                            <p className="text-[32px] font-black text-[#003DA5] mt-1">서비스</p>
+                          </div>
+                        </div>
+
+                        {/* 상담 주체 - 좌측 정렬 */}
+                        <div className="flex items-start h-20 border-b border-[#E5E7EB]/50 pb-4">
+                          <div className="flex-1">
+                            <p className="text-[18px] font-bold text-[#003DA5] leading-relaxed">
+                              수의영양학 전문가 + AI 기반 분석
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* 상담 방식 - 좌측 정렬 */}
+                        <div className="flex flex-col justify-center gap-0.5 h-24 border-b border-[#E5E7EB]/50 pb-4">
+                          <p className="text-[17px] font-bold text-[#003DA5] flex items-center gap-2">
+                            <span className="text-[20px]">✨</span> 보고서 기반 비대면 서비스
+                          </p>
+                          <p className="text-[16px] text-[#6B7280] pl-7">
+                            시간·장소 제약 없음
+                          </p>
+                        </div>
+
+                        {/* 가격 - 좌측 정렬 */}
+                        <div className="flex flex-col justify-center h-20">
+                          <p className="text-[28px] font-black text-[#003DA5]">
+                            ₩19,500 ~ ₩59,000
+                          </p>
+                          <p className="text-[14px] text-[#6B7280] mt-1 font-medium">
+                            {/* TODO: 추가 문구 ex)💎 플랜에 따라 선택 가능 */}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 우측 카드 - 오른쪽만 둥글게 (좌측 정렬) */}
+                  <div className="flex-1 z-10">
+                    <div
+                      className="h-full rounded-r-[32px] border-y border-r border-white/40 backdrop-blur-sm"
+                      style={{ background: 'rgba(255, 255, 255, 0.8)' }}
+                    >
+                      <div className="pl-12 pr-8 py-10 flex flex-col gap-6">
+                        {/* 헤더 */}
+                        <div className="h-20 flex items-center justify-center border-b border-[#E5E7EB]/50 pb-4">
+                          <div className="text-center">
+                            <p className="text-[18px] font-semibold text-[#6B7280]">타사</p>
+                            <p className="text-[32px] font-black text-[#374151] mt-1">서비스</p>
+                          </div>
+                        </div>
+
+                        {/* 상담 주체 - 좌측 정렬 */}
+                        <div className="flex items-center h-20 border-b border-[#E5E7EB]/50 pb-4">
+                          <p className="text-[18px] font-medium text-[#4B5563]">
+                            임상/영양학 수의사
+                          </p>
+                        </div>
+
+                        {/* 상담 방식 - 좌측 정렬 */}
+                        <div className="flex flex-col justify-center gap-2 h-24 border-b border-[#E5E7EB]/50 pb-4">
+                          <p className="text-[17px] text-[#4B5563] flex items-center gap-2">
+                            <span className="text-[18px]">🏥</span> 오프라인 대면 상담
+                          </p>
+                          <p className="text-[16px] text-[#6B7280] pl-7">
+                            예약·방문 필수
+                          </p>
+                        </div>
+
+                        {/* 가격 - 좌측 정렬 */}
+                        <div className="flex flex-col justify-center gap-1.5 h-20">
+                          <p className="text-[18px] font-semibold text-[#374151]">A: ₩250,000</p>
+                          <p className="text-[18px] font-semibold text-[#374151]">B: ₩350,000</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            {/* 모바일: 카드 내부에 라벨 포함(가독성 우선) */}
+            <div className="md:hidden space-y-4">
+              <div className="relative">
+                <div className="absolute -inset-3 rounded-[28px] bg-white/60 blur-2xl" aria-hidden="true" />
+                <div className="relative bg-white rounded-2xl border border-[#E0E6F5] shadow-[0_18px_45px_rgba(15,23,42,0.18)] p-5">
+                  <p className="text-center text-[15px] font-semibold text-[#003DA5]">젤리대학교</p>
+                  <p className="text-center text-[22px] font-bold text-[#111827] mb-4">서비스</p>
+                  <div className="space-y-3 text-[14px] text-[#4B5563]">
+                    <div>
+                      <p className="text-[12px] font-medium text-[#6B7280] mb-1">상담 주체</p>
+                      <p className="font-semibold text-[#003DA5]">수의영양학 전문가 + AI 기반 분석</p>
+                    </div>
+                    <div>
+                      <p className="text-[12px] font-medium text-[#6B7280] mb-1">상담 방식</p>
+                      <p>보고서 기반 비대면 서비스</p>
+                      <p>시간·장소 제약 없음</p>
+                    </div>
+                    <div>
+                      <p className="text-[12px] font-medium text-[#6B7280] mb-1">가격</p>
+                      <p className="text-[16px] font-bold text-[#003DA5]">₩19,500 ~ ₩59,000</p>
+                      <p className="text-[12px] text-[#6B7280] mt-0.5">플랜에 따라 선택 가능</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#F7F8FC] rounded-2xl border border-[#E0E6F5] shadow-[0_12px_30px_rgba(15,23,42,0.08)] p-5">
+                <p className="text-center text-[15px] font-semibold text-[#111827]">타사</p>
+                <p className="text-center text-[22px] font-bold text-[#111827] mb-4">서비스</p>
+                <div className="space-y-3 text-[14px] text-[#4B5563]">
+                  <div>
+                    <p className="text-[12px] font-medium text-[#6B7280] mb-1">상담 주체</p>
+                    <p>임상/영양학 수의사</p>
+                  </div>
+                  <div>
+                    <p className="text-[12px] font-medium text-[#6B7280] mb-1">상담 방식</p>
+                    <p>오프라인 대면 상담</p>
+                    <p>예약·방문 필수</p>
+                  </div>
+                  <div>
+                    <p className="text-[12px] font-medium text-[#6B7280] mb-1">가격</p>
+                    <p>A: ₩19,500</p>
+                    <p>B: ₩59,000</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
