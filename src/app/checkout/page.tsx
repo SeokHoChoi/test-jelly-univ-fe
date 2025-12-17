@@ -237,8 +237,8 @@ function CheckoutPageContent() {
 
       // 플랜에 따른 가격 설정
       const planInfo = isPremium
-        ? { planType: 'premium', amount: 79000, goodsName: '젤리유 프리미엄 플랜 (3개월)' }
-        : { planType: 'basic', amount: 39000, goodsName: '젤리유 베이직 플랜 (3개월)' };
+        ? { planType: 'premium', amount: 59000, goodsName: '젤리유 프리미엄 플랜 (3개월)' }
+        : { planType: 'basic', amount: 19500, goodsName: '젤리유 베이직 플랜 (3개월)' };
 
       // 결제 준비 API 호출
       const response = await preparePayment(token, planInfo);
@@ -416,14 +416,32 @@ function CheckoutPageContent() {
           <ReviewSlider reviews={reviews} showDots={true} />
         </div>
 
-        {/* 젤리대학교 서비스 vs 타사 서비스 비교 섹션 자리 (사용자 구현 영역) */}
+        {/* 젤리대학교 서비스 vs 타사 서비스 비교 섹션 (사용자 구현 영역) */}
         <div
           id="service-comparison"
-          className="mb-16 md:mb-24 flex justify-center"
         >
-          <div className="w-full max-w-5xl border border-dashed border-gray-300 rounded-2xl p-6 md:p-10 text-center text-sm text-gray-500">
-            {/* TODO: 이 영역에 젤리대학교 서비스 vs 타사 서비스 비교 UI를 구현하세요. */}
-            젤리대학교 서비스 vs 타사 서비스 비교 섹션 자리
+          {/* 좌측 패널 */}
+          <div>
+            {/* 헤더 */}
+            <span></span>
+            {/* 바디 */}
+            <div></div>
+          </div>
+
+          {/* 중앙 패널 */}
+          <div>
+            {/* 헤더 */}
+            <span>젤리대학교<br />서비스</span>
+            {/* 바디 */}
+            <div></div>
+          </div>
+
+          {/* 우측 패널 */}
+          <div>
+            {/* 헤더 */}
+            <span>타사<br />서비스</span>
+            {/* 바디 */}
+            <div></div>
           </div>
         </div>
 
