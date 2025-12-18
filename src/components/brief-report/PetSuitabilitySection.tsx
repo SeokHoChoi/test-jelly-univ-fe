@@ -111,6 +111,11 @@ const PetSuitabilitySection = () => {
     router.push('/survey');
   };
 
+  // 냥구 식단 설명 페이지로 이동하는 함수
+  const handleNyanguDiet = () => {
+    router.push('/nyangu-diet');
+  };
+
   // const petName = useMemo(() => {
   //   const name = dog?.name || '반려견';
   //   return name;
@@ -146,8 +151,10 @@ const PetSuitabilitySection = () => {
                 animation: 'shimmer 6s linear infinite'
               }}
             />
-            <span className="text-2xl relative z-10">{alertInfo.emoji}</span>
-            <span className="font-semibold text-sm relative z-10">{alertInfo.title}</span>
+            {/* <span className="text-2xl relative z-10">{alertInfo.emoji}</span>
+            <span className="font-semibold text-sm relative z-10">{alertInfo.title}</span> */}
+            <span className="text-2xl relative z-10">💡</span>
+            <span className="font-semibold text-sm relative z-10">상위 1% 식단에서 힌트를 얻으세요</span>
             <span className="text-lg transition-transform duration-300 relative z-10" style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}>
               ▼
             </span>
@@ -258,9 +265,9 @@ const PetSuitabilitySection = () => {
               </p>
             </div>
 
-            {/* 액션 버튼 - 애니메이션 */}
+            {/* 액션 버튼들 - 애니메이션 */}
             <div
-              className="pt-2"
+              className="pt-2 space-y-3"
               style={{
                 animation: `fadeInUp 0.5s ease-out ${(() => {
                   if (alertInfo.description) {
@@ -279,6 +286,12 @@ const PetSuitabilitySection = () => {
                 })()}s both`
               }}
             >
+              <button
+                onClick={handleNyanguDiet}
+                className="w-full bg-gradient-to-r from-[#003DA5] to-[#0052CC] hover:from-[#002A7A] hover:to-[#003DA5] text-white py-4 rounded-[50px] font-semibold text-base transition-colors shadow-lg"
+              >
+                상위 1% 식단에서 힌트를 얻으세요
+              </button>
               <button
                 onClick={handleLearnMore}
                 className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white py-4 rounded-[50px] font-semibold text-base transition-colors"

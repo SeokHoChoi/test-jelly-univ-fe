@@ -164,7 +164,8 @@ export default function PaymentResultPage() {
 
           {/* 메인 메시지 */}
           <h1 className="text-2xl font-bold text-gray-900 mb-2">결제가 완료되었습니다!</h1>
-          <p className="text-gray-600 mb-8">젤리유 프리미엄 플랜 구독이 시작되었습니다</p>
+          <p className="text-gray-600 mb-4">젤리유 프리미엄 플랜 구독이 시작되었습니다</p>
+          <p className="text-sm text-gray-500 mb-8">1:1 맞춤 리포트를 위해 추가 정보를 입력해주세요</p>
 
           {/* 결제 정보 카드 */}
           <div className="bg-gray-50 rounded-xl p-4 mb-6 text-left">
@@ -195,8 +196,16 @@ export default function PaymentResultPage() {
           {/* 액션 버튼들 */}
           <div className="space-y-3">
             <Button
-              onClick={() => router.push('/mypage')}
+              onClick={() => router.push('/survey')}
               className="w-full bg-[#003DA5] hover:bg-[#002A7A] text-white h-12 text-base font-semibold"
+            >
+              <User className="w-5 h-5 mr-2" />
+              추가 정보 입력하기 (16개 설문)
+            </Button>
+            <Button
+              onClick={() => router.push('/mypage')}
+              variant="outline"
+              className="w-full h-12 text-base"
             >
               <User className="w-5 h-5 mr-2" />
               마이페이지에서 확인하기

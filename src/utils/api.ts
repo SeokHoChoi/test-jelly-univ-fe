@@ -94,8 +94,10 @@ export interface RatingFeedInput {
 }
 
 export interface RatingRequestBody {
-  dogName: string;
-  dogWeight: string;
+  // 이전에는 dogName, dogWeight도 필수였으나
+  // 이제는 백엔드에서도 선택값이므로 선택 필드로 변경
+  dogName?: string;
+  dogWeight?: string;
   dogBreed: string;
   feeds: RatingFeedInput[]; // 1~3개
 }
