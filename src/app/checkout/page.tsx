@@ -496,27 +496,27 @@ function CheckoutPageContent() {
                           </div>
                         </div>
 
-                        {/* 상담 주체 - 좌측 정렬 */}
-                        <div className="flex items-start h-20 border-b border-[#E5E7EB]/50 pb-4">
-                          <div className="flex-1">
+                        {/* 상담 주체 - 중앙 정렬 */}
+                        <div className="flex items-center justify-center h-20 border-b border-[#E5E7EB]/50 pb-4">
+                          <div className="text-center">
                             <p className="text-[18px] font-bold text-[#003DA5] leading-relaxed">
                               수의영양학 전문가 + AI 기반 분석
                             </p>
                           </div>
                         </div>
 
-                        {/* 상담 방식 - 좌측 정렬 */}
-                        <div className="flex flex-col justify-center gap-0.5 h-24 border-b border-[#E5E7EB]/50 pb-4">
+                        {/* 상담 방식 - 중앙 정렬 */}
+                        <div className="flex flex-col items-center justify-center gap-0.5 h-24 border-b border-[#E5E7EB]/50 pb-4">
                           <p className="text-[17px] font-bold text-[#003DA5] flex items-center gap-2">
                             <span className="text-[20px]">✨</span> 보고서 기반 비대면 서비스
                           </p>
-                          <p className="text-[16px] text-[#6B7280] pl-7">
+                          <p className="text-[16px] text-[#6B7280] text-center">
                             시간·장소 제약 없음
                           </p>
                         </div>
 
-                        {/* 가격 - 좌측 정렬 */}
-                        <div className="flex flex-col justify-center h-20">
+                        {/* 가격 - 중앙 정렬 */}
+                        <div className="flex flex-col items-center justify-center h-20">
                           <p className="text-[28px] font-black text-[#003DA5]">
                             ₩19,500 ~ ₩59,000
                           </p>
@@ -528,13 +528,13 @@ function CheckoutPageContent() {
                     </div>
                   </div>
 
-                  {/* 우측 카드 - 오른쪽만 둥글게 (좌측 정렬) */}
+                  {/* 우측 카드 - 오른쪽만 둥글게 (중앙 정렬) */}
                   <div className="flex-1 z-10">
                     <div
                       className="h-full rounded-r-[32px] border-y border-r border-white/40 backdrop-blur-sm"
                       style={{ background: 'rgba(255, 255, 255, 0.8)' }}
                     >
-                      <div className="pl-12 pr-8 py-10 flex flex-col gap-6">
+                      <div className="px-8 py-10 flex flex-col gap-6">
                         {/* 헤더 */}
                         <div className="h-20 flex items-center justify-center border-b border-[#E5E7EB]/50 pb-4">
                           <div className="text-center">
@@ -543,25 +543,25 @@ function CheckoutPageContent() {
                           </div>
                         </div>
 
-                        {/* 상담 주체 - 좌측 정렬 */}
-                        <div className="flex items-center h-20 border-b border-[#E5E7EB]/50 pb-4">
-                          <p className="text-[18px] font-medium text-[#4B5563]">
+                        {/* 상담 주체 - 중앙 정렬 */}
+                        <div className="flex items-center justify-center h-20 border-b border-[#E5E7EB]/50 pb-4">
+                          <p className="text-[18px] font-medium text-[#4B5563] text-center">
                             임상/영양학 수의사
                           </p>
                         </div>
 
-                        {/* 상담 방식 - 좌측 정렬 */}
-                        <div className="flex flex-col justify-center gap-2 h-24 border-b border-[#E5E7EB]/50 pb-4">
+                        {/* 상담 방식 - 중앙 정렬 */}
+                        <div className="flex flex-col items-center justify-center gap-2 h-24 border-b border-[#E5E7EB]/50 pb-4">
                           <p className="text-[17px] text-[#4B5563] flex items-center gap-2">
                             <span className="text-[18px]">🏥</span> 오프라인 대면 상담
                           </p>
-                          <p className="text-[16px] text-[#6B7280] pl-7">
+                          <p className="text-[16px] text-[#6B7280] text-center">
                             예약·방문 필수
                           </p>
                         </div>
 
-                        {/* 가격 - 좌측 정렬 */}
-                        <div className="flex flex-col justify-center gap-1.5 h-20">
+                        {/* 가격 - 중앙 정렬 */}
+                        <div className="flex flex-col items-center justify-center gap-1.5 h-20">
                           <p className="text-[18px] font-semibold text-[#374151]">A: ₩250,000</p>
                           <p className="text-[18px] font-semibold text-[#374151]">B: ₩350,000</p>
                         </div>
