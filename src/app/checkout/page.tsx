@@ -1002,7 +1002,7 @@ function CheckoutPageContent() {
       </div>
 
       {/* 하단 고정 결제 영역 */}
-      <div className='sticky bottom-0 left-0 right-0 bg-white'>
+      <div className='sticky bottom-0 left-0 right-0 bg-white z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.08)]'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex flex-col items-center'>
           <button
             onClick={() => {
