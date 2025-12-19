@@ -99,9 +99,13 @@ function CheckoutPageContent() {
   }, []);
 
   // ?dir=true 쿼리 파라미터 확인하여 모달 자동 열기
+  // 단, campaign=nyangu인 경우 샘플 리포트를 보여주지 않음
   useEffect(() => {
     const dirParam = searchParams.get('dir');
-    if (dirParam === 'true') {
+    const campaignParam = searchParams.get('campaign');
+
+    // campaign=nyangu가 아닐 때만 샘플 리포트 모달 열기
+    if (dirParam === 'true' && campaignParam !== 'nyangu') {
       setSampleReportModalOpen(true);
     }
   }, [searchParams]);
