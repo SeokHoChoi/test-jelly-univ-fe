@@ -14,7 +14,7 @@ import { getToken } from '@/utils/auth';
 // NICE SDK 로딩 함수
 const ensureNiceSdkLoaded = (): Promise<void> => {
   return new Promise((resolve, reject) => {
-    if ((window as any).AUTHNICE) {
+    if ((window as { AUTHNICE?: { requestPay: (data: unknown) => void } }).AUTHNICE) {
       resolve();
       return;
     }
