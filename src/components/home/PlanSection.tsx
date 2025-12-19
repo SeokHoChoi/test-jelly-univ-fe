@@ -1,12 +1,44 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Card from '@/components/common/Card';
+import LoginRequiredModal from '@/components/common/LoginRequiredModal';
+import PlanSelectionModal from '@/components/common/PlanSelectionModal';
 import { Check } from 'lucide-react';
+import { preparePayment } from '@/lib/paymentClient';
+import { getToken } from '@/utils/auth';
+
+// NICE SDK 로딩 함수
+const ensureNiceSdkLoaded = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if ((window as any).AUTHNICE) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://pay.nicepay.co.kr/v1/js/';
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('NICE SDK 로딩 실패'));
+    document.head.appendChild(script);
+  });
+};
 
 const PlanSection = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [planSelectionModalOpen, setPlanSelectionModalOpen] = useState(false);
+  const [selectedPlanForModal, setSelectedPlanForModal] = useState<'basic' | 'premium' | 'both'>('both');
+  const [isMounted, setIsMounted] = useState(false);
+
+  // 클라이언트 사이드에서만 Portal 사용
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const freeFeatures = [
     '영양 정보 신뢰도, 영양 설계 균형도, 원료 품질, 제조 품질',
@@ -68,6 +100,103 @@ const PlanSection = () => {
       footerNote: '*수의영양학 전문 수의사가 최종 검증 후 제공해드립니다.',
     },
   ];
+
+  // 결제 준비 및 실행 함수 (체크아웃과 완전히 동일)
+  const handlePrepareAndPay = useCallback(async (planType?: 'basic' | 'premium') => {
+    try {
+      setLoading(true);
+
+      // 플랜 타입 결정: 파라미터 > sessionStorage > URL 파라미터 > 기본값(basic)
+      const savedPlan = typeof window !== 'undefined' ? sessionStorage.getItem('selectedPlan') : null;
+      const plan = planType || savedPlan || searchParams.get('plan') || 'basic';
+      const isPremium = plan === 'premium';
+
+      // JWT 토큰 확인
+      const token = getToken();
+      if (!token) {
+        // 선택한 플랜 정보를 sessionStorage에 저장
+        sessionStorage.setItem('selectedPlan', plan);
+        setLoginModalOpen(true);
+        return;
+      }
+
+      // sessionStorage에 저장된 플랜 정보 삭제 (사용 후 정리)
+      if (typeof window !== 'undefined' && savedPlan) {
+        sessionStorage.removeItem('selectedPlan');
+      }
+
+      // 플랜에 따른 가격 설정
+      const planInfo = isPremium
+        ? { planType: 'premium', amount: 59000, goodsName: '신규 맞춤 식단 설계' }
+        : { planType: 'basic', amount: 19500, goodsName: '현재 급여 식단 맞춤 설계' };
+
+      // 결제 준비 API 호출
+      const response = await preparePayment(token, planInfo);
+
+      if (!response?.success) throw new Error('결제 준비 실패');
+      const { data } = response;
+
+      // result 페이지에서 사용할 값 저장
+      sessionStorage.setItem('np_orderId', data.orderId);
+      sessionStorage.setItem('np_amount', String(data.amount));
+
+      // returnUrl 수정
+      const modifiedData = {
+        ...data,
+        returnUrl: `${window.location.origin}/api/payment/result`
+      };
+
+      // NICEPAY 결제창 호출
+      await ensureNiceSdkLoaded();
+      (window as { AUTHNICE: { requestPay: (data: unknown) => void } }).AUTHNICE.requestPay({
+        clientId: modifiedData.clientId,
+        method: 'card',
+        orderId: modifiedData.orderId,
+        amount: modifiedData.amount,
+        goodsName: modifiedData.goodsName,
+        returnUrl: modifiedData.returnUrl,
+        sandbox: process.env.NODE_ENV === 'development',
+        ...(modifiedData.timestamp && { timestamp: Number(modifiedData.timestamp) }),
+        ...(modifiedData.signature && { signature: modifiedData.signature }),
+        buyerName: modifiedData.buyerName ?? '',
+        buyerEmail: modifiedData.buyerEmail ?? '',
+        buyerTel: modifiedData.buyerTel ?? '',
+        fnSuccess: () => { },
+        fnFail: () => { alert('결제에 실패했습니다. 다시 시도해주세요.'); },
+        fnError: (err: unknown) => {
+          const message = err && typeof err === 'object' && 'message' in err ? String((err as { message?: unknown }).message) : String(err);
+          alert('결제 중 오류가 발생했습니다: ' + message);
+        },
+      });
+    } catch (error) {
+      console.error('결제 오류:', error);
+      alert(error instanceof Error ? error.message : '결제 준비 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  }, [searchParams]);
+
+  // 로그인/회원가입 후 리다이렉트 시 자동 결제 진행 (체크아웃과 완전히 동일)
+  useEffect(() => {
+    const autoPay = searchParams.get('autoPay');
+    const plan = searchParams.get('plan') as 'basic' | 'premium' | null;
+
+    if (autoPay === 'true' && plan && getToken()) {
+      if (typeof window !== 'undefined') {
+        // 이미 한 번 자동 결제를 시도했는지 체크 (새로고침 시 재실행 방지)
+        const alreadyTriggered = sessionStorage.getItem('autoPayTriggered');
+        if (alreadyTriggered === 'true') {
+          return;
+        }
+        sessionStorage.setItem('autoPayTriggered', 'true');
+      }
+
+      // 약간의 딜레이를 주어 페이지가 완전히 로드된 후 결제 진행
+      setTimeout(() => {
+        handlePrepareAndPay(plan);
+      }, 500);
+    }
+  }, [searchParams, handlePrepareAndPay]);
 
   return (
     <section id="plans" className="bg-[#F8F8F8] py-12 md:py-20">
@@ -188,13 +317,23 @@ const PlanSection = () => {
                 )}
               </div>
 
-              {/* 버튼 영역 - 하단 고정 */}
+              {/* 버튼 영역 - 체크아웃과 동일한 로직 */}
               <div className="mt-auto pt-6">
                 <button
                   onClick={() => {
-                    // 모든 플랜은 프로덕트 분석 페이지로 이동
-                    router.push('/product-analysis');
+                    const token = getToken();
+                    const planType = index === 0 ? 'basic' : 'premium'; // 첫 번째는 basic, 두 번째는 premium
+
+                    if (!token) {
+                      // 미로그인: 이미 플랜이 선택된 상태로 로그인/회원가입 모달 표시
+                      setSelectedPlanForModal(planType); // 해당 플랜으로 고정
+                      setLoginModalOpen(true);
+                    } else {
+                      // 로그인됨: 바로 결제 진행
+                      handlePrepareAndPay(planType);
+                    }
                   }}
+                  disabled={loading}
                   className={`inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#003DA5]/30 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 h-12 px-6 text-lg w-full ${index === 0
                     ? 'bg-[#003DA5] text-white !font-bold hover:bg-[#002A7A] active:bg-[#001F5C] mx-auto'
                     : plan.buttonVariant === 'primary'
@@ -202,13 +341,67 @@ const PlanSection = () => {
                       : 'border border-gray-300 text-[#003DA5] hover:bg-gray-50 active:bg-gray-100'
                     }`}
                 >
-                  {plan.buttonText}
+                  {loading ? '준비 중...' : plan.buttonText}
                 </button>
               </div>
             </Card>
           ))}
         </div>
       </div>
+
+      {/* 로그인 모달 (Portal로 body에 직접 렌더링 - home에서만 적용) */}
+      {isMounted && createPortal(
+        <LoginRequiredModal
+          isOpen={loginModalOpen}
+          onClose={() => {
+            setLoginModalOpen(false);
+            // 모달 닫을 때 sessionStorage 클리어
+            if (typeof window !== 'undefined') {
+              sessionStorage.removeItem('selectedPlan');
+              sessionStorage.removeItem('autoPayTriggered');
+            }
+          }}
+          onLogin={(selectedPlan) => {
+            // 선택한 플랜 저장 및 자동 결제 플래그 제거
+            if (selectedPlan) {
+              sessionStorage.setItem('selectedPlan', selectedPlan);
+            }
+            sessionStorage.removeItem('autoPayTriggered'); // 새로운 로그인 시도 시 플래그 제거
+
+            // 로그인 페이지로 이동 (URL 파라미터로 플랜 정보 전달)
+            const plan = selectedPlan || 'basic';
+            const redirectUrl = `/home?autoPay=true&plan=${plan}`;
+            router.push(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
+          }}
+          onSignup={(selectedPlan) => {
+            // 선택한 플랜 저장 및 자동 결제 플래그 제거
+            if (selectedPlan) {
+              sessionStorage.setItem('selectedPlan', selectedPlan);
+            }
+            sessionStorage.removeItem('autoPayTriggered'); // 새로운 회원가입 시도 시 플래그 제거
+
+            // 회원가입 페이지로 이동 (URL 파라미터로 플랜 정보 전달)
+            const plan = selectedPlan || 'basic';
+            const redirectUrl = `/home?autoPay=true&plan=${plan}`;
+            router.push(`/signup?redirect=${encodeURIComponent(redirectUrl)}`);
+          }}
+          planType={selectedPlanForModal}
+        />,
+        document.body
+      )}
+
+      {/* 플랜 선택 모달 (Portal로 body에 직접 렌더링 - home에서만 적용) */}
+      {isMounted && createPortal(
+        <PlanSelectionModal
+          isOpen={planSelectionModalOpen}
+          onClose={() => setPlanSelectionModalOpen(false)}
+          onSelectPlan={(plan) => {
+            setPlanSelectionModalOpen(false);
+            handlePrepareAndPay(plan);
+          }}
+        />,
+        document.body
+      )}
     </section>
   );
 };

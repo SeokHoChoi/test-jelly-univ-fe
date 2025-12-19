@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, LogIn, UserPlus, Check } from 'lucide-react';
 import Button from '@/components/common/Button';
 
@@ -21,6 +21,19 @@ export default function LoginRequiredModal({
 }: LoginRequiredModalProps) {
   const [selectedPlan, setSelectedPlan] = useState<'basic' | 'premium' | null>(null);
   const showAllPlans = planType === 'both' || !planType;
+
+  // 모달 열릴 때 body 스크롤 막기
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
   const basicPlan = {
     title: '현재 급여 식단 분석',
     price: '19,500원',
@@ -39,7 +52,7 @@ export default function LoginRequiredModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       {/* 배경 오버레이 */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -47,7 +60,7 @@ export default function LoginRequiredModal({
       />
 
       {/* 모달 컨텐츠 */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
         {/* 헤더 */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">

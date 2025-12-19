@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ArticleListSection from '@/components/home/ArticleListSection';
 import PlanSection from '@/components/home/PlanSection';
@@ -9,7 +10,9 @@ const HomePage = () => {
     <div className="min-h-screen home-page">
       <HeroSection />
       <ArticleListSection />
-      <PlanSection />
+      <Suspense fallback={<div className="py-12 md:py-20 text-center">로딩 중...</div>}>
+        <PlanSection />
+      </Suspense>
       <ReviewSection />
       <AdBanner />
     </div>
