@@ -13,6 +13,7 @@ import {
   Home,
   User,
   ArrowLeft,
+  AlertTriangle,
 } from "lucide-react";
 
 type ApproveResult = {
@@ -29,6 +30,7 @@ export default function PaymentResultPage() {
   const [loading, setLoading] = useState(true);
   const [surveyCompleted, setSurveyCompleted] = useState(false);
   const [paidPlan, setPaidPlan] = useState<"basic" | "premium">("basic");
+  const [showExitWarning, setShowExitWarning] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -103,8 +105,47 @@ export default function PaymentResultPage() {
     }
   }, []);
 
+  // 브라우저 종료/뒤로가기 경고 (설문 미완료 시에만)
+  useEffect(() => {
+    if (surveyCompleted || !result) return;
+
+    // 브라우저 종료/새로고침 경고
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+      return "";
+    };
+
+    // 뒤로가기 버튼 경고
+    const handlePopState = () => {
+      setShowExitWarning(true);
+      // 히스토리에 현재 상태를 다시 추가하여 뒤로가기 취소
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    // 초기 히스토리 상태 추가
+    window.history.pushState(null, "", window.location.href);
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [surveyCompleted, result]);
+
   const formatAmount = (amount: number) => {
     return new Intl.NumberFormat("ko-KR").format(amount) + "원";
+  };
+
+  const handleStayOnPage = () => {
+    setShowExitWarning(false);
+  };
+
+  const handleLeavePage = () => {
+    setShowExitWarning(false);
+    router.back();
   };
 
   if (loading) {
@@ -203,13 +244,14 @@ export default function PaymentResultPage() {
 
           {/* 메인 메시지 */}
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            결제가 완료되었습니다!
+            맞춤 리포트 제작을 위한 <br />
+            설문을 시작해주세요!
           </h1>
-          <p className="text-gray-600 mb-4">
-            젤리유 프리미엄 플랜 구독이 시작되었습니다
-          </p>
-          <p className="text-sm text-gray-500 mb-8">
-            1:1 맞춤 리포트를 위해 추가 정보를 입력해주세요
+          <p className="text-gray-600 mb-8">
+            {paidPlan === "premium"
+              ? "신규 맞춤 식단 설계"
+              : "현재 급여 식단 맞춤 설계"}
+            의 결제가 완료되었습니다
           </p>
 
           {/* 결제 정보 카드 */}
@@ -229,18 +271,6 @@ export default function PaymentResultPage() {
               </div>
             )}
           </div>
-
-          {/* 영수증 버튼 */}
-          {result.payment.receiptUrl && (
-            <Button
-              onClick={() => window.open(result.payment.receiptUrl, "_blank")}
-              variant="outline"
-              className="w-full mb-4"
-            >
-              <Receipt className="w-4 h-4 mr-2" />
-              영수증 보기
-            </Button>
-          )}
 
           {/* 액션 버튼들 */}
           <div className="space-y-3">
@@ -278,6 +308,17 @@ export default function PaymentResultPage() {
                 </Button>
               </>
             )}
+            {/* 영수증 버튼 */}
+            {result.payment.receiptUrl && (
+              <Button
+                onClick={() => window.open(result.payment.receiptUrl, "_blank")}
+                variant="outline"
+                className="w-full h-12 text-base"
+              >
+                <Receipt className="w-4 h-4 mr-2" />
+                영수증 보기
+              </Button>
+            )}
             {/* 설문 완료 시에만 홈으로 돌아가기 버튼 표시 */}
             {surveyCompleted && (
               <Button
@@ -292,6 +333,52 @@ export default function PaymentResultPage() {
           </div>
         </Card>
       </div>
+
+      {/* 브라우저 종료/뒤로가기 경고 모달 */}
+      {showExitWarning && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          {/* 배경 오버레이 */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+
+          {/* 모달 컨텐츠 */}
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full">
+            {/* 컨텐츠 */}
+            <div className="p-6 text-center">
+              {/* 아이콘 */}
+              <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertTriangle className="w-6 h-6 text-yellow-500" />
+              </div>
+
+              {/* 제목 */}
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                설문을 완료해주세요!
+              </h3>
+
+              {/* 메시지 */}
+              <p className="text-gray-600 text-sm leading-relaxed">
+                맞춤 리포트 제작을 위해 설문이 필요합니다. 정말 나가시겠어요?
+              </p>
+            </div>
+
+            {/* 푸터 버튼 */}
+            <div className="p-6 pt-0 flex gap-3">
+              <Button
+                onClick={handleLeavePage}
+                variant="outline"
+                className="flex-1"
+              >
+                나가기
+              </Button>
+              <Button
+                onClick={handleStayOnPage}
+                className="flex-1 bg-[#003DA5] hover:bg-[#002A7A] text-white"
+              >
+                머무르기
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
