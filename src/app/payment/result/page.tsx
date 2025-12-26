@@ -278,14 +278,17 @@ export default function PaymentResultPage() {
                 </Button>
               </>
             )}
-            <Button
-              onClick={() => router.push("/home")}
-              variant="outline"
-              className="w-full h-12 text-base"
-            >
-              <Home className="w-5 h-5 mr-2" />
-              홈으로 돌아가기
-            </Button>
+            {/* 설문 완료 시에만 홈으로 돌아가기 버튼 표시 */}
+            {surveyCompleted && (
+              <Button
+                onClick={() => router.push("/home")}
+                variant="outline"
+                className="w-full h-12 text-base"
+              >
+                <Home className="w-5 h-5 mr-2" />
+                홈으로 돌아가기
+              </Button>
+            )}
           </div>
         </Card>
       </div>
