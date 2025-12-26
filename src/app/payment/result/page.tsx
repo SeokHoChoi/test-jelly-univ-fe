@@ -103,6 +103,14 @@ export default function PaymentResultPage() {
     }
   }, []);
 
+  // 설문 미완료 시 자동으로 설문 페이지로 리다이렉트
+  useEffect(() => {
+    if (result && !loading && !error && !surveyCompleted) {
+      // 설문 미완료 시 바로 설문 페이지로 이동
+      router.replace(`/survey?plan=${paidPlan}`);
+    }
+  }, [result, loading, error, surveyCompleted, paidPlan, router]);
+
   const formatAmount = (amount: number) => {
     return new Intl.NumberFormat("ko-KR").format(amount) + "원";
   };
